@@ -176,8 +176,10 @@ export class OpenAiCompatibleProvider implements ModelProvider {
     };
   }
 
-  private headers(apiKey?: string | null): Record<string, string> {
-    const key = apiKey || this.cfg.apiKey;
+  private headers(apiKey?: string | null, authToken?: string | null): Record<string, string> {
+    // A connected subscription supplies an OAuth access token; API keys and
+    // OAuth tokens are both sent as a Bearer credential here.
+    const key = authToken || apiKey || this.cfg.apiKey;
     return key ? { authorization: `Bearer ${key}` } : {};
   }
 
@@ -195,7 +197,7 @@ export class OpenAiCompatibleProvider implements ModelProvider {
     if (tools) body.tools = tools;
     if (params.toolChoice && (params.toolChoice as { type?: string }).type === 'none') body.tool_choice = 'none';
 
-    const res = await postJson(this.url('/chat/completions'), this.headers(params.apiKey), body, {
+    const res = await postJson(this.url('/chat/completions'), this.headers(params.apiKey, params.authToken), body, {
       providerLabel: this.cfg.label,
       usedByokKey: !!params.apiKey,
     });
@@ -232,7 +234,7 @@ export class OpenAiCompatibleProvider implements ModelProvider {
     if (tools) body.tools = tools;
     if (params.toolChoice && (params.toolChoice as { type?: string }).type === 'none') body.tool_choice = 'none';
 
-    const res = await postJson(this.url('/chat/completions'), this.headers(params.apiKey), body, {
+    const res = await postJson(this.url('/chat/completions'), this.headers(params.apiKey, params.authToken), body, {
       providerLabel: this.cfg.label,
       usedByokKey: !!params.apiKey,
     });
@@ -329,6 +331,8 @@ export class OpenAiCompatibleProvider implements ModelProvider {
     model: ModelId;
     prompt: string;
     maxTokens: number;
+    apiKey?: string | null;
+    authToken?: string | null;
   }): Promise<{ text: string; usage: ClaudeUsage }> {
     const msg = await this.createMessage({
       model: params.model,
@@ -336,6 +340,8 @@ export class OpenAiCompatibleProvider implements ModelProvider {
       tools: [],
       messages: [{ role: 'user', content: params.prompt }],
       maxTokens: params.maxTokens,
+      apiKey: params.apiKey,
+      authToken: params.authToken,
     });
     const text = (msg.content as LooseBlock[])
       .filter((c) => c.type === 'text')
@@ -350,6 +356,8 @@ export class OpenAiCompatibleProvider implements ModelProvider {
     prompt: string;
     schema: Record<string, unknown>;
     maxTokens: number;
+    apiKey?: string | null;
+    authToken?: string | null;
   }): Promise<{ value: T; usage: ClaudeUsage }> {
     const messages: unknown[] = [];
     if (params.system) messages.push({ role: 'system', content: params.system });
@@ -370,7 +378,7 @@ export class OpenAiCompatibleProvider implements ModelProvider {
         content: `${params.prompt}\n\nRespond with ONLY valid JSON matching this schema:\n${JSON.stringify(params.schema)}`,
       };
     }
-    const res = await postJson(this.url('/chat/completions'), this.headers(), body, {
+    const res = await postJson(this.url('/chat/completions'), this.headers(params.apiKey, params.authToken), body, {
       providerLabel: this.cfg.label,
     });
     const json = (await res.json()) as {

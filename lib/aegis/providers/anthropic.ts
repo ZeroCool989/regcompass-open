@@ -32,7 +32,21 @@ let _client: Anthropic | null = null;
 const _byokClients = new Map<string, Anthropic>();
 const BYOK_CLIENT_CACHE_MAX = 50;
 
-export function getClient(apiKey?: string | null): Anthropic {
+export function getClient(apiKey?: string | null, authToken?: string | null): Anthropic {
+  // A connected Claude subscription supplies an OAuth access token, sent as a
+  // Bearer credential (Authorization) rather than the x-api-key header.
+  if (authToken) {
+    const cacheKey = `oauth:${authToken}`;
+    const cached = _byokClients.get(cacheKey);
+    if (cached) return cached;
+    const client = new Anthropic({ authToken, maxRetries: 0 });
+    if (_byokClients.size >= BYOK_CLIENT_CACHE_MAX) {
+      const oldest = _byokClients.keys().next().value;
+      if (oldest !== undefined) _byokClients.delete(oldest);
+    }
+    _byokClients.set(cacheKey, client);
+    return client;
+  }
   if (apiKey) {
     const cached = _byokClients.get(apiKey);
     if (cached) return cached;
@@ -188,7 +202,7 @@ export class AnthropicProvider implements ModelProvider {
   };
 
   async createMessage(params: ProviderCallParams): Promise<ProviderMessage> {
-    const client = getClient(params.apiKey);
+    const client = getClient(params.apiKey, params.authToken);
     const startedAt = Date.now();
     const request: Anthropic.MessageCreateParamsNonStreaming = {
       model: params.model,
@@ -233,7 +247,7 @@ export class AnthropicProvider implements ModelProvider {
   }
 
   async streamMessage(params: ProviderCallParams): Promise<ProviderMessageStream> {
-    const client = getClient(params.apiKey);
+    const client = getClient(params.apiKey, params.authToken);
     const request: Anthropic.MessageCreateParamsStreaming = {
       model: params.model,
       system: buildSystemBlocks(params.systemBlocks),
@@ -267,6 +281,8 @@ export class AnthropicProvider implements ModelProvider {
     model: ModelId;
     prompt: string;
     maxTokens: number;
+    apiKey?: string | null;
+    authToken?: string | null;
   }): Promise<{ text: string; usage: ClaudeUsage }> {
     const response = await this.createMessage({
       model: params.model ?? MODEL_IDS.haiku,
@@ -274,6 +290,8 @@ export class AnthropicProvider implements ModelProvider {
       tools: [],
       messages: [{ role: 'user', content: params.prompt }],
       maxTokens: params.maxTokens,
+      apiKey: params.apiKey,
+      authToken: params.authToken,
     });
     const text = response.content
       .filter((c): c is Anthropic.TextBlock => c.type === 'text')
@@ -288,8 +306,10 @@ export class AnthropicProvider implements ModelProvider {
     prompt: string;
     schema: Record<string, unknown>;
     maxTokens: number;
+    apiKey?: string | null;
+    authToken?: string | null;
   }): Promise<{ value: T; usage: ClaudeUsage }> {
-    const client = getClient();
+    const client = getClient(params.apiKey, params.authToken);
     let response: Anthropic.Message;
     try {
       response = await client.messages.create({

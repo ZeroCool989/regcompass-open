@@ -1,4 +1,5 @@
 import type { ModelProvider } from './types';
+import type { OAuthProviderId } from '../oauth/registry';
 import { AnthropicProvider } from './anthropic';
 import { OpenAiCompatibleProvider } from './openai-compatible';
 import { GeminiProvider } from './gemini';
@@ -87,4 +88,22 @@ function providerForModel(model?: string): ModelProvider {
 /** Resolve the brain for a run. */
 export function resolveProvider(model?: string): ModelProvider {
   return overrideProvider() ?? providerForModel(model);
+}
+
+/**
+ * The subscription provider whose OAuth token (if connected) should back the
+ * active brain, or null when the active brain is a local/self-hosted endpoint
+ * that has no subscription concept (Ollama, custom gateway). Mirrors the brain
+ * selection in {@link resolveProvider}.
+ */
+export function activeOAuthProviderId(model?: string): OAuthProviderId | null {
+  const brain = env('AEGIS_BRAIN')?.toLowerCase();
+  if (brain && brain !== 'anthropic') {
+    if (brain === 'gemini') return 'google';
+    if (brain === 'openai') return 'openai';
+    return null; // ollama / custom / self-hosted: no subscription
+  }
+  if (!model || model.startsWith('claude')) return 'anthropic';
+  if (model.startsWith('gemini')) return 'google';
+  return 'openai';
 }

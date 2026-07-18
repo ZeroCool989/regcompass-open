@@ -64,6 +64,10 @@ export type ProviderCallParams = {
   maxTokens: number;
   /** Optional per-user API key (BYOK). Never logged or returned. */
   apiKey?: string | null;
+  /** Optional OAuth access token from a connected subscription. Sent as a
+   *  Bearer credential; takes precedence over the provider's env key. Never
+   *  logged or returned. */
+  authToken?: string | null;
   /** Optional tool-choice override; kept out of the cached prefix. */
   toolChoice?: ProviderToolChoice;
 };
@@ -88,6 +92,8 @@ export interface ModelProvider {
     model: ModelId;
     prompt: string;
     maxTokens: number;
+    apiKey?: string | null;
+    authToken?: string | null;
   }): Promise<{ text: string; usage: ClaudeUsage }>;
 
   /** Single-shot schema-constrained structured output. */
@@ -97,5 +103,7 @@ export interface ModelProvider {
     prompt: string;
     schema: Record<string, unknown>;
     maxTokens: number;
+    apiKey?: string | null;
+    authToken?: string | null;
   }): Promise<{ value: T; usage: ClaudeUsage }>;
 }

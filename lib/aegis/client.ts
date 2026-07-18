@@ -6,6 +6,8 @@ import type {
   ProviderMessageStream,
 } from './providers/types';
 import { getProvider } from './providers/registry';
+import { activeOAuthProviderId } from './providers/catalog';
+import { getAccessToken } from './oauth';
 
 /**
  * Model-layer facade.
@@ -34,32 +36,58 @@ export {
   classifyUpstream,
 } from './providers/anthropic';
 
+/**
+ * Attach a connected subscription's OAuth token to the call when appropriate.
+ *
+ * Credential precedence: an explicit key/token on the call wins; otherwise, if
+ * a subscription is connected for the active brain's family, its access token
+ * (auto-refreshed) is used; otherwise the provider falls back to its env key.
+ * A local-only concern — with no connections configured this is a cheap no-op.
+ */
+async function withSubscription<T extends { model: ModelId; apiKey?: string | null; authToken?: string | null }>(
+  params: T,
+): Promise<T> {
+  if (params.apiKey || params.authToken) return params;
+  const id = activeOAuthProviderId(params.model);
+  if (!id) return params;
+  const token = await getAccessToken(id);
+  return token ? { ...params, authToken: token } : params;
+}
+
 /** Non-streaming message create (main loop + helpers route through here). */
-export function callClaude(params: ClaudeCallParams): Promise<ProviderMessage> {
-  return getProvider(params.model).createMessage(params);
+export async function callClaude(params: ClaudeCallParams): Promise<ProviderMessage> {
+  const p = await withSubscription(params);
+  return getProvider(p.model).createMessage(p);
 }
 
 /** Streaming message create (SSE path). */
-export function streamClaude(params: ClaudeCallParams): Promise<ClaudeMessageStream> {
-  return getProvider(params.model).streamMessage(params);
+export async function streamClaude(params: ClaudeCallParams): Promise<ClaudeMessageStream> {
+  const p = await withSubscription(params);
+  return getProvider(p.model).streamMessage(p);
 }
 
 /** Single-shot text helper (intent classification, compaction). */
-export function callHaiku(params: {
+export async function callHaiku(params: {
   model: ModelId;
   prompt: string;
   maxTokens: number;
+  apiKey?: string | null;
+  authToken?: string | null;
 }): Promise<{ text: string; usage: ClaudeUsage }> {
-  return getProvider(params.model).completeText(params);
+  const p = await withSubscription(params);
+  return getProvider(p.model).completeText(p);
 }
 
 /** Single-shot schema-constrained structured output (compaction digest). */
-export function callStructured<T>(params: {
+export async function callStructured<T>(params: {
   model: ModelId;
   system: string;
   prompt: string;
   schema: Record<string, unknown>;
   maxTokens: number;
+  apiKey?: string | null;
+  authToken?: string | null;
 }): Promise<{ value: T; usage: ClaudeUsage }> {
-  return getProvider(params.model).structured<T>(params);
+  const p = await withSubscription(params);
+  return getProvider(p.model).structured<T>(p);
 }

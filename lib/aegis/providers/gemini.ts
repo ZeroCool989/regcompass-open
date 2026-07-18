@@ -147,7 +147,10 @@ export class GeminiProvider implements ModelProvider {
     return (this.cfg.baseURL ?? DEFAULT_BASE).replace(/\/$/, '');
   }
 
-  private headers(apiKey?: string | null): Record<string, string> {
+  private headers(apiKey?: string | null, authToken?: string | null): Record<string, string> {
+    // A connected Google subscription supplies an OAuth access token, sent as a
+    // Bearer credential rather than the x-goog-api-key header.
+    if (authToken) return { authorization: `Bearer ${authToken}` };
     const key = apiKey || this.cfg.apiKey || process.env.GOOGLE_API_KEY || process.env.GEMINI_API_KEY;
     if (!key) throw new AegisError('internal_error', 'No Google/Gemini API key configured.');
     return { 'x-goog-api-key': key };
@@ -168,7 +171,7 @@ export class GeminiProvider implements ModelProvider {
   async createMessage(params: ProviderCallParams): Promise<ProviderMessage> {
     const res = await postJson(
       `${this.base()}/models/${params.model}:generateContent`,
-      this.headers(params.apiKey),
+      this.headers(params.apiKey, params.authToken),
       this.buildBody(params),
       { providerLabel: this.cfg.label, usedByokKey: !!params.apiKey },
     );
@@ -194,7 +197,7 @@ export class GeminiProvider implements ModelProvider {
   async streamMessage(params: ProviderCallParams): Promise<ProviderMessageStream> {
     const res = await postJson(
       `${this.base()}/models/${params.model}:streamGenerateContent?alt=sse`,
-      this.headers(params.apiKey),
+      this.headers(params.apiKey, params.authToken),
       this.buildBody(params),
       { providerLabel: this.cfg.label, usedByokKey: !!params.apiKey },
     );
@@ -267,6 +270,8 @@ export class GeminiProvider implements ModelProvider {
     model: ModelId;
     prompt: string;
     maxTokens: number;
+    apiKey?: string | null;
+    authToken?: string | null;
   }): Promise<{ text: string; usage: ClaudeUsage }> {
     const msg = await this.createMessage({
       model: params.model,
@@ -274,6 +279,8 @@ export class GeminiProvider implements ModelProvider {
       tools: [],
       messages: [{ role: 'user', content: params.prompt }],
       maxTokens: params.maxTokens,
+      apiKey: params.apiKey,
+      authToken: params.authToken,
     });
     const text = (msg.content as { type?: string; text?: string }[])
       .filter((c) => c.type === 'text')
@@ -288,6 +295,8 @@ export class GeminiProvider implements ModelProvider {
     prompt: string;
     schema: Record<string, unknown>;
     maxTokens: number;
+    apiKey?: string | null;
+    authToken?: string | null;
   }): Promise<{ value: T; usage: ClaudeUsage }> {
     const body: Record<string, unknown> = {
       contents: [{ role: 'user', parts: [{ text: params.prompt }] }],
@@ -300,7 +309,7 @@ export class GeminiProvider implements ModelProvider {
     if (params.system) body.system_instruction = { parts: [{ text: params.system }] };
     const res = await postJson(
       `${this.base()}/models/${params.model}:generateContent`,
-      this.headers(),
+      this.headers(params.apiKey, params.authToken),
       body,
       { providerLabel: this.cfg.label },
     );

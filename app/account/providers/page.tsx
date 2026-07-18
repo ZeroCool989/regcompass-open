@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import Link from 'next/link';
 import { redirect } from 'next/navigation';
 import { AiProviderSettings } from '@/components/AiProviderSettings';
+import { SubscriptionConnect } from '@/components/SubscriptionConnect';
 import { getUserFromCookies } from '@/lib/auth';
 
 export const dynamic = 'force-dynamic';
@@ -23,6 +24,7 @@ export default async function AiProvidersPage() {
         Anthropic/Claude kann bereits für AEGIS aktiviert werden; OpenAI und Google sind vorbereitet, bleiben aber bis zur verifizierten Tool- und Zitier-Parität deaktiviert.
       </p>
       <AiProviderSettings />
+      <SubscriptionConnect />
     </div>
   );
 }

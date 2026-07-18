@@ -1,5 +1,5 @@
 import { afterEach, describe, expect, it } from 'vitest';
-import { resolveProvider } from '../catalog';
+import { activeOAuthProviderId, resolveProvider } from '../catalog';
 
 const SAVED = { ...process.env };
 afterEach(() => {
@@ -35,5 +35,26 @@ describe('resolveProvider — global AEGIS_BRAIN override', () => {
     const p = resolveProvider('claude-sonnet-4-6');
     expect(p.id).toBe('ollama');
     expect(p.capabilities.promptCache).toBe(false);
+  });
+});
+
+describe('activeOAuthProviderId — which subscription backs the active brain', () => {
+  it('maps model families to subscription providers', () => {
+    delete process.env.AEGIS_BRAIN;
+    expect(activeOAuthProviderId('claude-sonnet-4-6')).toBe('anthropic');
+    expect(activeOAuthProviderId(undefined)).toBe('anthropic');
+    expect(activeOAuthProviderId('gemini-2.5-pro')).toBe('google');
+    expect(activeOAuthProviderId('gpt-5')).toBe('openai');
+  });
+
+  it('honors the AEGIS_BRAIN override, and has no subscription for local/self-hosted', () => {
+    process.env.AEGIS_BRAIN = 'gemini';
+    expect(activeOAuthProviderId('claude-sonnet-4-6')).toBe('google');
+    process.env.AEGIS_BRAIN = 'openai';
+    expect(activeOAuthProviderId('claude-sonnet-4-6')).toBe('openai');
+    process.env.AEGIS_BRAIN = 'ollama';
+    expect(activeOAuthProviderId('claude-sonnet-4-6')).toBeNull();
+    process.env.AEGIS_BRAIN = 'custom';
+    expect(activeOAuthProviderId('claude-sonnet-4-6')).toBeNull();
   });
 });
