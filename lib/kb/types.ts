@@ -1,5 +1,35 @@
 import { z } from 'zod';
 
+/**
+ * Canonical regulation identifiers shipped with the bundled knowledge base.
+ * The `regulation` field is validated as a free string so a custom KB may
+ * define its own set; this list documents the shipped canonical values and is
+ * the fallback for tool input schemas when a KB exposes no regulations.
+ */
+export const BUNDLED_REGULATIONS = [
+  'EU_AI_ACT', 'DORA', 'GDPR', 'NIS2', 'DSA', 'DATA_ACT',
+  'PRODUCT_LIABILITY', 'FINMA_08_2024', 'FINMA_RS_2023_1',
+  'FINMA_RS_2018_3', 'REVDSG', 'BDSG', 'BSIG', 'MARISK', 'BAIT',
+  'ISO_42001', 'ISO_42005', 'ISO_23894', 'NIST_AI_RMF',
+] as const;
+
+/** Canonical category slugs shipped with the bundled knowledge base. */
+export const BUNDLED_CATEGORIES = [
+  'governance', 'risk-management', 'data', 'transparency', 'security',
+  'monitoring', 'documentation', 'third-party', 'rights', 'prohibited-practices',
+  'incident-reporting', 'resilience-testing', 'third-party-risk', 'enforcement',
+  'cooperation', 'cybersecurity', 'scope', 'definitions', 'classification',
+  'conformity', 'conformity-assessment', 'standards', 'registration', 'database',
+  'human-oversight', 'record-keeping', 'quality-management', 'post-market-monitoring',
+  'provider-obligations', 'deployer-obligations', 'importer-obligations',
+  'distributor-obligations', 'authorised-representatives', 'value-chain',
+  'corrective-actions', 'market-surveillance', 'codes-of-conduct', 'penalties',
+  'fundamental-rights', 'rights-and-remedies', 'innovation-support',
+  'gpai-obligations', 'gpai-governance', 'gpai-classification',
+  'data-governance', 'testing', 'requirements',
+  'transitional-provisions', 'application-timeline',
+] as const;
+
 export const Control = z.object({
   id: z.string(),
   action: z.string(),
@@ -20,12 +50,10 @@ export type Control = z.infer<typeof Control>;
 export const Requirement = z.object({
   id: z.string(),
   title: z.string(),
-  regulation: z.enum([
-    'EU_AI_ACT', 'DORA', 'GDPR', 'NIS2', 'DSA', 'DATA_ACT',
-    'PRODUCT_LIABILITY', 'FINMA_08_2024', 'FINMA_RS_2023_1',
-    'FINMA_RS_2018_3', 'REVDSG', 'BDSG', 'BSIG', 'MARISK', 'BAIT',
-    'ISO_42001', 'ISO_42005', 'ISO_23894', 'NIST_AI_RMF'
-  ]),
+  // Regulation identifier. Validated as a non-empty string rather than a fixed
+  // enum so a custom (bring-your-own) knowledge base can define its own set;
+  // BUNDLED_REGULATIONS below is the canonical list shipped with this repo.
+  regulation: z.string().min(1),
   article: z.string(),
   jurisdiction: z.array(z.enum(['EU', 'CH', 'DE', 'INTL'])),
   summary: z.string(),
@@ -60,21 +88,10 @@ export const Requirement = z.object({
     'gpai-provider', 'importer', 'distributor', 'authorised-representative',
     'financial-entity', 'ict-third-party-provider'
   ])),
-  category: z.enum([
-    'governance', 'risk-management', 'data', 'transparency', 'security',
-    'monitoring', 'documentation', 'third-party', 'rights', 'prohibited-practices',
-    'incident-reporting', 'resilience-testing', 'third-party-risk', 'enforcement',
-    'cooperation', 'cybersecurity', 'scope', 'definitions', 'classification',
-    'conformity', 'conformity-assessment', 'standards', 'registration', 'database',
-    'human-oversight', 'record-keeping', 'quality-management', 'post-market-monitoring',
-    'provider-obligations', 'deployer-obligations', 'importer-obligations',
-    'distributor-obligations', 'authorised-representatives', 'value-chain',
-    'corrective-actions', 'market-surveillance', 'codes-of-conduct', 'penalties',
-    'fundamental-rights', 'rights-and-remedies', 'innovation-support',
-    'gpai-obligations', 'gpai-governance', 'gpai-classification',
-    'data-governance', 'testing', 'requirements',
-    'transitional-provisions', 'application-timeline'
-  ]),
+  // Category slug. Validated as a non-empty string (not a fixed enum) so a
+  // custom knowledge base can define its own taxonomy; BUNDLED_CATEGORIES
+  // below documents the canonical slugs shipped with this repo.
+  category: z.string().min(1),
   relevanceForFinancialSector: z.enum(['critical', 'high', 'medium', 'low']),
   bindingLevel: z.enum(['mandatory', 'supervisory_expectation', 'best_practice']),
   enforcementConsequence: z.string(),

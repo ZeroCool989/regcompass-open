@@ -7,27 +7,31 @@
  */
 import { readFileSync, writeFileSync, existsSync } from 'fs';
 import { createHash } from 'crypto';
-import { join, dirname } from 'path';
+import { join, dirname, resolve } from 'path';
 import { fileURLToPath } from 'url';
 
 const root = join(dirname(fileURLToPath(import.meta.url)), '..');
+// Generate the manifest for a custom KB when KB_DIR is set, else the bundled one.
+const KB_DIR = process.env.KB_DIR?.trim() || null;
+const KB_ROOT = KB_DIR ? resolve(KB_DIR) : join(root, 'lib/kb');
+const SOURCE_DIR = KB_DIR ? join(resolve(KB_DIR), 'source') : join(root, 'docs/source');
 
 export function computeKbVersion(): string {
   const hash = createHash('sha256');
-  for (const f of ['lib/kb/requirements.json', 'lib/kb/regulations.json', 'lib/kb/crosswalk.json']) {
-    hash.update(readFileSync(join(root, f)));
+  for (const f of ['requirements.json', 'regulations.json', 'crosswalk.json']) {
+    hash.update(readFileSync(join(KB_ROOT, f)));
   }
   return hash.digest('hex').slice(0, 16);
 }
 
 function main() {
   const reqs: Array<Record<string, unknown>> = JSON.parse(
-    readFileSync(join(root, 'lib/kb/requirements.json'), 'utf8'),
+    readFileSync(join(KB_ROOT, 'requirements.json'), 'utf8'),
   );
-  const regs: unknown[] = JSON.parse(readFileSync(join(root, 'lib/kb/regulations.json'), 'utf8'));
-  const crosswalk: unknown[] = JSON.parse(readFileSync(join(root, 'lib/kb/crosswalk.json'), 'utf8'));
+  const regs: unknown[] = JSON.parse(readFileSync(join(KB_ROOT, 'regulations.json'), 'utf8'));
+  const crosswalk: unknown[] = JSON.parse(readFileSync(join(KB_ROOT, 'crosswalk.json'), 'utf8'));
 
-  const manifestPath = join(root, 'docs/source/CHECKSUMS.sha256');
+  const manifestPath = join(SOURCE_DIR, 'CHECKSUMS.sha256');
   const byMethod: Record<string, number> = {};
   for (const r of reqs) {
     const m = (r.verificationMethod as string) ?? 'unknown';
@@ -50,7 +54,7 @@ function main() {
       byMethod,
     },
     sourceChecksums: {
-      manifest: 'docs/source/CHECKSUMS.sha256',
+      manifest: 'source/CHECKSUMS.sha256',
       present: existsSync(manifestPath),
       sha256: existsSync(manifestPath)
         ? createHash('sha256').update(readFileSync(manifestPath)).digest('hex').slice(0, 16)
@@ -58,7 +62,7 @@ function main() {
     },
   };
 
-  writeFileSync(join(root, 'lib/kb/manifest.json'), JSON.stringify(manifest, null, 2) + '\n');
+  writeFileSync(join(KB_ROOT, 'manifest.json'), JSON.stringify(manifest, null, 2) + '\n');
   console.log(JSON.stringify(manifest, null, 2));
 }
 

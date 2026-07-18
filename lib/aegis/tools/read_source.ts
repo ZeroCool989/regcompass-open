@@ -2,6 +2,7 @@ import type Anthropic from '@anthropic-ai/sdk';
 import { readFileSync, existsSync } from 'node:fs';
 import * as path from 'node:path';
 import { rankPassages } from './_passages';
+import { KB, KB_SOURCE_DIR } from '@/lib/kb';
 
 /**
  * read_source — fallback tool that searches the raw legislation text in
@@ -20,48 +21,11 @@ import { rankPassages } from './_passages';
  * "⚠️ Quelle: Gesetzestext (nicht in KB verifiziert)".
  */
 
-// Set of regulation IDs that have a corresponding source file in docs/source/.
-// ISO_23894 is intentionally excluded — no source file present.
-export type ReadSourceRegulation =
-  | 'EU_AI_ACT'
-  | 'DORA'
-  | 'GDPR'
-  | 'NIS2'
-  | 'DSA'
-  | 'DATA_ACT'
-  | 'PRODUCT_LIABILITY'
-  | 'FINMA_08_2024'
-  | 'FINMA_RS_2023_1'
-  | 'FINMA_RS_2018_3'
-  | 'REVDSG'
-  | 'BDSG'
-  | 'BSIG'
-  | 'MARISK'
-  | 'BAIT'
-  | 'ISO_42001'
-  | 'ISO_42005'
-  | 'NIST_AI_RMF';
-
-const REGULATION_TO_FILE: Record<ReadSourceRegulation, string> = {
-  EU_AI_ACT: 'eu_ai_act_DE.txt',
-  DORA: 'eu_dora_act_DE.txt',
-  GDPR: 'eu_GDPR_act_DE.txt',
-  NIS2: 'eu_nis2_act_DE.txt',
-  DSA: 'eu_dsa_act_DE.txt',
-  DATA_ACT: 'eu_data_act_DE.txt',
-  PRODUCT_LIABILITY: 'eu_product_liability_directive_DE.txt',
-  FINMA_08_2024: 'FINMA 082024_DE.txt',
-  FINMA_RS_2023_1: 'FINMA RS 2023_1_DE.txt',
-  FINMA_RS_2018_3: 'FINMA RS 2018_3_DE.txt',
-  REVDSG: 'revDSG_DE.txt',
-  BDSG: 'Bundesdatenschutzgesetz (BDSG)_DE.txt',
-  BSIG: 'BSI-Gesetz - BSIG_DE.txt',
-  MARISK: 'MaRisk_DE.txt',
-  BAIT: 'BAIT_DE.txt',
-  ISO_42001: 'ISO-42001_DE.txt',
-  ISO_42005: 'Iso-42005-2024-Dis-Standard_DRAFT_DE.txt',
-  NIST_AI_RMF: 'nist.ai.100-1_DE.txt',
-};
+// Regulation identifier accepted by read_source. The concrete set of regulations
+// that actually resolve to a source file is derived from the loaded knowledge
+// base (`KB.regulationsWithSource` / `KB.sourceFileFor`), so a bring-your-own KB
+// works without editing this file.
+export type ReadSourceRegulation = string;
 
 // ───────────────────────── Schema ─────────────────────────
 
@@ -76,28 +40,9 @@ export const READ_SOURCE_SCHEMA: Anthropic.Tool = {
     properties: {
       regulation: {
         type: 'string',
-        enum: [
-          'EU_AI_ACT',
-          'DORA',
-          'GDPR',
-          'NIS2',
-          'DSA',
-          'DATA_ACT',
-          'PRODUCT_LIABILITY',
-          'FINMA_08_2024',
-          'FINMA_RS_2023_1',
-          'FINMA_RS_2018_3',
-          'REVDSG',
-          'BDSG',
-          'BSIG',
-          'MARISK',
-          'BAIT',
-          'ISO_42001',
-          'ISO_42005',
-          'NIST_AI_RMF',
-        ],
+        enum: KB.regulationsWithSource,
         description:
-          'Regulation whose source file should be searched. ISO_23894 is not available — no source text in the repository.',
+          'Regulation whose source file should be searched. Only regulations that have a primary source text in the knowledge base are listed; others cannot be read.',
       },
       query: {
         type: 'string',
@@ -117,7 +62,7 @@ export const READ_SOURCE_SCHEMA: Anthropic.Tool = {
 
 // ───────────────────────── Path safety ─────────────────────────
 
-const ALLOWED_DIR = path.resolve(process.cwd(), 'docs', 'source');
+const ALLOWED_DIR = KB_SOURCE_DIR;
 
 function resolveSourcePath(filename: string): string {
   const fullPath = path.resolve(ALLOWED_DIR, filename);
@@ -156,10 +101,10 @@ export type ReadSourcePassage = {
 };
 
 export function executeReadSource(input: ReadSourceInput): ReadSourcePassage[] {
-  // Validate regulation against the closed mapping. The agent is bound to the
-  // enum at the Anthropic API level; this check is defence-in-depth for direct
+  // Resolve the source filename from the loaded KB. The agent is bound to the
+  // KB-derived enum at the API level; this check is defence-in-depth for direct
   // executor calls (tests, internal callers).
-  const filename = REGULATION_TO_FILE[input.regulation];
+  const filename = KB.sourceFileFor(input.regulation);
   if (!filename) {
     throw new Error(
       `source_access_denied: no source file available for regulation "${input.regulation}"`,

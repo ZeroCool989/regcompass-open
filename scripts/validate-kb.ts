@@ -20,14 +20,17 @@
  */
 import { readFileSync, readdirSync, existsSync } from 'fs';
 import { createHash } from 'crypto';
-import { join, dirname, basename } from 'path';
+import { join, dirname, basename, resolve } from 'path';
 import { fileURLToPath } from 'url';
 import { z } from 'zod';
 import { Requirement, RegulationMeta, CrosswalkEntry } from '../lib/kb/types';
 import { checkArticleRefs, controlFingerprint } from '../lib/kb/validate-helpers';
 
 const root = join(dirname(fileURLToPath(import.meta.url)), '..');
-const SOURCE_DIR = join(root, 'docs/source');
+// Validate a custom KB when KB_DIR is set, otherwise the bundled one.
+const KB_DIR = process.env.KB_DIR?.trim() || null;
+const KB_ROOT = KB_DIR ? resolve(KB_DIR) : join(root, 'lib/kb');
+const SOURCE_DIR = KB_DIR ? join(resolve(KB_DIR), 'source') : join(root, 'docs/source');
 const MANIFEST = join(SOURCE_DIR, 'CHECKSUMS.sha256');
 
 /**
@@ -43,8 +46,10 @@ const warnings: string[] = [];
 const err = (s: string) => errors.push(s);
 const warn = (s: string) => warnings.push(s);
 
+// KB JSON files are resolved against KB_ROOT (KB_DIR when set, else lib/kb),
+// so the same validator runs over a bundled or a bring-your-own KB.
 function loadJson(rel: string): unknown {
-  return JSON.parse(readFileSync(join(root, rel), 'utf8'));
+  return JSON.parse(readFileSync(join(KB_ROOT, basename(rel)), 'utf8'));
 }
 
 function sha256(path: string): string {
@@ -150,11 +155,11 @@ if (reqParse.success && regParse.success && cwParse.success) {
       continue;
     }
     if (r.sourceFile !== basename(r.sourceFile)) {
-      err(`${r.id}: sourceFile must be a plain filename inside docs/source/, got "${r.sourceFile}"`);
+      err(`${r.id}: sourceFile must be a plain filename inside the source/ folder, got "${r.sourceFile}"`);
       continue;
     }
     if (!existsSync(join(SOURCE_DIR, r.sourceFile))) {
-      err(`${r.id}: sourceFile does not resolve: docs/source/${r.sourceFile}`);
+      err(`${r.id}: sourceFile does not resolve under ${SOURCE_DIR}: ${r.sourceFile}`);
       continue;
     }
     if (manifest.size > 0 && !manifest.has(r.sourceFile)) {
@@ -177,18 +182,18 @@ if (reqParse.success && regParse.success && cwParse.success) {
 
 // ------------------------------------------------- 7. manifest freshness
 {
-  const manifestFile = join(root, 'lib/kb/manifest.json');
+  const manifestFile = join(KB_ROOT, 'manifest.json');
   if (!existsSync(manifestFile)) {
-    err('lib/kb/manifest.json missing — run `npm run kb:manifest`');
+    err('manifest.json missing — run `npm run kb:manifest`');
   } else {
     const kbHash = createHash('sha256');
-    for (const f of ['lib/kb/requirements.json', 'lib/kb/regulations.json', 'lib/kb/crosswalk.json']) {
-      kbHash.update(readFileSync(join(root, f)));
+    for (const f of ['requirements.json', 'regulations.json', 'crosswalk.json']) {
+      kbHash.update(readFileSync(join(KB_ROOT, f)));
     }
     const expected = kbHash.digest('hex').slice(0, 16);
     const manifest = JSON.parse(readFileSync(manifestFile, 'utf8'));
     if (manifest.kbVersion !== expected) {
-      err(`lib/kb/manifest.json is stale (kbVersion ${manifest.kbVersion}, data hash ${expected}) — run \`npm run kb:manifest\``);
+      err(`manifest.json is stale (kbVersion ${manifest.kbVersion}, data hash ${expected}) — run \`npm run kb:manifest\``);
     }
   }
 }

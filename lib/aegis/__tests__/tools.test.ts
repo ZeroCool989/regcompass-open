@@ -285,9 +285,9 @@ describe('executeReadSource', () => {
   });
 
   it('throws source_access_denied for a regulation with no source file', () => {
+    // ISO_23894 has no source text in the bundled KB, so it does not resolve.
     expect(() =>
       executeReadSource({
-        // @ts-expect-error — ISO_23894 is intentionally excluded from the enum
         regulation: 'ISO_23894',
         query: 'risk',
       }),
@@ -295,9 +295,10 @@ describe('executeReadSource', () => {
   });
 
   it('throws source_access_denied for path traversal attempts', () => {
+    // A regulation the loaded KB does not map to a source file is rejected
+    // before any path resolution — no unmapped filename can reach the fs.
     expect(() =>
       executeReadSource({
-        // @ts-expect-error — direct executor call with malicious regulation
         regulation: '../../../etc/passwd',
         query: 'anything',
       }),

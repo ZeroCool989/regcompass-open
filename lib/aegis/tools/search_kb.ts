@@ -22,27 +22,9 @@ export const SEARCH_KB_SCHEMA: Anthropic.Tool = {
       },
       regulation: {
         type: 'string',
-        enum: [
-          'EU_AI_ACT',
-          'DORA',
-          'GDPR',
-          'NIS2',
-          'DSA',
-          'DATA_ACT',
-          'PRODUCT_LIABILITY',
-          'FINMA_08_2024',
-          'FINMA_RS_2023_1',
-          'FINMA_RS_2018_3',
-          'REVDSG',
-          'BDSG',
-          'BSIG',
-          'MARISK',
-          'BAIT',
-          'ISO_42001',
-          'ISO_42005',
-          'ISO_23894',
-          'NIST_AI_RMF',
-        ],
+        // Derived from the loaded knowledge base so a custom KB's regulations
+        // are offered; the bundled KB yields its canonical 19 identifiers.
+        enum: KB.regulations.map((r) => r.id),
       },
       jurisdiction: {
         type: 'string',
