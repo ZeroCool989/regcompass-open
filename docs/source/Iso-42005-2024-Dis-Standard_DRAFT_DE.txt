@@ -1,0 +1,3686 @@
+[SOURCE_FILE: Iso-42005-2024-Dis-Standard_DRAFT_EN.pdf]
+[EXTRACTION_DATE: 2026-05-19 13:08:06]
+[NUM_PAGES: 43]
+[EXTRACTION_METHOD: pymupdf]
+[OCR_USED: no]
+[TRANSLATED_FROM: en -> de via DeepL 2026-05-19 13:54:16]
+
+[PAGE: 1]
+
+ISO 42005-2024 DIS - Norm
+Informatik HL (Peking Nr.11 Mittelschule)
+Scannen zum Öffnen auf Studocu
+Studocu wird nicht von einer Hochschule oder Universität gesponsert oder unterstützt
+ISO 42005-2024 DIS-Norm
+Informatik HL (Peking Nr.11 Mittelschule)
+Scannen, um auf Studocu zu öffnen
+Studocu wird von keiner Hochschule oder Universität gesponsert oder gebilligt
+Heruntergeladen von Benutzer (spacealpha@gmail.com)
+lOMoARcPSD|52109980
+
+[PAGE: 2]
+
+Informationstechnologie - Künstliche Intelligenz - AI
+Systemfolgenabschätzung
+ICS: 35.020
+ENTWURF EINER INTERNATIONALEN NORM
+ISO/IEC DIS 42005
+ISO/IEC JTC 1/SC 42
+Sekretariat: ANSI
+Die Abstimmung beginnt am:
+Die Stimmabgabe endet am:
+2024-02-01
+2024-04-25
+DIESES DOKUMENT IST EIN ENTWURF, DER
+FÜR
+KOMMENTAR
+UND
+GENEHMIGUNG.
+IT
+IST
+KANN DAHER GEÄNDERT WERDEN UND DARF
+NICHT ALS INTERNATIONALE NORM BEZEICHNET WERDEN
+NORM BEZEICHNET WERDEN, BIS SIE ALS SOLCHE VERÖFFENTLICHT WIRD.
+ZUSÄTZLICH ZU IHRER BEWERTUNG ALS
+SEIN
+AKZEPTABEL
+FÜR
+INDUSTRIE,
+TECHNOLOGISCH,
+GEWERBLICHE
+UND
+NUTZERZWECKE MÜSSEN ENTWÜRFE INTERNATIONALER
+NORMEN GELEGENTLICH IM LICHTE IHRER
+IM LICHTE IHRES POTENZIALS GEPRÜFT WERDEN
+POTENZIAL, NORMEN ZU WERDEN, AUF DIE
+AUF DIE IN NATIONALEN VORSCHRIFTEN VERWIESEN WERDEN KANN
+NATIONALEN VORSCHRIFTEN.
+DIE EMPFÄNGER DIESES ENTWURFS WERDEN AUFGEFORDERT
+ZU
+EINREICHEN,
+MIT
+IHREN
+KOMMENTARE,
+MITTEILUNG ÜBER ALLE RELEVANTEN PATENTRECHTE
+PATENTRECHTE, VON DENEN SIE KENNTNIS HABEN, UND
+BELEGE VORZULEGEN.
+Referenznummer
+ISO/IEC DIS 42005:2024(E)
+© ISO/IEC 2024
+Dieses Dokument wird so verteilt, wie es vom Sekretariat des Ausschusses erhalten wurde.
+Heruntergeladen von Benutzer (spacealpha@gmail.com)
+lOMoARcPSD|52109980
+
+[PAGE: 3]
+
+ii
+ISO/IEC DIS 42005:2024(E)
+URHEBERRECHTLICH GESCHÜTZTES DOKUMENT
+© ISO/IEC 2024
+Alle Rechte vorbehalten. Sofern nicht anders angegeben oder im Zusammenhang mit der Umsetzung erforderlich, darf kein Teil dieser Veröffentlichung
+in irgendeiner Form oder mit irgendwelchen Mitteln, elektronisch oder mechanisch, vervielfältigt oder anderweitig genutzt werden, einschließlich Fotokopieren oder Einstellen ins
+im Internet oder Intranet ohne vorherige schriftliche Genehmigung vervielfältigt werden. Die Erlaubnis kann entweder bei der ISO unter der folgenden Adresse angefordert werden
+oder bei der ISO-Mitgliedsorganisation in dem Land des Antragstellers.
+ISO Copyright-Büro
+CP 401 - Ch. de Blandonnet 8
+CH-1214 Vernier, Genf
+Telefon: +41 22 749 01 11
+E-Mail: copyright@iso.org
+Website: www.iso.org
+Veröffentlicht in der Schweiz
+
+© ISO/IEC 2024 - Alle Rechte vorbehalten
+
+Heruntergeladen von Benutzer (spacealpha@gmail.com)
+lOMoARcPSD|52109980
+
+[PAGE: 4]
+
+ISO/IEC 42005:####(X)
+© ISO/IEC 2024- Alle Rechte vorbehalten
+iii
+Inhalt
+14
+Vorwort.................................................................................................................................................................................... v
+15
+Einleitung ............................................................................................................................................................................vi
+16
+1
+Umfang....................................................................................................................................................................................1
+17
+2
+Normative Verweise001
+18
+3
+Begriffe und Definitionen .................................................................................................................................................
+19
+4
+Implementierung eines Prozesses zur Folgenabschätzung von KI-Systemen ............................................................................
+20
+4.1 Allgemeines ...............................................................................................................................................................................
+21
+4.2 Dokumentieren des Prozesses...........................................................................................................................................3
+22
+4.3 Integration mit anderen organisatorischen Managementprozessen ...............................................................3
+23
+4.4 Zeitplan für die Bewertung der Auswirkungen von KI-Systemen..............................................................................................................3
+24
+4.5 Leitfaden zur Bestimmung des Umfangs der KI-Systemfolgenabschätzung..........................................4
+25
+4.6 Zuweisung von Verantwortlichkeiten.........................................................................................................................................4
+26
+4.7 Festlegung von Schwellenwerten für sensible Verwendungen, verbotene Verwendungen und Auswirkungsskalen................................4
+27
+4.8 Durchführung der KI-Systemfolgenabschätzung..................................................................................................5
+28
+4.9 Analyse der Ergebnisse der Folgenabschätzung für das KI-System.........................................................................5
+29
+4.10
+Aufzeichnung und Berichterstattung .....................................................................................................................................6
+30
+4.11
+Genehmigungsverfahren.....................................................................................................................................................6
+31
+4.12
+Überwachung und Überprüfung .........................................................................................................................................7
+32
+5
+Dokumentation der Folgenabschätzung des KI-Systems..............................................................................................7
+33
+5.1 Allgemeines ...............................................................................................................................................................................7
+34
+5.2 Umfang der KI-Systemfolgenabschätzung.........................................................................................................7
+35
+5.3 Informationen zum KI-System .................................................................................................................................................7
+36
+5.3.1
+Beschreibung des KI-Systems............................................................................................................................................7
+37
+5.3.2
+Funktionen des KI-Systems ..................................................................................................................................................8
+38
+5.3.3
+Zweck des KI-Systems ..................................................................................................................................................8
+39
+5.3.4
+Beabsichtigte Nutzung............................................................................................................................................................8
+40
+5.3.5
+Unbeabsichtigte Verwendungen ......................................................................................................................................................8
+41
+5.4 Dateninformation und -qualität ...................................................................................................................................9
+42
+5.4.1
+Allgemein.........................................................................................................................................................................9
+43
+5.4.2
+Dateninformationen .....................................................................................................................................................9
+44
+5.4.3
+Dokumentation der Datenqualität............................................................................................................................ 10
+45
+5.5 Informationen zu Algorithmen und Modellen ...................................................................................................................... 10
+46
+5.5.1
+Allgemein...................................................................................................................................................................... 10
+47
+5.5.2
+Informationen über die von der Organisation verwendeten Algorithmen ......................................................................... 10
+48
+5.5.3
+Informationen über die Entwicklung von Algorithmen.................................................................................................... 10
+49
+5.5.4
+Informationen über die in einem KI-System verwendeten Modelle .......................................................................................... 11
+50
+5.5.5
+Informationen zur Modellentwicklung ........................................................................................................... 11
+51
+5.6 Einsatzumgebung....................................................................................................................................... 11
+52
+5.6.1
+Geografisches Gebiet und Sprachen ................................................................................................................. 11
+53
+5.6.2
+Komplexität der Einsatzumgebung und Beschränkungen...................................................................... 12
+54
+5.7 Relevante interessierte Parteien.................................................................................................................................... 12
+55
+5.8 Tatsächliche und potenzielle Auswirkungen................................................................................................................................. 13
+56
+5.8.1
+Allgemein...................................................................................................................................................................... 13
+57
+5.8.2
+Nutzen und Schaden.............................................................................................................................................. 13
+58
+5.8.3
+Versagen von KI-Systemen und falscher Einsatz oder Missbrauch..................................................................................................... 16
+59
+5.9 Maßnahmen zum Umgang mit Schaden und Nutzen ........................................................................................................ 17
+60
+Anhang A (informativ) Leitfaden zur Verwendung mit ISO/IEC 42001....................................................................... 18
+61
+Anhang B (informativ) Leitfaden für die Verwendung mit ISO/IEC 23894....................................................................... 21
+62
+ISO/IEC DIS 42005:2024(E)
+Heruntergeladen von Benutzer (spacealpha@gmail.com)
+lOMoARcPSD|52109980
+
+[PAGE: 5]
+
+ISO/IEC 42005:####(X)
+© ISO/IEC 2024- Alle Rechte vorbehalten
+iv
+B.1 Allgemeines ............................................................................................................................................................................ 21
+63
+B.2 Unterschiede zwischen Risikomanagement und KI-Systemfolgenabschätzung..................................... 21
+64
+B.3 Grundsätze des Risikomanagements im Zusammenhang mit der Folgenabschätzung für KI-Systeme ............................................. 21
+65
+Anhang C (informativ) Taxonomie von Schaden und Nutzen ..................................................................................... 23
+66
+Anhang D (informativ) Abgleich der Folgenabschätzung von KI-Systemen mit anderen Bewertungen.................. 25
+67
+D.1 Einleitung .................................................................................................................................................................. 25
+68
+D.2 Leitfaden zur Koordinierung .................................................................................................................................................... 25
+69
+D.3 Leitfaden zur Anpassung der Folgenabschätzung .................................................................................................................. 26
+70
+D.4 Leitfaden für die Kartierung .............................................................................................................................................................. 27
+71
+Anhang E (informativ) Beispiele für Vorlagen zur Folgenabschätzung von KI-Systemen ....................................... 29
+72
+E.1 Allgemeines ............................................................................................................................................................................ 29
+73
+E.2 Beispiel für eine KI-Systemfolgenabschätzung ........................................................................................ 29
+74
+KI-Systemfolgenabschätzung für [Systemname oder -kennung].............................................................. 29
+75
+Abschnitt A - Systeminformationen ................................................................................................................................... 29
+76
+Abschnitt B - Dateninformationen und -qualität................................................................................................................. 31
+77
+Abschnitt C - Informationen zu Algorithmen und Modellen................................................................................................... 31
+78
+Abschnitt D - Einsatzumgebung ....................................................................................................................... 32
+79
+Abschnitt E - Relevante interessierte Parteien..................................................................................................................... 33
+80
+Abschnitt F - Tatsächlicher und potenzieller Nutzen und Schaden........................................................................................... 33
+81
+Abschnitt G - Versagen des KI-Systems und Missbrauch............................................................................................. 34
+82
+Literaturverzeichnis .......................................................................................................................................................................... 35
+83
+84
+ISO/IEC DIS 42005:2024(E)
+Heruntergeladen von Benutzer (spacealpha@gmail.com)
+lOMoARcPSD|52109980
+
+[PAGE: 6]
+
+ISO/IEC 42005:####(X)
+© ISO/IEC 2024- Alle Rechte vorbehalten
+v
+Vorwort
+85
+Die ISO (Internationale Organisation für Normung) ist ein weltweiter Zusammenschluss von nationalen Normungsorganisationen
+86
+Gremien (ISO-Mitgliedsorganisationen). Die Ausarbeitung internationaler Normen erfolgt in der Regel durch
+87
+durch die technischen Ausschüsse der ISO. Jedes Mitgliedsgremium, das an einem Thema interessiert ist, für das eine technische
+88
+Komitee eingerichtet wurde, hat das Recht, in diesem Komitee vertreten zu sein. International
+89
+Organisationen, sowohl staatliche als auch nichtstaatliche, die mit der ISO in Verbindung stehen, nehmen ebenfalls an der Arbeit teil. ISO
+90
+arbeitet eng mit der Internationalen Elektrotechnischen Kommission (IEC) in allen Fragen zusammen, die
+91
+elektrotechnischen Normung zusammen.
+92
+Die Verfahren, die zur Entwicklung dieses Dokuments verwendet wurden und die für seine weitere Pflege vorgesehen sind, sind
+93
+in den ISO/IEC-Richtlinien, Teil 1, beschrieben. Insbesondere die verschiedenen Zulassungskriterien, die für die
+94
+verschiedenen Arten von ISO-Dokumenten zu beachten. Dieses Dokument wurde in Übereinstimmung mit den
+95
+Redaktionsregeln der ISO/IEC-Richtlinien, Teil 2 (siehe www.iso.org/directives).
+96
+Es wird auf die Möglichkeit hingewiesen, dass einige der Elemente dieses Dokuments Gegenstand von
+97
+Patentrechte sein können. ISO ist nicht verantwortlich für die Identifizierung solcher Patentrechte. Einzelheiten zu jedem
+98
+Patentrechte, die während der Entwicklung des Dokuments identifiziert wurden, werden in der Einleitung und/oder auf
+99
+der ISO-Liste der eingegangenen Patenterklärungen (siehe www.iso.org/patents).
+100
+Jeder in diesem Dokument verwendete Handelsname ist eine Information, die der Bequemlichkeit der Benutzer dient und nicht
+101
+eine Billigung dar.
+102
+Für eine Erklärung des freiwilligen Charakters von Normen, der Bedeutung von ISO-spezifischen Begriffen und
+103
+Ausdrücke im Zusammenhang mit der Konformitätsbewertung sowie Informationen über die Einhaltung der Weltnormen durch ISO
+104
+Handelsorganisation (WTO)
+Prinzipien der Technischen Handelshemmnisse (TBT), siehe
+105
+www.iso.org/iso/foreword.html.
+106
+Dieses Dokument wurde vom Technischen Komitee ISO/IEC JTC 1, Informationstechnologie, erstellt,
+107
+Unterkomitee SC 42, Künstliche Intelligenz.
+108
+Rückmeldungen oder Fragen zu diesem Dokument richten Sie bitte an die nationale Normungsorganisation des Benutzers. A
+109
+vollständige Auflistung dieser Stellen finden Sie unter www.iso.org/members.html.
+110
+ISO/IEC DIS 42005:2024(E)
+Heruntergeladen von Benutzer (spacealpha@gmail.com)
+lOMoARcPSD|52109980
+
+[PAGE: 7]
+
+ISO/IEC 42005:####(X)
+© ISO/IEC 2024- Alle Rechte vorbehalten
+vi
+Einführung
+111
+Die zunehmende Allgegenwart von Systemen, Produkten, Diensten und deren Komponenten, die eine Form von
+112
+künstlicher Intelligenz (KI) enthalten, hat zu einer wachsenden Besorgnis darüber geführt, wie sich KI-Systeme potenziell auf alle
+113
+Ebenen der Gesellschaft auswirken können. KI bringt große Vorteile mit sich: die Automatisierung schwieriger oder gefährlicher Arbeiten,
+114
+schnellere und genauere Analyse großer Datenmengen, Fortschritte im Gesundheitswesen usw. Allerdings gibt es
+115
+Bedenken über mögliche negative Auswirkungen von KI-Systemen, einschließlich unerwünschter Verzerrungen, Umweltschäden
+116
+und unerwünschter Abbau von Arbeitskräften.
+117
+Die Entwicklung und der Einsatz von scheinbar unbedeutenden KI-Systemen hat das Potenzial, erhebliche Auswirkungen (sowohl
+118
+(sowohl positiv als auch negativ) auf Einzelpersonen, Gruppen von Einzelpersonen und die Gesellschaft als Ganzes auswirken. Zur Förderung von
+119
+Transparenz und Vertrauenswürdigkeit von Systemen zu fördern, die KI-Technologien nutzen, sollte eine Organisation, die KI entwickelt und
+120
+die diese Technologien einsetzen, Maßnahmen ergreifen, um den betroffenen Parteien zu versichern, dass diese Auswirkungen
+121
+angemessen berücksichtigt wurden. Keine einzelne Maßnahme kann diese Sicherheit bieten, aber die Auswirkungen von KI-Systemen
+122
+aber die Folgenabschätzung von KI-Systemen spielt eine wichtige Rolle im breiteren Ökosystem von Governance, Risiko und Konformität.
+123
+Bewertung, die zusammen ein System des Vertrauens und der Verantwortlichkeit schaffen können.
+124
+ISO/IEC 38507, ISO/IEC 23894 und ISO/IEC 420011 sind alle wichtige Bestandteile dieses Ökosystems, denn
+125
+Governance, Risiko und Konformitätsbewertung (über ein Managementsystem). Jede dieser
+126
+betont die Notwendigkeit, die Auswirkungen auf den Einzelnen und die Gesellschaft zu berücksichtigen. Ein Leitungsorgan kann
+127
+diese Auswirkungen verstehen, um sicherzustellen, dass die Nutzung von KI-Systemen mit den Werten und Zielen des Unternehmens übereinstimmt. Eine
+128
+Organisation, die Risikomanagement-Aktivitäten durchführt, kann die potenziellen Auswirkungen auf Personen und
+129
+Gesellschaften verstehen, um das Gesamtrisiko des Unternehmens angemessen zu berechnen und abzuschätzen. Und eine Organisation
+130
+die KI-Systeme entwickelt oder einsetzt, kann das Verständnis und die Dokumentation dieser Auswirkungen einbeziehen.
+131
+in ihr Managementsystem integrieren, um sicherzustellen, dass die betreffenden KI-Systeme die Erwartungen der relevanten
+132
+interessierten Parteien sowie interne und externe Anforderungen erfüllen.
+133
+Die Durchführung von Folgenabschätzungen für KI-Systeme und die Nutzung der dokumentierten Ergebnisse dieser Abschätzungen
+134
+sind integraler Bestandteil von Aktivitäten auf allen Organisationsebenen, um KI-Systeme zu entwickeln, die vertrauenswürdig und
+135
+transparent sind. Zu diesem Zweck bietet dieses Dokument einer Organisation eine Anleitung, wie sie sowohl die
+136
+einen Prozess zur Durchführung solcher Bewertungen implementiert und ein gemeinsames Verständnis der Komponenten fördert
+137
+die zur Erstellung einer effektiven Bewertung erforderlich sind.
+138
+1 In Vorbereitung. Stand zum Zeitpunkt der Veröffentlichung: ISO/IEC FDIS 42001:2023.
+ISO/IEC DIS 42005:2024(E)
+Heruntergeladen von Benutzer (spacealpha@gmail.com)
+lOMoARcPSD|52109980
+
+[PAGE: 8]
+
+ISO/IEC 42005:####(X)
+© ISO/IEC 2024- Alle Rechte vorbehalten
+1
+Informationstechnik - Künstliche Intelligenz - KI-System
+139
+Folgenabschätzung
+140
+1 Umfang
+141
+Dieses Dokument ist ein Leitfaden für Organisationen, die KI-Systemfolgenabschätzungen für
+142
+Personen und Gesellschaften durchführt, die von einem KI-System und seinen vorhersehbaren Anwendungen betroffen sein können. Es umfasst
+143
+Überlegungen dazu, wie und wann solche Abschätzungen durchgeführt werden sollten und in welchen Phasen des Lebenszyklus eines KI-Systems
+144
+Lebenszyklus durchzuführen sind, sowie eine Anleitung für die Dokumentation der Folgenabschätzung von KI-Systemen.
+145
+Darüber hinaus enthält dieser Leitfaden Hinweise darauf, wie der Prozess der Folgenabschätzung für KI-Systeme in den Lebenszyklus des Systems integriert werden kann.
+146
+das KI-Risikomanagement und das KI-Managementsystem einer Organisation integriert werden kann.
+147
+Dieses Dokument ist für Organisationen gedacht, die KI-Systeme entwickeln, bereitstellen oder nutzen. Diese
+148
+Dokument ist auf jede Organisation anwendbar, unabhängig von Größe, Art und Charakter.
+149
+2 Normative Verweise
+150
+Auf die folgenden Dokumente wird im Text so verwiesen, dass ihr Inhalt teilweise oder ganz
+151
+Anforderungen des vorliegenden Dokuments darstellen. Bei datierten Verweisen gilt nur die zitierte Ausgabe. Für
+152
+undatierten Verweisen gilt die letzte Ausgabe des referenzierten Dokuments (einschließlich aller Änderungen).
+153
+ISO/IEC 22989:2022, Informationstechnik - Künstliche Intelligenz - Konzepte und Terminologie
+154
+ISO/IEC 23053:2022, Rahmenwerk für Systeme der Künstlichen Intelligenz (KI) mit maschinellem Lernen (ML)
+155
+3 Begriffe und Definitionen
+156
+Für die Zwecke dieses Dokuments werden die Begriffe und Definitionen in ISO/IEC 22989:2022, ISO/IEC
+157
+23053:2022 und im Folgenden angegeben sind.
+158
+ISO und IEC unterhalten terminologische Datenbanken zur Verwendung in der Normung unter den folgenden Adressen:
+159
+- ISO Online Browsing Platform: verfügbar unter https://www.iso.org/obp
+160
+- IEC Electropedia: verfügbar unter http://www.electropedia.org/
+161
+3.1
+162
+Folgenabschätzung für KI-Systeme
+163
+formaler, dokumentierter Prozess, durch den die Auswirkungen auf Einzelpersonen, Gruppen von Einzelpersonen und Gesellschaften
+164
+von einer Organisation berücksichtigt werden, die Produkte oder Dienstleistungen entwickelt, bereitstellt oder nutzt, die künstliche
+165
+Intelligenz
+166
+3.2
+167
+Verwendungszweck
+168
+die Zwecke, für die ein KI-System entwickelt, trainiert und getestet wird
+169
+3.3
+170
+beabsichtigte Benutzer
+171
+Gruppen von Personen oder Informationssystemen, für die ein KI-System konzipiert ist
+172
+[QUELLE: ISO 20282-1:2006, 3.12, geändert, um "Menschen" in "Menschen oder Informationssysteme" zu ändern, und
+173
+"ein Produkt" in "ein KI-System"]
+174
+3.4
+175
+interessierte Partei (bevorzugter Begriff)
+176
+Stakeholder (zugelassener Begriff)
+177
+Person oder Organisation, die eine Entscheidung oder einen Beschluss beeinflussen kann, davon betroffen ist oder sich selbst davon betroffen fühlt.
+178
+Aktivität
+179
+ISO/IEC DIS 42005:2024(E)
+Heruntergeladen von Benutzer (spacealpha@gmail.com)
+lOMoARcPSD|52109980
+
+[PAGE: 9]
+
+ISO/IEC 42005:####(X)
+© ISO/IEC 2024- Alle Rechte vorbehalten
+2
+[QUELLE: ISO/IEC 42001:-, 3.2, geändert, um Querverweise auf andere Definitionen in ISO/IEC zu entfernen
+180
+42001]
+181
+3.5
+182
+vernünftigerweise vorhersehbarer Missbrauch
+183
+Nutzung eines KI-Systems in einer Weise, die vom Entwickler oder Anbieter des KI-Systems nicht beabsichtigt ist, die aber dazu führen kann
+184
+aus dem leicht vorhersehbaren Verhalten der beabsichtigten Nutzer
+185
+Anmerkung 1 zum Eintrag: Leicht vorhersehbares menschliches Verhalten umfasst das Verhalten aller Arten von Nutzern, z.B. die
+186
+älteren Menschen, Kindern und Menschen mit Behinderungen. Für weitere Informationen siehe ISO 10377.
+187
+Anmerkung 2 zum Eintrag: Im Zusammenhang mit der Verbrauchersicherheit wird der Begriff "vernünftigerweise vorhersehbarer Gebrauch" zunehmend
+188
+als Synonym sowohl für "bestimmungsgemäße Verwendung" als auch für "vernünftigerweise vorhersehbare Fehlanwendung" verwendet.
+189
+Anmerkung 3 zum Eintrag: Die spezifischen Definitionen können je nach Anwendungsbereich etwas variieren
+190
+der Norm oder Verordnung.
+191
+[QUELLE: ISO/IEC Guide 51:2014, 3.7, geändert, um "ein Produkt oder System" in "ein KI-System" zu ändern, und
+192
+"Lieferant" in "Entwickler oder Anbieter von KI-Systemen"]
+193
+3.6
+194
+Vorsätzlicher Missbrauch
+195
+vorsätzliche unerlaubte Nutzung eines KI-Systems in einer Weise, die vom Entwickler oder Anbieter des KI-Systems nicht beabsichtigt ist,
+196
+die sich negativ auf die Ziele des Anbieters oder Nutzers des KI-Systems auswirkt
+197
+Anmerkung 1 zum Eintrag: Die spezifischen Definitionen können je nach Anwendungsbereich etwas variieren
+198
+der Norm oder Verordnung.
+199
+[QUELLE: ISO/IEC 2382:2015, 2126318, geändert, um "vorsätzlich oder fahrlässig" in "vorsätzlich", "Aktivität" zu ändern
+200
+in "Nutzung eines KI-Systems in einer Weise, die vom Entwickler oder Anbieter des KI-Systems nicht beabsichtigt ist", "Computer
+201
+Sicherheit" in "Informationssicherheit", und "ein Datenverarbeitungssystem" in "ein KI-System"]
+202
+3.7
+203
+Unbeabsichtigte Verwendung
+204
+Nutzung oder Anwendung des KI-Systems in einer vom KI-Entwickler oder KI-Anbieter nicht beabsichtigten Weise, einschließlich
+205
+positive, negative oder neutrale Auswirkungen
+206
+3.8
+207
+Potenziell vorteilhafte Nutzung
+208
+Nutzung oder Anwendung des KI-Systems auf eine Weise, die vom Entwickler oder Anbieter des KI-Systems nicht beabsichtigt ist, die
+209
+zu erkennbaren Vorteilen oder Chancen führt
+210
+3.9
+211
+eingeschränkte Nutzung
+212
+Nutzung eines KI-Systems, die durch Gesetze, Organisationsrichtlinien oder vertragliche Vereinbarungen eingeschränkt ist
+213
+3.10
+214
+sensible Nutzung
+215
+Nutzung eines KI-Systems, die eine erhebliche nachteilige Auswirkung auf Einzelpersonen, Gruppen von Einzelpersonen oder
+216
+Gesellschaften
+217
+4 Implementierung eines KI-System-Folgenabschätzungsprozesses
+218
+4.1 Allgemeines
+219
+Organisationen sollten einen strukturierten, konsistenten Ansatz für die Durchführung und Dokumentation von KI-Systemen haben.
+220
+Folgenabschätzungen haben. Der verwendete Prozess kann je nach Kontext variieren, einschließlich der Organisation
+221
+Geschäft, Strategie, Kultur, rechtliche Anforderungen und Risikobereitschaft. Klausel 4 beschreibt mögliche Elemente einer
+222
+KI-Systemfolgenabschätzungsprozesses, die Organisationen bei der Implementierung eines solchen Prozesses berücksichtigen können.
+223
+ISO/IEC DIS 42005:2024(E)
+Heruntergeladen von Benutzer (spacealpha@gmail.com)
+lOMoARcPSD|52109980
+
+[PAGE: 10]
+
+ISO/IEC 42005:####(X)
+© ISO/IEC 2024- Alle Rechte vorbehalten
+3
+4.2 Dokumentieren des Prozesses
+224
+Der Prozess zur Durchführung von KI-Systemfolgenabschätzungen in einer Organisation sollte dokumentiert werden, und
+225
+diese Dokumentation sollte auf dem neuesten Stand gehalten und den relevanten interessierten Parteien zur Verfügung gestellt werden.
+226
+Die Dokumentation des Prozesses sollte zumindest Informationen zu den Themen in Klausel 4 enthalten. Das Ergebnis
+227
+der Prozessdokumentation kann je nach den Bedürfnissen der Organisation und der Art der AI variieren
+228
+Systems variieren und kann zum Beispiel Folgendes umfassen:
+229
+- dokumentierte Verfahrensanweisungen;
+230
+- Vorlagen für die Folgenabschätzung von AI-Systemen (siehe Anhang E für eine Beispielvorlage);
+231
+- abgeschlossene Folgenabschätzungen für KI-Systeme und andere Artefakte aus dem Bewertungsprozess.
+232
+Die Dokumentation sollte während des gesamten Prozesses der Folgenabschätzung für KI-Systeme innerhalb der
+233
+Datenaufbewahrungsrichtlinien der Organisation und ihrer gesetzlichen Verpflichtungen in Bezug auf die Datenaufbewahrung, d.h. bei der
+234
+Phasen des Entwurfs, der Umgestaltung, der Einführung und der Bewertung.
+235
+4.3 Integration mit anderen organisatorischen Managementprozessen
+236
+Die Organisation sollte dokumentieren, wie die KI-Systemfolgenabschätzung mit anderen
+237
+organisatorischen Prozessen integriert ist. Dazu kann gehören, wie sie sich in ein KI-Managementsystem (ISO/IEC 42001) oder
+238
+oder eine andere organisatorische Management- oder Governance-Struktur einfügt, und kann Überlegungen wie diese beinhalten:
+239
+- wie die Organisation die Bewertung der Auswirkungen von KI-Systemen in die organisatorischen Risiken integriert
+240
+Bewertung integriert;
+241
+- wie die Organisation die KI-Systemfolgenabschätzung mit anderen Arten von Folgenabschätzungen
+242
+Bewertungen;
+243
+- organisatorische Governance-, Risiko- und Compliance-Prozesse, die für das System vorhanden oder geplant sind
+244
+Umgang mit potenziellen Auswirkungen.
+245
+ANMERKUNG
+Die Anhänge A, B und D enthalten zusätzliche Informationen.
+246
+4.4 Zeitplan für die Bewertung der Auswirkungen des AI-Systems
+247
+Als Teil des Prozesses zur Bewertung der Auswirkungen von KI-Systemen sollte die Organisation festlegen und
+248
+festlegen, wann solche Bewertungen durchgeführt werden sollen und bis zu welchem Grad, oder wann ein vorheriges Risiko
+249
+Risikobewertung wiederverwendet, wiederverwendet oder überarbeitet werden kann und in welchem Umfang. Die Festlegung des Zeitplans für die KI
+250
+Systemfolgenabschätzungen kann durch Faktoren wie unter anderem folgende beeinflusst werden:
+251
+- geltende rechtliche Anforderungen;
+252
+- Risikograd des KI-Systems (die Organisation kann ISO/IEC 23894:2023, 6.3.4 für zusätzliche
+253
+Anleitung);
+254
+- die Erwartungen der relevanten interessierten Parteien;
+255
+- interne Prozesse im Lebenszyklus des AI-Systems.
+256
+Auslöser für eine Neubeurteilung können sein:
+257
+- Änderung der Nutzung des AI-Systems;
+258
+- Änderung der Sensibilität der Daten;
+259
+- Änderung der Komplexität oder des Typs des KI-Systems.
+260
+HINWEIS
+Die Risikostufen können durch externe Anforderungen vorgegeben sein. Risiko- oder Auswirkungsstufen können vor
+261
+durch externe Anforderungen bestimmt werden (z.B. kann KI in Automobilen aufgrund von Sicherheitsbedenken eine hohe Auswirkung haben)
+262
+Zeitliche Überlegungen können umfassen:
+263
+- wie oft KI-Systemfolgenabschätzungen durchgeführt werden;
+264
+- in welcher Phase des Lebenszyklus eines KI-Systems sie durchgeführt werden;
+265
+- wie häufig sie aktualisiert werden;
+266
+- was die Notwendigkeit einer neuen KI-Systemfolgenabschätzung oder einer Aktualisierung auslöst.
+267
+ISO/IEC DIS 42005:2024(E)
+Heruntergeladen von Benutzer (spacealpha@gmail.com)
+lOMoARcPSD|52109980
+
+[PAGE: 11]
+
+ISO/IEC 42005:####(X)
+© ISO/IEC 2024- Alle Rechte vorbehalten
+4
+Die Organisation sollte sich überlegen, ob sie Tools für das Triaging einsetzt, wenn eine KI-Systemauswirkung
+268
+Bewertung erforderlich ist. Wenn die Organisation zum Beispiel feststellt, dass KI-Systemfolgenabschätzungen
+269
+nur bei KI-Systemen mit "hohem Risiko" durchgeführt werden sollen, sollten sie als Teil des Prozesses dokumentieren, welche
+270
+was ein "risikoreiches" KI-System ist und was die Notwendigkeit einer Folgenabschätzung auslöst (z.B. bestimmte
+271
+Systemmerkmale, Zweck, Folgen, Kontext, betroffene interessierte Parteien, Modelltyp, Datentyp, Ebene
+272
+der Automatisierung oder Art der Ausgabe). Ein Triagierungsprozess kann eine kürzere Version der Folgenabschätzung für das KI-System erfordern.
+273
+um festzustellen, ob das KI-System ein hohes Risiko darstellt und eine vollständige KI-Systemfolgenabschätzung erfordert.
+274
+4.5 Leitfaden zur Bestimmung des Umfangs der KI-Systemfolgenabschätzung
+275
+Die Organisation sollte den Umfang der KI-Systemfolgenabschätzung definieren und dokumentieren, indem sie
+276
+den Umfang eines KI-Systems festlegen, indem sie eine klare Anleitung für die KI-Systemfolgenabschätzungen auf der Grundlage der
+277
+Bedürfnissen der jeweiligen Organisation und den potenziellen Auswirkungen auf relevante interessierte Parteien. Der Umfang
+278
+einer KI-System-Folgenabschätzung kann Folgendes umfassen, ist aber nicht darauf beschränkt:
+279
+a) das gesamte System oder eine Komponente des Systems, die Funktionalitäten bietet, die explizit von
+280
+Benutzer nutzen können (z. B. wenn eine Änderung an einer oder mehreren Komponenten des Systems vorgenommen wird);
+281
+b) eine Beschreibung der Rolle der Organisation innerhalb des KI-Ökosystems (z.B. Datenanbieter, Modell
+282
+Anbieter, Dienstanbieter oder Produktanbieter).
+283
+ANMERKUNG
+Änderungen an einer Systemkomponente können Auswirkungen auf das Gesamtsystem haben, die sich auf verschiedene
+284
+interessierte Parteien haben.
+285
+4.6 Zuweisung von Verantwortlichkeiten
+286
+Es kann mehrere Verantwortlichkeiten geben, die eine Organisation zuweisen kann. Diese hängen von der Art des
+287
+KI-Systemfolgenabschätzung, ihrer Dauer und anderen Faktoren ab und können Verantwortlichkeiten für Folgendes umfassen:
+288
+- die Dokumentation der KI-Systemfolgenabschätzung;
+289
+- relevante interessierte Parteien, die zur Fertigstellung der Bewertung beitragen, und die
+290
+die für die Koordinierung ihrer Beteiligung verantwortlich sind (z. B. Forschung und Entwicklung, Marketing und
+291
+Vertrieb, Sicherheit und Betrieb, Rechtsabteilung, Arbeitnehmervertreter und andere relevante interessierte
+292
+Parteien);
+293
+- Mitteilung der Ergebnisse;
+294
+- Genehmigungen;
+295
+- Eskalationen.
+296
+Die Zuständigkeiten für die Folgenabschätzung von AI-Systemen sollten entsprechend der jeweiligen
+297
+Erfahrung, Kompetenz, Rolle und Zugang zu Informationen.
+298
+Multidisziplinarität wird empfohlen, um sicherzustellen, dass die Auswirkungen in angemessener Weise vorhergesehen und behandelt werden.
+299
+während des gesamten Lebenszyklus des KI-Systems.
+300
+ANMERKUNG
+Unterschiedliche Fachkenntnisse können für einen effektiven Bewertungsprozess von Bedeutung sein. Zu den Disziplinen können gehören
+301
+Personen mit einer Ausbildung in Menschenrechten und Sozialwissenschaften wie Anthropologie, Soziologie und Psychologie.
+302
+4.7 Festlegung von Schwellenwerten für sensible Nutzungen, eingeschränkte Nutzungen und Auswirkungsskalen
+303
+Ein entscheidender Teil der Folgenabschätzung von KI-Systemen ist die Sicherstellung, dass definierte Schwellenwerte, insbesondere für
+304
+Nutzung von KI-Systemen, dokumentiert werden. Zuvor sollte die Organisation diese Schwellenwerte definieren und dokumentieren.
+305
+Schwellenwerte definieren und dokumentieren, basierend auf dem Kontext, in dem sie arbeiten. Dies kann Überlegungen beinhalten wie z.B.:
+306
+- geltende rechtliche Anforderungen;
+307
+- die Erwartungen der relevanten interessierten Parteien;
+308
+- Stand der Technik;
+309
+- Vorteile des KI-Systems;
+310
+- kulturelle, arbeitsrechtliche und gesellschaftliche Normen;
+311
+- anwendbare ethische Rahmenwerke für KI.
+312
+ISO/IEC DIS 42005:2024(E)
+Heruntergeladen von Benutzer (spacealpha@gmail.com)
+lOMoARcPSD|52109980
+
+[PAGE: 12]
+
+ISO/IEC 42005:####(X)
+© ISO/IEC 2024- Alle Rechte vorbehalten
+5
+Je nach Art und Umfang der Schwellenwerte kann die Organisation zusätzliche Prozesse implementieren,
+313
+einschließlich Überprüfungen und Genehmigungen. Die Organisation kann zum Beispiel entscheiden, dass bestimmte Verwendungen oder potenzielle
+314
+Missbrauchs sensibel oder aufgrund von Unternehmensrichtlinien verboten sind. Gesetzliche oder andere externe Anforderungen können
+315
+die Sensibilität der Nutzung oder des Missbrauchs eines KI-Systems weiter bestimmen. Wenn eine KI-Systemfolgenabschätzung
+316
+ergibt, dass die geplante Nutzung in eine "sensible" oder "eingeschränkte" Kategorie fällt, sollte die Organisation
+317
+dokumentieren, was die nächsten Schritte als Teil des Gesamtprozesses sind.
+318
+BEISPIEL 1
+Ein Beispiel für einen sensiblen Anwendungsfall kann ein KI-System sein, das die Kreditvergabe automatisieren soll.
+319
+Entscheidungen.
+320
+BEISPIEL 2
+Ein Schritt, der unternommen werden kann, wenn ein sensibler oder eingeschränkter Verwendungszweck identifiziert wird, kann die Eskalation zum Management sein
+321
+(einschließlich Genehmigungen). Denken Sie an ein KI-System, das sich stark auf die Rechte, insbesondere die von Kindern, auswirkt,
+322
+und dessen nachteilige Auswirkungen nicht durch technische Verbesserungen gemildert werden können. Solche Probleme können
+323
+eskaliert werden, um zu entscheiden, ob die Entwicklung dieses Systems aufgrund negativer Auswirkungen überprüft werden soll.
+324
+Die Organisation sollte auch berücksichtigen, wie die Gesamtwirkungsskalen bestimmt werden und wie die potenziellen Auswirkungen
+325
+berechnet werden. Die Ergebnisse einer KI-Systemfolgenabschätzung können zum Beispiel zeigen, dass beabsichtigte
+326
+für ein KI-System nicht sensibel sind, aber eine große Anzahl von Nutzern betreffen können, und dies sollte bei der Bewertung der Auswirkungen berücksichtigt werden.
+327
+in das Ausmaß der Auswirkungen und die nächsten Verfahrensschritte einfließen, die die Organisation in der KI-Systemfolgenabschätzung festlegt.
+328
+Bewertung bestimmt.
+329
+Die Organisation sollte das Ausmaß der potenziellen Auswirkungen berücksichtigen, wenn sie die verschiedenen Teile der
+330
+der Bewertung der Auswirkungen des AI-Systems. Die Organisation sollte über Kriterien für die Arten von potenziellen Auswirkungen verfügen
+331
+die ein Ergebnis des KI-Systems sein können. Um zum Beispiel das Ausmaß der potenziellen Auswirkungen zu bewerten, sollte die
+332
+Bewertung der Auswirkungen des KI-Systems Kriterien für die Einstufung von Auswirkungen als schwerwiegend oder katastrophal enthalten, wenn sie
+333
+zu hohen nachteiligen Folgen für die Organisation, für Gruppen von Einzelpersonen oder für die Gesellschaft führen können. Siehe zum Beispiel
+334
+zum Beispiel Abschnitt 3.2 von [16].
+335
+4.8 Durchführung der KI-Systemfolgenabschätzung
+336
+Für jede beabsichtigte Nutzung und jeden vernünftigerweise vorhersehbaren Missbrauch eines KI-Systems sollte die Organisation
+337
+ggf. berücksichtigen:
+338
+a) Identifizierung der nach vernünftigem Ermessen vorhersehbaren Auswirkungen des KI-Systems auf alle identifizierten Personen, Gruppen von
+339
+Einzelpersonen und Gesellschaften, wie in 5.7 und ggf. in anderen Ressourcen beschrieben. Sowohl
+340
+nützliche und schädliche Auswirkungen sollten berücksichtigt werden;
+341
+b) mehrere Arten oder Dimensionen von Auswirkungen des KI-Systems auf Gruppen von Einzelpersonen, Organisationen und auf
+342
+Gesellschaften, z.B. wie in Abschnitt 3.2 von [16] dargelegt, einschließlich, aber nicht beschränkt auf:
+343
+1) Ermittlung der vernünftigerweise vorhersehbaren potenziellen Auswirkungen auf Einzelpersonen, Gruppen, Organisationen
+344
+und Gesellschaften. Es ist wichtig zu berücksichtigen, wie sich solche Auswirkungen auch in
+345
+organisatorische Risiken bedeuten. 5.8 enthält weitere Hinweise zu den Arten von potenziellen Vorteilen und
+346
+Schäden, die für jede identifizierte interessierte Partei berücksichtigt werden sollten;
+347
+2) Häufigkeit der Bewertung und Neubewertung von Risiken und Auswirkungen;
+348
+c) Auswirkungen auf die Grundrechte, als Teil der Identifizierung der Auswirkungen auf Einzelpersonen oder Gruppen von
+349
+Einzelpersonen, wie in [16] und in Abschnitt 3.3 von [16] dargelegt, einschließlich, aber nicht beschränkt auf:
+350
+1) Auswirkungen auf die Menschenrechte in regelmäßigen Abständen oder bei Bedarf zu ermitteln, z. B. so früh wie möglich
+351
+und in bestimmten Phasen des Lebenszyklus von KI-Systemen. Nicht erschöpfende Beispiele für Rechte auf
+352
+zu berücksichtigen sind: Nicht-Diskriminierung, Recht auf Leben und persönliche Sicherheit, Privatsphäre und
+353
+Freiheit der Meinungsäußerung;
+354
+2) bestimmen Sie, wie die Auswirkungen auf die Grund- und Menschenrechte behandelt werden sollen;
+355
+d) Bewertung des Ausmaßes und der Wahrscheinlichkeit der festgestellten Auswirkungen.
+356
+4.9 Analyse der Ergebnisse der Folgenabschätzung des AI-Systems
+357
+Die Ergebnisse der Folgenabschätzung für KI-Systeme können eine entscheidende Rolle bei der verantwortungsvollen Nutzung und
+358
+Entwicklung von KI-Systemen spielen. Die Bewertung sollte analysiert und sowohl in technische als auch in
+359
+Managemententscheidungen einfließen.
+360
+ISO/IEC DIS 42005:2024(E)
+Heruntergeladen von Benutzer (spacealpha@gmail.com)
+lOMoARcPSD|52109980
+
+[PAGE: 13]
+
+ISO/IEC 42005:####(X)
+© ISO/IEC 2024- Alle Rechte vorbehalten
+6
+Auf technischer Ebene kann die Analyse beispielsweise dazu dienen, die Qualität von Produkten oder Dienstleistungen zu verbessern, indem man
+361
+Schutzvorkehrungen gegen unbeabsichtigte Nutzung oder Missbrauch, Verbesserung der Sicherheit und Robustheit von KI-Systemen usw. Sie kann auch
+362
+die Arten von Maßnahmen zur Behebung von Nutzen und Schaden bestimmen, wie in 5.8.2 beschrieben. Zusätzlich,
+363
+sollten die Ergebnisse der Bewertung mit den in 4.7 festgelegten Schwellenwerten verglichen werden, und wenn die
+364
+Schwellenwerte nicht erreicht werden, einen Aktionsplan zur Abhilfe aufstellen.
+365
+Auf Managementebene kann die Analyse als Grundlage für die organisatorischen Risikomanagementprozesse verwendet werden
+366
+vorhersehbaren Auswirkungen von KI-Systemen. Dies kann die Berücksichtigung der Auswirkungen einzelner Systeme
+367
+Bewertungen, aber auch die Analyse mehrerer Bewertungen als Ganzes, um festzustellen, wie Trends die
+368
+organisatorische Risiken und Ziele auf breiter Ebene auswirken können.
+369
+4.10 Aufzeichnung und Berichterstattung
+370
+Die Organisation sollte die Erwartungen an die Art und Weise, wie die KI-Systemfolgenabschätzung aufgezeichnet wird, definieren und dokumentieren.
+371
+aufgezeichnet werden soll, sowie die Erwartungen an die Berichterstattung über die Ergebnisse der KI-Systemfolgenabschätzung. Die
+372
+Format der Bewertung kann von den Bedürfnissen der Organisation abhängen und kann in einem Dokument festgehalten werden
+373
+Vorlage, einem System oder einer anderen Methode erfasst werden, die die Aufzeichnung und Berichterstattung ermöglicht.
+374
+Die Organisation kann sowohl internen als auch externen Berichtsbedarf haben. Überlegungen zur internen Berichterstattung
+375
+kann die Berichterstattung an:
+376
+- das obere Management;
+377
+- Arbeitnehmervertretungen;
+378
+- Systementwickler;
+379
+- Systemeigentümer.
+380
+Externe Berichterstattung kann die Berichterstattung an:
+381
+- Aufsichtsbehörden;
+382
+- Kunden;
+383
+- Personen, die von dem KI-System betroffen sind.
+384
+Die Berichterstattung über die Folgenabschätzung des KI-Systems an relevante interessierte Parteien kann Folgendes umfassen:
+385
+- Informationen über tatsächliche oder potenzielle Auswirkungen im Zusammenhang mit den geplanten Anwendungsfällen des KI-Systems sowie andere
+386
+potenziell vorteilhafte Verwendungen, vernünftigerweise vorhersehbare Missbräuche und vorsätzliche Missbräuche (zumindest auf einer
+387
+breiten Ebene);
+388
+- so viele Dimensionen der identifizierten Auswirkungen wie angemessen, einschließlich so vieler Arten von
+389
+Auswirkungen, die in 5.8 beschrieben sind, so weit wie möglich.
+390
+Bei der Berichterstattung über Missbrauchsfälle kann die Organisation Details auslassen, die nützlich sein können
+391
+für Angreifer sein können.
+392
+HINWEIS
+Informationen darüber, welche Details Angreifern unangemessene Informationen liefern können, finden Sie in [22].
+393
+Berichte sollten so strukturiert und formuliert sein, dass sie die Informationen liefern können, die ein
+394
+interessierten Parteien benötigt werden, um gegebenenfalls die Übereinstimmung des KI-Systems mit den gesetzlichen Anforderungen zu beurteilen.
+395
+in Bezug auf Folgenabschätzungen zu beurteilen. Sie sollten auch so strukturiert und formuliert sein, dass sie, wenn bestimmte
+396
+Teile für den Schutz des geistigen Eigentums nicht verfügbar sind, verständlich bleiben.
+397
+4.11 Genehmigungsverfahren
+398
+Die Organisation sollte alle Genehmigungen dokumentieren, die im Rahmen der KI-Systemfolgenabschätzung erforderlich sind
+399
+Prozesses. Dies kann Genehmigungen im Zusammenhang mit dem Überschreiten festgelegter Schwellenwerte (siehe 4.7) oder eine endgültige
+400
+Genehmigung der gesamten KI-Systemfolgenabschätzung. Die Überlegungen können umfassen:
+401
+- wann Genehmigungen erforderlich sind (z.B. bei Überschreitung eines Schwellenwerts, nachdem die KI-Systemauswirkungen
+402
+- Bewertung abgeschlossen ist);
+403
+- wer die Verantwortung für die Genehmigung trägt (dies kann je nach Art der Genehmigung variieren);
+404
+ISO/IEC DIS 42005:2024(E)
+Heruntergeladen von Benutzer (spacealpha@gmail.com)
+lOMoARcPSD|52109980
+
+[PAGE: 14]
+
+ISO/IEC 42005:####(X)
+© ISO/IEC 2024- Alle Rechte vorbehalten
+7
+- ob in irgendeiner Situation externe Genehmigungen erforderlich sind (z.B. behördliche, externe relevante
+405
+interessierte Parteien).
+406
+4.12 Überwachung und Überprüfung
+407
+Die Organisation sollte festlegen und dokumentieren, wie die Folgenabschätzungen für AI-Systeme überprüft werden, einschließlich
+408
+in welchen Abständen oder nach vorher festgelegten Auslösern und von wem.
+409
+5 Dokumentieren der KI-Systemfolgenabschätzung
+410
+5.1 Allgemeines
+411
+Dieser Abschnitt enthält Hinweise, die in eine dokumentierte KI-Systemfolgenabschätzung aufgenommen werden können. Die
+412
+Organisation sollte ihren Bedarf auf der Grundlage ihres Kontexts bestimmen, und nicht alle Anleitungen in diesem Abschnitt sind
+413
+auf jede Organisation anwendbar. Es ist zum Beispiel möglich, dass eine Organisation, die eine KI
+414
+System implementiert, das von einem Dritten entwickelt wurde, keine Details zu den Daten (5.4) oder Informationen zum Algorithmus (5.5) hat.
+415
+ANMERKUNG
+ISO/IEC 127922 liefert Informationen über mögliche nützliche Elemente, die in den Datenkatalog aufgenommen werden können.
+416
+Dokumentation der Folgenabschätzung eines KI-Systems enthalten können.
+417
+5.2 Umfang der KI-Systemfolgenabschätzung
+418
+Der Umfang der Folgenabschätzung für das KI-System sollte das betrachtete KI-System, seine
+419
+vorhersehbaren Auswirkungen sowie die internen und externen Einflüsse, die diese Auswirkungen beeinflussen. Die Beschreibung des Umfangs
+420
+sollte enthalten:
+421
+a) eine Identifizierung des betrachteten AI-Systems;
+422
+b) eine Identifizierung von Einzelpersonen, Gruppen von Einzelpersonen und Gesellschaften, die von der KI betroffen sein können
+423
+System betroffen sein können, einschließlich ihrer Bedürfnisse und Erwartungen, die für die Folgenabschätzung des KI-Systems relevant sind
+424
+und von der Organisation identifizierbar sind;
+425
+c) eine Beschreibung der beabsichtigten Nutzung;
+426
+d) eine Liste der vorhersehbaren Missbräuche oder vorsätzlichen Missbräuche, die diese Identifizierung von Personen beeinträchtigen können,
+427
+Gruppen von Personen und Gesellschaften beeinträchtigen können.
+428
+Falls zutreffend, sollte die Beschreibung des Geltungsbereichs deutlich auf Ausnahmen von den in a)-d) aufgeführten Punkten hinweisen.
+429
+Der Umfang der Folgenabschätzung kann andere Folgenabschätzungen umfassen oder durch diese ergänzt werden (z.B.
+430
+Menschenrechtsverträglichkeitsprüfung oder menschenrechtliche Sorgfaltsprüfungen, siehe Anhang D), basierend auf
+431
+verschiedenen Teilen der Informationen des AI-Systems, wie in 5.3 beschrieben.
+432
+5.3 Informationen zum AI-System
+433
+5.3.1
+Beschreibung des KI-Systems
+434
+Die Folgenabschätzung für das KI-System sollte eine grundlegende Beschreibung des KI-Systems enthalten, in der beschrieben wird, was
+435
+was das KI-System tut und wie es auf einer hohen Ebene funktioniert. Die Beschreibung sollte beinhalten, welche Art von
+436
+Fähigkeiten des KI-Systems, um potenziellen Gutachtern den nötigen Kontext zu geben, um das KI-System zu verstehen.
+437
+System und die Umgebung, in der es arbeitet, zu verstehen. Die Beschreibung des KI-Systems kann zusätzliche Details enthalten
+438
+wie von der Organisation festgelegt, z.B.:
+439
+- Diagramme der AI-Systemarchitektur;
+440
+- technische Anforderungen und Spezifikationen;
+441
+- Demonstrationen und Nachweis von Konzepten.
+442
+2 In Vorbereitung. Stand zum Zeitpunkt der Veröffentlichung: ISO/IEC CD 12792:2023.
+ISO/IEC DIS 42005:2024(E)
+Heruntergeladen von Benutzer (spacealpha@gmail.com)
+lOMoARcPSD|52109980
+
+[PAGE: 15]
+
+ISO/IEC 42005:####(X)
+© ISO/IEC 2024- Alle Rechte vorbehalten
+8
+5.3.2
+Funktionen des AI-Systems
+443
+Die Dokumentation zu den Funktionen des AI-Systems sollte eine genauere und detailliertere Beschreibung der
+444
+Funktionalitäten und Fähigkeiten sein, und ob sie aktuell oder geplant sind. Dies kann auch eine Übersicht über die
+445
+Beschreibung enthalten, zum Beispiel:
+446
+- Vorhersagen, Arten von Daten, Algorithmen und Modellen, die das KI-System verwendet (siehe auch 5.4 und
+447
+5.5);
+448
+- Benutzerinteraktion;
+449
+- Hardware- und Software-Konfigurationen;
+450
+- Warnungen und Schwellenwerte.
+451
+In der Dokumentation der Funktionen eines KI-Systems sollten die Unternehmen die Offenlegung von
+452
+der technischen Details auf bestimmte Personengruppen beschränken, um die vorhersehbaren Chancen einer beabsichtigten
+453
+Missbrauchs zu verringern.
+454
+Eine weitere zu berücksichtigende Dokumentation im Zusammenhang mit Systemfunktionen ist die Abhängigkeit von oder die Beziehung zu anderen
+455
+Systemen und deren Funktionen; wenn das zu dokumentierende System beispielsweise auf einem Modell beruht, das Teil von
+456
+einem anderen Produkt oder System ist.
+457
+5.3.3
+Zweck des AI-Systems
+458
+Der Zweck des KI-Systems sollte dokumentiert werden, damit potenzielle Prüfer verstehen können, warum das
+459
+Organisation das KI-System aufbaut oder einsetzt und wie die KI-Technologie zur Erreichung dieser Ziele beiträgt.
+460
+Ziele beiträgt. Bei der Dokumentation des Zwecks des KI-Systems sollten Organisationen mindestens die folgenden Punkte berücksichtigen
+461
+Folgendes berücksichtigen:
+462
+a) den Endbenutzer oder Hauptkunden des KI-Systems;
+463
+b) wie sie die Aufgabe erledigen;
+464
+c)
+das Wertversprechen des KI-Systems.
+465
+5.3.4
+Beabsichtigte Anwendungen
+466
+Die Auswirkungen des KI-Systems auf Menschen und Gesellschaften hängen zum Teil von den beabsichtigten Verwendungszwecken ab. Beabsichtigte Verwendungen
+467
+können auch als Anwendungsfälle oder Szenarien bezeichnet werden und können Folgendes umfassen:
+468
+- was das KI-System für bestimmte Gruppen von Endnutzern oder Kunden tun oder erreichen soll;
+469
+- wo und wann sie das KI-System nutzen können;
+470
+- ob es zeitliche Beschränkungen für das System gibt (z.B. nur für eine bestimmte Anzahl von Jahren in Betrieb
+471
+von Jahren).
+472
+KI-Systeme und KI-Systemfunktionen können mehrere Verwendungszwecke haben. Organisationen sollten diese identifizieren und
+473
+vernünftigerweise vorhersehbare Verwendungszwecke dokumentieren, einschließlich nützlicher Verwendungen.
+474
+BEISPIEL
+Ein von einer Bank entwickeltes KI-System, das eine Person anhand eines biometrischen Scans identifizieren kann
+475
+des Gesichts der Person identifizieren kann. Die beabsichtigten Anwendungen können sein:
+476
+- Zugang zur mobilen Anwendung der Bank gewähren;
+477
+- ein personalisiertes Erlebnis in einer Bankfiliale bieten.
+478
+5.3.5
+Unbeabsichtigte Nutzung
+479
+Die Organisation sollte mögliche, vernünftigerweise vorhersehbare Missbräuche und absichtliche
+480
+Missbrauchs.
+481
+Die Organisation soll identifizieren und dokumentieren:
+482
+- vernünftigerweise vorhersehbare Missbräuche;
+483
+- vorsätzliche Missbräuche;
+484
+- potenziell nützliche Verwendungen.
+485
+ISO/IEC DIS 42005:2024(E)
+Heruntergeladen von Benutzer (spacealpha@gmail.com)
+lOMoARcPSD|52109980
+
+[PAGE: 16]
+
+ISO/IEC 42005:####(X)
+© ISO/IEC 2024- Alle Rechte vorbehalten
+9
+ANMERKUNG 1 Einige Arten des Missbrauchs können in Ressourcen beschrieben werden, wie z.B. in der KI-bezogenen Ausbeutung
+486
+Methoden [18], Arten von Fehlern in maschinellen Lernsystemen und Bedrohungen [19], Identifizierung von Bedrohungen durch KI-Systeme
+487
+und Bedrohungsmodellierung [20][21].
+488
+ANMERKUNG 2 ISO/IEC 42001 bietet eine Anleitung für die Mitteilung akzeptabler Verwendungszwecke an relevante interessierte
+489
+Parteien sowie über inakzeptable und verbotene Verwendungen.
+490
+Um zusätzliche potenziell nützliche Verwendungen oder Anwendungen des KI-Systems zu berücksichtigen, sollte die Organisation
+491
+Methoden anwenden, die geeignet sind, um:
+492
+a) andere nützliche Anwendungen des KI-Systems zu identifizieren, die die Organisation absichtlich verfolgen kann;
+493
+b) andere nützliche Anwendungen des KI-Systems zu identifizieren, die die beabsichtigten Nutzer versuchen können;
+494
+c) die die Organisation nicht absichtlich verfolgen kann.
+495
+Die Organisation kann potenziell nutzbringende Verwendungen dokumentieren, wenn sie identifiziert sind.
+496
+5.4 Dateninformationen und Qualität
+497
+5.4.1
+Allgemein
+498
+Bestimmte KI-Systeme verwenden Trainings-, Test- und Validierungsdatensätze zur Erstellung, Prüfung und Validierung von trainierten
+499
+Modelle. Die Produktionsdaten werden auf die trainierten Modelle angewendet, um Ausgabedaten zu erzeugen. Die Verwendung von Trainings-, Test- und
+500
+Validierungsdatensätzen, die nicht den Anforderungen entsprechen, kann im Kontext des KI-Systems zu falschen
+501
+Ausgaben führen, die dann negative Auswirkungen auf Einzelpersonen, Gruppen von Einzelpersonen und Gesellschaften haben.
+502
+Darüber hinaus werden historische und aktuelle ungewollte Voreingenommenheit und Ungerechtigkeit gegenüber Gruppen von Individuen erfasst
+503
+in Trainingsdatensätzen erfasst werden, dazu führen, dass ein trainiertes Modell die unerwünschte Voreingenommenheit weitergibt oder sogar noch verstärkt.
+504
+oder Ungerechtigkeit verstärkt.
+505
+HINWEIS Weitere Informationen zu den in KI-Systemen verwendeten Datentypen finden Sie in ISO/IEC 22989.
+506
+5.4.2
+Daten-Informationen
+507
+Datensätze können von einem breiten Spektrum an beschreibenden Informationen begleitet werden, von gar keinen bis zu umfassenden.
+508
+Die Organisation kann die Auswirkungen der Verwendung eines bestimmten Datensatzes in einem KI-System am besten bestimmen, wenn die
+509
+Informationen am umfassendsten sind. Die Organisation sollte dies berücksichtigen, wenn sie bestimmt, welche
+510
+Informationen in eine KI-Systemfolgenabschätzung aufgenommen werden sollen.
+511
+Wenn Sie die Dokumentation über die in KI-Systemen verwendeten Datensätze in einer KI-Systemfolgenabschätzung
+512
+Folgenabschätzung zu berücksichtigen, sollte die Organisation zumindest die folgenden Punkte berücksichtigen:
+513
+a) Verfügbarkeit von Dateninformationen für eine mögliche Überprüfung durch Menschen. Dateninformationen können gespeichert werden in
+514
+maschinenlesbarer Form gespeichert werden, aber sie sollten auch von menschlichen Prüfern verwendet werden können.
+515
+b) wie und woher die Daten gewonnen wurden (entspricht die Gewinnung der Daten den
+516
+Organisation den rechtlichen Verpflichtungen, ethischen Grundsätzen und anderen Richtlinien?).
+517
+c) die Menge der Daten im Verhältnis zu den Anforderungen des KI-Systems;
+518
+d) Herkunft des Datensatzes (z. B. Datenursprünge, Dateninhaber, Datennutzer, auf die Daten angewandte Prozesse
+519
+Daten oder Speicherorte der Daten);
+520
+e) bekannte Risiken einer unerwünschten Verzerrung des Datensatzes;
+521
+f)
+die von dem Datensatz abgedeckten Regionen;
+522
+g) Prozesse für die Datenqualität;
+523
+h) Zugangskontrollen und Schutz des Datensatzes;
+524
+i)
+Zeitlicher Umfang der Daten (d.h. Anfangs- und Enddatum der Daten im Datensatz);
+525
+j)
+Überprüfungen der Daten durch relevante interessierte Parteien (einschließlich der Frage, ob diverse Überprüfungen
+526
+abgeschlossen wurden).
+527
+HINWEIS
+Für zusätzliche Informationen, die einen Datensatz begleiten können, siehe ISO/IEC 23751. Siehe 5.8.2.5 für
+528
+Informationen zum Datenschutz. Weitere Informationen über unerwünschte Verzerrungen finden Sie in ISO/IEC TR 24027:2021.
+529
+530
+ISO/IEC DIS 42005:2024(E)
+Heruntergeladen von Benutzer (spacealpha@gmail.com)
+lOMoARcPSD|52109980
+
+[PAGE: 17]
+
+ISO/IEC 42005:####(X)
+10
+5.4.3
+Dokumentation der Datenqualität
+531
+Die Dokumentation der Datenqualität kann ein zusätzlicher Teil der Dateninformationen sein, die erfasst werden können
+532
+in der Dokumentation zur Bewertung der Auswirkungen von KI-Systemen auf der Grundlage der organisatorischen Anforderungen. ISO/IEC 5259-13 definiert
+533
+Datenqualität als eine Eigenschaft der Daten, die den Anforderungen der Organisation für eine bestimmte
+534
+Kontext erfüllt.
+535
+Wenn es um die Dokumentation der Datenqualität in einer KI-Systemfolgenabschätzung geht, muss die Organisation
+536
+sollte die Organisation mindestens die folgenden Punkte berücksichtigen:
+537
+a) Anforderungen an die Datenqualität, die erfüllt sind;
+538
+b) Pläne für die Erreichung von Datenqualitätsanforderungen, die noch nicht erfüllt sind;
+539
+c) die Verwendung eines Lebenszyklus für die Datenqualität im Rahmen der Entwicklung des KI-Systems;
+540
+d) genehmigte Nutzung des Datensatzes im KI-System durch geeignete interessierte Parteien.
+541
+ANMERKUNG
+Für Informationen zu Begriffen, Konzepten und Lebenszyklen der Datenqualität siehe ISO/IEC 5259-1. Für
+542
+Informationen über das Datenqualitätsmodell, Datenqualitätsmerkmale und Datenqualitätsmaßnahmen siehe ISO/IEC
+543
+5259-24. Für Informationen über Datenqualitätsprozesse siehe ISO/IEC 5259-45.
+544
+5.5 Informationen zu Algorithmus und Modell
+545
+5.5.1
+Allgemein
+546
+KI-Systeme können Algorithmen und Modelle verwenden, um ihre vom Menschen definierten Ziele zu erreichen. ISO/IEC 22989
+547
+beschreibt ein Modell für maschinelles Lernen als ein mathematisches Konstrukt, das Schlussfolgerungen oder Vorhersagen erzeugt,
+548
+und dass ein maschinelles Lernmodell das Ergebnis des Trainings eines maschinellen Lernalgorithmus ist. Auswirkungen von
+549
+Algorithmen und Modelle können durch die in 5.5.2 bis 5.5.5 beschriebenen Aspekte verursacht werden.
+550
+HINWEIS
+Weitere Informationen über Algorithmen und Modelle für maschinelles Lernen finden Sie in ISO/IEC 22989 und
+551
+ISO/IEC 23053.
+552
+5.5.2
+Informationen über die von der Organisation verwendeten Algorithmen
+553
+Bei der Entwicklung der Dokumentation für die in einem KI-System verwendeten Algorithmen sollte die Organisation
+554
+zumindest die folgenden Punkte berücksichtigen:
+555
+a) die Angemessenheit der ausgewählten Algorithmen in Bezug auf die Geschäftsziele und die KI-Aufgabe
+556
+selbst;
+557
+b) die Herkunft der Algorithmen und etwaige Modifikationen (z.B. wissenschaftliche Abhandlungen, Fachzeitschriften und
+558
+Präsentationen oder Quellcode-Repositories);
+559
+c) die wissenschaftliche Gültigkeit des Algorithmus (z.B. wurde der Algorithmus von glaubwürdigen Experten getestet und bewiesen).
+560
+Experten auf diesem Gebiet getestet und bewiesen);
+561
+d) frühere reale Anwendungen der Algorithmen und ihre Leistung (z. B. haben KI-Systeme, die auf
+562
+Algorithmen basieren, in Betrieb genommen oder aufgegeben, wurden frühere Anwendungen der Algorithmen
+563
+Schäden verursacht, wie lauten die Leistungskennzahlen früherer Anwendungen);
+564
+e) Datenanforderungen für die Algorithmen;
+565
+f)
+Anfälligkeit der Algorithmen für unerwünschte Ergebnisse (z. B. falsche Korrelationen, Überanpassung
+566
+oder Ausbreitung unerwünschter Verzerrungen).
+567
+5.5.3
+Informationen zur Algorithmusentwicklung
+568
+Bei der Entwicklung der Dokumentation von Algorithmen in einer KI-Systemfolgenabschätzung muss die Organisation
+569
+sollte die Organisation mindestens Folgendes berücksichtigen:
+570
+a) Anforderungen, die erfüllt werden;
+571
+b) Pläne zur Erfüllung von Anforderungen, die noch nicht erfüllt sind;
+572
+c) die Verwendung eines Lebenszyklus innerhalb der KI-Systementwicklung;
+573
+3 In Vorbereitung. Stand zum Zeitpunkt der Veröffentlichung: ISO/IEC DIS 5259-1:2023. 4
+In Vorbereitung. Stand zum Zeitpunkt der Veröffentlichung: ISO/IEC DIS 5259-2:2023. 5
+In Vorbereitung. Stand zum Zeitpunkt der Veröffentlichung: ISO/IEC DIS 5259-4:2023.
+© ISO/IEC 2024- Alle Rechte vorbehalten
+ISO/IEC DIS 42005:2024(E)
+Heruntergeladen von Benutzer (spacealpha@gmail.com)
+lOMoARcPSD|52109980
+
+[PAGE: 18]
+
+ISO/IEC 42005:####(X)
+© ISO/IEC 2024- Alle Rechte vorbehalten
+11
+d) Genehmigungsverfahren für den im KI-System verwendeten Algorithmus.
+574
+5.5.4
+Informationen über die in einem KI-System verwendeten Modelle
+575
+Bei der Entwicklung der Dokumentation für die in einem KI-System verwendeten Modelle sollte die Organisation Folgendes berücksichtigen
+576
+zumindest die folgenden Punkte berücksichtigen:
+577
+a) die Daten (z.B. Training, Test, Validierung) und die zur Entwicklung der Modelle verwendeten Algorithmen (siehe
+578
+5.5.3)
+579
+b) die Methoden zum Trainieren der Modelle;
+580
+c) es sollten Schritte unternommen werden, um sicherzustellen, dass Datenproben zwischen Training und Validierung nicht wiederverwendet werden
+581
+oder Testdatensätzen wiederverwendet werden;
+582
+d) Schritte, die zum Trainieren, Testen und Validieren mehrerer Modelle unternommen werden;
+583
+e) Kriterien und Schritte zur Auswahl geeigneter Merkmale;
+584
+f)
+Kriterien für die Modellauswahl;
+585
+g) Metriken, die zur Bewertung der Leistung der Modelle verwendet werden (z. B. Genauigkeit, Receiver Operating
+586
+Charakteristik, Konfusionsmatrix, mittlerer quadratischer Fehler oder durchschnittlicher Abstand zum Clusterzentrum);
+587
+h) die Bewertung, ob die ausgewählten Modelle gut auf Produktionsdaten verallgemeinert werden können;
+588
+i)
+Bewertung, ob die ausgewählten Modelle unerwünschte Verzerrungen oder andere Schäden hervorrufen oder aufrechterhalten;
+589
+j)
+Bewertung, ob die Ausgabedaten des Modells persönlich identifizierbare Daten enthalten oder erzeugen
+590
+Informationen (PII) enthalten;
+591
+k) die Robustheit und Widerstandsfähigkeit des Modells;
+592
+l)
+Maßnahmen zur Erkennung und Korrektur von Datendrift (z. B. Neutrainieren des Modells, wenn die Produktionsdaten zu
+593
+in ihren Eigenschaften von den ursprünglichen Trainingsdaten abweichen);
+594
+m) Kriterien und Verfahren für die Umschulung des Modells;
+595
+n) die Auswirkungen des kontinuierlichen Lernens (falls implementiert).
+596
+Für die Modelle, die von der Organisation umgeschult (z.B. feingedreht) wurden, kann diese Liste mit dem neuen
+597
+Daten und Szenarien angewendet werden. Die Überlegungen zu den Modellen vor der Umschulung können sich auf die offengelegten
+598
+Informationen der Modellanbieter beziehen.
+599
+Für die vortrainierten Modelle, die in ein KI-System importiert und verwendet werden, müssen die Punkte e)-i) sowie die Tests in a), c) und
+600
+d) sollten mit den neuen Daten und Szenarien berücksichtigt werden.
+601
+5.5.5
+Informationen zur Modellentwicklung
+602
+Bei der Entwicklung der Dokumentation von Modellen in einer KI-Systemfolgenabschätzung sollte die Organisation
+603
+sollte die Organisation mindestens Folgendes berücksichtigen:
+604
+a) Anforderungen, die erfüllt werden;
+605
+b) Pläne zur Erfüllung von Anforderungen, die noch nicht erfüllt sind;
+606
+c) die Verwendung eines Lebenszyklus innerhalb der KI-Systementwicklung.
+607
+5.6 Einsatzumgebung
+608
+5.6.1
+Geografisches Gebiet und Sprachen
+609
+Die Auswirkungen von KI-Systemen können mit dem geografischen, kulturellen oder rechtlichen Kontext der Länder oder Regionen zusammenhängen
+610
+wo sie eingesetzt werden, und sollten daher bei der Dokumentation der Folgenabschätzung von KI-Systemen berücksichtigt werden.
+611
+Bei der Dokumentation der Auswirkungen eines KI-Systems, das in einem bestimmten Land oder einer Region eingesetzt wird, sollte die
+612
+Organisation berücksichtigen:
+613
+a) wo das KI-System derzeit eingesetzt wird und wo es in Zukunft eingesetzt werden kann;
+614
+b) rechtliche Anforderungen, die für das geografische Einsatzgebiet gelten;
+615
+c) kulturelle Erwägungen des geografischen Einsatzgebiets;
+616
+d) die im geografischen Einsatzgebiet gesprochenen Sprachen und insbesondere für natürliche Sprache
+617
+Verarbeitungssysteme, welche Sprachen derzeit unterstützt werden;
+618
+e) verhaltensbezogene, soziale und physiologische menschliche Eigenschaften, die in einem geografischen Gebiet konzentriert werden können.
+619
+ISO/IEC DIS 42005:2024(E)
+Heruntergeladen von Benutzer (spacealpha@gmail.com)
+lOMoARcPSD|52109980
+
+[PAGE: 19]
+
+ISO/IEC 42005:####(X)
+© ISO/IEC 2024- Alle Rechte vorbehalten
+12
+ANMERKUNG
+Die Diskriminierung von kulturellen Gruppen und Gruppen, die bestimmte Sprachen sprechen, kann durch
+620
+unzureichende Berücksichtigung geografischer kultureller und sprachlicher Einflüsse führen.
+621
+Die Organisation sollte ferner geplante Maßnahmen dokumentieren, die zur Verbesserung der zukünftigen
+622
+Versionen der KI-Systeme im Hinblick auf geografische und kulturelle Besonderheiten oder rechtliche Anforderungen der
+623
+Landes oder der Region des Einsatzes.
+624
+Die Berücksichtigung einer angemessenen Vertretung für geographisch konzentrierte Gruppen mit
+625
+gemeinsamen Sprachen oder Kulturen zu gewährleisten, sollte das KI-System anhand von Daten trainiert, getestet und validiert werden
+626
+die für die Region(en) repräsentativ sind, in der es eingesetzt werden soll.
+627
+5.6.2
+Komplexität und Beschränkungen der Einsatzumgebung
+628
+Neben der geografischen Umgebung des Einsatzes muss auch die Bewertung der Auswirkungen des KI-Systems
+629
+Dokumentation auch Informationen über die technische Einsatzumgebung und relevante
+630
+Beschränkungen enthalten. Dazu können Informationen gehören wie:
+631
+- ob es sich um einen Online-Dienst, eine Anwendung usw. handelt;
+632
+- ob es sich um eine Plattform handelt;
+633
+- ob es sich um eine Cloud-Bereitstellung handelt;
+634
+- Überlegungen zu Open Source;
+635
+- nur auf bestimmter Hardware verfügbar;
+636
+- nur als Teil von bestimmten Anwendungen verfügbar;
+637
+- Infrastruktur, die für das KI-System erforderlich ist;
+638
+- relevanter Kontext, Wissen über und frühere Erfahrungen mit dem KI-System.
+639
+5.7 Relevante interessierte Parteien
+640
+Die Organisation sollte Einzelpersonen, Gruppen von Einzelpersonen oder Gesellschaften identifizieren und dokumentieren, die für die
+641
+von einem KI-System und dessen beabsichtigter Nutzung betroffen sein können, in der Folgenabschätzung des KI-Systems identifizieren und dokumentieren. Relevante interessierte
+642
+Parteien sind sowohl diejenigen, die direkt mit dem KI-System interagieren, als auch diejenigen, die von ihm betroffen sein können
+643
+ohne notwendigerweise zu interagieren. Einige Beispiele für relevante interessierte Parteien sind:
+644
+- Endbenutzer;
+645
+- Systementwickler und Designer;
+646
+- Systemeigentümer und -betreiber;
+647
+- Regulierungsbehörden und Gesetzgeber;
+648
+- gefährdete Gruppen, Bürger und Arbeitnehmer;
+649
+- Gesellschaften;
+650
+- betroffene Personen.
+651
+Zu den betroffenen Parteien gehören auch Einzelpersonen, Gruppen von Einzelpersonen und Gesellschaften, die
+652
+direkt oder indirekt von dem KI-System betroffen sind. Gruppen, die diese relevanten interessierten Parteien vertreten,
+653
+oder die Einzelpersonen und Gruppen selbst, sollten während der Folgenabschätzung des KI-Systems konsultiert werden.
+654
+Prozesses konsultiert werden.
+655
+Umfang und Reichweite der Konsultation mit den relevanten interessierten Parteien sollten proportional zu einem Ergebnis sein
+656
+und dem geschätzten anfänglichen Risikoniveau aus einem dem Umfang und der Tragweite der AI angemessenen Triagierungsprozess
+657
+Systemfolgenabschätzung angemessen ist (z. B. wenn das Risiko als hoch eingeschätzt wird, sollte die KI-Systemfolgenabschätzung
+658
+Bewertung sowie der Konsultationsprozess robuster). Unabhängig von der Risikostufe ist die Konsultation
+659
+Prozess die Organisation in die Lage versetzen, die Interessen und Bedenken der relevanten Gruppen zu verstehen und darauf zu reagieren.
+660
+Parteien in gutem Glauben zu verstehen und darauf zu reagieren. Die Konsultation sollte diesen interessierten Parteien zeitnah relevante Informationen liefern.
+661
+Parteien zur Verfügung stellen, verschiedene Perspektiven einbeziehen und die besonderen Bedürfnisse schutzbedürftiger Gruppen angemessen berücksichtigen
+662
+oder Einzelpersonen berücksichtigen und sicherstellen, dass betroffene relevante interessierte Parteien frei von Vergeltungsmaßnahmen sind und
+663
+Vergeltungsmaßnahmen geschützt sind, Vertraulichkeit und Anonymität, wo nötig, gewahrt werden und Einzelpersonen die
+664
+die Möglichkeit, Entscheidungen anzufechten und gegebenenfalls Rechtsmittel einzulegen.
+665
+ISO/IEC DIS 42005:2024(E)
+Heruntergeladen von Benutzer (spacealpha@gmail.com)
+lOMoARcPSD|52109980
+
+[PAGE: 20]
+
+ISO/IEC 42005:####(X)
+© ISO/IEC 2024- Alle Rechte vorbehalten
+13
+5.8 Tatsächliche und potenzielle Auswirkungen
+666
+5.8.1
+Allgemein
+667
+Für die relevanten interessierten Parteien, die in 5.7 identifiziert wurden, sind die potenziellen Vorteile und potenziellen Schäden
+668
+kategorisiert werden.
+669
+5.8.2
+Nutzen und Schaden
+670
+5.8.2.1
+Allgemein
+671
+Für jede relevante interessierte Partei sollten der potenzielle Nutzen und der potenzielle Schaden analysiert werden. Für
+672
+Sie beispielsweise den potenziellen Nutzen, den jede relevante interessierte Partei als indirekte oder direkte
+673
+aus der Interaktion mit dem KI-System erwarten kann. Die Unterklauseln in dieser Klausel können verwendet werden, um potenzielle
+674
+Schaden und Nutzen aus verschiedenen Zielen zu berücksichtigen. Diese Ziele sind nicht erschöpfend und andere Ziele können
+675
+in Betracht gezogen werden. Für weitere Informationen siehe Anhang C.
+676
+5.8.2.2
+Rechenschaftspflicht
+677
+Rechenschaftspflicht ist der Zustand oder die Verantwortung einer Person oder Einrichtung, die für Handlungen, Entscheidungen
+678
+oder Leistungen, einschließlich der von KI-Systemen getroffenen Entscheidungen.
+679
+Der Einsatz von KI-Systemen kann bestehende Rahmenwerke für die Rechenschaftspflicht verändern. Siehe ISO/IEC 23894:2023 [4],
+680
+A.2 für weitere Informationen über das Ziel der Rechenschaftspflicht. Siehe auch ISO/IEC 38507 für
+681
+Rechenschaftspflicht aus Sicht der Unternehmensführung für die Nutzung von KI in der Organisation.
+682
+Für jede identifizierte relevante interessierte Partei sollte die Organisation den potenziellen Nutzen und
+683
+Schaden im Zusammenhang mit der Rechenschaftspflicht als Ergebnis der Nutzung des KI-Systems analysieren.
+684
+Nachfolgend finden Sie Beispiele für eine solche Analyse:
+685
+- Auswirkungen auf die jeweilige interessierte Partei, einschließlich der folgenden Überlegungen:
+686
+- die Möglichkeit, dass der Einsatz des KI-Systems Auswirkungen auf ihre Rechtsposition, ihr Leben
+687
+Lebenschancen oder Menschenrechte;
+688
+- die Möglichkeit, dass die Nutzung des KI-Systems der Person physischen oder psychischen Schaden zufügt
+689
+interessierten Partei zu verursachen;
+690
+- Auswirkungen auf die betroffene Person für den Fall, dass das KI-System die Anforderungen nicht angemessen erfüllt
+691
+den Zweck, für den es eingesetzt wurde;
+692
+- Auswirkungen auf die relevante interessierte Partei aufgrund von Daten, die zur Entwicklung des KI-Systems verwendet wurden;
+693
+- Auswirkungen auf die betreffende interessierte Partei, die sich daraus ergeben, dass keine angemessene menschliche Aufsicht ausgeübt wird
+694
+für das KI-System und seine Ergebnisse.
+695
+5.8.2.3
+Transparenz
+696
+Transparenz ist die Eigenschaft einer Organisation oder eines Systems, angemessene Informationen über
+697
+Aktivitäten, Entscheidungen und Systemeigenschaften an relevante interessierte Parteien in einer Art und Weise kommuniziert werden, die
+698
+umfassenden, verständlichen und zugänglichen Weise mitgeteilt werden. Bei KI-Systemen sind die Informationen für das System
+699
+Transparenz Aspekte wie Merkmale, Leistung, Einschränkungen, Komponenten und Verfahren umfassen,
+700
+Maßnahmen, Designziele, Designentscheidungen und Annahmen, Datenquellen und Kennzeichnungsprotokolle.
+701
+Die Menge an Informationen und das Verständnis über das KI-System kann sich potenziell auf interessierte
+702
+Parteien haben. Weitere Informationen über das Ziel der Transparenz finden Sie in ISO/IEC 23894:2023 [4], A.12.
+703
+Für jede identifizierte relevante interessierte Partei sollte die Organisation den potenziellen Nutzen und
+704
+Nachteile im Zusammenhang mit der Transparenz bei der Verwendung des AI-Systems analysieren.
+705
+Im Folgenden finden Sie einige Beispiele:
+706
+ISO/IEC DIS 42005:2024(E)
+Heruntergeladen von Benutzer (spacealpha@gmail.com)
+lOMoARcPSD|52109980
+
+[PAGE: 21]
+
+ISO/IEC 42005:####(X)
+© ISO/IEC 2024- Alle Rechte vorbehalten
+14
+- Die Auswirkungen auf die betreffende interessierte Partei, wenn es nicht genügend Informationen über die
+707
+Fähigkeiten des KI-Systems, seine Beschränkungen und Grenzen;
+708
+- die Auswirkungen für die betroffene Partei, wenn sie nicht weiß, dass sie mit dem KI-System interagiert
+709
+KI-System interagieren.
+710
+5.8.2.4
+Fairness und Diskriminierung
+711
+Fairness bedeutet, unparteiisch zu sein und sich ohne Bevorzugung oder Diskriminierung zu verhalten.
+712
+Diskriminierung ist die ungerechte oder vorurteilsbehaftete Behandlung von verschiedenen Personen oder Organisationen,
+713
+Gruppen von Personen oder Gesellschaften.
+714
+Die Ergebnisse von KI-Systemen können sich auf interessierte Parteien auswirken, indem sie unfair oder diskriminierend gegenüber bestimmten
+715
+Einzelpersonen oder Gruppen von Einzelpersonen. Diese Auswirkung kann sich noch verschärfen, wenn
+716
+automatisierte Entscheidungsfindung auf der Grundlage der Ergebnisse eines KI-Systems verwendet wird, das in unfairer Weise diskriminiert
+717
+Teile der Gesellschaft benachteiligt. Siehe ISO/IEC 23894:2023 [4], A.6 für weitere Informationen über das Ziel
+718
+der Fairness.
+719
+Für jede identifizierte relevante interessierte Partei sollte die Organisation den potenziellen Nutzen und
+720
+Schaden in Bezug auf Fairness analysieren, wenn das KI-System eingesetzt wird.
+721
+Nachfolgend finden Sie Beispiele für eine solche Analyse:
+722
+- die Auswirkung auf die betroffene Partei, wenn die Leistung des KI-Systems für eine der folgenden Parteien besser oder schlechter ist
+723
+bestimmte Bevölkerungsgruppen, denen die interessierte Partei angehört (z.B. Altersgruppe),
+724
+Geschlecht, Religion, usw.);
+725
+- die Auswirkungen auf die betreffende interessierte Partei, wenn das KI-System die interessierte Partei in
+726
+Art und Weise darstellt, die sie aufgrund ihrer zugehörigen Bevölkerungsgruppen diskriminiert;
+727
+- Aspekte der Zugänglichkeit für die betreffende interessierte Partei, damit sie nicht aufgrund von Behinderungen ausgeschlossen wird
+728
+oder mangelnder digitaler Fähigkeiten.
+729
+5.8.2.5
+Datenschutz
+730
+Privatsphäre im Kontext des Datenschutzes bedeutet, dass eine Person die Kontrolle über die Erhebung und Verwendung ihrer Daten hat.
+731
+PII und die Gewissheit, dass ihre PII vertraulich bleiben und nicht missbraucht werden.
+732
+Wenn KI-Systeme Daten, die PII enthalten, für ihre Entwicklung, Eingaben oder Ausgaben verwenden, besteht die
+733
+Potenzial, dass das KI-System Auswirkungen auf die Privatsphäre hat. ISO/IEC 23894:2023, A.8 bietet Informationen
+734
+über das Ziel des Schutzes der Privatsphäre, einschließlich der Erhebung, Verwendung, Offenlegung und Ableitung von personenbezogenen Daten im Zusammenhang mit
+735
+mit KI-Systemen.
+736
+Für jede identifizierte relevante interessierte Partei sollte die Organisation die potenziellen Vorteile und
+737
+Schäden in Bezug auf den Datenschutz bei der Verwendung des KI-Systems analysieren. Die Auftraggeber von PII können relevante interessierte Parteien sein.
+738
+Im Folgenden finden Sie einige Beispiele:
+739
+- die Auswirkungen auf die betroffene Partei, wenn PII für den Zweck des KI-Systems gesammelt wurden
+740
+Entwicklung oder Nutzung (z. B. Modelltraining) erhoben wurden;
+741
+- die Auswirkungen auf die betroffene Partei, die sich aus einer Verletzung der Privatsphäre im Zusammenhang mit dem
+742
+Verarbeitung von PII, die für die Entwicklung oder Nutzung des KI-Systems erfolgt;
+743
+- die Verpflichtungen der Organisation gegenüber und die Erwartung der relevanten interessierten Partei
+744
+Partei in Bezug auf die Verarbeitung von PII und die Mechanismen zur Erfüllung dieser Verpflichtungen und Erwartungen,
+745
+einschließlich, aber nicht beschränkt auf:
+746
+- Fairness;
+747
+- Risiko einer unerwünschten Voreingenommenheit oder Diskriminierung, Genauigkeit;
+748
+- automatisierte Entscheidungsfindung und menschliches Eingreifen;
+749
+- Beschaffung von Informationen;
+750
+- Mittel zur Ausübung ihrer Rechte.
+751
+ISO/IEC DIS 42005:2024(E)
+Heruntergeladen von Benutzer (spacealpha@gmail.com)
+lOMoARcPSD|52109980
+
+[PAGE: 22]
+
+ISO/IEC 42005:####(X)
+© ISO/IEC 2024- Alle Rechte vorbehalten
+15
+Folgenabschätzungen zum Datenschutz oder zum Schutz der Privatsphäre können dabei helfen, die potenziellen Auswirkungen auf relevante
+752
+interessierte Parteien. ISO/IEC 29134 [10] ist ein Beispiel für einen verfügbaren Leitfaden. ISO/IEC 27701 [11] bietet
+753
+weitere Anforderungen und Anleitungen, die Organisationen dabei helfen, ihre Verpflichtungen zum Schutz von PII zu erfüllen.
+754
+5.8.2.6
+Verlässlichkeit
+755
+ISO/IEC 22989:2022, 5.15.3 beschreibt Zuverlässigkeit als die Fähigkeit des KI-Systems, korrekt zu funktionieren (d.h.
+756
+das KI-System erfüllt die angegebenen Anforderungen und zeigt ein konsistentes beabsichtigtes Verhalten und Ergebnisse).
+757
+Für jede identifizierte relevante interessierte Partei sollte die Organisation den potenziellen Nutzen und
+758
+Schaden in Bezug auf die Zuverlässigkeit bei der Nutzung des KI-Systems analysieren.
+759
+Nachfolgend finden Sie Beispiele für eine solche Analyse:
+760
+- die Auswirkungen auf die betreffende interessierte Partei, wenn das KI-System die angegebene Leistung nicht erfüllt
+761
+Anforderungen während seiner Betriebsphase nicht erfüllt;
+762
+- die Auswirkungen auf die jeweilige interessierte Partei für den Fall, dass eine Aktualisierung des KI-Systems, eine Datenabweichung oder
+763
+Konzeptabweichung (siehe ISO/IEC 22989:2022, 5.11.9.1) dazu führt, dass die Leistung des Systems nicht den
+764
+Anforderungen entspricht;
+765
+- die Auswirkungen auf die betreffende interessierte Partei, die sich aus vorhersehbaren Fehlern wie z.B. falsch-positiven Ergebnissen ergeben
+766
+oder falschen Negativen;
+767
+- die Auswirkungen für die betroffene interessierte Partei, wenn das KI-System oder seine Ergebnisse durch
+768
+Unbefugten beeinträchtigt werden, was dazu führt, dass die angegebenen Leistungsanforderungen nicht erfüllt werden.
+769
+5.8.2.7
+Sicherheit
+770
+Sicherheit bezieht sich auf die Eigenschaft eines KI-Systems, dass es unter definierten Bedingungen nicht zu einem Zustand führt, in dem
+771
+führt, in dem das Leben, die Gesundheit, das Wohlergehen, das Eigentum oder die Umwelt von Menschen gefährdet sind. Der Einsatz von KI-Systemen
+772
+kann neue Sicherheitsfragen aufwerfen. Siehe ISO/IEC 23894:2023 [4], A.10 für weitere Informationen über die
+773
+Ziel der Sicherheit.
+774
+Für jede identifizierte relevante interessierte Partei sollte die Organisation den potenziellen Nutzen und
+775
+Schäden in Bezug auf die Sicherheit analysieren, wenn das KI-System eingesetzt wird.
+776
+Nachfolgend finden Sie Beispiele für eine solche Analyse:
+777
+- die Auswirkungen auf die jeweilige interessierte Partei, wenn das KI-System unsicher arbeitet;
+778
+- die Auswirkungen auf die relevante interessierte Partei im Falle von Änderungen am KI-System, einschließlich
+779
+als Ergebnis der Identifizierung von Problemen oder Verbesserungen der Leistung des KI-Systems;
+780
+- die Auswirkungen auf die relevante interessierte Partei aufgrund bekannter falsch positiver, falsch negativer und anderer
+781
+bekannten Fehlern.
+782
+5.8.2.8
+Erklärbarkeit
+783
+ISO/IEC 22989:2022, 5.15.16 beschreibt die Erklärbarkeit als die Fähigkeit für einen Menschen zu verstehen, wie die
+784
+KI-System zu einer bestimmten Ausgabe kommt. Außerdem heißt es dort, dass die Ergebnisse einiger KI-Systeme eher
+785
+aufgrund ihres Komplexitätsgrades schwieriger zu erklären sind als andere (z.B. die Ergebnisse tiefer neuronaler
+786
+Netze schwieriger zu erklären sind als die Ergebnisse von Entscheidungsbäumen).
+787
+Für jede identifizierte relevante interessierte Partei sollte die Organisation den potenziellen Nutzen und
+788
+Schaden im Zusammenhang mit der Erklärbarkeit bei der Verwendung des KI-Systems analysieren.
+789
+Im Folgenden finden Sie einige Beispiele:
+790
+- die Auswirkungen auf die betroffene interessierte Partei, wenn nicht genügend Informationen verfügbar sind, um
+791
+fundierte Entscheidungen auf der Grundlage der Ergebnisse des KI-Systems zu treffen;
+792
+- die Auswirkung der Erklärbarkeit auf relevante interessierte Parteien während des Entwurfs und der Entwicklung,
+793
+Verifikations- und Validierungs- und Einführungsphasen des Lebenszyklus des KI-Systems (z. B. ist
+794
+ISO/IEC DIS 42005:2024(E)
+Heruntergeladen von Benutzer (spacealpha@gmail.com)
+lOMoARcPSD|52109980
+
+[PAGE: 23]
+
+ISO/IEC 42005:####(X)
+© ISO/IEC 2024- Alle Rechte vorbehalten
+16
+Erklärbarkeit helfen den relevanten interessierten Parteien, die Leistung der eingesetzten KI zu verbessern
+795
+Systems zu verbessern oder Entscheidungen zu treffen, die für oder gegen den Einsatz sprechen);
+796
+- die Auswirkungen der Erklärbarkeit auf das Vertrauen der relevanten interessierten Parteien in das KI-System;
+797
+- die Auswirkung der Erklärbarkeit auf die Fähigkeit der relevanten interessierten Parteien, die Ergebnisse der KI anzufechten
+798
+eines KI-Systems anzufechten.
+799
+5.8.2.9
+Auswirkungen auf die Umwelt
+800
+KI-Systeme verbrauchen Rechenressourcen in unterschiedlichem Ausmaß: von bescheidenen Mengen, die mit
+801
+traditionellen Systemen vergleichbar sind, bis hin zu so enormen Mengen, dass sie Bedenken hinsichtlich der Nachhaltigkeit aufwerfen [23]. Da die riesigen
+802
+Mehrheit der KI-Systeme auf herkömmlicher Hardware läuft, kann die Messung der Umweltauswirkungen
+803
+schwierig, aber nicht unmöglich sein [24].
+804
+Die Bewertung der Auswirkungen von KI-Systemen sollte Folgendes berücksichtigen:
+805
+a) Die direkten Umweltauswirkungen eines KI-Systems, einschließlich, aber nicht beschränkt auf:
+806
+1) sowohl negative als auch positive Auswirkungen;
+807
+2) Auswirkungen, die während des gesamten Lebenszyklus des KI-Systems von der Einführung bis zur Stilllegung auftreten;
+808
+3) den Ressourcenverbrauch.
+809
+b) Die indirekten Umweltauswirkungen eines KI-Systems, einschließlich, aber nicht beschränkt auf:
+810
+1) die positiven Auswirkungen, die sich aus dem Einsatz nützlicher KI-Anwendungen ergeben, wie z.B.
+811
+Schutz bedrohter Tierarten [25] oder die Optimierung der Leistung von intelligenten elektrischen
+812
+Stromnetze [26];
+813
+2) die schädlichen Auswirkungen, wie z.B. die Förderung und der Anstoß von ökologisch nicht nachhaltigen
+814
+Verbraucherverhalten.
+815
+5.8.3
+KI-Systemausfälle und Fehlgebrauch oder Missbrauch
+816
+5.8.3.1
+Allgemein
+817
+Relevante interessierte Parteien können betroffen sein, wenn das KI-System ausfällt oder absichtlich missbraucht wird oder vernünftigerweise
+818
+vorhersehbar missbraucht wird. Die Folgenabschätzung für das KI-System sollte Folgendes berücksichtigen:
+819
+a) die vorhersehbaren oder bekannten Möglichkeiten, wie das KI-System ausfallen kann, und die Auswirkungen auf relevante interessierte
+820
+Parteien infolge solcher Fehler;
+821
+b) die Möglichkeiten, wie das KI-System vernünftigerweise vorhersehbar missbraucht oder absichtlich missbraucht werden kann,
+822
+und die Auswirkungen eines solchen vernünftigerweise vorhersehbaren Missbrauchs auf relevante interessierte Parteien
+823
+oder beabsichtigten Missbrauchs.
+824
+5.8.3.2
+Auswirkungen eines Ausfalls des KI-Systems
+825
+Die Organisation sollte mögliche Ausfälle des KI-Systems dokumentieren. Dazu können potenzielle Typen gehören
+826
+von zufälligen Eingaben in das KI-System sowie Ausfälle bestimmter KI-Systemkomponenten oder -prozesse.
+827
+Dazu können auch menschliches Versagen, Ausfälle von Hard- oder Software und unbeabsichtigte Interaktionen von
+828
+Systemen oder Prozessen.
+829
+Die Organisation sollte die Auswirkungen auf identifizierte relevante interessierte Parteien (siehe 5.7) als
+830
+infolge von Ausfällen des KI-Systems. Die Folgen und Auswirkungen auf bestimmte Gruppen von Personen oder
+831
+Gesellschaften aufgrund von Ausfällen des KI-Systems sollten dokumentiert werden.
+832
+5.8.3.3
+Auswirkungen des Missbrauchs von KI-Systemen
+833
+Die Organisation sollte den vernünftigerweise vorhersehbaren Missbrauch oder absichtlichen Missbrauch des KI-Systems dokumentieren.
+834
+Es kann sinnvoll sein, den Nutzen für böswillige Akteure, die das KI-System vorsätzlich missbrauchen, abzuschätzen.
+835
+Die Organisation sollte die möglichen Auswirkungen auf identifizierte interessierte Parteien ermitteln und dokumentieren
+836
+(siehe 5.7) als Folge des typischen, vernünftigerweise vorhersehbaren Missbrauchs des KI-Systems.
+837
+ISO/IEC DIS 42005:2024(E)
+Heruntergeladen von Benutzer (spacealpha@gmail.com)
+lOMoARcPSD|52109980
+
+[PAGE: 24]
+
+ISO/IEC 42005:####(X)
+© ISO/IEC 2024- Alle Rechte vorbehalten
+17
+5.9 Maßnahmen zum Umgang mit Schaden und Nutzen
+838
+Die Organisation sollte erwägen, sowohl technische als auch Maßnahmen auf Managementebene zu dokumentieren, um
+839
+Schaden und Nutzen im Rahmen der Folgenabschätzung für das KI-System zu dokumentieren, wie z.B:
+840
+a) Vorschläge für Maßnahmen, die auf technischer Ebene umgesetzt werden sollen. Diese Vorschläge sollten übernommen werden
+841
+im Rahmen der spezifischen Genehmigungsverfahren für das KI-System berücksichtigt werden (siehe 4.11).
+842
+BEISPIEL 1
+Ein Entwicklerteam schlägt vor, einer Benutzerregistrierung Verschlüsselung hinzuzufügen, nachdem es die
+843
+potenziell negative Auswirkungen auf die Privatsphäre.
+844
+BEISPIEL 2
+Es wird empfohlen, die Entwicklung oder Nutzung eines KI-Systems so zu steuern, dass
+845
+wie beabsichtigt ist und dass die Auswirkungen über den Lebenszyklus des KI-Systems hinweg berücksichtigt werden.
+846
+BEISPIEL 3
+Die Betreiber eines KI-Systems können sich dafür entscheiden, ein KI-System stillzulegen oder zu aktualisieren, wenn seine
+847
+Leistung nicht den Anforderungen entspricht. Die Stilllegung eines KI-Systems kann Auswirkungen haben auf
+848
+interessierte Parteien haben (z.B. finanzielle Verluste oder Gesundheitsrisiken).
+849
+b) Empfehlungen zur Berücksichtigung durch das Topmanagement bei der Festlegung und Durchsetzung
+850
+Unternehmensrichtlinien für KI-Systeme.
+851
+BEISPIEL 4
+Ein Entwicklerteam identifiziert potentielle Verwendungsmöglichkeiten für ein sprachgenerierendes System durch ein
+852
+potenziellen Kunden, der das System nutzt, um Angebote zu erstellen, die fälschlicherweise mit
+853
+lebenden Personen zugeordnet werden können. Ob Sie das System an diesen Kunden verkaufen, ist eine geschäftliche Entscheidung und kann
+854
+bei der Entscheidung über einen Vertrag berücksichtigt werden.
+855
+BEISPIEL 5
+Es werden Schulungen und Sensibilisierungen für diejenigen vorgeschlagen, die das KI-System nutzen, aber auch
+856
+andere Mitarbeiter der Organisation und andere relevante interessierte Parteien, wie z.B. impact related
+857
+auf die automatisierte Entscheidungsfindung. Schäden können durch fehlendes oder unzureichendes Bewusstsein und
+858
+Ausbildung.
+859
+BEISPIEL 6
+Organisationen können ihre Prioritäten für die Bewertung festlegen und
+860
+Infrastruktur schaffen, um die zu ergreifenden Maßnahmen auf diese Prioritäten abzustimmen. Dazu kann auch der Datenschutz gehören,
+861
+Arbeit, unerwünschte Voreingenommenheit, Diskriminierung, Transparenz, Rechenschaftspflicht oder andere Prinzipien.
+862
+Diese Empfehlungen sollten bei der Vorbereitung und Aktualisierung der Risikobehandlung berücksichtigt werden.
+863
+Plans berücksichtigen.
+864
+ISO/IEC DIS 42005:2024(E)
+Heruntergeladen von Benutzer (spacealpha@gmail.com)
+lOMoARcPSD|52109980
+
+[PAGE: 25]
+
+ISO/IEC 42005:####(X)
+© ISO/IEC 2024- Alle Rechte vorbehalten
+18
+Anhang A
+865
+(informativ)
+866
+867
+Leitfaden zur Verwendung mit ISO/IEC 42001
+868
+ISO/IEC 42001 enthält Anforderungen und Empfehlungen zu den Auswirkungen eines KI-Systems
+869
+Bewertung. Tabelle A.1 enthält Hinweise, wie dieses Dokument zur Unterstützung von ISO/IEC 42001 verwendet werden kann.
+870
+871
+Tabelle A.1. Für dieses Dokument relevante Abschnitte in ISO/IEC 42001
+872
+ISO/IEC
+42001:-
+Typ
+Zusammenfassung
+Dieses Dokument Anleitung dazu, wie dieses
+Dokument unterstützt
+ISO/IEC 42001:-
+6.1.4 KI-System
+Auswirkungen
+bewertung
+Anforderung
+ISO/IEC 42001:-, 6.1.4
+behandelt AI-System
+Folgenabschätzung im Allgemeinen
+allgemein, indem sie festlegt
+die Notwendigkeit für
+Organisationen die Notwendigkeit
+einen Folgenabschätzungs
+Folgenabschätzungsprozess einführen, um
+um die Auswirkungen eines
+KI-System auf
+Individuen und Gesellschaften hat.
+Darüber hinaus befasst es sich mit
+die Notwendigkeit einer
+Dokumentation.
+Diese Klausel können Sie
+auf Management
+Systemebene betrachtet werden und
+beschreibt die Notwendigkeit der
+die Betrachtung der Systemauswirkungen
+Bewertungen ganzheitlich
+und wie sie sich auf das
+organisatorisches Risiko.
+Ganzes
+Dokument
+Dieses Dokument bietet
+Anleitung, wie Sie
+die Anforderungen
+in ISO/IEC 42001:-, 6.1.4.
+Klausel 4 beschreibt
+Prozesse, die
+von einer
+Organisation umzusetzen sind, während Klausel
+5 Einzelheiten zur
+Dokumentation.
+Dieses Dokument kann
+in erster Linie gesehen werden als
+Organisationen zu helfen
+bei der Erstellung von Prozessen und
+Dokumentation für
+einzelnen Systemebenen
+Folgenabschätzungen.
+Allerdings können diese individuellen
+Bewertungen können jedoch
+ganzheitlich als die
+notwendigen Inputs für
+ISO/IEC 42001:-, 6.1.4.
+8.4 KI-System
+Auswirkungen
+bewertung
+Anforderung
+ISO/IEC 42001:-, 8.4
+verlangt, dass eine KI
+Systemauswirkungen
+Bewertung durchgeführt wird
+in geplanten Abständen oder
+wenn signifikante
+Änderungen erfolgt.
+Diese Klausel kann
+auf Management
+Systemebene betrachtet werden und
+beschreibt die Notwendigkeit der
+Auswirkungen auf das System
+Bewertungen ganzheitlich
+und wie sie sich auf das
+organisatorisches Risiko.
+4.3
+Abschnitt 4.3 in diesem Dokument
+beschreibt den Zeitpunkt und die
+möglichen Auslöser für eine KI
+Systemauswirkungen
+Bewertung.
+Dieses Dokument kann
+in erster Linie gesehen werden als
+Organisationen zu helfen
+bei der Erstellung von Prozessen und
+Dokumentation für
+einzelnen Systemebenen
+Folgenabschätzungen.
+Allerdings können diese individuellen
+Bewertungen können jedoch
+ganzheitlich als die
+notwendigen Inputs für
+ISO/IEC 42001:-, 8.4.
+ISO/IEC DIS 42005:2024(E)
+Heruntergeladen von Benutzer (spacealpha@gmail.com)
+lOMoARcPSD|52109980
+
+[PAGE: 26]
+
+ISO/IEC 42005:####(X)
+© ISO/IEC 2024- Alle Rechte vorbehalten
+19
+ISO/IEC
+42001:-
+Typ
+Zusammenfassung
+Dieses Dokument Anleitung dazu, wie dieses
+Dokument unterstützt
+ISO/IEC 42001:-
+B.2.2 AI-Richtlinie
+Umsetzung
+Anleitung
+Die Implementierungs
+Leitfaden besagt, dass die
+Notwendigkeit zur Durchführung einer AI
+Systemfolgenabschätzung
+Bewertung durchgeführt werden sollte
+in der KI
+Richtlinie.
+Das gesamte
+Dokument
+Dieses Dokument kann verwendet werden
+von
+Organisationen
+in
+zur Unterstützung ihrer KI-Politik.
+Im Einzelnen,
+Klausel
+4
+spezifiziert die Einrichtung und
+Umsetzung
+einer
+AI
+Systemfolgenabschätzung
+Prozess, der nützlich sein kann
+bei der Erstellung von KI-Richtlinien
+Dokumentation.
+B.3.2 Rollen und
+Verantwortlichkeiten
+Implementierung
+Anleitung
+Der Leitfaden zur Implementierung
+Leitfaden besagt, dass
+Organisationen sollten
+das KI-System berücksichtigen
+Folgenabschätzung berücksichtigen
+bei der Zuweisung von
+Rollen und
+Verantwortlichkeiten berücksichtigen.
+4.5
+Diese Klausel beschreibt
+zusätzliche Faktoren, die
+bei der Definition von
+Rollen und Verantwortlichkeiten
+für die Folgenabschätzung von AI-Systemen
+Bewertung
+B.4.2 Ressourcen
+Dokumentation
+Implementierung
+Anleitung
+Der Leitfaden zur Implementierung
+Anleitung listet die
+folgende Ressourcen:
+- AI-System
+Komponenten;
+- Daten-Ressourcen,
+- Tooling-Ressourcen
+- System- und
+Rechenleistung
+Ressourcen
+Humanressourcen.
+5.2
+Der Abschnitt 5.2 in diesem Dokument
+behandelt verschiedene Aspekte
+die in B.4.2 erwähnt werden, wie
+die Dokumentation dieser
+Elemente entscheidend sind für
+in der Lage zu sein, die
+Auswirkungen des Systems. Es ist
+in einigen Fällen möglich
+dass die Dokumentation der
+Ressourcen in der Folgenabschätzung
+der Folgenabschätzung die
+allgemeine Notwendigkeit der Dokumentation
+Ressourcen; Organisationen
+sollten dies selbst bestimmen
+selbst bestimmen.
+B.5.1 Allgemein
+Kontrolle
+Zielsetzung
+Das Ziel besagt, dass
+Auswirkungen von KI-Systemen auf
+Individuen und Gesellschaften
+die von dem KI-System betroffen sind
+bewertet werden sollten
+während seines gesamten Lebenszyklus.
+Ganzes
+Dokument
+Dieses Dokument bietet
+Anleitung, wie Sie
+dieses Ziel zu erreichen.
+B.5.2 KI-System
+Auswirkungen
+Bewertung
+Prozess
+Kontrolle und
+Implementierung
+Leitfaden
+Die Kontrolle betrifft
+den Prozess der KI
+Systemauswirkungen
+Bewertung.
+4
+Klausel 4 in diesem Dokument
+bietet eine Anleitung, wie
+zur Einrichtung und Implementierung von
+AI
+System
+Auswirkungen
+Bewertung
+Prozesse,
+Bereitstellung von
+detaillierte
+Anleitung
+zu
+wie
+Organisationen diese Kontrolle erfüllen können
+Kontrolle erfüllen können.
+B.5.3
+Dokumentation
+des KI-Systems
+Auswirkungen
+Bewertungen
+Kontrolle und
+Implementierung
+Leitfaden
+Die Kontrolle betrifft
+die Dokumentation der
+der Auswirkungen des AI-Systems
+Bewertung.
+5
+Klausel 5 in diesem Dokument
+bietet detaillierte
+Anleitung, wie
+Organisationen
+ein KI-System dokumentieren
+Folgenabschätzung.
+ISO/IEC DIS 42005:2024(E)
+Heruntergeladen von Benutzer (spacealpha@gmail.com)
+lOMoARcPSD|52109980
+
+[PAGE: 27]
+
+ISO/IEC 42005:####(X)
+© ISO/IEC 2024- Alle Rechte vorbehalten
+20
+ISO/IEC
+42001:-
+Typ
+Zusammenfassung
+Dieses Dokument Anleitung dazu, wie dieses
+Dokument unterstützt
+ISO/IEC 42001:-
+B.5.4 Bewertung von
+AI-System
+Auswirkungen auf
+Einzelpersonen und
+Gruppen von
+Einzelpersonen
+Kontrolle und
+Umsetzung
+Anleitung
+Die Kontrolle betrifft
+die Bewertung von
+potenziellen Auswirkungen
+auf Einzelpersonen
+und Gruppen von
+Einzelpersonen.
+5.7
+Verschiedene Aspekte
+die in B.5.4 erwähnt wurden, werden
+ausführlicher erörtert
+Einzelheiten in Abschnitt 5.7 dieses
+Dokuments behandelt.
+B.5.5 Bewertung
+Gesellschaftliche
+Auswirkungen von KI
+Systeme
+Kontrolle und
+Implementierung
+Anleitung
+Die Kontrolle betrifft
+die Bewertung von
+potenziellen sozialen Auswirkungen.
+5.7
+Verschiedene Aspekte
+die in B.5.5 erwähnt wurden, werden
+ausführlicher diskutiert
+in 5.7 dieses Dokuments
+Dokuments behandelt.
+B.6.1.3
+Prozesse für
+verantwortungsvolle
+Design und
+Entwicklung von
+KI-Systemen
+Implantation
+Steuerung
+Die Kontrolle betrifft
+die Implementierung und
+Dokumentation von
+Prozessen im KI-System
+Folgenabschätzung
+4, 5
+Beide Klauseln dieses
+Dokuments behandeln
+Integration der Folgenabschätzung
+Folgenabschätzung in den
+gesamten Lebenszyklus der KI
+873
+ISO/IEC DIS 42005:2024(E)
+Heruntergeladen von Benutzer (spacealpha@gmail.com)
+lOMoARcPSD|52109980
+
+[PAGE: 28]
+
+ISO/IEC 42005:####(X)
+© ISO/IEC 2024- Alle Rechte vorbehalten
+21
+Anhang B
+874
+(informativ)
+875
+876
+Leitfaden zur Verwendung mit ISO/IEC 23894
+877
+B.1 Allgemeines
+878
+ISO/IEC 23894 bietet einen Leitfaden zum Risikomanagement für Organisationen, die
+879
+KI-Systeme. ISO/IEC 23894 basiert auf ISO 31000, die das organisatorische Risikomanagement in
+880
+allgemein beschreibt. ISO/IEC 23894 erklärt, wie die Prinzipien, der Rahmen und die Prozesse von ISO 31000
+881
+im Kontext der künstlichen Intelligenz angewendet werden können. Dieser Anhang bietet eine Anleitung, wie ein KI-System Auswirkungen
+882
+Bewertung das Risikomanagement unterstützen kann.
+883
+B.2 Unterschiede zwischen Risikomanagement und Auswirkungen von KI-Systemen
+884
+Bewertung
+885
+ISO 31000 (und damit ISO/IEC 23894) beschreibt Risikomanagement als "koordinierte Aktivitäten, um die
+886
+und Kontrolle einer Organisation in Bezug auf Risiken" (ISO 31000:2018, 3.2). Risikomanagement ist "iterativ
+887
+und unterstützt Organisationen dabei, Strategien festzulegen, Ziele zu erreichen und fundierte Entscheidungen zu treffen" (ISO
+888
+31000:2018, Einleitung). Risikomanagement ist daher eine umfassende Managementaktivität, die sich mit
+889
+die Organisation als Ganzes, einschließlich der Art und Weise, wie KI-Systementwickler Entwicklungsprojekte durchführen, KI
+890
+Systemanbieter die Beziehung zu ihren Kunden verwalten und KI-Systembenutzer die Funktionen des Systems nutzen.
+891
+von KI-Systemen nutzen. Die Bewertung der Auswirkungen von KI-Systemen befasst sich, im Gegensatz zum allgemeinen Risikomanagement, mit potenziellen
+892
+Auswirkungen von KI-Systemen:
+893
+a) auf eine begrenzte Anzahl relevanter interessierter Parteien, nämlich Einzelpersonen, Gruppen von Einzelpersonen,
+894
+Gesellschaften und die Umwelt;
+895
+b) auf potenzielle oder konkrete Anwendungen von KI-Systemen im Gegensatz zur allgemeinen Governance und Verwaltung
+896
+Fragen wie Geschäftsstrategien, Compliance-Management, Finanzmanagement oder Technologie
+897
+Strategien.
+898
+Die Bewertung der Auswirkungen von KI-Systemen ist daher eher produkt- oder serviceorientiert als die Risikobewertung.
+899
+Management. Sie ist auch dafür gedacht, direkt von den mit der Entwicklung befassten Teams durchgeführt zu werden,
+900
+Bereitstellung oder dem technischen Management des KI-Systems befassen.
+901
+Folgenabschätzungen für KI-Systeme sind jedoch ein wichtiger Bestandteil des gesamten Risikomanagement-Lebenszyklus
+902
+und ein wesentlicher Beitrag zu einer erfolgreichen Risikobewertung.
+903
+B.3 Grundsätze des Risikomanagements in Bezug auf die Folgenabschätzung von KI-Systemen
+904
+Abbildung B.1 veranschaulicht die Beziehung zwischen ISO/IEC 23894 und diesem Dokument. Die verschiedenen Teile
+905
+in der Abbildung von ISO/IEC 23894 sind zu Referenzzwecken mit den entsprechenden Unterklauseln von ISO/IEC 23894 notiert.
+906
+ISO/IEC DIS 42005:2024(E)
+Heruntergeladen von Benutzer (spacealpha@gmail.com)
+lOMoARcPSD|52109980
+
+[PAGE: 29]
+
+ISO/IEC 42005:####(X)
+© ISO/IEC 2024- Alle Rechte vorbehalten
+22
+907
+Abbildung B.1 - Beziehung von ISO/IEC 23894:2023 zu diesem Dokument
+908
+ISO/IEC DIS 42005:2024(E)
+Heruntergeladen von Benutzer (spacealpha@gmail.com)
+lOMoARcPSD|52109980
+
+[PAGE: 30]
+
+ISO/IEC 42005:####(X)
+© ISO/IEC 2024- Alle Rechte vorbehalten
+23
+Anhang C
+909
+(informativ)
+910
+911
+Taxonomie von Schaden und Nutzen
+912
+Tabelle C.1 bietet der Organisation eine Vorlage für die Analyse potenzieller Schäden und Nutzen für KI
+913
+Systeme. Die Organisation sollte eine solche Anleitung für jede Art von relevanter interessierter Partei berücksichtigen
+914
+die für das KI-System relevant sind, das Gegenstand der Folgenabschätzung für das KI-System ist.
+915
+Tabelle C.1 - Schaden und Nutzen
+916
+Ziele
+Beispiel Schaden
+Beispiel Nutzen
+Rechenschaftspflicht
+Beaufsichtigung von
+erheblichen nachteiligen
+Auswirkungen
+- Bedrohung von Chancen und rechtlichem Status
+Status
+- Bedrohung für das menschliche Leben
+- Psychologischer oder physischer Schaden
+- Signifikante negative Auswirkungen werden erfasst
+bevor sie die Chance haben, Schaden anzurichten
+Eignung für
+Zweck
+- Relevante interessierte Parteien können oder
+das KI-System nicht nutzen können oder wollen
+- Das KI-System liefert falsche Ergebnisse
+und Daten
+- Je besser das KI-System das Problem löst
+Problem löst, das es lösen soll, desto
+größer
+der
+Nutzen
+für
+relevanten
+interessierten Parteien
+Datenverwaltung
+- Daten, die nicht angemessen verwaltet werden
+angemessen verwaltet werden (gekennzeichnet, getaggt,
+genehmigt, bewertet auf
+Angemessenheit usw.) können zu mangelnder
+Zweckmäßigkeit und unerwünschten
+Verzerrungen führen, neben anderen Problemen
+- Angemessene Datenverwaltung kann
+potenzielle Probleme aufdecken (unerwünschte
+Verzerrungen, mangelnde Eignung für den Zweck usw.)
+bevor die Modelle überhaupt trainiert werden,
+Dies führt zu besseren Ergebnissen für
+interessierten Parteien
+Menschliche Aufsicht
+und Kontrolle
+- Ein Mangel an menschlicher Aufsicht und Kontrolle
+kann dazu führen, dass Probleme und Bedrohungen
+verlängern
+- Richtige menschliche Aufsicht und Kontrolle
+ermöglicht es, Probleme frühzeitig zu erkennen und
+behoben
+- Menschliche Aufsicht und Kontrolle können zu
+zu neuen Erkenntnissen und KI-System
+Verbesserungen führen, von denen die relevanten
+interessierten Parteien
+Transparenz
+KI-System
+Erklärbarkeit
+- Relevante interessierte Parteien
+Fehlinterpretationen oder Missverständnisse
+beabsichtigter Zweck oder Verwendung des KI-Systems
+basierend auf den Ergebnissen
+- Relevante interessierte Parteien können sich nicht
+sich nicht darauf verlassen, dass das KI-System eine fundierte
+Entscheidungsfindung
+- Übermäßiges Vertrauen in die "Automatisierung"
+- Relevante interessierte Parteien sind in der Lage
+den Ergebnissen des KI-Systems vertrauen, um
+fundierte und genaue Entscheidungen zu treffen
+Kommunikation mit
+relevanten
+interessierte Parteien
+- Relevante interessierte Parteien sind sich nicht
+sind sich der Einschränkungen des AI-Systems bewusst,
+Parameter und Einstellungen, die eine
+verantwortungsvolle Nutzung ermöglichen
+- Kritische Sicherheitsinformationen sind nicht leicht
+zugänglich oder verständlich
+- Relevante interessierte Parteien können
+das KI-System konsequent umsetzen
+mit ihren verantwortungsvollen KI-Prinzipien durch
+das AI-System vollständig verstehen
+Abhängigkeiten
+- Das KI-System kann sicher verwendet werden von
+interessierten Parteien genutzt werden, oder die Sicherheits
+Verpflichtungen erfüllt werden können im Falle von
+Lieferanten und Drittparteien
+Offenlegung der KI
+Interaktion
+- Relevante interessierte Parteien können
+mit der KI unter der Annahme interagieren
+sie ist ein Mensch
+- Relevante interessierte Parteien können
+informierte Entscheidungen treffen und einwilligen
+mit KI zu interagieren, anstatt mit einem
+ISO/IEC DIS 42005:2024(E)
+Heruntergeladen von Benutzer (spacealpha@gmail.com)
+lOMoARcPSD|52109980
+
+[PAGE: 31]
+
+ISO/IEC 42005:####(X)
+© ISO/IEC 2024- Alle Rechte vorbehalten
+24
+Ziele
+Beispiel Schaden
+Beispiel Nutzen
+Menschen, einschließlich der Preisgabe von sensiblen
+Informationen
+Fairness
+Qualität der Dienstleistung
+- Die Qualität der Dienstleistungen ist uneinheitlich
+zwischen den demografischen Gruppen, was zu
+Ungleichheiten (bessere Leistung für
+einige Gruppen besser als andere)
+- Die Qualität der Dienstleistung ist in allen
+demografischen Gruppen und bietet neue
+Chancen für historisch
+unterprivilegierten Gruppen
+Zuteilung von
+Chancen
+- Die Ergebnisse des KI-Systems führen zu einer ungleichen
+Zuteilung von Chancen an verschiedene
+demografischen Gruppen
+- Die Ergebnisse des KI-Systems identifizieren und
+mildern die ungleiche Verteilung von
+Chancen für verschiedene
+demografischen Gruppen
+Minimierung von
+Stereotypisierung
+- KI-Systemausgaben führen zu
+Stereotypisierung, Auslöschung oder Herabwürdigung
+demographischer Gruppen
+- Die Ergebnisse des KI-Systems helfen bei der Identifizierung
+Trends bei der Stereotypisierung, Auslöschung oder
+demografischen Gruppen zu erkennen,
+die zu Lösungen führen
+Verlässlichkeit
+Misserfolge und
+Abhilfemaßnahmen
+- Fehler (sowohl vorhersehbare als auch
+unbekannt) haben keine Pläne zur Behebung
+und das KI-System, das kritische
+Dienste bereitstellt, ist nicht funktionsfähig
+- Ein gut geplantes System mit zuverlässigen
+Backup-, Ausfall- und Abhilfeplänen
+kann zu einer verbesserten System
+Zuverlässigkeit
+Überwachung,
+Rückmeldung,
+Bewertung
+- Fehlende Überwachung macht die Datensätze
+veraltet und die Ergebnisse des KI-Systems
+werden unzuverlässig
+- Die Bewertung von Systemen findet Fehler
+vor
+Sicherheit und Datenschutz
+Schutz der Privatsphäre
+und Einhaltung
+mit gesetzlichen
+Verpflichtungen und
+Richtlinien
+- Die zum Trainieren von Modellen verwendeten Daten sind nicht
+angemessen für den Datenschutz geschützt,
+und PII werden in Systemen verwendet, die
+sie nicht verwenden sollten
+- KI-Systeme werden trainiert auf
+angemessen de-identifizierte PII,
+um sicherzustellen, dass ein System
+Vorteile, die sich aus
+persönlichen Daten (z.B. Gesundheitsdaten),
+ohne das Risiko für den Einzelnen
+Sicherheit des Systems
+und Einhaltung
+mit gesetzlichen
+Verpflichtungen und
+Richtlinien
+- Schwachstellen in der Sicherheit des Systems
+können es böswilligen Akteuren ermöglichen, die Kontrolle zu übernehmen
+und das System für ungewollte Zwecke zu nutzen
+Zwecke zu nutzen
+- Kontinuierlich lernende Systeme können
+neue und aufkommende Sicherheitsbedrohungen vorhersagen und
+aufkommende Sicherheitsbedrohungen
+ISO/IEC DIS 42005:2024(E)
+Heruntergeladen von Benutzer (spacealpha@gmail.com)
+lOMoARcPSD|52109980
+
+[PAGE: 32]
+
+ISO/IEC 42005:####(X)
+© ISO/IEC 2024- Alle Rechte vorbehalten
+25
+Anhang D
+917
+(informativ)
+918
+919
+Abgleich der AI-Systemfolgenabschätzung mit anderen Abschätzungen
+920
+D.1 Einleitung
+921
+Der Zweck dieses Anhangs ist es, eine Anleitung für die Durchführung einer KI-Systemfolgenabschätzung zu geben
+922
+in Verbindung mit bestehenden oder verwandten Bewertungen in einer Weise, die die Anforderungen von ISO/IEC
+923
+42001 und bestehenden Bewertungsanforderungen (z.B. unter Berücksichtigung von Risiko, Recht, Sicherheit, Datenschutz, Datenethik,
+924
+Menschenrechten, Beschaffung und Architektur). Ziel ist es, die Überschneidung dieser Anforderungen zu erleichtern und zu vermeiden.
+925
+Bewertungen.
+926
+Wenn sie effizient und angemessen durchgeführt wird, kann eine KI-Systemfolgenabschätzung andere Abschätzungen ergänzen und auf diese zurückgreifen.
+927
+bestehenden Prüfungen ergänzen und auf diese zurückgreifen, möglicherweise mehrmals während des Lebenszyklus eines KI-Systems.
+928
+Dieser Anhang besteht aus drei Teilen, die einer Organisation bei der Durchführung einer KI-Folgenabschätzung helfen können
+929
+Bewertung helfen können:
+930
+- D.2 Leitfaden zur Koordinierung: Ein Leitfaden, der Organisationen bei der Koordinierung und dem Aufbau ihrer
+931
+Folgenabschätzungen zu koordinieren und darauf aufzubauen, um die Anforderungen von ISO/IEC 42001 effizienter und effektiver zu erfüllen.
+932
+über bestehende Folgenabschätzungsprozesse zu erfüllen und Doppelarbeit zu vermeiden.
+933
+- D.3 Leitfaden zur Anpassung der Folgenabschätzung: Ein Leitfaden, der einer Organisation helfen soll, zu ermitteln, wie bestehende
+934
+Folgenabschätzungen mit einer Folgenabschätzung für ein KI-System übereinstimmen und verbessert werden können, um den Prozess zu beschleunigen.
+935
+Prozess der Fertigstellung einer KI-Systemfolgenabschätzung zu beschleunigen.
+936
+- D.4 Abbildung: Ein visueller Leitfaden, der bei der Abbildung der vorgeschlagenen KI-Systemfolgenabschätzung hilft
+937
+mit den bestehenden oder verwandten Folgenabschätzungsprozessen einer Organisation zu verbinden. Dieser Leitfaden veranschaulicht
+938
+Koordinationsmöglichkeiten und reduziert Doppelarbeit, so dass eine KI-Systemfolgenabschätzung
+939
+effizienter in das gesamte Managementsystem einer Organisation eingebettet ist.
+940
+D.2 Leitfaden für die Koordinierung
+941
+Viele Organisationen führen bereits routinemäßig verschiedene Arten von Folgenabschätzungen in Bezug auf IT
+942
+Systeme durch (z.B. Risikobewertungen, Datenschutzbewertungen und Menschenrechtsbewertungen). Während jede
+943
+Bewertung einem bestimmten Zweck dient, haben diese Bewertungen oft Ähnlichkeiten, sowohl was die
+944
+interessierten Parteien und der benötigten Daten. Hinzufügen einer Folgenabschätzung speziell für KI
+945
+Systeme hinzuzufügen, ohne zu berücksichtigen, wie diese sinnvoll auf ̶ und zu ̶ anderen Bewertungen beitragen kann, die
+946
+erforderlich sind, kann zu unnötigen Reibungen, Kosten und Verzögerungen bei der verantwortungsvollen Nutzung von KI-Systemen führen.
+947
+Ein Ansatz, den eine Organisation nutzen kann, um Folgenabschätzungen zu beschleunigen und Doppelarbeit zu vermeiden, ist
+948
+Prozesse zu vermeiden, ist der Einsatz eines Koordinationsleitfadens, der dabei hilft, die relevanten Prüfungen, die für eine KI
+949
+Systemfolgenabschätzung erforderlich sind (z.B. Risiko, Recht, Sicherheit, Datenschutz, Datenethik, Menschenrechte, Beschaffung oder
+950
+Architektur). Um die Wirksamkeit eines Koordinationsleitfadens zu gewährleisten, kann eine Organisation die Ernennung eines
+951
+Koordinationsleiter oder ein Team mit Erfahrung in einem oder mehreren dieser Bereiche zu ernennen, das als Vermittler zwischen den
+952
+relevanten internen Funktionen.
+953
+Zu den wichtigsten Überlegungen bei der Implementierung eines Koordinationsleitfadens gehören:
+954
+a) Festlegung der zu überprüfenden KI-Systeme (d.h. der Systeme, die in den Anwendungsbereich der KI fallen)
+955
+Managementsystems fallen) und wie andere Folgenabschätzungen, die von der Behörde durchgeführt wurden oder noch durchgeführt werden
+956
+Organisation abgeschlossen wurden oder werden sollen, in diese Überprüfung einfließen können.
+957
+ISO/IEC DIS 42005:2024(E)
+Heruntergeladen von Benutzer (spacealpha@gmail.com)
+lOMoARcPSD|52109980
+
+[PAGE: 33]
+
+ISO/IEC 42005:####(X)
+© ISO/IEC 2024- Alle Rechte vorbehalten
+26
+ANMERKUNG Für weitere Hinweise zum Umfang einer KI-Systemfolgenabschätzung siehe ISO/IEC
+958
+42001:-, 5.1.
+959
+b) Folgenabschätzungen für KI-Systeme verschiedener Art können eine Reihe von externen relevanten
+960
+interessierten Parteien einbeziehen. Ein ganzheitlicher und koordinierter Ansatz für die Einbindung der relevanten
+961
+interessierten Parteien hilft der Organisation, kumulative und systemische Auswirkungen zu verstehen und zu verwalten.
+962
+Risiken. Dies wiederum steigert den Nutzen jeder einzelnen Bewertung.
+963
+c) Viele der Fragen, die in den verschiedenen Folgenabschätzungen behandelt werden, wie Cybersicherheit und
+964
+Datenschutz, sind die gleichen, werden aber durch eine etwas andere Brille betrachtet. Der Koordinierungsleitfaden
+965
+kann dabei helfen, herauszufinden, welche Rahmenbedingungen, Fragen und Daten tendenziell ähnlich sind und daher wiederholt werden
+966
+Folgenabschätzungen unterschiedlicher Art sind und wo es entscheidende Unterschiede gibt, die
+967
+verstanden und priorisiert werden können (z. B. Cybersicherheit und Datenschutz).
+968
+d) Gleichzeitige Überprüfungen können eine effizientere Nutzung der Ressourcen und schnellere Überprüfungen ermöglichen. Für
+969
+kann eine Datenschutz-Folgenabschätzung beispielsweise Informationen über Dateninformationen und
+970
+Qualität enthalten. Wenn eine solche Bewertung zusammen mit einer Überprüfung des KI-Systems durchgeführt wird, können die Auswirkungen auf
+971
+Auswirkungen auf Dateninformationen und -qualität in beiden Kontexten gleichzeitig berücksichtigt und gelöst werden.
+972
+e) Die Bestimmung der Komponenten eines KI-Systems kann Aufschluss über die Bandbreite der relevanten Auswirkungen
+973
+Folgenabschätzungen, die zur Folgenabschätzung eines KI-Systems beitragen können. Dies kann helfen bei
+974
+zu verstehen, wie mehrere KI-Systeme innerhalb einer Organisation voneinander abhängig sein können
+975
+die zu neuen Verhaltensweisen und Auswirkungen führen. Ein Ansatz besteht darin, KI-Systeme nach Anwendungsfall zu gruppieren.
+976
+Beispielsweise können alle Systeme, die für die Kreditvergabe genutzt werden, als Teil desselben Systems gruppiert werden.
+977
+Bewertung zusammengefasst werden. Diese Bewertung kann dann jedes Mal aktualisiert werden, wenn das KI-System geändert wird, so dass
+978
+einer Organisation, die Auswirkungen von Änderungen am KI-System zu bewerten und Doppelarbeit zu vermeiden. Wenn die
+979
+Komponenten eines KI-Systems identifiziert worden sind, kann eine Organisation besser erkennen
+980
+das Spektrum der Folgenabschätzungen, die für die Folgenabschätzung des KI-Systems relevant sind, besser identifizieren und so die
+981
+Koordination zwischen diesen Bewertungen.
+982
+D.3 Leitfaden zur Anpassung der Folgenabschätzung
+983
+Es gibt eine Vielzahl von Folgenabschätzungen, die Organisationen in der Regel im Rahmen der Erfüllung
+984
+ihrer bestehenden Bewertungsanforderungen durchführen. Bestehende Bewertungen, die von einer Organisation durchgeführt werden, können enthalten
+985
+wertvollen Input für eine KI-Systemfolgenabschätzung gemäß diesem Dokument enthalten.
+986
+Tabelle D.1 zeigt einen beispielhaften Prozess für die Entwicklung eines Leitfadens für die Folgenabschätzung.
+987
+Tabelle D.1 - Beispielprozess für einen Leitfaden zur Folgenabschätzung
+988
+Schritt 1. Identifizieren Sie die bestehenden Folgenabschätzungen, die für die vorgesehene KI-Folgenabschätzung
+Folgenabschätzung relevant sein können.
+Als allgemeine Richtlinie können bestehende Folgenabschätzungen, die für die durchgeführte KI-Folgenabschätzung relevant sein können
+umfassen:
+- alle Folgenabschätzungen zu Menschenrechten (HRIA), die sich auf eine Aktivität des Unternehmens beziehen, die in irgendeiner Weise
+die in irgendeiner Weise durch die zu bewertende KI erweitert oder beeinflusst wird;
+- alle Datenschutz-Folgenabschätzungen (PIA), die sich auf Daten beziehen, die in dem KI-System verarbeitet werden sollen;
+- alle Umweltverträglichkeitsprüfungen (UVP), die sich auf eine Umgebung beziehen, die das KI-System
+auswirken oder in dem es betrieben wird;
+- alle Sicherheitsfolgenabschätzungen (SIA), die sich auf Änderungen an einem organisatorischen Informationssystem beziehen
+die mit dem KI-System zusammenhängen;
+- alle finanziellen Folgenabschätzungen (FIA), die sich auf die Ausgaben und Einnahmen im Zusammenhang mit dem KI-System beziehen
+System bezieht;
+- alle Abschätzungen der geschäftlichen Auswirkungen (BIA), die sich auf die potenziellen Folgen für die Geschäfts
+Funktionen und Prozesse im Zusammenhang mit dem AI-System.
+Schritt 2. Ziehen Sie die relevanten Inhalte aus den bestehenden Folgenabschätzungen heraus, die für die
+für die durchzuführende KI-Folgenabschätzung relevant sein können.
+ISO/IEC DIS 42005:2024(E)
+Heruntergeladen von Benutzer (spacealpha@gmail.com)
+lOMoARcPSD|52109980
+
+[PAGE: 34]
+
+ISO/IEC 42005:####(X)
+© ISO/IEC 2024- Alle Rechte vorbehalten
+27
+989
+Tabelle D.2 ist eine Matrix, die veranschaulicht, wie eine Organisation die Übereinstimmung zwischen bestehenden Auswirkungen
+990
+Folgenabschätzung und einer KI-Systemfolgenabschätzung identifizieren kann. Ein Leitfaden zur Anpassung der Folgenabschätzung kann verwendet werden, um
+991
+welche Abschnitte oder Unterabschnitte einer KI-Systemfolgenabschätzung (wie in diesem Dokument beschrieben)
+992
+von bestehenden Folgenabschätzungen beeinflusst werden. Tabelle D.2 dient nur als Beispiel und kann
+993
+an die Bedürfnisse der Organisation angepasst werden.
+994
+Tabelle D.2 - Beispiel für eine visuelle Anleitung zur Ausrichtung einer Folgenabschätzung
+995
+Zeile
+Klausel von
+dieses
+Dokuments
+Unterklausel
+dieses
+Dokuments
+Potenzielle
+Eingaben
+aus einer
+relevanten
+HRIA
+Potenzielle
+Eingaben
+aus einer
+relevanten
+PIA
+Potenzielle
+Eingaben
+aus einer
+relevanten
+EIA
+Potenzielle
+Eingaben
+aus einer
+relevanten
+FIA
+Potenzielle
+Eingaben
+von einer
+relevanten
+BIA
+Potenzielle
+Eingaben
+von einer
+relevanten
+SIA
+1.
+5.1
+K.A.
+X
+X
+2.
+5.2
+5.2.1
+-
+-
+3.
+5.2.2
+-
+-
+4.
+5.2.3
+-
+-
+5.
+5.2.4
+6.
+5.2.5
+X
+X
+7.
+5.3
+5.3.1
+-
+-
+8.
+5.3.2
+X
+X
+9.
+5.4
+5.4.1
+-
+-
+10.
+5.4.2
+-
+X
+11.
+5.4.3
+-
+X
+12.
+5.4.4
+-
+X
+13.
+5.4.5
+-
+X
+14.
+5.5
+5.5.1
+X
+-
+15.
+5.5.2
+X
+X
+16.
+5.6
+5.6.1
+-
+-
+17.
+5.6.2
+X
+X
+18.
+5.7
+5.7.1
+-
+-
+19.
+5.7.2
+X
+X
+20.
+5.7.3
+X
+X
+21.
+5.8
+NICHT ZUTREFFEND
+X
+-
+Schlüssel
+X: Eingaben, die sich wahrscheinlich auf die KI-Systemfolgenabschätzung beziehen
+996
+D.4 Leitfaden zum Mapping
+997
+Ein Mapping-Leitfaden ist ein visueller Leitfaden, der mit erläuterndem Material unterlegt ist, um zu zeigen, wie ein KI-System
+998
+Folgenabschätzung in Verbindung mit anderen bestehenden oder verwandten Abschätzungen verwendet werden kann, um
+999
+- Wiederholungen und Doppelarbeit zu vermeiden und
+1000
+- Risikofaktoren für KI-Systeme umfassend anzugehen und zu identifizieren.
+1001
+Der Mapping-Leitfaden selbst ist ein einfacher konzeptioneller Ausgangspunkt, um Organisationen dabei zu helfen, ein integriertes
+1002
+Ansatz zur Folgenabschätzung zu verfolgen. Das Tool soll veranschaulichen:
+1003
+- das Spektrum bestehender Folgenabschätzungen, die sich auf die Auswirkungen von KI-Systemen beziehen oder mit ihnen überschneiden
+1004
+Abschätzungen;
+1005
+- wie verschiedene Folgenabschätzungen einen gemeinsamen Kontext haben (z.B. organisatorische Ziele, Management
+1006
+Ziele, Risiko oder Führung), während gleichzeitig Variationen in den Themenbereichen (z.B. KI, Datenschutz) berücksichtigt werden,
+1007
+Qualität oder Sicherheit).
+1008
+ISO/IEC DIS 42005:2024(E)
+Heruntergeladen von Benutzer (spacealpha@gmail.com)
+lOMoARcPSD|52109980
+
+[PAGE: 35]
+
+ISO/IEC 42005:####(X)
+© ISO/IEC 2024- Alle Rechte vorbehalten
+28
+Dies soll den Ansatz der Managementsystemnormen unterstützen und widerspiegeln, bei dem eine harmonisierte
+1009
+Struktur Gemeinsamkeiten sicherstellt und gleichzeitig Variationen zulässt.
+1010
+Abbildung D.1 veranschaulicht die mögliche Beziehung zwischen der AI-Systemfolgenabschätzung und anderen
+1011
+Folgenabschätzungen in verschiedenen Bereichen innerhalb der Organisation im weiteren Sinne. Sie soll eine
+1012
+mögliches Beispiel für eine Implementierung.
+1013
+1014
+Abbildung D.1 - Mögliche Beziehung zwischen KI-Systemfolgenabschätzung und anderen
+1015
+Bewertungen
+1016
+ISO/IEC DIS 42005:2024(E)
+Heruntergeladen von Benutzer (spacealpha@gmail.com)
+lOMoARcPSD|52109980
+
+[PAGE: 36]
+
+ISO/IEC 42005:####(X)
+© ISO/IEC 2024- Alle Rechte vorbehalten
+29
+Anhang E
+1017
+(informativ)
+1018
+1019
+Beispiele für Vorlagen zur Folgenabschätzung von KI-Systemen
+1020
+E.1 Allgemein
+1021
+Dieser Anhang enthält eine Beispielvorlage, die von einer Organisation verwendet und angepasst werden kann, um
+1022
+eine KI-Systemfolgenabschätzung zu dokumentieren. Die Felder in der Vorlage basieren auf den Unterabschnitten in
+1023
+Klausel 5. Es wird erwartet, dass mindestens eine KI-Systemfolgenabschätzung pro KI-System durchgeführt wird, das
+1024
+von der Organisation entwickelt oder verwendet wird. Es kann jedoch notwendig sein, mehrere KI-Systeme durchzuführen.
+1025
+Folgenabschätzungen für ein KI-System während des gesamten Lebenszyklus des KI-Systems durchzuführen.
+1026
+HINWEIS
+Es ist wahrscheinlich, dass die KI-Richtlinie der Organisation Anforderungen darüber enthält, wann eine KI
+1027
+System-Folgenabschätzung durchzuführen ist. In einigen Fällen kann die KI-Richtlinie der Organisation vorschreiben, dass ein KI-System
+1028
+Folgenabschätzung für jedes KI-System durchgeführt wird, das die Organisation entwickelt oder verwendet. In anderen
+1029
+kann die KI-Richtlinie der Organisation Bedingungen beschreiben, die, wenn sie erfüllt sind, eine KI-Systemfolgenabschätzung
+1030
+Folgenabschätzung durchgeführt werden muss.
+1031
+E.2 Beispiel für eine KI-Systemfolgenabschätzung
+1032
+KI-Systemfolgenabschätzung für [Systemname oder -kennung]
+1033
+In der KI-Systemfolgenabschätzung werden die potenziellen Auswirkungen eines KI-Systems auf Einzelpersonen, Gruppen von
+1034
+Einzelpersonen und Gesellschaften ermittelt; es wird bestimmt, ob die beabsichtigten Verwendungszwecke des KI-Systems sensibel sind oder
+1035
+eingeschränkt sind und ob zusätzliche Überprüfungen und Genehmigungen erforderlich sind. Die abgeschlossene KI-System-Folgenabschätzung
+1036
+Folgenabschätzungsdokumentation, einschließlich dieser Vorlage, erfordert die Genehmigung von [Name des Genehmigers einfügen oder
+1037
+verantwortlichen Abteilung].
+1038
+Abschnitt A - Systeminformationen
+1039
+Identifizierung des AI-Systems, das Gegenstand dieser AI-Systemfolgenabschätzung ist.
+1040
+Name oder Kennung des KI-Systems
+Andere AI-System-Identifikatoren
+Lebenszyklusphase des KI-Systems
+1041
+HINWEIS
+Das letzte Feld in diesem Abschnitt zur Identifizierung der Lebenszyklusphase des KI-Systems gibt an, in welcher Phase
+1042
+im Lebenszyklus des KI-Systems diese KI-Systemfolgenabschätzung durchgeführt wird. Es gibt auch an, in welcher
+1043
+Phase des Produktlebenszyklus diese Folgenabschätzung für das KI-System durchgeführt wird, wenn das KI-System
+1044
+von der Organisation entwickelt wird.
+1045
+Verfolgen Sie die Änderungshistorie dieser KI-Systemfolgenabschätzung.
+1046
+Autor
+Datum der letzten Änderung
+1047
+Identifizieren Sie die Prüfer und Genehmiger dieser KI-Systemfolgenabschätzung.
+1048
+Überprüft von
+Datum der Überprüfung
+Genehmigt von
+Datum der Genehmigung
+1049
+ISO/IEC DIS 42005:2024(E)
+Heruntergeladen von Benutzer (spacealpha@gmail.com)
+lOMoARcPSD|52109980
+
+[PAGE: 37]
+
+ISO/IEC 42005:####(X)
+© ISO/IEC 2024- Alle Rechte vorbehalten
+30
+AI-Systembeschreibung
+1050
+Enthalten Sie eine fundierte Beschreibung des KI-Systems, was das KI-System tut und wie es auf einer hohen Ebene funktioniert.
+1051
+Fügen Sie alle Anhänge bei, die Sie für nützlich halten, um den Gutachtern ein besseres Verständnis des KI-Systems und der
+1052
+Umgebung, in der es arbeitet, besser zu verstehen. Siehe 5.3.1.
+1053
+1054
+Merkmale des AI-Systems
+1055
+Fügen Sie eine detaillierte Beschreibung der Funktionen und Fähigkeiten des KI-Systems hinzu und ob diese geplant sind
+1056
+oder aktuell sind. Geben Sie alle Abhängigkeiten von anderen Systemen an. Siehe 5.3.2.
+1057
+Funktion des AI-Systems
+In der aktuellen Version?
+In einer geplanten Version? Geschätzte
+Version und Datum.
+1
+2
+3
+1058
+Details zu Abhängigkeiten von anderen Systemen.
+1059
+1060
+Zweck des KI-Systems
+1061
+Fügen Sie eine Beschreibung des Zwecks des KI-Systems hinzu, warum es entwickelt oder verwendet wird, den Wert
+1062
+des KI-Systems und welche Ergebnisse durch den Einsatz des KI-Systems erzielt werden sollen
+1063
+Systems erreicht werden sollen. Siehe 5.3.3.
+1064
+1065
+Verwendungszweck
+1066
+Geben Sie alle erwarteten Verwendungszwecke des KI-Systems an, für die es entwickelt wurde.
+1067
+Siehe 5.3.4.
+1068
+Name der beabsichtigten Nutzung
+Beschreibung des Verwendungszwecks. Enthält Informationen über den beabsichtigten
+Endbenutzer des AI-Systems, wo und wann das AI-System verwendet werden kann.
+verwendet werden kann.
+1
+2
+3
+ISO/IEC DIS 42005:2024(E)
+Heruntergeladen von Benutzer (spacealpha@gmail.com)
+lOMoARcPSD|52109980
+
+[PAGE: 38]
+
+ISO/IEC 42005:####(X)
+© ISO/IEC 2024- Alle Rechte vorbehalten
+31
+Unbeabsichtigte Verwendungen
+1069
+Fügen Sie Beschreibungen möglicher, vernünftigerweise vorhersehbarer Fehlanwendungen und vorsätzlicher Missbräuche hinzu. Siehe 5.3.5.
+1070
+Name der unbeabsichtigten Verwendung
+Beschreibung der unbeabsichtigten Nutzung. Geben Sie an, ob diese unbeabsichtigte Nutzung
+ein Missbrauch des KI-Systems ist oder ein Missbrauch des KI-Systems
+1
+2
+3
+1071
+Abschnitt B - Dateninformationen und Qualität
+1072
+Informationen zu den Daten
+1073
+Fügen Sie Informationen zu den Datensätzen hinzu, die mit dem AI-System verwendet werden. Siehe 5.4.2.
+1074
+Füllen Sie für jeden Datensatz die folgende Tabelle aus.
+1075
+Dataset-Name, Version, Größe
+Eigentümer des Datensatzes
+Zugriffsrechte für den Datensatz
+Beschreibung des Inhalts des Datensatzes
+Beabsichtigte und unbeabsichtigte Zwecke dieses Datensatzes,
+einschließlich der Frage, ob er für KI-Systeme verwendet werden darf
+Details zur Datenerfassung, woher, von wem,
+usw.
+Bekannte Risiken einer unerwünschten Verzerrung des Datensatzes und
+abgedeckten Regionen.
+Auf den Datensatz angewandte Verfahren zur Qualitätskontrolle
+Ist eine Datenschutz-Folgenabschätzung erforderlich?
+1076
+Dokumentation der Datenqualität
+1077
+Enthalten Sie Informationen über die Datenqualitätsmerkmale, die für jeden verwendeten Datensatz berücksichtigt wurden
+1078
+für das AI-System. Siehe 5.4.3.
+1079
+Erfüllte Datenqualitätsmerkmale
+Datenqualitätsmerkmal
+Bedeutung für das KI-System, Datum der Erfüllung, relevante Genehmigungen
+1
+2
+3
+Datenqualitätsmerkmale, die geplant sind, aber noch nicht erfüllt werden. Datum, bis zu dem das Datenqualitätsmerkmal
+erfüllt werden soll.
+Datenqualitätsmerkmal
+Bedeutung für das System, geplanter Termin für die Erfüllung
+1
+2
+3
+1080
+Abschnitt C - Informationen zu Algorithmen und Modellen
+1081
+Informationen über Algorithmen
+1082
+Fügen Sie Informationen über jeden Algorithmus hinzu, der für das KI-System entwickelt oder darin verwendet wird. Siehe 5.5.2
+1083
+und 5.5.3.
+1084
+Eignung des Algorithmus für die Zwecke des KI-Systems
+Systems und seiner beabsichtigten Verwendung
+Herkunft des Algorithmus
+Wissenschaftliche Gültigkeit des Algorithmus
+ISO/IEC DIS 42005:2024(E)
+Heruntergeladen von Benutzer (spacealpha@gmail.com)
+lOMoARcPSD|52109980
+
+[PAGE: 39]
+
+ISO/IEC 42005:####(X)
+© ISO/IEC 2024- Alle Rechte vorbehalten
+32
+Nutzung und Leistung in der realen Welt
+Anforderungen an die Daten
+Anfälligkeit für unerwünschte Ergebnisse
+1085
+Informationen über die im KI-System verwendeten Modelle
+1086
+Fügen Sie Informationen zu jedem Modell hinzu, das für das KI-System entwickelt oder darin verwendet wird. Siehe 5.5.4 und 5.5.5.
+1087
+a)
+Die Daten (z.B. Training, Test, Validierung) und die
+Algorithmen, die zur Entwicklung der Modelle verwendet wurden (siehe 5.5)
+b)
+Parameter und Methoden für das Training der Modelle
+c)
+Es sollten Schritte unternommen werden, um sicherzustellen, dass Datenproben
+zwischen Trainings- und Validierungs- oder Testdaten nicht wiederverwendet werden
+Testdatensätzen
+d)
+Schritte, die zum Trainieren, Testen und Validieren mehrerer
+Modelle
+e)
+Kriterien und Schritte zur Auswahl geeigneter
+Merkmale
+f)
+Kriterien für die Modellauswahl
+g)
+Metriken zur Bewertung der Leistung der Modelle
+Modelle (z.B.
+Genauigkeit,
+Empfänger
+operative
+Kennlinie, Konfusionsmatrix, mittlerer Wurzelfehler
+quadratischer Fehler oder durchschnittlicher Abstand zum Clustermittelpunkt
+Zentrum)
+h)
+Bewertung, ob die ausgewählten Modelle
+gut auf Produktionsdaten verallgemeinern
+i)
+Bewertung, ob die ausgewählten Modelle
+unerwünschte Verzerrungen oder andere Schäden verewigen oder verursachen
+j)
+Bewertung, ob die Ausgabedaten des Modells
+enthalten oder
+erstellt
+persönlich identifizierbare
+Informationen (PII)
+k)
+Robustheit und Widerstandsfähigkeit des Modells
+l)
+Maßnahmen zur Erkennung und Korrektur von Datenabweichungen (z.B.
+Neutraining des Modells, wenn die Produktionsdaten beginnen
+in ihren Eigenschaften von den ursprünglichen
+Trainingsdaten abweichen)
+m)
+Kriterien und Verfahren für die Umschulung des Modells
+n)
+Auswirkungen des kontinuierlichen Lernens (falls implementiert)
+1088
+Abschnitt D - Einsatzumgebung
+1089
+Geografisches Gebiet und Sprachen
+1090
+Fügen Sie Informationen zum geografischen, kulturellen oder rechtlichen Kontext der Länder oder Regionen hinzu, in denen die KI
+1091
+System eingesetzt wird. Siehe 5.6.1.
+1092
+a1)
+Wo das AI-System derzeit eingesetzt wird
+a2)
+Geplante Einsatzorte
+b)
+Gesetzliche Anforderungen für das geografische
+Einsatzgebiet
+c)
+Kulturelle
+Überlegungen des
+der
+geografischen
+Einsatzgebietes
+d)
+Im geografischen Einsatzgebiet gesprochene Sprachen
+und insbesondere für Systeme zur Verarbeitung natürlicher Sprache
+verarbeitende Systeme, welche Sprachen werden
+derzeit unterstützt werden
+ISO/IEC DIS 42005:2024(E)
+Heruntergeladen von Benutzer (spacealpha@gmail.com)
+lOMoARcPSD|52109980
+
+[PAGE: 40]
+
+ISO/IEC 42005:####(X)
+© ISO/IEC 2024- Alle Rechte vorbehalten
+33
+e)
+Verhaltensmuster, soziale und physiologische menschliche Merkmale
+die in einer Geographie konzentriert werden können (z.B. Mimik
+Gesichtsausdrücke, emotionale Zustände, Gesten oder Geräusche)
+1093
+Komplexität und Beschränkungen der Einsatzumgebung
+1094
+Geben Sie Informationen über die technische Einsatzumgebung des KI-Systems an.
+1095
+Wie wird das KI-System eingesetzt oder soll es eingesetzt werden?
+eingesetzt?
+Einschränkungen für den Einsatz
+1096
+Abschnitt E - Relevante interessierte Parteien
+1097
+Bestimmen Sie, wer die relevanten interessierten Parteien sind, die potenziell von dem KI-System betroffen sein können und
+1098
+Nutzung betroffen sind. Siehe 5.7.
+1099
+Externer Name der relevanten interessierten Partei (identifizieren
+Einzelpersonen, Gruppen von Einzelpersonen, gefährdete
+Gruppen, Gesellschaften, betroffene Personen, usw.)
+Rolle in Bezug auf das KI-System
+1
+2
+3
+1100
+Interne relevante interessierte Partei Name oder Team
+Name
+Rolle in Bezug auf das KI-System (z.B. Entwickler, System
+Eigentümer oder verantwortlich für die Aufsicht)
+1
+2
+3
+1101
+Abschnitt F - Tatsächlicher und potenzieller Nutzen und Schaden
+1102
+Bestimmen Sie für jede in Abschnitt E identifizierte betroffene Partei den tatsächlichen und potenziellen Nutzen und Schaden
+1103
+für diese Partei anhand der in 5.8.2 beschriebenen Perspektiven.
+1104
+Potenzieller Nutzen
+Potenzieller Schaden
+Rechenschaftspflicht
+Transparenz
+Fairness
+und
+Diskriminierung
+Datenschutz
+Verlässlichkeit
+Sicherheit
+Erklärbarkeit
+ISO/IEC DIS 42005:2024(E)
+Heruntergeladen von Benutzer (spacealpha@gmail.com)
+lOMoARcPSD|52109980
+
+[PAGE: 41]
+
+ISO/IEC 42005:####(X)
+© ISO/IEC 2024- Alle Rechte vorbehalten
+34
+Umwelt
+Auswirkungen
+1105
+Abschnitt G - Ausfälle von KI-Systemen und falscher Gebrauch oder Missbrauch
+1106
+Auswirkungen eines Ausfalls des KI-Systems
+1107
+Machen Sie für jede der in Abschnitt E genannten betroffenen Parteien Angaben zu den Auswirkungen von KI-Systemen
+1108
+Ausfall. Siehe 5.8.3.2.
+1109
+Beschreibung des Versagens
+Auswirkungen, die sich aus einem möglichen Ausfall ergeben (geben Sie an, ob es sich um
+ein Nutzen oder eine Auswirkung ist)
+1
+2
+3
+1110
+Auswirkungen von KI-Systemmissbrauch oder -verwendung
+1111
+Machen Sie für jede der in Abschnitt E genannten interessierten Parteien Angaben zu den Auswirkungen des KI-Systems
+1112
+oder Missbrauchs. Siehe 5.8.3.3.
+1113
+Beschreibung des Fehlgebrauchs oder Missbrauchs
+Auswirkungen eines möglichen Missbrauchs
+(geben Sie an, ob es sich um einen Nutzen oder eine Auswirkung handelt)
+1
+2
+3
+1114
+ISO/IEC DIS 42005:2024(E)
+Heruntergeladen von Benutzer (spacealpha@gmail.com)
+lOMoARcPSD|52109980
+
+[PAGE: 42]
+
+ISO/IEC 42005:####(X)
+© ISO/IEC 2024- Alle Rechte vorbehalten
+35
+Literaturverzeichnis
+1115
+[1]
+ISO 20282-1:2006, Leichte Bedienbarkeit von Produkten des täglichen Bedarfs - Teil 1: Gestaltungsanforderungen für
+1116
+Nutzungskontext und Benutzereigenschaften
+1117
+[2]
+ISO 10377:2013, Sicherheit von Verbraucherprodukten - Leitlinien für Lieferanten
+1118
+[3]
+ISO/IEC 38507:2022, Informationstechnologie - Steuerung der IT - Auswirkungen auf die Steuerung von
+1119
+der Nutzung von künstlicher Intelligenz durch Organisationen
+1120
+[4]
+ISO/IEC 23894:2023, Informationstechnik - Künstliche Intelligenz - Risikomanagement
+1121
+[5]
+ISO/IEC 42001:-6, Informationstechnik - Künstliche Intelligenz - Managementsystem
+1122
+[6]
+ISO/IEC 23751:2022, Informationstechnik - Cloud Computing und verteilte Plattformen -
+1123
+Rahmenwerk für Vereinbarungen zur gemeinsamen Nutzung von Daten (DSA)
+1124
+[7]
+ISO/IEC 5259-1:-7, Künstliche Intelligenz - Datenqualität für Analytik und maschinelles Lernen (ML)
+1125
+- Teil 1: Überblick, Terminologie und Beispiele
+1126
+[8]
+ISO/IEC 5259-2:-8, Künstliche Intelligenz - Datenqualität für Analytik und maschinelles Lernen (ML)
+1127
+- Teil 2: Maßnahmen zur Datenqualität
+1128
+[9]
+ISO/IEC 5259-4:-9, Künstliche Intelligenz - Datenqualität für Analytik und maschinelles Lernen (ML)
+1129
+- Teil 4: Rahmenwerk für Datenqualitätsprozesse
+1130
+[10]
+ISO/IEC 29134:2023, Informationstechnik - Sicherheitstechniken - Richtlinien für den Datenschutz
+1131
+Folgenabschätzung
+1132
+[11]
+ISO/IEC 27701:2019, Sicherheitstechniken - Erweiterung von ISO/IEC 27001 und ISO/IEC 27002 für
+1133
+Privacy Information Management - Anforderungen und Richtlinien
+1134
+[12]
+ISO/IEC Guide 51:2014, Sicherheitsaspekte - Leitlinien für ihre Aufnahme in Normen
+1135
+[13]
+ISO/IEC 2382:2015, Informationstechnologie - Wortschatz
+1136
+[14]
+ISO/IEC 12792:-10, Informationstechnik - Künstliche Intelligenz - Transparenz-Taxonomie von
+1137
+KI-Systemen
+1138
+[15]
+ISO/IEC TR 24027:2021, Informationstechnologie - Künstliche Intelligenz (KI) - Verzerrungen in KI-Systemen
+1139
+und KI-gestützte Entscheidungsfindung
+1140
+[16]
+Anthony M. Barrett, Dan Hendrycks, Jessica Newman und Brandie Nonnecke. Handlungsfähige Anleitung
+1141
+for High-Consequence AI Risk Management: Towards Standards Addressing AI Catastrophic Risks. ArXiv,
+1142
+2022 [eingesehen am 30. November 2023]. Verfügbar unter: https://arxiv.org/abs/2206.08966
+1143
+[17]
+Vereinte Nationen. Leitprinzipien zu Wirtschaft und Menschenrechten: Die Umsetzung der Vereinten
+1144
+Nations "Protect, Respect and Remedy" Framework. Büro des Hochkommissars der Vereinten Nationen für
+1145
+Menschenrechte
+Rights,
+2011
+[eingesehen
+30
+November
+2023].
+Verfügbar
+von:
+1146
+https://www.ohchr.org/en/publications/reference-publications/guiding-principles-business-and-
+1147
+menschenrechte
+1148
+[18]
+MITRE. Systemmissbrauch für externe Effekte. Adversarial Threat Landscape for Artificial-Intelligence
+1149
+Systems (ATLAS), MITRE, 2021 [eingesehen am 30. November 2023]. Verfügbar unter: https://atlas.mitre.org
+1150
+[19]
+Ram Shankar Siva Kumar, David O'Brien, Jeffrey Snover, Kendra Albert und Salome Viljoen.
+1151
+Failure Modes in Machine Learning. Microsoft, 2021 [eingesehen am 30. November 2023]. Verfügbar unter:
+1152
+https://docs.microsoft.com/en-us/security/engineering/failure-modes-in-machine-learning
+1153
+6 In Vorbereitung. Stand zum Zeitpunkt der Veröffentlichung: ISO/IEC FDIS 42001:2023.
+7 In Vorbereitung. Stand zum Zeitpunkt der Veröffentlichung: ISO/IEC DIS 5259-1:2023.
+8 In Vorbereitung. Stand zum Zeitpunkt der Veröffentlichung: ISO/IEC DIS 5259-2:2023.
+9 In Vorbereitung. Stand zum Zeitpunkt der Veröffentlichung: ISO/IEC DIS 5259-4:2023.
+10 In Vorbereitung. Stand zum Zeitpunkt der Veröffentlichung: ISO/IEC CD 12792:2023.
+ISO/IEC DIS 42005:2024(E)
+Heruntergeladen von Benutzer (spacealpha@gmail.com)
+lOMoARcPSD|52109980
+
+[PAGE: 43]
+
+ISO/IEC 42005:####(X)
+© ISO/IEC 2024- Alle Rechte vorbehalten
+36
+[20]
+Andrew Marshall, Jugal Parikh, Emre Kiciman und Ram Shankar Siva Kumar. AI/ML Pivots zum
+1154
+Security Development Lifecycle Bug Bar. Microsoft, 2021 [eingesehen am 30. November 2023]. Verfügbar unter:
+1155
+https://docs.microsoft.com/en-us/security/engineering/bug-bar-aiml
+1156
+[21]
+Andrew Marshall, Jugal Parikh, Emre Kiciman und Ram Shankar Siva Kumar. Modellierung von Bedrohungen
+1157
+AI/ML Systems and Dependencies. Microsoft, 2022 [eingesehen am 30. November 2023]. Verfügbar unter:
+1158
+https://docs.microsoft.com/en-us/security/engineering/threat-modeling-aiml
+1159
+[22]
+Partnership on AI. Publikationsnormen für verantwortungsvolle KI. Partnership on AI, 2023 [eingesehen 30
+1160
+November 2023], Verfügbar unter: https://partnershiponai.org/workstream/publication-norms-for-
+1161
+responsible-ai/
+1162
+[23]
+Organisation für wirtschaftliche Zusammenarbeit und Entwicklung. Messung der Umweltauswirkungen
+1163
+von Computern und Anwendungen der künstlichen Intelligenz: Der KI-Fußabdruck. OECD Digital Economy Papers, Nr. 341,
+1164
+OECD
+Veröffentlichung,
+Paris,
+2022
+[angesehen
+30
+November
+2023].
+Verfügbar
+von:
+1165
+https://doi.org/10.1787/7babf571-en
+1166
+[24]
+Alexandra Sasha Luccioni, Sylvain Viguier und Anne-Laure Ligozat. Schätzung des Kohlenstoff
+1167
+Footprint of BLOOM, a 176B Parameter Language Model. arXiv, 2022 [eingesehen am 30. November 2023].
+1168
+Verfügbar unter: https://arxiv.org/abs/2211.02001
+1169
+[25]
+Priti Gupta und Ben Morris. Wie Ranger KI zum Schutz der indischen Tiger einsetzen. BBC Nachrichten
+1170
+[online]. Mumbai, Indien, 2. August 2022 [eingesehen am 30. November 2023]. Verfügbar von:
+1171
+https://www.bbc.com/news/business-61824904
+1172
+[26]
+James Warner. Wie kann ein intelligentes Stromnetz mit Hilfe von künstlicher Intelligenz die Effizienz verbessern?
+1173
+CustomerThink [online]. Coronado, Vereinigte Staaten, 24. Februar 2021 [eingesehen am 18. November 2022].
+1174
+Verfügbar
+von:
+https://customerthink.com/how-cdoes-a-smart-grid-improve-efficiency-using-
+1175
+künstliche-intelligenz/
+1176
+1177
+ISO/IEC DIS 42005:2024(E)
+Heruntergeladen von Benutzer (spacealpha@gmail.com)
+lOMoARcPSD|52109980

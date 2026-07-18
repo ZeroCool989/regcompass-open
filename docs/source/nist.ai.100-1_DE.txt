@@ -1,0 +1,1960 @@
+[SOURCE_FILE: nist.ai.100-1_EN.pdf]
+[EXTRACTION_DATE: 2026-05-19 13:08:06]
+[NUM_PAGES: 48]
+[EXTRACTION_METHOD: pymupdf]
+[OCR_USED: no]
+[TRANSLATED_FROM: en -> de via DeepL 2026-05-19 13:54:44]
+
+[PAGE: 1]
+
+NIST AI 100-1
+Künstliche Intelligenz Risikomanagement
+Rahmenwerk (AI RMF 1.0)
+
+[PAGE: 2]
+
+NIST AI 100-1
+Künstliche Intelligenz Risikomanagement
+Rahmenwerk (AI RMF 1.0)
+Diese Veröffentlichung ist kostenlos erhältlich unter:
+https://doi.org/10.6028/NIST.AI.100-1
+Januar 2023
+U.S. Handelsministerium
+Gina M. Raimondo, Sekretärin
+Nationales Institut für Standards und Technologie
+Laurie E. Locascio, NIST-Direktorin und stellvertretende Handelsministerin für Standards und Technologie
+
+[PAGE: 3]
+
+Bestimmte kommerzielle Einrichtungen, Geräte oder Materialien können in diesem Dokument genannt werden, um ein
+ein experimentelles Verfahren oder Konzept angemessen zu beschreiben. Eine solche Identifizierung soll nicht bedeuten, dass das
+tion oder Befürwortung durch das National Institute of Standards and Technology bedeuten, noch soll sie implizieren, dass
+die Einrichtungen, Materialien oder Geräte notwendigerweise die besten für den jeweiligen Zweck sind.
+Diese Veröffentlichung ist kostenlos erhältlich unter: https://doi.org/10.6028/NIST.AI.100-1
+Aktualisierungszeitplan und Versionen
+Das Artificial Intelligence Risk Management Framework (AI RMF) soll ein lebendiges Dokument sein.
+Das NIST wird den Inhalt und die Nützlichkeit des Rahmenwerks regelmäßig überprüfen, um festzustellen, ob eine Aktualisierung angemessen ist.
+Es wird erwartet, dass eine Überprüfung mit formellen Beiträgen der KI-Gemeinschaft spätestens im Jahr 2028 stattfinden wird. Das
+Framework wird ein zweistufiges Versionssystem verwenden, um größere und kleinere Änderungen zu verfolgen und zu identifizieren. Die
+erste Nummer steht für die Generation des AI RMF und seiner Begleitdokumente (z.B. 1.0) und ändert sich nur bei
+ändert sich nur bei größeren Überarbeitungen. Geringfügige Überarbeitungen werden mit ".n" nach der Generationsnummer gekennzeichnet
+(z.B., 1.1). Alle Änderungen werden in einer Versionskontrolltabelle festgehalten, in der die Historie, einschließlich
+Versionsnummer, Datum der Änderung und Beschreibung der Änderung. Das NIST plant, das AI RMF Playbook
+häufig. Kommentare zum AI RMF Playbook können jederzeit per E-Mail an AIframework@nist.gov gesendet werden.
+und werden halbjährlich überprüft und integriert.
+
+[PAGE: 4]
+
+Inhaltsverzeichnis
+Zusammenfassung
+1
+Teil 1: Grundlegende Informationen
+4
+1
+Risiko einrahmen
+4
+1.1
+Verständnis und Umgang mit Risiken, Auswirkungen und Schäden
+4
+1.2
+Herausforderungen für das KI-Risikomanagement
+5
+1.2.1
+Risikomessung
+5
+1.2.2
+Risikotoleranz
+7
+1.2.3
+Risikopriorisierung
+7
+1.2.4
+Organisatorische Integration und Management von Risiken
+8
+2
+Publikum
+9
+3
+KI-Risiken und Vertrauenswürdigkeit
+12
+3.1
+Gültig und verlässlich
+13
+3.2
+Sicher
+14
+3.3
+Sicher und widerstandsfähig
+15
+3.4
+Verantwortlich und transparent
+15
+3.5
+Erklärbar und interpretierbar
+16
+3.6
+Verbesserte Privatsphäre
+17
+3.7
+Fair - mit schädlichen Vorurteilen verwaltet
+17
+4
+Wirksamkeit der AI RMF
+19
+Teil 2: Kern und Profile
+20
+5
+AI RMF-Kern
+20
+5.1
+Regieren
+21
+5.2
+Karte
+24
+5.3
+Maßnahme
+28
+5.4
+Verwalten
+31
+6
+AI RMF-Profile
+33
+Anhang A: Beschreibungen der Aufgaben der KI-Akteure aus den Abbildungen 2 und 3
+35
+Anhang B: Wie sich KI-Risiken von traditionellen Software-Risiken unterscheiden
+38
+Anhang C: KI-Risikomanagement und Mensch-KI-Interaktion
+40
+Anhang D: Attribute der KI-RMF
+42
+Liste der Tabellen
+Tabelle 1 Kategorien und Unterkategorien für die GOVERN-Funktion.
+22
+Tabelle 2 Kategorien und Unterkategorien für die Funktion MAP.
+26
+Tabelle 3 Kategorien und Unterkategorien für die Funktion MEASURE.
+29
+Tabelle 4 Kategorien und Unterkategorien für die Funktion MANAGE.
+32
+i
+
+[PAGE: 5]
+
+NIST AI 100-1
+AI RMF 1.0
+Liste der Abbildungen
+Abb. 1
+Beispiele für potenzielle Schäden im Zusammenhang mit KI-Systemen. Vertrauenswürdige KI-Systeme
+und ihre verantwortungsvolle Nutzung können negative Risiken mindern und zu Vorteilen
+Vorteile für Menschen, Organisationen und Ökosysteme beitragen.
+5
+Abb. 2
+Lebenszyklus und Schlüsseldimensionen eines KI-Systems. Abgeändert von OECD
+(2022) OECD Framework for the Classification of AI systems - OECD
+Digital Economy Papers. Die beiden inneren Kreise zeigen die Schlüsseldimensionen von KI-Systemen.
+mensionen und der äußere Kreis zeigt die Phasen des KI-Lebenszyklus. Idealerweise beginnt das Risikomanagement
+Idealerweise beginnt das Risikomanagement mit der Funktion Planen und Entwerfen in der Anwendung
+Kontext und wird während des gesamten Lebenszyklus des KI-Systems durchgeführt. Siehe Abbildung 3
+für repräsentative KI-Akteure.
+10
+Abb. 3
+KI-Akteure in den verschiedenen Phasen des KI-Lebenszyklus. Siehe Anhang A für detaillierte Beschreibungen
+der Aufgaben der KI-Akteure, einschließlich Details zu Test-, Bewertungs-, Verifizierungs- und
+tion und Validierungsaufgaben. Beachten Sie, dass die KI-Akteure in der Dimension KI-Modell
+(Abbildung 2) getrennt sind, und zwar die, die die Modelle erstellen und verwenden
+Modelle erstellen und verwenden, von denen, die die Modelle verifizieren und validieren, getrennt sind.
+11
+Abb. 4
+Merkmale von vertrauenswürdigen KI-Systemen. Gültig & Zuverlässig ist eine notwendige
+Bedingung für Vertrauenswürdigkeit und wird als Basis für andere Vertrauenswürdigkeitseigenschaften dargestellt.
+ness-Merkmale dargestellt. Rechenschaftspflichtig & Transparent ist als vertikaler Kasten dargestellt
+weil es sich auf alle anderen Merkmale bezieht.
+12
+Abb. 5
+Funktionen organisieren die KI-Risikomanagement-Aktivitäten auf der höchsten Ebene, um
+KI-Risiken zu steuern, abzubilden, zu messen und zu verwalten. Governance ist als Querschnittsfunktion konzipiert
+eine Querschnittsfunktion sein, die die anderen drei Funktionen informiert und in sie einfließt.
+Funktionen.
+20
+Seite ii
+
+[PAGE: 6]
+
+NIST AI 100-1
+AI RMF 1.0
+Zusammenfassung
+Technologien der künstlichen Intelligenz (KI) haben ein erhebliches Potenzial, die Gesellschaft und das Leben der Menschen zu verändern.
+und das Leben der Menschen zu verändern - von Handel und Gesundheit über Transport und Cybersicherheit bis hin zur Umwelt und unserem Planeten.
+Umwelt und unseren Planeten. KI-Technologien können ein inklusives Wirtschaftswachstum fördern und den
+wissenschaftlichen Fortschritt unterstützen, der die Bedingungen in unserer Welt verbessert. KI-Technologien bergen jedoch
+Allerdings bergen KI-Technologien auch Risiken, die sich negativ auf Einzelpersonen, Gruppen, Organisationen, Gemeinschaften
+Gemeinschaften, die Gesellschaft, die Umwelt und den Planeten auswirken können. Wie die Risiken für andere Arten von Technologien können auch die KI
+können KI-Risiken auf unterschiedliche Weise entstehen und können als lang- oder kurzfristig, hoch
+oder geringe Wahrscheinlichkeit, systemisch oder lokal und mit großen oder geringen Auswirkungen.
+Die KI-RMF bezeichnet ein KI-System als ein technisches oder maschinenbasiertes System, das
+das für eine bestimmte Reihe von Zielen Ergebnisse wie Vorhersagen, Empfehlungen oder Entscheidungen generieren kann.
+Empfehlungen oder Entscheidungen generieren kann, die reale oder virtuelle Umgebungen beeinflussen. KI-Systeme sind so konzipiert
+mit unterschiedlichem Grad an Autonomie zu arbeiten (Adaptiert von: OECD Recommendation
+zu KI:2019; ISO/IEC 22989:2022).
+Es gibt zwar unzählige Standards und bewährte Praktiken, die Unternehmen dabei helfen, die Risiken zu mindern
+von herkömmlicher Software oder informationsbasierten Systemen zu minimieren, sind die Risiken von KI-Systemen in vielerlei Hinsicht
+in vielerlei Hinsicht einzigartig (siehe Anhang B). KI-Systeme können zum Beispiel auf Daten trainiert werden, die
+Daten trainiert werden, die sich im Laufe der Zeit ändern können, manchmal in erheblichem Maße und unerwartet, was sich auf die Funktion des Systems auswirkt.
+und die Vertrauenswürdigkeit des Systems in einer Weise beeinflussen, die schwer zu verstehen ist. KI-Systeme und die Kontexte
+Kontexte, in denen sie eingesetzt werden, sind häufig komplex, so dass es schwierig ist, Fehler zu erkennen und darauf zu
+auf Fehler zu reagieren, wenn sie auftreten. KI-Systeme sind von Natur aus sozio-technisch, das heißt
+sie werden durch gesellschaftliche Dynamiken und menschliches Verhalten beeinflusst. KI-Risiken - und Vorteile - können
+können sich aus dem Zusammenspiel von technischen Aspekten in Verbindung mit gesellschaftlichen Faktoren ergeben, die damit zusammenhängen
+die Art und Weise, wie ein System genutzt wird, seine Interaktionen mit anderen KI-Systemen, wer es betreibt und der
+sozialen Kontext, in dem es eingesetzt wird.
+Diese Risiken machen KI zu einer einzigartigen Herausforderung für den Einsatz und die Nutzung der Technologie sowohl für Unternehmen als auch für die Gesellschaft.
+Organisationen und in der Gesellschaft. Ohne angemessene Kontrollen können KI-Systeme Ungerechtigkeiten verstärken, aufrechterhalten
+oder ungerechte oder unerwünschte Ergebnisse für Einzelpersonen und Gemeinschaften verstärken oder verschlimmern. Mit
+Mit geeigneten Kontrollen können KI-Systeme ungerechte Ergebnisse abmildern und steuern.
+Das KI-Risikomanagement ist eine Schlüsselkomponente der verantwortungsvollen Entwicklung und Nutzung von KI-Systemen.
+temen. Verantwortungsvolle KI-Praktiken können dazu beitragen, die Entscheidungen über Design, Entwicklung und Nutzung von KI-Systemen an den beabsichtigten Zielen auszurichten.
+Entwicklung und den Einsatz von KI-Systemen mit den beabsichtigten Zielen und Werten in Einklang zu bringen. Zu den Kernkonzepten der verantwortungsvollen KI gehören
+phasieren den Menschen in den Mittelpunkt, soziale Verantwortung und Nachhaltigkeit. Das KI-Risikomanagement kann
+verantwortungsvolle Anwendungen und Praktiken vorantreiben, indem es Unternehmen und ihre internen Teams dazu veranlasst
+die KI entwerfen, entwickeln und einsetzen, dazu bringen, kritischer über den Kontext und mögliche
+oder unerwartete negative und positive Auswirkungen. Das Verständnis und der Umgang mit den Risiken von KI
+Systemen zu verstehen und zu managen, wird dazu beitragen, die Vertrauenswürdigkeit zu erhöhen und damit das Vertrauen der Öffentlichkeit zu stärken.
+Seite 1
+
+[PAGE: 7]
+
+NIST AI 100-1
+AI RMF 1.0
+Soziale Verantwortung kann sich auf die Verantwortung der Organisation "für die Auswirkungen
+ihrer Entscheidungen und Aktivitäten auf die Gesellschaft und die Umwelt durch transparentes
+und ethisches Verhalten" (ISO 26000:2010). Nachhaltigkeit bezieht sich auf den "Zustand des
+globalen Systems, einschließlich ökologischer, sozialer und wirtschaftlicher Aspekte, in dem die
+Bedürfnisse der Gegenwart erfüllt werden, ohne die Fähigkeit künftiger Generationen zu gefährden, ihre
+ihre eigenen Bedürfnisse zu befriedigen" (ISO/IEC TR 24368:2022). Verantwortungsvolle KI soll
+zu einer Technologie führen, die auch gerecht und verantwortungsbewusst ist. Die Erwartung ist, dass
+organisatorische Praktiken im Einklang mit "professioneller Verantwortung" durchgeführt werden.
+die von der ISO als ein Ansatz definiert wird, der "sicherstellen soll, dass Fachleute, die KI-Systeme und -Anwendungen entwerfen,
+KI-Systeme und -Anwendungen oder KI-basierte Produkte oder Systeme entwerfen, entwickeln oder einsetzen,
+ihre einzigartige Position erkennen, um Einfluss auf die Menschen, die Gesellschaft und die Zukunft der KI auszuüben
+der KI" (ISO/IEC TR 24368:2022).
+Wie vom National Artificial Intelligence Initiative Act of 2020 (P.L. 116-283),
+ist es das Ziel der KI RMF, den Organisationen, die KI-Systeme entwerfen, entwickeln, einsetzen oder nutzen, eine Ressource zur Verfügung zu stellen,
+die KI-Systeme entwerfen, entwickeln, einsetzen oder nutzen, eine Ressource zur Verfügung zu stellen, um die zahlreichen Risiken der KI zu bewältigen und eine vertrauensvolle und verantwortungsvolle Entwicklung und Nutzung von KI zu fördern.
+und verantwortungsvolle Entwicklung und Nutzung von KI-Systemen zu fördern. Das Rahmenwerk ist als
+freiwillig, rechtebewahrend, nicht sektorspezifisch und anwendungsunabhängig sein und bietet Flexibilität
+Organisationen jeder Größe, in allen Sektoren und in der gesamten Gesellschaft die Möglichkeit, die
+Ansätze des Frameworks umzusetzen.
+Das Framework wurde entwickelt, um Organisationen und Einzelpersonen - im Folgenden als
+KI-Akteure - mit Ansätzen auszustatten, die die Vertrauenswürdigkeit von KI-Systemen erhöhen, und zu helfen
+den verantwortungsvollen Entwurf, die Entwicklung, den Einsatz und die Nutzung von KI-Systemen im Laufe der Zeit zu fördern.
+KI-Akteure werden von der Organisation für wirtschaftliche Zusammenarbeit und Entwicklung (OECD) definiert
+(OECD) als "diejenigen, die eine aktive Rolle im Lebenszyklus von KI-Systemen spielen, einschließlich Organisationen und
+tionen und Einzelpersonen, die KI einsetzen oder betreiben" [OECD (2019) Artificial Intelligence in
+Society-OECD iLibrary] (Siehe Anhang A).
+Die KI-RMF soll praktisch sein, sich an die KI-Landschaft anpassen, wenn die KI-Technologien
+weiterentwickelt und von Organisationen in unterschiedlichem Maße und mit unterschiedlichen Kapazitäten operationalisiert werden
+so dass die Gesellschaft von der KI profitieren kann, während sie gleichzeitig vor ihren potenziellen
+Schäden geschützt ist.
+Das Rahmenwerk und die unterstützenden Ressourcen werden aktualisiert, erweitert und verbessert auf der Grundlage
+Technologie, der weltweiten Normenlandschaft und der Erfahrungen und Rückmeldungen der KI-Gemeinschaft
+Erfahrungen und Feedback. Das NIST wird das AI RMF und die dazugehörigen Anleitungen weiterhin mit
+geltenden internationalen Standards, Richtlinien und Praktiken abzustimmen. Während die KI-RMF zum Einsatz kommt
+werden zusätzliche Erkenntnisse gewonnen, die in zukünftige Aktualisierungen und zusätzliche Ressourcen einfließen werden.
+Das Framework ist in zwei Teile gegliedert. Teil 1 erörtert, wie Organisationen die
+die Risiken im Zusammenhang mit KI einordnen können und beschreibt die Zielgruppe. Anschließend werden KI-Risiken und Vertrauenswürdigkeit
+ness analysiert, wobei die Merkmale vertrauenswürdiger KI-Systeme umrissen werden, darunter
+Seite 2
+
+[PAGE: 8]
+
+NIST AI 100-1
+AI RMF 1.0
+gültig und zuverlässig, sicher und widerstandsfähig, rechenschaftspflichtig und transparent, erklärbar und
+interpretierbar, datenschutzfreundlich und fair, wobei schädliche Verzerrungen vermieden werden.
+Teil 2 umfasst den "Kern" des Frameworks. Er beschreibt vier spezifische Funktionen, die helfen sollen
+Organisationen dabei zu helfen, die Risiken von KI-Systemen in der Praxis zu bewältigen. Diese Funktionen - GOVERN,
+MAP, MEASURE und MANAGE - werden weiter in Kategorien und Unterkategorien untergliedert.
+gorien. Während GOVERN für alle Phasen der KI-Risikomanagement-Prozesse und -Verfahren von Organisationen gilt, ist MAP eine
+Verfahren und Prozessen von Unternehmen gilt, können die Funktionen MAP, MEASURE und MANAGE in KI
+system-spezifischen Kontexten und in bestimmten Stadien des KI-Lebenszyklus angewendet werden.
+Weitere Ressourcen im Zusammenhang mit dem Framework sind im AI RMF Playbook enthalten,
+das über die NIST AI RMF Website verfügbar ist:
+https://www.nist.gov/itl/ai-risk-management-framework.
+Die Entwicklung des AI RMF durch das NIST in Zusammenarbeit mit dem privaten und öffentlichen Sek- tor
+toren ist auf die breiteren KI-Bemühungen ausgerichtet und steht im Einklang mit dem National AI
+Initiative Act of 2020, den Empfehlungen der National Security Commission on Artificial Intelligence
+Empfehlungen und dem Plan for Federal Engagement in Developing Technical Standards and Related Tools
+zugehörige Werkzeuge. Die Einbeziehung der KI-Gemeinschaft während der Entwicklung dieses Rahmenwerks
+- über Antworten auf eine formelle Anfrage nach Informationen, drei gut besuchte Workshops,
+öffentliche Kommentare zu einem Konzeptpapier und zwei Entwürfen des Rahmenwerks, Diskussionen auf mehreren
+öffentlichen Foren und vielen Treffen in kleinen Gruppen - hat die Entwicklung des AI
+RMF 1.0 sowie in die KI-Forschung, -Entwicklung und -Evaluierung, die vom NIST und anderen
+anderen. Prioritäre Forschung und zusätzliche Anleitungen, die dieses Rahmenwerk verbessern, werden
+in einer zugehörigen AI Risk Management Framework Roadmap festgehalten werden, zu der NIST und
+die breitere Gemeinschaft beitragen können.
+Seite 3
+
+[PAGE: 9]
+
+NIST AI 100-1
+AI RMF 1.0
+Teil 1: Grundlegende Informationen
+1.
+Der Rahmen des Risikos
+Das KI-Risikomanagement bietet einen Weg, um die potenziellen negativen Auswirkungen von KI-Systemen zu minimieren,
+wie z.B. Bedrohungen der bürgerlichen Freiheiten und Rechte, zu minimieren und gleichzeitig Möglichkeiten zur Maximierung der
+positiven Auswirkungen. Der Umgang mit KI-Risiken und potenziellen negativen Auswirkungen sowie deren Dokumentation
+Auswirkungen kann zu vertrauenswürdigeren KI-Systemen führen.
+1.1
+Verstehen und Angehen von Risiken, Auswirkungen und Schäden
+Im Zusammenhang mit der KI-RMF bezieht sich Risiko auf das zusammengesetzte Maß der Wahrscheinlichkeit eines Ereignisses
+des Eintretens eines Ereignisses und des Ausmaßes oder Grades der Folgen des entsprechenden Ereignisses.
+Die Auswirkungen bzw. Folgen von KI-Systemen können positiv, negativ oder beides sein und können
+und können zu Chancen oder Bedrohungen führen (Angepasst aus: ISO 31000:2018). Bei der Betrachtung der
+negativen Auswirkungen eines potenziellen Ereignisses ist das Risiko eine Funktion von 1) der negativen Auswirkung oder dem Ausmaß des Schadens, der entstehen würde.
+oder Ausmaß des Schadens, der entstehen würde, wenn der Umstand oder das Ereignis eintritt, und 2) der Wahrscheinlichkeit des
+des Eintretens (Angepasst aus: OMB Circular A-130:2016). Negative Auswirkungen oder Schäden können
+von Einzelpersonen, Gruppen, Gemeinschaften, Organisationen, der Gesellschaft, der Umwelt
+und den Planeten.
+"Risikomanagement bezieht sich auf koordinierte Aktivitäten zur Steuerung und Kontrolle einer Organisation in Bezug auf Risiken.
+tion im Hinblick auf Risiken" (Quelle: ISO 31000:2018).
+Während sich Risikomanagementprozesse im Allgemeinen mit negativen Auswirkungen befassen, bietet dieses Rahmenwerk
+Ansätze, um die zu erwartenden negativen Auswirkungen von KI-Systemen zu minimieren und Möglichkeiten
+Möglichkeiten zur Maximierung der positiven Auswirkungen. Ein effektives Management des Risikos potenzieller Schäden
+könnte zu vertrauenswürdigeren KI-Systemen führen und potenzielle Vorteile für die Menschen (Individuen, Gemeinschaften und die Gesellschaft) freisetzen.
+Menschen, Gemeinschaften und die Gesellschaft), Organisationen und Systeme/Ökosysteme. Risikomanagement
+kann KI-Entwickler und -Nutzer in die Lage versetzen, die Auswirkungen zu verstehen und die inhärenten Grenzen und Unsicherheiten ihrer Systeme zu berücksichtigen.
+und Unsicherheiten in ihren Modellen und Systemen zu berücksichtigen, was wiederum die allgemeine
+Systemleistung und Vertrauenswürdigkeit sowie die Wahrscheinlichkeit, dass KI-Technologien
+in einer Weise genutzt werden, die vorteilhaft ist.
+Die KI-RMF ist so konzipiert, dass sie sich mit neuen Risiken befasst, sobald diese auftauchen. Diese Flexibilität ist besonders
+besonders wichtig, wenn die Auswirkungen nicht leicht vorhersehbar sind und die Anwendungen sich weiterentwickeln. Während
+Während einige Risiken und Vorteile der KI bekannt sind, kann es schwierig sein, die negativen Auswirkungen
+und das Ausmaß des Schadens. Abbildung 1 zeigt Beispiele für mögliche Schäden, die mit KI-Systemen verbunden sein können.
+mit KI-Systemen verbunden sein können.
+Beim KI-Risikomanagement sollte berücksichtigt werden, dass die Menschen davon ausgehen, dass KI-Systeme funktionieren
+- und gut funktionieren - in allen Bereichen. Zum Beispiel werden KI-Systeme, ob sie nun richtig sind oder nicht, als
+dass sie objektiver sind als Menschen oder dass sie über mehr Fähigkeiten verfügen als
+als allgemeine Software.
+Seite 4
+
+[PAGE: 10]
+
+NIST AI 100-1
+AI RMF 1.0
+Abb. 1. Beispiele für potenzielle Schäden im Zusammenhang mit KI-Systemen. Vertrauenswürdige KI-Systeme und ihre
+verantwortungsvolle Nutzung können negative Risiken mindern und zu Vorteilen für Menschen, Organisationen und
+Ökosysteme beitragen.
+1.2
+Herausforderungen für das KI-Risikomanagement
+Im Folgenden werden mehrere Herausforderungen beschrieben. Sie sollten bei der Verwaltung von Risiken berücksichtigt werden
+Risiken im Streben nach KI-Vertrauenswürdigkeit berücksichtigen.
+1.2.1
+Risikomessung
+KI-Risiken oder Ausfälle, die nicht genau definiert oder angemessen verstanden werden, sind schwer zu messen.
+quantitativ oder qualitativ zu messen. Die Unfähigkeit, KI-Risiken angemessen zu messen, bedeutet nicht
+bedeutet nicht, dass ein KI-System notwendigerweise ein hohes oder niedriges Risiko darstellt. Einige Risikomessungen
+Herausforderungen umfassen:
+Risiken im Zusammenhang mit Software, Hardware und Daten Dritter: Daten oder Systeme von Drittanbietern
+können die Forschung und Entwicklung beschleunigen und den Technologiewechsel erleichtern. Sie können aber auch
+können die Risikomessung erschweren. Risiken können sowohl von Daten, Software oder Hardware von Drittanbietern ausgehen
+Hardware selbst als auch von der Art ihrer Nutzung ausgehen. Die von der Organisation, die das KI-System entwickelt, verwendeten Risikometriken oder Methoden
+das KI-System entwickelt, stimmen möglicherweise nicht mit den Risikomessungen oder -methoden überein, die von der
+der Organisation, die das System einsetzt oder betreibt. Außerdem ist die Organisation, die das
+das KI-System entwickelt, die verwendeten Risikokennzahlen oder -methoden möglicherweise nicht transparent. Risiko
+Risikomessung und -management können dadurch erschwert werden, wie Kunden Daten oder Systeme von Dritten
+Daten oder Systeme von Drittanbietern in KI-Produkte oder -Dienstleistungen integrieren, insbesondere ohne ausreichende interne
+Governance-Strukturen und technische Sicherheitsvorkehrungen. Unabhängig davon sollten alle Parteien und KI-Akteure
+Risiken in den KI-Systemen, die sie entwickeln, einsetzen oder als eigenständige oder integrierte
+Komponenten.
+Aufkommende Risiken aufspüren: Das Risikomanagement von Organisationen wird durch folgende Maßnahmen verbessert
+aufkommende Risiken identifizieren und verfolgen und Techniken zu ihrer Messung in Betracht ziehen.
+Seite 5
+
+[PAGE: 11]
+
+NIST AI 100-1
+AI RMF 1.0
+Ansätze zur Bewertung der Auswirkungen von KI-Systemen können KI-Akteuren helfen, potenzielle Auswirkungen
+oder Schäden in bestimmten Kontexten zu verstehen.
+Verfügbarkeit zuverlässiger Metriken: Der derzeitige Mangel an einem Konsens über robuste und überprüfbare
+Messmethoden für Risiko und Vertrauenswürdigkeit und die Anwendbarkeit auf verschiedene KI-Anwendungsfälle
+Anwendungsfälle, ist eine Herausforderung bei der Messung von KI-Risiken. Mögliche Fallstricke bei der Messung von
+negative Risiken oder Schäden zu messen, ist die Tatsache, dass die Entwicklung von Metriken oft ein institutionelles Unterfangen ist.
+ein institutionelles Unterfangen ist und unbeabsichtigt Faktoren widerspiegeln kann, die nichts mit den zugrunde liegenden Auswirkungen zu tun haben. Unter
+Darüber hinaus können Messansätze zu stark vereinfacht werden, manipuliert werden, entscheidende Nuancen vermissen lassen, auf unerwartete Weise
+sich auf unerwartete Weise verlassen oder die Unterschiede zwischen den betroffenen Gruppen und Kontexten nicht berücksichtigen.
+und Kontexten.
+Ansätze zur Messung der Auswirkungen auf eine Bevölkerung funktionieren am besten, wenn sie anerkennen, dass Kontexte
+dass Kontexte eine Rolle spielen, dass Schäden verschiedene Gruppen oder Untergruppen unterschiedlich betreffen können und dass Gemeinschaften
+oder andere Untergruppen, die geschädigt werden können, nicht immer direkte Nutzer eines Systems sind.
+Risiko in verschiedenen Phasen des KI-Lebenszyklus: Die Messung des Risikos in einer früheren Phase des KI
+Lebenszyklus kann zu anderen Ergebnissen führen als die Messung des Risikos in einer späteren Phase; einige Risiken können
+Einige Risiken sind zu einem bestimmten Zeitpunkt latent vorhanden und können sich mit der Anpassung und Weiterentwicklung von KI-Systemen erhöhen. Außerdem
+Darüber hinaus können verschiedene KI-Akteure im KI-Lebenszyklus unterschiedliche Risikoperspektiven haben.
+So kann beispielsweise ein KI-Entwickler, der KI-Software zur Verfügung stellt, wie z.B. vor-trainierte Modifikationen, eine andere Risikoperspektive haben.
+Modelle zur Verfügung stellt, kann eine andere Risikoperspektive haben als ein KI-Akteur, der für den Einsatz
+dieses vortrainierte Modell in einem bestimmten Anwendungsfall einsetzt. Solche Anwender erkennen möglicherweise nicht, dass ihre
+dass ihre speziellen Anwendungen andere Risiken mit sich bringen könnten als die, die der ursprüngliche Entwickler wahrgenommen hat.
+Alle beteiligten KI-Akteure tragen gemeinsam die Verantwortung für den Entwurf, die Entwicklung und den Einsatz eines
+vertrauenswürdiges KI-System zu entwerfen, zu entwickeln und einzusetzen, das für den Zweck geeignet ist.
+Risiken in der realen Welt: Während die Messung von KI-Risiken in einem Labor oder einer kontrollierten
+kontrollierten Umgebung wichtige Erkenntnisse vor dem Einsatz liefern kann, unterscheiden sich diese Messungen möglicherweise
+von den Risiken, die in der realen Welt auftreten.
+Undurchschaubarkeit: Unberechenbare KI-Systeme können die Risikomessung erschweren. Unergründlichkeit
+kann eine Folge der undurchsichtigen Natur von KI-Systemen sein (begrenzte Erklärbarkeit oder Interpretierbarkeit)
+Interpretierbarkeit), mangelnder Transparenz oder Dokumentation bei der Entwicklung oder dem Einsatz von KI-Systemen oder
+inhärente Unsicherheiten in KI-Systemen.
+Menschliche Ausgangssituation: Risikomanagement von KI-Systemen, die den Menschen ergänzen oder ersetzen sollen
+oder ersetzen sollen, z.B. bei der Entscheidungsfindung, erfordert eine Form von Vergleichsmaßstäben
+Vergleich. Dies ist schwer zu systematisieren, da KI-Systeme andere Aufgaben ausführen - und
+Aufgaben anders ausführen als Menschen.
+Seite 6
+
+[PAGE: 12]
+
+NIST AI 100-1
+AI RMF 1.0
+1.2.2
+Risikotoleranz
+Die AI RMF kann zwar zur Priorisierung von Risiken verwendet werden, sie schreibt jedoch keine Risikotoleranz vor. Risiko
+Die Risikotoleranz bezieht sich auf die Bereitschaft der Organisation oder des KI-Akteurs (siehe Anhang A), das Risiko zu tragen
+Risiko zu tragen, um seine Ziele zu erreichen. Die Risikotoleranz kann durch gesetzliche oder regula-
+Anforderungen beeinflusst werden (Angepasst von: ISO GUIDE 73). Die Risikotoleranz und der Grad des Risikos, der
+für Organisationen oder die Gesellschaft akzeptabel ist, sind in hohem Maße kontext-, anwendungs- und
+spezifisch. Die Risikotoleranz kann durch Richtlinien und Normen beeinflusst werden, die von den Eigentümern von KI-Systemen
+temeigentümern, Organisationen, Branchen, Gemeinschaften oder politischen Entscheidungsträgern festgelegt wurden. Risikotoleranzen werden
+sich im Laufe der Zeit wahrscheinlich ändern, wenn sich KI-Systeme, Richtlinien und Normen weiterentwickeln. Verschiedene Organisati- onen
+Organisationen können aufgrund ihrer jeweiligen Prioritäten und Ressourcen unterschiedliche Risikotoleranzen haben.
+Ressourcenüberlegungen.
+Neue Erkenntnisse und Methoden, um Schaden/Kosten-Nutzen-Abwägungen besser zu informieren, werden weiterhin
+von Unternehmen, Regierungen, Hochschulen und der Zivilgesellschaft weiterentwickelt und diskutiert werden.
+In dem Maße, wie die Herausforderungen bei der Festlegung von KI-Risikotoleranzen ungelöst bleiben, kann es
+kann es Kontexte geben, in denen ein Rahmenwerk für das Risikomanagement noch nicht ohne weiteres zur Abschwächung
+negativen KI-Risiken.
+Das Rahmenwerk soll flexibel sein und die bestehenden Risikopraktiken ergänzen
+die sich an den geltenden Gesetzen, Vorschriften und Normen orientieren sollten. Organisationen
+sollten bestehende Vorschriften und Richtlinien für Risikokriterien, Toleranz und
+Reaktion, die durch organisatorische, fachliche, disziplinäre, sektorale oder professionelle
+Anforderungen. In einigen Sektoren oder Branchen gibt es möglicherweise festgelegte Definitionen von Schäden oder
+Dokumentations-, Berichts- und Offenlegungspflichten festgelegt. Innerhalb von Sektoren,
+kann das Risikomanagement von den bestehenden Richtlinien für bestimmte Anwendungen und
+Anwendungsfälle abhängen. Wo es keine etablierten Richtlinien gibt, sollten Organisationen
+eine angemessene Risikotoleranz definieren. Sobald die Toleranz definiert ist, kann diese AI RMF verwendet werden
+zur Verwaltung von Risiken und zur Dokumentation von Risikomanagementprozessen verwendet werden.
+1.2.3
+Priorisierung von Risiken
+Der Versuch, negative Risiken vollständig zu eliminieren, kann in der Praxis kontraproduktiv sein, da
+nicht alle Vorfälle und Ausfälle eliminiert werden können. Unrealistische Erwartungen in Bezug auf Risiken können
+Organisationen dazu verleiten, Ressourcen in einer Weise zuzuweisen, die die Risikoklassifizierung ineffizient oder
+unpraktisch macht oder knappe Ressourcen verschwendet. Eine Kultur des Risikomanagements kann Unternehmen helfen
+zu erkennen, dass nicht alle KI-Risiken gleich sind und dass Ressourcen zielgerichtet zugewiesen werden können.
+Ein praktikables Risikomanagement legt klare Richtlinien für die Bewertung der Vertrauenswürdigkeit fest
+eines jeden KI-Systems, das ein Unternehmen entwickelt oder einsetzt. Die Richtlinien und Ressourcen sollten
+auf der Grundlage des bewerteten Risikoniveaus und der potenziellen Auswirkungen eines KI-Systems priorisiert werden. Das Ausmaß
+in dem ein KI-System angepasst oder auf den spezifischen Nutzungskontext des
+Der Umfang, in dem ein KI-System angepasst oder auf den spezifischen Kontext des Einsatzes durch den KI-Anwender zugeschnitten ist, kann ein wichtiger Faktor sein.
+Seite 7
+
+[PAGE: 13]
+
+NIST AI 100-1
+AI RMF 1.0
+Bei der Anwendung der KI-RMF sind die Risiken, die die Organisation für die
+KI-Systeme in einem bestimmten Nutzungskontext am höchsten sind, müssen am dringendsten priorisiert und am gründlichsten
+gründlichsten Risikomanagement-Prozess. In Fällen, in denen ein KI-System unannehmbare
+negatives Risikoniveau aufweist - etwa wenn erhebliche negative Auswirkungen drohen, schwere Schäden
+oder katastrophale Risiken vorhanden sind - sollten Entwicklung und Einsatz
+auf sichere Art und Weise eingestellt werden, bis die Risiken ausreichend beherrscht werden können. Wenn die Entwicklung eines KI-Systems
+Entwicklung, Einsatz und Anwendungsfälle eines KI-Systems in einem bestimmten Kontext als risikoarm eingestuft werden, kann dies
+kann dies auf eine potenziell niedrigere Priorisierung hindeuten.
+Die Risikopriorisierung kann sich zwischen KI-Systemen, die für die direkte Interaktion mit Menschen entwickelt oder eingesetzt werden
+mit Menschen zu interagieren, im Vergleich zu KI-Systemen, die dies nicht tun. Eine höhere anfängliche Prioritätensetzung
+kann in Situationen erforderlich sein, in denen das KI-System auf großen Datensätzen trainiert wird, die aus
+sensiblen oder geschützten Daten besteht, wie z.B. persönlich identifizierbare Informationen, oder wenn die Ergebnisse der
+der KI-Systeme direkte oder indirekte Auswirkungen auf den Menschen haben. KI-Systeme, die für die Interaktion
+nur mit Computersystemen zu interagieren und die mit nicht sensiblen Datensätzen trainiert wurden (z.B. mit Daten
+Daten aus der physischen Umgebung) trainiert werden, können eine geringere anfängliche Priorisierung erfordern. Nichtsdestotrotz -
+Dennoch bleibt die regelmäßige Bewertung und Priorisierung von Risiken auf der Grundlage des Kontexts wichtig, da
+KI-Systeme, die nicht auf den Menschen ausgerichtet sind, können nachgelagerte Auswirkungen auf die Sicherheit oder die Gesellschaft haben.
+Das Restrisiko - definiert als das nach der Risikobehandlung verbleibende Risiko (Quelle: ISO GUIDE 73) -
+hat direkte Auswirkungen auf die Endnutzer oder die betroffenen Personen und Gemeinschaften. Die Dokumentation von Restrisiken
+Risiken muss der Systemanbieter die Risiken des Einsatzes des KI-Produkts vollständig berücksichtigen
+und informiert die Endbenutzer über mögliche negative Auswirkungen der Interaktion mit dem System.
+1.2.4
+Organisatorische Integration und Management von Risiken
+KI-Risiken sollten nicht isoliert betrachtet werden. Verschiedene KI-Akteure haben je nach ihrer Rolle unterschiedliche Zuständigkeiten
+je nach ihrer Rolle im Lebenszyklus unterschiedliche Verantwortlichkeiten und ein unterschiedliches Bewusstsein. Organisationen, die zum Beispiel
+Organisationen, die ein KI-System entwickeln, haben oft keine Informationen darüber, wie das System genutzt werden kann.
+verwendet wird. Das KI-Risikomanagement sollte in die umfassenderen Strategien und Prozesse des
+Risikomanagementstrategien und -prozesse integriert werden. Die Behandlung von KI-Risiken zusammen mit anderen kritischen Risiken,
+wie Cybersicherheit und Datenschutz, zu behandeln, führt zu einem ganzheitlicheren Ergebnis und organisatorischen
+Effizienzen.
+Die KI-RMF kann zusammen mit verwandten Anleitungen und Rahmenwerken für das Management folgender Risiken verwendet werden
+KI-Systemrisiken oder allgemeineren Unternehmensrisiken. Einige Risiken im Zusammenhang mit KI-Systemen sind allgemein
+auch bei anderen Arten von Softwareentwicklung und -einsatz. Beispiele für sich überschneidende Risiken
+Beispiele für sich überschneidende Risiken sind: Bedenken hinsichtlich des Datenschutzes im Zusammenhang mit der Verwendung der zugrundeliegenden Daten zum Trainieren von KI-Systemen; die en
+die Energie- und Umweltauswirkungen, die mit den hohen Anforderungen an die Ressourcen verbunden sind;
+Sicherheitsbedenken in Bezug auf die Vertraulichkeit, Integrität und Verfügbarkeit des Systems und der
+Trainings- und Ausgabedaten sowie die allgemeine Sicherheit der zugrunde liegenden Software und Hardware
+für KI-Systeme.
+Seite 8
+
+[PAGE: 14]
+
+NIST AI 100-1
+AI RMF 1.0
+Organisationen müssen geeignete Mechanismen zur Rechenschaftspflicht einrichten und aufrechterhalten,
+Verantwortungsmechanismen, Rollen und Verantwortlichkeiten, Kultur und Anreizstrukturen einrichten und aufrechterhalten, damit das Risikomanagement effektiv ist.
+wirksam zu sein. Die Verwendung der AI RMF allein wird nicht zu diesen Veränderungen führen oder die entsprechenden
+Anreize. Ein effektives Risikomanagement wird durch organisatorisches Engagement auf
+und erfordert möglicherweise einen kulturellen Wandel innerhalb einer Organisation oder Branche. Darüber hinaus
+Außerdem stehen kleine bis mittelgroße Organisationen, die KI-Risiken verwalten oder die KI-RMF umsetzen
+je nach ihren Fähigkeiten und Ressourcen mit anderen Herausforderungen konfrontiert als große Organisationen.
+Ressourcen.
+2.
+Zielgruppe
+Die Identifizierung und das Management von KI-Risiken und potenziellen Auswirkungen - sowohl positiv als auch negativ - erfordert
+erfordert ein breites Spektrum von Perspektiven und Akteuren über den gesamten KI-Lebenszyklus hinweg. Idealerweise repräsentieren die KI-Akteure
+eine Vielzahl von Erfahrungen, Fachkenntnissen und Hintergründen repräsentieren und demographisch
+demographisch und disziplinär unterschiedlichen Teams. Das AI RMF soll von KI-Akteuren genutzt werden
+über den gesamten KI-Lebenszyklus und alle Dimensionen hinweg.
+Die OECD hat einen Rahmen für die Klassifizierung von KI-Lebenszyklusaktivitäten nach
+fünf sozio-technischen Schlüsseldimensionen entwickelt, die jeweils Eigenschaften aufweisen, die für die KI-Politik und -Verwaltung
+nance, einschließlich Risikomanagement, relevant sind [OECD (2022) OECD Framework for the Classification
+von KI-Systemen - OECD Digital Economy Papers]. Abbildung 2 zeigt diese Dimensionen,
+die vom NIST für die Zwecke dieses Rahmenwerks leicht modifiziert wurden. Die NIST-Änderung hebt
+hebt die Bedeutung von Test-, Bewertungs-, Verifizierungs- und Validierungsprozessen (TEVV)
+während des gesamten KI-Lebenszyklus und verallgemeinert den operativen Kontext eines KI-Systems.
+Die in Abbildung 2 dargestellten KI-Dimensionen sind der Anwendungskontext, Daten und Input, KI
+Modell sowie Aufgabe und Output. An diesen Dimensionen sind KI-Akteure beteiligt, die
+die das Design, die Entwicklung, den Einsatz, die Bewertung und die Nutzung von KI-Systemen durchführen oder verwalten und die
+KI-Risikomanagement vorantreiben, sind die primäre Zielgruppe der KI-RMF.
+Repräsentative KI-Akteure in den verschiedenen Dimensionen des Lebenszyklus sind in Abbildung 3 aufgeführt und in Anhang A ausführlich beschrieben.
+in Anhang A detailliert beschrieben. Innerhalb der KI-RMF arbeiten alle KI-Akteure zusammen, um Risiken zu managen
+und die Ziele einer vertrauenswürdigen und verantwortungsvollen KI zu erreichen. KI-Akteure mit TEVV-spezifischem
+Fachwissen sind in den gesamten KI-Lebenszyklus integriert und können besonders von dem Rahmenwerk profitieren.
+dem Rahmenwerk profitieren. Regelmäßig durchgeführte TEVV-Aufgaben können Erkenntnisse in Bezug auf technische,
+gesellschaftlicher, rechtlicher und ethischer Standards oder Normen liefern und dabei helfen, Auswirkungen zu antizipieren und
+Bewertung und Verfolgung aufkommender Risiken. Als regelmäßiger Prozess innerhalb eines KI-Lebenszyklus ermöglicht TEVV
+sowohl die Korrektur von Zwischenergebnissen als auch das post-hoc Risikomanagement.
+Die Dimension Menschen & Planet in der Mitte von Abbildung 2 steht für die Menschenrechte und das
+das breitere Wohl der Gesellschaft und des Planeten. Die KI-Akteure in dieser Dimension umfassen
+ein separates KI-RMF-Publikum, das das Hauptpublikum informiert. Diese KI-Akteure können
+Handelsverbände, Organisationen, die Standards entwickeln, Forscher und Interessengruppen gehören,
+Seite 9
+
+[PAGE: 15]
+
+NIST AI 100-1
+AI RMF 1.0
+Abb. 2. Lebenszyklus und Schlüsseldimensionen eines KI-Systems. Abgeändert von OECD (2022) OECD
+Framework for the Classification of AI systems - OECD Digital Economy Papers. Die beiden inneren
+Kreise zeigen die Schlüsseldimensionen von KI-Systemen und der äußere Kreis zeigt die Phasen des KI-Lebenszyklus. Idealerweise,
+beginnt das Risikomanagement mit der Planungs- und Designfunktion im Anwendungskontext und wird
+während des gesamten Lebenszyklus des KI-Systems durchgeführt. Siehe Abbildung 3 für repräsentative KI-Akteure.
+Umweltgruppen, Organisationen der Zivilgesellschaft, Endnutzer und potenziell betroffene Personen und Gemeinden.
+Einzelpersonen und Gemeinschaften. Diese Akteure können:
+- dabei helfen, den Kontext zu liefern und die potenziellen und tatsächlichen Auswirkungen zu verstehen;
+- eine Quelle für formale oder quasi-formale Normen und Richtlinien für das Risikomanagement von KI sein;
+- die Grenzen für den Einsatz von KI festlegen (technisch, gesellschaftlich, rechtlich und ethisch); und
+- die Diskussion über die Kompromisse fördern, die notwendig sind, um gesellschaftliche Werte und Prioritäten abzuwägen
+und Prioritäten im Zusammenhang mit bürgerlichen Freiheiten und Rechten, Gleichberechtigung, der Umwelt und dem Planeten sowie der
+Wirtschaft.
+Erfolgreiches Risikomanagement hängt von einem Gefühl der kollektiven Verantwortung der KI
+Akteuren, wie in Abbildung 3 dargestellt. Die in Abschnitt 5 beschriebenen RMF-Funktionen der KI erfordern unterschiedliche
+Perspektiven, Disziplinen, Berufe und Erfahrungen. Unterschiedliche Teams tragen zu einem
+zu einem offeneren Austausch von Ideen und Annahmen über den Zweck und die Funktionen der Technologie -
+und machen diese impliziten Aspekte deutlicher. Diese breitere kollektive Perspektive schafft
+Möglichkeiten, Probleme aufzudecken und bestehende und entstehende Risiken zu identifizieren.
+Seite 10
+
+[PAGE: 16]
+
+NIST AI 100-1
+AI RMF 1.0
+Abb. 3. KI-Akteure in den verschiedenen Phasen des KI-Lebenszyklus. Detaillierte Beschreibungen der Aufgaben der KI-Akteure, einschließlich Details zu Tests, finden Sie in Anhang A,
+Evaluierungs-, Verifizierungs- und Validierungsaufgaben. Beachten Sie, dass die KI-Akteure in der Dimension KI-Modell (Abbildung 2) als bewährte Praxis getrennt sind, wobei
+Diejenigen, die die Modelle erstellen und verwenden, sind von denjenigen getrennt, die die Modelle verifizieren und validieren.
+Seite 11
+
+[PAGE: 17]
+
+NIST AI 100-1
+AI RMF 1.0
+3.
+KI-Risiken und Vertrauenswürdigkeit
+Damit KI-Systeme vertrauenswürdig sind, müssen sie oft auf eine Vielzahl von Kri-
+terien reagieren, die für interessierte Parteien von Wert sind. Ansätze, die die Vertrauenswürdigkeit von KI erhöhen
+können negative KI-Risiken reduzieren. Dieses Rahmenwerk formuliert die folgenden Merkmale von
+vertrauenswürdiger KI und bietet Anleitungen zu deren Umsetzung. Merkmale einer vertrauenswürdigen KI
+Systeme sind: valide und zuverlässig, sicher und widerstandsfähig, rechenschaftspflichtig und trans-
+übergreifend, erklärbar und interpretierbar, datenschutzfreundlich und fair mit schädlichen Verzerrungen
+verwaltet. Um eine vertrauenswürdige KI zu schaffen, muss jede dieser Eigenschaften
+auf der Grundlage des Anwendungskontextes des KI-Systems. Während alle Merkmale soziotechnische Systemmerkmale sind
+sind, beziehen sich Rechenschaftspflicht und Transparenz auch auf die Prozesse und Aktivitäten innerhalb eines KI-Systems
+eines KI-Systems und sein externes Umfeld. Die Vernachlässigung dieser Merkmale kann die
+Wahrscheinlichkeit und das Ausmaß negativer Folgen erhöhen.
+Abb. 4. Merkmale von vertrauenswürdigen KI-Systemen. Gültig & Zuverlässig ist eine notwendige Bedingung für
+Vertrauenswürdigkeit und wird als Basis für andere Merkmale der Vertrauenswürdigkeit dargestellt. Verantwortlich &
+Transparent wird als vertikales Kästchen dargestellt, da es sich auf alle anderen Merkmale bezieht.
+Die Merkmale der Vertrauenswürdigkeit (in Abbildung 4 dargestellt) sind untrennbar mit dem sozialen und organisatorischen Verhalten verbunden.
+und organisatorisches Verhalten, die von KI-Systemen verwendeten Datensätze, die Auswahl von KI-Modellen und Algorithmen
+Algorithmen, die Auswahl der KI-Modelle und -Algorithmen und die Entscheidungen derer, die sie entwickeln, sowie die Interaktion mit den Menschen, die
+die den Einblick in diese Systeme und ihre Überwachung gewährleisten. Das menschliche Urteilsvermögen sollte genutzt werden
+bei der Entscheidung über die spezifischen Metriken für die Vertrauenswürdigkeit von KI-Systemen und die
+genauen Schwellenwerte für diese Metriken.
+Die individuelle Berücksichtigung von KI-Vertrauenswürdigkeitsmerkmalen wird die Vertrauenswürdigkeit von KI-Systemen nicht gewährleisten.
+Es sind in der Regel Kompromisse erforderlich, und selten treffen alle Merkmale auf alle Situationen zu.
+und einige werden in jeder Situation mehr oder weniger wichtig sein. Letztlich ist Vertrauenswürdigkeit
+Schließlich ist Vertrauenswürdigkeit ein soziales Konzept, das sich über ein ganzes Spektrum erstreckt und nur so stark ist wie seine schwächsten
+Eigenschaften.
+Bei der Bewältigung von KI-Risiken können Unternehmen vor schwierigen Entscheidungen stehen, wenn sie diese Eigenschaften ausbalancieren.
+Charakteristika. In bestimmten Szenarien kann es beispielsweise zu einem Kompromiss zwischen der Optimierung der
+Interpretierbarkeit und der Wahrung der Privatsphäre. In anderen Fällen könnten Unternehmen mit einem Zielkonflikt
+zwischen Vorhersagegenauigkeit und Interpretierbarkeit. Oder unter bestimmten Bedingungen wie Daten
+können Techniken zur Verbesserung des Datenschutzes zu einem Verlust an Genauigkeit führen und Entscheidungen beeinträchtigen.
+Seite 12
+
+[PAGE: 18]
+
+NIST AI 100-1
+AI RMF 1.0
+über Fairness und andere Werte in bestimmten Domänen. Der Umgang mit Zielkonflikten erfordert die Berücksichtigung
+den Entscheidungskontext zu berücksichtigen. Diese Analysen können die Existenz
+und das Ausmaß von Kompromissen zwischen verschiedenen Maßnahmen aufzeigen, aber sie beantworten nicht die Fragen, wie
+wie man mit dem Kompromiss umgeht. Diese hängen von den Werten ab, die im jeweiligen Kontext eine Rolle spielen.
+sollten auf eine Weise gelöst werden, die sowohl transparent als auch angemessen gerechtfertigt ist.
+Es gibt mehrere Ansätze zur Verbesserung des Kontextbewusstseins im KI-Lebenszyklus. Für
+Fachexperten können beispielsweise bei der Bewertung der TEVV-Ergebnisse helfen und mit den
+und mit Produkt- und Einsatzteams zusammenarbeiten, um die TEVV-Parameter auf die Anforderungen und Einsatzbedingungen abzustimmen.
+Einsatzbedingungen abzustimmen. Mit den richtigen Ressourcen können Sie die Breite und Vielfalt der
+von interessierten Parteien und relevanten KI-Akteuren während des gesamten KI-Lebenszyklus
+die Möglichkeiten für kontextabhängige Bewertungen und für die Identifizierung von
+Vorteile und positive Auswirkungen von KI-Systemen. Diese Praktiken können die Wahrscheinlichkeit erhöhen, dass
+Risiken, die in sozialen Kontexten entstehen, angemessen gehandhabt werden.
+Das Verständnis und die Behandlung von Vertrauenswürdigkeitsmerkmalen hängt von der Rolle eines KI-Akteurs
+Rolle eines KI-Akteurs innerhalb des KI-Lebenszyklus ab. Für jedes beliebige KI-System kann ein KI-Designer oder -Entwickler
+eine andere Auffassung von den Merkmalen haben als der Anwender.
+Die in diesem Dokument erläuterten Merkmale der Vertrauenswürdigkeit beeinflussen sich gegenseitig.
+Hochgradig sichere, aber unfaire Systeme, genaue, aber undurchsichtige und uninterpretierbare Systeme,
+und ungenaue, aber sichere, datenschutzfreundliche und transparente Systeme sind alle unerwünscht.
+wünschenswert. Ein umfassender Ansatz für das Risikomanagement erfordert eine Abwägung
+zwischen den Merkmalen der Vertrauenswürdigkeit. Es liegt in der gemeinsamen Verantwortung aller KI-Akteure.
+Es liegt in der gemeinsamen Verantwortung aller KI-Akteure zu entscheiden, ob die KI-Technologie für einen bestimmten Kontext oder Zweck geeignet oder notwendig ist.
+für einen bestimmten Kontext oder Zweck geeignet oder notwendig ist und wie man sie verantwortungsvoll einsetzt. Die Entscheidung über die Inbetriebnahme
+Die Entscheidung, ein KI-System in Auftrag zu geben oder einzusetzen, sollte auf einer kontextbezogenen Bewertung der Vertrauenswürdigkeit
+der Vertrauenswürdigkeit und der relativen Risiken, Auswirkungen, Kosten und Vorteile beruhen.
+von einem breiten Kreis interessierter Parteien.
+3.1
+Gültig und verlässlich
+Validierung ist die "Bestätigung durch die Bereitstellung objektiver Beweise, dass die
+Anforderungen für einen bestimmten Verwendungszweck oder eine bestimmte Anwendung erfüllt sind" (Quelle: ISO
+9000:2015). Der Einsatz von KI-Systemen, die ungenau, unzuverlässig oder unzureichend generiert sind.
+auf Daten und Einstellungen jenseits ihres Trainings abgestimmt sind, schafft und erhöht negative KI-Risiken und
+verringert die Vertrauenswürdigkeit.
+Zuverlässigkeit wird in der gleichen Norm definiert als die "Fähigkeit eines Gegenstandes, die geforderte Leistung zu erbringen,
+ohne Ausfall, für eine bestimmte Zeitspanne, unter bestimmten Bedingungen" (Quelle: ISO/IEC TS
+5723:2022). Zuverlässigkeit ist ein Ziel für die allgemeine Korrektheit des Betriebs eines KI-Systems unter den
+erwarteten Einsatzbedingungen und über einen bestimmten Zeitraum, einschließlich der gesamten Lebensdauer des
+des Systems.
+Seite 13
+
+[PAGE: 19]
+
+NIST AI 100-1
+AI RMF 1.0
+Genauigkeit und Robustheit tragen zur Gültigkeit und Vertrauenswürdigkeit von KI-Systemen bei und
+können in KI-Systemen in einem Spannungsverhältnis zueinander stehen.
+Genauigkeit wird in ISO/IEC TS 5723:2022 definiert als "die Nähe der Ergebnisse von Beobachtungen,
+Berechnungen oder Schätzungen zu den wahren oder als wahr akzeptierten Werten". Messungen
+sungen der Genauigkeit sollten rechnerzentrierte Maße (z.B. falsch positive und
+Falsch-Positiv- und Falsch-Negativ-Raten), die Zusammenarbeit zwischen Mensch und KI und die externe Validität (verallgemeinerbar
+über die Trainingsbedingungen hinaus). Genauigkeitsmessungen sollten immer mit folgenden Tests gepaart werden
+klar definierten und realistischen Testsätzen - die repräsentativ für die Bedingungen der erwarteten Nutzung sind
+- und Details zur Testmethodik; diese sollten in die zugehörige Dokumentation aufgenommen werden.
+tation enthalten. Genauigkeitsmessungen können eine Disaggregation der Ergebnisse für verschiedene Daten
+Segmente.
+Robustheit oder Verallgemeinerbarkeit ist definiert als die "Fähigkeit eines Systems, sein Leistungsniveau
+Leistungsniveau unter einer Vielzahl von Umständen aufrechtzuerhalten" (Quelle: ISO/IEC TS 5723:2022). Ro-
+bustness ist ein Ziel für eine angemessene Systemfunktionalität unter einer Vielzahl von Bedingungen und
+Umständen, einschließlich der Verwendung von KI-Systemen, die ursprünglich nicht vorgesehen war. Robustheit erfordert
+nicht nur, dass das System genau so funktioniert, wie es bei den erwarteten Anwendungen funktioniert, sondern auch, dass es
+sondern auch, dass es so funktioniert, dass potenzielle Schäden für Menschen minimiert werden, wenn es in einer
+unerwarteten Situation.
+Die Validität und Zuverlässigkeit von KI-Systemen wird häufig durch laufende Tests oder
+Überwachung, die bestätigt, dass ein System wie vorgesehen funktioniert. Die Messung der Validität,
+Genauigkeit, Robustheit und Zuverlässigkeit tragen zur Vertrauenswürdigkeit bei und sollten berücksichtigen
+berücksichtigen, dass bestimmte Arten von Fehlern einen größeren Schaden verursachen können. Bemühungen zum KI-Risikomanagement
+sollten der Minimierung potenzieller negativer Auswirkungen Vorrang einräumen und müssen möglicherweise
+ein menschliches Eingreifen in Fällen, in denen das KI-System Fehler nicht erkennen oder korrigieren kann.
+3.2
+Sicher
+KI-Systeme sollten "unter definierten Bedingungen nicht zu einem Zustand führen, in dem menschliches Leben,
+Gesundheit, Eigentum oder die Umwelt gefährdet sind" (Quelle: ISO/IEC TS 5723:2022). Sicher
+Betrieb von KI-Systemen wird verbessert durch:
+- verantwortungsvolle Entwurfs-, Entwicklungs- und Einsatzpraktiken;
+- klare Informationen für die Anwender über die verantwortungsvolle Nutzung des Systems;
+- verantwortungsbewusste Entscheidungsfindung von Anwendern und Endbenutzern; und
+- Erklärungen und Dokumentation von Risiken auf der Grundlage empirischer Belege für Zwischenfälle.
+Unterschiedliche Arten von Sicherheitsrisiken können maßgeschneiderte KI-Risikomanagement-Ansätze erfordern, die
+je nach Kontext und Schweregrad der potenziellen Risiken. Sicherheitsrisiken, die ein potenzielles
+Risiko einer schweren Verletzung oder des Todes darstellen, erfordern die dringendste Priorisierung und das gründlichste
+Management-Prozess.
+Seite 14
+
+[PAGE: 20]
+
+NIST AI 100-1
+AI RMF 1.0
+Die Berücksichtigung von Sicherheitsaspekten während des gesamten Lebenszyklus und ein möglichst früher Beginn bei
+Planung und Design können Ausfälle oder Bedingungen, die ein System gefährlich machen können, verhindern.
+Andere praktische Ansätze für die KI-Sicherheit beziehen sich oft auf strenge Simulationen und Tests in der Domäne
+Echtzeit-Überwachung und die Möglichkeit, Systeme, die von der Norm abweichen, abzuschalten, zu modifizieren oder zu beeinflussen.
+oder in Systeme einzugreifen, die von der beabsichtigten oder erwarteten Funktionalität abweichen.
+Ansätze für das KI-Sicherheitsrisikomanagement sollten sich an den Bemühungen und Richtlinien für
+Sicherheit in Bereichen wie dem Transportwesen und dem Gesundheitswesen orientieren und sich an bestehenden sektor- oder
+oder anwendungsspezifischen Richtlinien oder Standards orientieren.
+3.3
+Sicher und widerstandsfähig
+KI-Systeme sowie die Ökosysteme, in denen sie eingesetzt werden, können als resilient bezeichnet werden.
+wenn sie unerwarteten widrigen Ereignissen oder unerwarteten Veränderungen in ihrer Umgebung oder Nutzung standhalten können
+Umgebung oder ihrer Nutzung widerstehen können - oder wenn sie ihre Funktionen und Struktur angesichts interner und externer
+und externen Veränderungen aufrechterhalten und sicher und elegant abbauen können, wenn dies notwendig ist (Adaptiert
+aus: ISO/IEC TS 5723:2022). Häufige Sicherheitsbedenken beziehen sich auf gegnerische Beispiele,
+Data Poisoning und das Eindringen von Modellen, Trainingsdaten oder anderem geistigen Eigentum
+über Endpunkte von KI-Systemen. KI-Systeme, die die Vertraulichkeit, Integrität und
+durch Schutzmechanismen, die den unbefugten Zugriff und die Nutzung verhindern
+als sicher bezeichnet werden. Die Richtlinien des NIST Cybersecurity Framework und des Risk Manage-
+ment Framework gehören zu denen, die hier anwendbar sind.
+Sicherheit und Widerstandsfähigkeit sind verwandte, aber unterschiedliche Eigenschaften. Während Widerstandsfähigkeit die Fähigkeit ist
+die Fähigkeit ist, nach einem unerwarteten negativen Ereignis zur normalen Funktion zurückzukehren, umfasst die Sicherheit
+aber auch Protokolle zur Vermeidung von, zum Schutz vor, zur Reaktion auf und zur Wiederherstellung nach
+von Angriffen. Resilienz bezieht sich auf Robustheit und geht über die Herkunft der Daten hinaus
+und umfasst auch die unerwartete oder gegnerische Nutzung (oder den Missbrauch) des Modells oder der Daten.
+3.4
+Rechenschaftspflicht und Transparenz
+Vertrauenswürdige KI hängt von der Rechenschaftspflicht ab. Rechenschaftspflicht setzt Transparenz voraus.
+Transparenz spiegelt das Ausmaß wider, in dem Informationen über ein KI-System und seine Ergebnisse
+Informationen über ein KI-System und seine Ergebnisse zur Verfügung stehen - unabhängig davon, ob sie
+bewusst sind, dass sie dies tun. Sinnvolle Transparenz bietet Zugang zu einem angemessenen Niveau
+von Informationen je nach Stadium des KI-Lebenszyklus und zugeschnitten auf die Rolle oder das Wissen der
+der KI-Akteure oder Personen, die mit dem KI-System interagieren oder es nutzen. Durch die Förderung eines höheren
+Transparenz erhöht das Vertrauen in das KI-System.
+Dieses Merkmal reicht von Designentscheidungen und Trainingsdaten bis hin zum Training des Modells.
+Dieses Merkmal erstreckt sich von Designentscheidungen und Trainingsdaten bis hin zur Modellschulung, der Struktur des Modells, den beabsichtigten Anwendungsfällen und der Art und Weise der Bereitstellung,
+wann und von wem die Entscheidungen über den Einsatz, die Nachbereitung des Einsatzes oder den Endbenutzer getroffen wurden. Transparenz ist oft
+notwendig, um gegen fehlerhafte oder anderweitig negative Ergebnisse von KI-Systemen vorgehen zu können.
+zu negativen Auswirkungen führen. Die Transparenz sollte die Interaktion zwischen Mensch und KI berücksichtigen: zum Beispiel
+Seite 15
+
+[PAGE: 21]
+
+NIST AI 100-1
+AI RMF 1.0
+wie ein menschlicher Bediener oder Benutzer benachrichtigt wird, wenn ein potenzielles oder tatsächliches nachteiliges Ergebnis
+das durch ein KI-System verursacht wurde, erkannt wird. Ein transparentes System ist nicht unbedingt ein genaues,
+datenschutzfreundliches, sicheres oder faires System. Es ist jedoch schwierig zu bestimmen, ob ein
+undurchsichtiges System solche Eigenschaften besitzt, und zwar im Laufe der Zeit, wenn sich komplexe Systeme
+weiterentwickeln.
+Die Rolle der KI-Akteure sollte berücksichtigt werden, wenn es darum geht, Rechenschaft über die Ergebnisse von
+KI-Systeme. Das Verhältnis zwischen Risiko und Verantwortlichkeit im Zusammenhang mit KI und technologischen
+Das Verhältnis zwischen Risiko und Verantwortlichkeit im Zusammenhang mit KI und technologischen Systemen im Allgemeinen unterscheidet sich je nach kulturellem, rechtlichem, sektoralem und gesellschaftlichem Kontext.
+Wenn die Folgen schwerwiegend sind, wenn beispielsweise Leben und Freiheit auf dem Spiel stehen, sollten KI-Entwickler
+KI-Entwickler und -Installateure ihre Transparenz- und Verantwortungspraktiken proportional und proaktiv anpassen.
+und Rechenschaftspflicht anpassen. Beibehaltung von organisatorischen Praktiken und Führungsstrukturen
+zur Schadensbegrenzung, wie z.B. das Risikomanagement, können dazu beitragen, dass die Systeme rechenschaftspflichtiger werden.
+Maßnahmen zur Verbesserung von Transparenz und Rechenschaftspflicht sollten auch die Auswirkungen dieser
+Auswirkungen dieser Bemühungen auf die durchführende Stelle berücksichtigen, einschließlich der Höhe der notwendigen Ressourcen und der
+die Notwendigkeit, geschützte Informationen zu schützen.
+Die Wahrung der Herkunft der Trainingsdaten und die Unterstützung der Zuordnung der Entscheidungen des KI-Systems
+Entscheidungen des KI-Systems auf Teilmengen von Trainingsdaten kann sowohl zur Transparenz als auch zur Rechenschaftspflicht beitragen.
+Trainingsdaten können auch dem Urheberrecht unterliegen und sollten den geltenden Gesetzen für geistiges Eigentum entsprechen.
+Gesetze zum Schutz des geistigen Eigentums befolgen.
+Da die Transparenz-Tools für KI-Systeme und die zugehörige Dokumentation ständig weiterentwickelt werden, sollten die Entwickler von KI-Systemen
+Entwickler von KI-Systemen werden ermutigt, verschiedene Arten von Transparenzwerkzeugen in Zusammenarbeit mit KI-Anwendern zu testen.
+in Zusammenarbeit mit KI-Anwendern zu testen, um sicherzustellen, dass KI-Systeme wie beabsichtigt eingesetzt werden.
+3.5
+Erklärbar und interpretierbar
+Erklärbarkeit bezieht sich auf eine Darstellung der Mechanismen, die der Funktionsweise von KI-Systemen zugrunde liegen.
+während sich die Interpretierbarkeit auf die Bedeutung der Ergebnisse von KI-Systemen im Kontext ihrer
+im Zusammenhang mit ihren funktionalen Zwecken. Gemeinsam helfen Erklärbarkeit und Interpretierbarkeit
+denjenigen, die ein KI-System betreiben oder beaufsichtigen, sowie den Nutzern eines KI-Systems, einen
+tiefere Einblicke in die Funktionalität und Vertrauenswürdigkeit des Systems, einschließlich seiner Ergebnisse, zu gewinnen.
+Ergebnisse. Die zugrundeliegende Annahme ist, dass die Wahrnehmung eines negativen Risikos auf einen Mangel an
+der Fähigkeit, die Systemausgabe zu verstehen oder in einen angemessenen Kontext zu setzen. Erklärbare und
+interpretierbare KI-Systeme bieten Informationen, die den Endnutzern helfen, den Zweck
+und die potenziellen Auswirkungen eines KI-Systems zu verstehen.
+Das Risiko mangelnder Erklärbarkeit kann durch die Beschreibung der Funktionsweise von KI-Systemen gemanagt werden,
+mit Beschreibungen, die auf individuelle Unterschiede zugeschnitten sind, wie z.B. die Rolle des Benutzers, sein Wissen und sein
+Kenntnisstand. Erklärbare Systeme lassen sich leichter debuggen und überwachen, und sie eignen sich
+sich für eine gründlichere Dokumentation, Prüfung und Kontrolle.
+Seite 16
+
+[PAGE: 22]
+
+NIST AI 100-1
+AI RMF 1.0
+Risiken für die Interpretierbarkeit können oft durch eine Beschreibung der Gründe
+ein KI-System eine bestimmte Vorhersage oder Empfehlung gemacht hat. (Siehe "Vier Prinzipien der
+Erklärbare Künstliche Intelligenz" und "Psychologische Grundlagen der Erklärbarkeit und
+Interpretierbarkeit in der Künstlichen Intelligenz" finden Sie hier.)
+Transparenz, Erklärbarkeit und Interpretierbarkeit sind unterschiedliche Eigenschaften, die sich gegenseitig unterstützen.
+sich gegenseitig unterstützen. Transparenz kann die Frage beantworten, "was im System passiert ist". Ex-
+Erklärbarkeit kann die Frage beantworten, "wie" eine Entscheidung im System getroffen wurde. Inter-
+Inter- pretabilität beantwortet die Frage, "warum" eine Entscheidung im System getroffen wurde und welche
+Bedeutung oder Kontext für den Benutzer.
+3.6
+Verbesserte Privatsphäre
+Privatsphäre bezieht sich allgemein auf die Normen und Praktiken, die dazu beitragen, die menschliche Autonomie,
+Identität und Würde des Menschen. Diese Normen und Praktiken beziehen sich in der Regel auf den Schutz vor Eindringlingen,
+die Einschränkung der Beobachtung oder die Möglichkeit des Einzelnen, in die Offenlegung oder Kontrolle von Aspekten seiner Identität einzuwilligen
+ihrer Identitäten (z.B. Körper, Daten, Ruf). (Siehe Das NIST Privacy Framework: Ein Werkzeug
+für die Verbesserung des Datenschutzes durch Risikomanagement in Unternehmen.)
+Datenschutzwerte wie Anonymität, Vertraulichkeit und Kontrolle sollten generell die Entscheidungen
+für das Design, die Entwicklung und den Einsatz von KI-Systemen leiten. Risiken im Zusammenhang mit dem Datenschutz können sich auf
+Sicherheit, Voreingenommenheit und Transparenz beeinflussen und zu Kompromissen mit diesen anderen Merkmalen führen.
+Wie bei der Sicherheit können bestimmte technische Merkmale eines KI-Systems die Privatsphäre fördern oder verringern.
+Privatsphäre. KI-Systeme können auch neue Risiken für die Privatsphäre bergen, indem sie Rückschlüsse auf
+Personen oder zuvor private Informationen über Personen.
+Technologien zur Verbesserung der Privatsphäre ("PETs") für KI sowie Methoden zur Datenminimierung wie
+Datenminimierung, wie z.B. De-Identifizierung und Aggregation für bestimmte Modell-Outputs, können das Design für
+KI-Systemen mit erhöhtem Datenschutz unterstützen. Unter bestimmten Bedingungen, wie z.B. bei spärlichen Daten, können
+können Techniken zur Verbesserung der Privatsphäre zu einem Verlust an Genauigkeit führen, der sich auf Entscheidungen über Fairness
+und andere Werte in bestimmten Domänen.
+3.7
+Fair - mit schädlichen Vorurteilen verwaltet
+Fairness in der KI schließt die Sorge um Gleichheit und Gerechtigkeit ein, indem Probleme wie schädliche Vorurteile und Diskriminierung behandelt werden.
+Voreingenommenheit und Diskriminierung. Standards für Fairness können komplex und schwer zu definieren sein.
+weil die Wahrnehmung von Fairness in verschiedenen Kulturen unterschiedlich ist und sich je nach Anwendung ändern kann.
+Das Risikomanagement von Unternehmen wird durch die Anerkennung und Berücksichtigung
+diese Unterschiede. Systeme, in denen schädliche Verzerrungen abgeschwächt werden, sind nicht unbedingt fair.
+So können beispielsweise Systeme, in denen die Vorhersagen für alle demografischen Gruppen einigermaßen ausgewogen sind
+Gruppen einigermaßen ausgeglichen sind, können dennoch für Menschen mit Behinderungen oder für Menschen, die von der digitalen Kluft betroffen sind, unzugänglich sein
+Kluft betroffen sind, unzugänglich sein oder bestehende Ungleichheiten oder systembedingte Vorurteile verschärfen.
+Seite 17
+
+[PAGE: 23]
+
+NIST AI 100-1
+AI RMF 1.0
+Bias ist weiter gefasst als demographische Ausgewogenheit und Repräsentativität der Daten. Das NIST hat drei
+drei Hauptkategorien von KI-Voreingenommenheit identifiziert, die berücksichtigt und verwaltet werden müssen: systemische, rechnerische
+und statistische, und menschlich-kognitive. Jede dieser Kategorien kann auch ohne Vorurteile auftreten,
+Parteilichkeit oder diskriminierender Absicht auftreten. Systemische Voreingenommenheit kann in KI-Datensätzen, den orga-
+organisatorischen Normen, Praktiken und Prozessen über den gesamten KI-Lebenszyklus hinweg und in der breiteren Gesellschaft
+die KI-Systeme nutzt. Computergestützte und statistische Verzerrungen können in KI-Datensätzen
+und algorithmischen Prozessen auftreten und sind oft auf systematische Fehler aufgrund nicht repräsentativer
+Stichproben. Menschlich-kognitive Verzerrungen beziehen sich darauf, wie ein Individuum oder eine Gruppe die Informationen von KI-Systemen wahrnimmt.
+tems wahrnimmt, um eine Entscheidung zu treffen oder fehlende Informationen zu ergänzen, oder wie Menschen
+über den Zweck und die Funktionen eines KI-Systems denken. Menschlich-kognitive Verzerrungen sind allgegenwärtig
+in Entscheidungsfindungsprozessen über den gesamten Lebenszyklus und die Nutzung von KI-Systemen, einschließlich des Designs,
+Implementierung, Betrieb und Wartung von KI.
+Voreingenommenheit existiert in vielen Formen und kann sich in den automatisierten Systemen festsetzen, die dabei helfen
+Entscheidungen über unser Leben zu treffen. Obwohl Voreingenommenheit nicht immer ein negatives Phänomen ist, können KI-Systeme
+können KI-Systeme die Geschwindigkeit und das Ausmaß von Voreingenommenheit potenziell erhöhen und die
+Schaden für Einzelpersonen, Gruppen, Gemeinschaften, Organisationen und die Gesellschaft. Voreingenommenheit ist eng verknüpft
+mit den Konzepten der Transparenz und der Fairness in der Gesellschaft verbunden. (Für weitere Informationen
+(Weitere Informationen über Voreingenommenheit, einschließlich der drei Kategorien, finden Sie in der NIST Special Publication 1270, Towards
+a Standard for Identifying and Managing Bias in Artificial Intelligence.)
+Seite 18
+
+[PAGE: 24]
+
+NIST AI 100-1
+AI RMF 1.0
+4.
+Effektivität der AI RMF
+Die Bewertung der Wirksamkeit der KI-RMF - einschließlich der Möglichkeiten zur Messung von Verbesserungen
+der Vertrauenswürdigkeit von KI-Systemen - werden Teil zukünftiger Aktivitäten des NIST sein, in
+in Zusammenarbeit mit der KI-Gemeinschaft.
+Organisationen und andere Nutzer des Frameworks werden ermutigt, regelmäßig zu bewerten
+ob das AI RMF ihre Fähigkeit verbessert hat, KI-Risiken zu managen, einschließlich, aber nicht beschränkt auf
+ihre Richtlinien, Prozesse, Praktiken, Implementierungspläne, Indikatoren, Messungen
+und erwartete Ergebnisse. Das NIST beabsichtigt, mit anderen zusammenzuarbeiten, um Met-
+Methoden und Ziele für die Bewertung der Effektivität der RMF für KI zu entwickeln und die
+Ergebnisse und unterstützende Informationen zu teilen. Es wird erwartet, dass die Nutzer des Frameworks von folgenden Vorteilen profitieren:
+- verbesserte Prozesse zur Steuerung, Abbildung, Messung und Verwaltung von KI-Risiken und
+klare Dokumentation der Ergebnisse;
+- ein verbessertes Bewusstsein für die Beziehungen und Kompromisse zwischen den Merkmalen der Vertrauenswürdigkeit
+Eigenschaften, soziotechnischen Ansätzen und KI-Risiken;
+- Explizite Prozesse, um Entscheidungen über die Inbetriebnahme und den Einsatz von Systemen zu treffen.
+sionen;
+- Etablierte Richtlinien, Prozesse, Praktiken und Verfahren zur Verbesserung der organisatorischen
+organisatorischen Rechenschaftspflicht in Bezug auf KI-Systemrisiken;
+- eine verbesserte Organisationskultur, die der Identifizierung und dem Management von
+von KI-Systemrisiken und potenziellen Auswirkungen auf Einzelpersonen, Gemeinschaften, Organisationen
+und die Gesellschaft;
+- besserer Informationsaustausch innerhalb und zwischen Organisationen über Risiken, Entscheidungs
+Entscheidungsfindungsprozesse, Verantwortlichkeiten, häufige Fallstricke, TEVV-Praktiken und Ansätze
+für kontinuierliche Verbesserungen;
+- mehr kontextbezogenes Wissen, um das Bewusstsein für nachgelagerte Risiken zu schärfen;
+- verstärktes Engagement mit interessierten Parteien und relevanten KI-Akteuren; und
+- erweiterte Kapazitäten für TEVV von KI-Systemen und damit verbundenen Risiken.
+Seite 19
+
+[PAGE: 25]
+
+NIST AI 100-1
+AI RMF 1.0
+Teil 2: Kern und Profile
+5.
+AI RMF-Kern
+Der AI RMF Core liefert Ergebnisse und Aktionen, die den Dialog, das Verständnis und die
+Aktivitäten zum Umgang mit KI-Risiken und zur verantwortungsvollen Entwicklung vertrauenswürdiger KI-Systeme. Wie in Abbildung 5 veranschaulicht
+in Abbildung 5 dargestellt, besteht der Kern aus vier Funktionen: REGELN, ABBILDEN, MESSEN,
+und VERWALTEN. Jede dieser übergeordneten Funktionen ist in Kategorien und Unterkategorien unterteilt.
+Kategorien. Die Kategorien und Unterkategorien sind in spezifische Aktionen und Ergebnisse unterteilt.
+Die Aktionen stellen weder eine Checkliste dar, noch sind sie notwendigerweise eine geordnete Folge von Schritten.
+Abb. 5. Funktionen organisieren die Aktivitäten des KI-Risikomanagements auf der höchsten Ebene, um KI-Risiken zu steuern, abzubilden,
+Messen und Verwalten von KI-Risiken. Governance ist als übergreifende Funktion konzipiert, die die anderen
+und in die anderen drei Funktionen einfließt.
+Das Risikomanagement sollte kontinuierlich und zeitnah erfolgen und sich über den gesamten Lebenszyklus des KI-Systems erstrecken.
+Lebenszyklus durchgeführt werden. Die Kernfunktionen der KI-RMF sollten in einer Weise ausgeführt werden, die
+und multidisziplinäre Perspektiven widerspiegelt, möglicherweise auch die Ansichten von KI-Akteuren außerhalb der Organisation.
+außerhalb der Organisation. Ein vielfältiges Team trägt zu einem offeneren Austausch von Ideen und
+Annahmen über den Zweck und die Funktionen der Technologie, die entworfen und entwickelt wird,
+Seite 20
+
+[PAGE: 26]
+
+NIST AI 100-1
+AI RMF 1.0
+eingesetzt oder bewertet werden - was die Möglichkeit bietet, Probleme zu erkennen und
+bestehende und entstehende Risiken.
+Eine Online-Ressource zur AI RMF, das NIST AI RMF Playbook, ist verfügbar
+um Organisationen bei der Navigation durch die AI RMF zu helfen und deren Ergebnisse durch vorgeschlagene
+taktische Maßnahmen, die sie in ihrem eigenen Kontext anwenden können. Wie die AI RMF ist auch das Playbook
+freiwillig und Organisationen können die Vorschläge entsprechend ihren Bedürfnissen und Interessen nutzen.
+Interessen nutzen. Benutzer des Playbooks können aus dem vorgeschlagenen Material maßgeschneiderte Anleitungen erstellen
+für den eigenen Gebrauch erstellen und ihre Vorschläge der breiteren Gemeinschaft zur Verfügung stellen.
+Zusammen mit der AI RMF ist das Playbook Teil des NIST Trustworthy and Responsible AI
+Ressourcenzentrum.
+Die Nutzer des Frameworks können diese Funktionen so anwenden, wie es ihren Bedürfnissen für das Management von
+KI-Risiken auf der Grundlage ihrer Ressourcen und Fähigkeiten. Einige Organisationen können wählen
+aus den Kategorien und Unterkategorien auszuwählen; andere können wählen und haben die
+die Fähigkeit, alle Kategorien und Unterkategorien anzuwenden. Vorausgesetzt, es gibt eine Governance-Struktur.
+vorausgesetzt, dass eine Governance-Struktur vorhanden ist, können die Funktionen in beliebiger Reihenfolge über den KI-Lebenszyklus hinweg ausgeführt werden, wenn
+wie es der Benutzer des Frameworks für wertvoll hält. Nach der Einführung der Ergebnisse in
+GOVERN, würden die meisten Benutzer des AI RMF mit der Funktion MAP beginnen und mit MEASURE oder MANAGE fortfahren.
+und fahren mit MEASURE oder MANAGE fort. Wie auch immer die Benutzer die Funktionen integrieren, der Prozess
+der Prozess sollte iterativ sein, mit Querverweisen zwischen den Funktionen, falls erforderlich. Ähnlich
+gibt es Kategorien und Unterkategorien mit Elementen, die für mehrere Funktionen gelten
+Funktionen gelten, oder die logischerweise vor bestimmten Unterkategorie-Entscheidungen getroffen werden sollten.
+5.1
+Regieren
+Die Funktion GOVERN:
+- kultiviert und implementiert eine Kultur des Risikomanagements in Organisationen.
+die KI-Systeme konzipieren, entwickeln, einsetzen, evaluieren oder erwerben;
+- skizziert Prozesse, Dokumente und Organisationsschemata, die die Risiken eines Systems vorhersehen, identifizieren
+und die Risiken, die ein System darstellen kann, zu erkennen und zu managen, auch für die Nutzer und andere in der Gesellschaft
+- und Verfahren, um diese Ergebnisse zu erreichen;
+- Prozesse zur Bewertung potenzieller Auswirkungen einbezieht;
+- eine Struktur bereitstellt, durch die KI-Risikomanagementfunktionen mit organisatorischen
+mit organisatorischen Grundsätzen, Richtlinien und strategischen Prioritäten;
+- verbindet die technischen Aspekte des Designs und der Entwicklung von KI-Systemen mit organisatorischen
+Werte und Prinzipien und ermöglicht organisatorische Praktiken und Kompetenzen für die
+für die Personen, die an der Beschaffung, der Schulung, dem Einsatz und der Überwachung solcher Systeme beteiligt sind;
+und
+- befasst sich mit dem gesamten Produktlebenszyklus und den damit verbundenen Prozessen, einschließlich rechtlicher und anderer
+Fragen im Zusammenhang mit der Nutzung von Software- oder Hardwaresystemen und Daten Dritter.
+Seite 21
+
+[PAGE: 27]
+
+NIST AI 100-1
+AI RMF 1.0
+GOVERN ist eine Querschnittsfunktion, die sich durch das gesamte KI-Risikomanagement zieht und
+die anderen Funktionen des Prozesses ermöglicht. Aspekte von GOVERN, insbesondere solche, die mit
+Einhaltung oder Bewertung, sollten in jede der anderen Funktionen integriert werden. Aufmerksamkeit
+Governance ist eine kontinuierliche und unabdingbare Voraussetzung für ein effektives KI-Risikomanagement
+über die gesamte Lebensdauer eines KI-Systems und die Hierarchie des Unternehmens hinweg.
+Eine starke Governance kann interne Praktiken und Normen vorantreiben und verbessern, um die Risikokultur eines Unternehmens zu fördern.
+nisationale Risikokultur zu fördern. Die leitenden Behörden können die übergreifenden Richtlinien festlegen, die
+die den Auftrag, die Ziele, die Werte, die Kultur und die Risikotoleranz einer Organisation bestimmen. Die oberste Führung
+Führung gibt den Ton für das Risikomanagement in einer Organisation an und damit auch die
+Kultur. Das Management stimmt die technischen Aspekte des KI-Risikomanagements auf die Richtlinien und
+Abläufe. Dokumentation kann die Transparenz erhöhen, die menschlichen Überprüfungsprozesse verbessern,
+und die Verantwortlichkeit in KI-Systemteams stärken.
+Nach der Einführung der Strukturen, Systeme, Prozesse und Teams, die in der GOV-
+ERN-Funktion beschriebenen Strukturen, Systeme, Prozesse und Teams eingerichtet haben, sollten Organisationen von einer zielgerichteten Kultur profitieren, die sich auf das Risiko
+Verständnis und Management konzentrieren. Es obliegt den Nutzern des Frameworks, die
+GOVERN-Funktion weiter auszubauen, wenn sich das Wissen, die Kultur und die Bedürfnisse oder Erwartungen der KI
+Akteure im Laufe der Zeit weiterentwickeln.
+Praktiken im Zusammenhang mit der Steuerung von KI-Risiken werden im NIST AI RMF Playbook beschrieben. Tabelle
+1 listet die Kategorien und Unterkategorien der GOVERN-Funktion auf.
+Tabelle 1: Kategorien und Unterkategorien für die GOVERN-Funktion.
+GOVERN 1:
+Politiken, Prozesse,
+Verfahren und
+Praktiken in der gesamten
+Organisation im Zusammenhang
+mit der Abbildung,
+Messung und
+Verwaltung von KI
+Risiken sind vorhanden,
+transparent und
+umgesetzt
+effektiv.
+GOVERN 1.1: Rechtliche und regulatorische Anforderungen in Bezug auf KI
+werden verstanden, verwaltet und dokumentiert.
+GOVERN 1.2: Die Merkmale einer vertrauenswürdigen KI sind in die
+in die Richtlinien, Prozesse, Verfahren und Praktiken der Organisation integriert.
+Praktiken integriert.
+GOVERN 1.3: Es sind Prozesse, Verfahren und Praktiken vorhanden
+um das erforderliche Maß an Risikomanagementaktivitäten auf der Grundlage der
+auf der Grundlage der Risikotoleranz der Organisation.
+GOVERN 1.4: Der Risikomanagementprozess und seine Ergebnisse sind
+durch transparente Richtlinien, Verfahren und andere
+Kontrollen auf der Grundlage der Risikoprioritäten der Organisation festgelegt.
+Kategorien
+Unterkategorien
+Fortsetzung auf der nächsten Seite
+Seite 22
+
+[PAGE: 28]
+
+NIST AI 100-1
+AI RMF 1.0
+Tabelle 1: Kategorien und Unterkategorien für die GOVERN-Funktion. (Fortgesetzt)
+GOVERN 1.5: Laufende Überwachung und regelmäßige Überprüfung des
+Risikomanagementprozesses und seiner Ergebnisse sind geplant und
+Rollen und Verantwortlichkeiten klar definiert, einschließlich der
+die Festlegung der Häufigkeit regelmäßiger Überprüfungen.
+GOVERN 1.6: Es gibt Mechanismen zur Bestandsaufnahme von KI-Systemen
+und werden entsprechend den organisatorischen Risikoprioritäten mit Ressourcen ausgestattet.
+GOVERN 1.7: Es gibt Prozesse und Verfahren für die Dekom-
+und Ausmusterung von KI-Systemen auf sichere Weise und auf eine Art und Weise.
+die die Risiken nicht erhöhen und die Vertrauenswürdigkeit der Organisation
+Vertrauenswürdigkeit der Organisation.
+GOVERN 2:
+Rechenschaftspflicht
+Strukturen sind vorhanden
+vorhanden, so dass die
+entsprechenden Teams
+und Einzelpersonen
+bevollmächtigt sind,
+verantwortlich und
+geschult sind für die Kartierung,
+Messung und
+Verwaltung von KI-Risiken.
+GOVERN 2.1: Rollen, Verantwortlichkeiten und Kommunikationswege
+Kommunikation im Zusammenhang mit der Erfassung, Messung und dem Management von KI-Risiken sind
+dokumentiert und sind für Einzelpersonen und Teams in der gesamten
+der gesamten Organisation.
+GOVERN 2.2: Die Mitarbeiter und Partner der Organisation erhalten
+KI-Risikomanagement geschult, damit sie ihre Aufgaben und
+Aufgaben und Verantwortlichkeiten im Einklang mit den entsprechenden Richtlinien, Verfahren
+Verfahren und Vereinbarungen.
+GOVERN 2.3: Die Führungsspitze der Organisation übernimmt
+die Verantwortung für Entscheidungen über Risiken im Zusammenhang mit der
+Entwicklung und Einsatz.
+GOVERN 3:
+Vielfalt in der Belegschaft,
+Gleichberechtigung, Inklusion,
+und Barrierefreiheit
+Prozesse werden
+Prioritäten bei der
+Kartierung,
+Messung und
+Verwaltung von AI
+Risiken über den gesamten
+Lebenszyklus.
+GOVERN 3.1: Die Entscheidungsfindung in Bezug auf das Abbilden, Messen,
+und Verwaltung von KI-Risiken während des gesamten Lebenszyklus wird von einem
+vielfältiges Team (z.B. Vielfalt der Demographie, Disziplinen, Erfahrung
+Erfahrungen, Fachwissen und Hintergründen).
+GOVERN 3.2: Es gibt Richtlinien und Verfahren zur Definition und
+Rollen und Verantwortlichkeiten für Mensch-KI-Konfigura- tionen
+Konfigurationen und die Überwachung von KI-Systemen.
+REGELN 4:
+Organisatorische
+Teams sind verpflichtet
+für eine Kultur
+GOVERN 4.1: Organisatorische Richtlinien und Praktiken sind vorhanden
+zur Förderung eines kritischen Denkens und einer auf Sicherheit ausgerichteten Denkweise bei der Konzeption,
+Entwicklung, Einsatz und Nutzung von KI-Systemen, um mögliche
+mögliche negative Auswirkungen zu minimieren.
+Kategorien
+Unterkategorien
+Fortsetzung auf der nächsten Seite
+Seite 23
+
+[PAGE: 29]
+
+NIST AI 100-1
+AI RMF 1.0
+Tabelle 1: Kategorien und Unterkategorien für die GOVERN-Funktion. (Forts.)
+die berücksichtigt und
+kommuniziert AI
+Risiko.
+GOVERN 4.2: Organisationsteams dokumentieren die Risiken und potenziellen
+möglichen Auswirkungen der KI-Technologie, die sie entwerfen, entwickeln, einsetzen,
+evaluieren und nutzen, und sie kommunizieren über die Auswirkungen
+umfassend.
+GOVERN 4.3: Es gibt organisatorische Praktiken, die es ermöglichen, KI
+Tests, die Identifizierung von Zwischenfällen und den Informationsaustausch zu ermöglichen.
+GOVERN 5:
+Prozesse sind vorhanden
+für eine solide
+Zusammenarbeit mit
+relevanten KI-Akteuren.
+GOVERN 5.1: Organisatorische Richtlinien und Praktiken sind vorhanden
+um Feedback von denjenigen zu sammeln, zu berücksichtigen, zu priorisieren und zu integrieren
+außerhalb des Teams, das das KI-System entwickelt oder eingesetzt hat
+bezüglich der potenziellen individuellen und gesellschaftlichen Auswirkungen von
+KI-Risiken.
+GOVERN 5.2: Es sind Mechanismen eingerichtet, die es dem Team
+das das KI-System entwickelt oder eingesetzt hat, regelmäßig das
+Feedback von relevanten KI-Akteuren in das Systemdesign und die
+und Implementierung einfließen zu lassen.
+GOVERN 6: Richtlinien
+und Verfahren sind
+vorhanden, um die
+KI-Risiken und Nutzen
+die sich aus
+Software Dritter
+und Daten und anderen
+Fragen der Lieferkette.
+GOVERN 6.1: Es gibt Richtlinien und Verfahren, die Folgendes regeln
+AI-Risiken im Zusammenhang mit Drittanbietern, einschließlich Risiken der Verletzung
+der Verletzung des geistigen Eigentums oder anderer Rechte Dritter.
+GOVERN 6.2: Es gibt Notfallprozesse für den Umgang mit
+Ausfälle oder Vorfälle in Daten- oder KI-Systemen Dritter, die als
+als hochriskant eingestuft werden.
+Kategorien
+Unterkategorien
+5.2
+Karte
+Die MAP-Funktion stellt den Kontext her, um die Risiken eines KI-Systems zu erfassen. Der KI
+Lebenszyklus besteht aus vielen voneinander abhängigen Aktivitäten, an denen eine Vielzahl von Akteuren beteiligt ist (siehe
+Abbildung 3). In der Praxis haben die KI-Akteure, die für einen Teil des Prozesses zuständig sind, oft nicht die volle
+Sichtbarkeit oder Kontrolle über andere Teile und die damit verbundenen Kontexte. Die Interdependenzen
+zwischen diesen Aktivitäten und zwischen den relevanten KI-Akteuren kann es schwierig machen, die
+Auswirkungen von KI-Systemen zu antizipieren. So können beispielsweise frühe Entscheidungen bei der Bestimmung der Zwecke und
+und Ziele eines KI-Systems sein Verhalten und seine Fähigkeiten verändern, und die Dynamik des
+(z.B. Endnutzer oder betroffene Einzelpersonen) können die Auswirkungen von KI
+Systementscheidungen beeinflussen. Folglich können die besten Absichten innerhalb einer Dimension des KI-Lebenszyklus
+durch Wechselwirkungen mit Entscheidungen und Bedingungen in anderen, späteren Aktivitäten untergraben werden.
+Seite 24
+
+[PAGE: 30]
+
+NIST AI 100-1
+AI RMF 1.0
+Diese Komplexität und der unterschiedliche Grad an Transparenz können zu Unsicherheiten im Risikomanagement führen.
+Praktiken der Risikoverwaltung führen. Die Vorwegnahme, Bewertung und anderweitige Behebung potenzieller Quellen von
+Diese Unsicherheit kann durch die Vorwegnahme und Bewertung potenzieller Quellen negativer Risiken gemindert und die Integrität des Entscheidungsprozesses verbessert werden.
+Die Informationen, die bei der Durchführung der MAP-Funktion gesammelt werden, ermöglichen die Vorbeugung negativer Risiken
+und dienen als Entscheidungsgrundlage für Prozesse wie das Modellmanagement sowie für eine
+eine erste Entscheidung über die Angemessenheit oder die Notwendigkeit einer KI-Lösung. Die Ergebnisse der
+MAP-Funktion bilden die Grundlage für die Funktionen MEASURE und MANAGE. Ohne Kontextwissen
+und das Bewusstsein für Risiken innerhalb der identifizierten Kontexte ist das Risikomanagement
+schwierig durchzuführen. Die MAP-Funktion soll die Fähigkeit einer Organisation verbessern, Risiken
+Risiken und die dazu beitragenden Faktoren zu identifizieren.
+Die Umsetzung dieser Funktion wird durch die Einbeziehung der Perspektiven eines vielfältigen
+internen Teams und die Einbeziehung von Personen außerhalb des Teams, das das KI-System entwickelt oder eingesetzt hat
+das KI-System entwickelt oder eingesetzt hat. Die Einbeziehung externer Mitarbeiter, Endbenutzer, potenziell betroffener
+Endnutzer, potenziell betroffene Gemeinden und andere können je nach dem Risikoniveau eines bestimmten KI-Systems, der
+Zusammensetzung des internen Teams und den Unternehmensrichtlinien. Das Zusammentragen solch breiter Perspek- tiven
+tiven kann Unternehmen helfen, negative Risiken proaktiv zu vermeiden und vertrauenswürdige KI-Systeme zu entwickeln.
+KI-Systeme zu entwickeln, indem:
+- Verbesserung ihrer Fähigkeit, Kontexte zu verstehen;
+- ihre Annahmen über den Nutzungskontext überprüfen;
+- Erkennen, wenn Systeme innerhalb oder außerhalb ihres Kontextes nicht funktionieren
+Kontext nicht funktionieren;
+- Identifizierung positiver und nützlicher Anwendungen ihrer bestehenden KI-Systeme;
+- Verbesserung des Verständnisses der Grenzen von KI- und ML-Prozessen;
+- Identifizierung von Beschränkungen in realen Anwendungen, die zu negativen Auswirkungen führen können;
+- Identifizierung bekannter und vorhersehbarer negativer Auswirkungen im Zusammenhang mit der beabsichtigten Nutzung von KI
+Systemen; und
+- die Vorhersage von Risiken bei der Nutzung von KI-Systemen über die beabsichtigte Nutzung hinaus.
+Nach Abschluss der MAP-Funktion sollten die Nutzer des Frameworks über ausreichendes kontextbezogenes
+Wissen über die Auswirkungen von KI-Systemen haben, um eine erste Entscheidung darüber zu treffen, ob
+ob ein KI-System entworfen, entwickelt oder eingesetzt werden soll. Wenn eine Entscheidung getroffen wird, sollten Organisationen
+sollten Unternehmen die Funktionen MEASURE und MANAGE zusammen mit Richtlinien und Verfahren nutzen
+die im Rahmen der GOVERN-Funktion eingeführt wurden, um das KI-Risikomanagement zu unterstützen. Es ist unumgänglich
+Es ist wichtig, dass Framework-Anwender die MAP-Funktion auch weiterhin auf KI-Systeme im Kontext anwenden,
+Fähigkeiten, Risiken, Nutzen und potenzielle Auswirkungen sich im Laufe der Zeit weiterentwickeln.
+Praktiken im Zusammenhang mit der Abbildung von KI-Risiken werden im NIST AI RMF Playbook beschrieben. Tabelle
+2 listet die Kategorien und Unterkategorien der MAP-Funktion auf.
+Seite 25
+
+[PAGE: 31]
+
+NIST AI 100-1
+AI RMF 1.0
+Tabelle 2: Kategorien und Unterkategorien für die MAP-Funktion.
+MAP 1: Der Kontext wird
+hergestellt und
+verstanden.
+MAP 1.1: Beabsichtigte Zwecke, potenziell nützliche Verwendungen, kontextspezifische
+kontextspezifische Gesetze, Normen und Erwartungen sowie die voraussichtlichen Umgebungen
+in denen das KI-System eingesetzt werden soll, sind verstanden und dokumentiert.
+dokumentiert. Zu den Überlegungen gehören: die spezifische Gruppe oder die Typen von Nutzern
+sowie deren Erwartungen; mögliche positive und negative Auswirkungen
+Auswirkungen des Systemeinsatzes auf Einzelpersonen, Gemeinschaften, Organisationen,
+Gesellschaft und den Planeten; Annahmen und damit verbundene Einschränkungen über
+Zwecke, Anwendungen und Risiken von KI-Systemen über den gesamten Entwicklungs- oder
+Produkt-KI-Lebenszyklus; und damit verbundene TEVV- und Systemmetriken.
+MAP 1.2: Interdisziplinäre KI-Akteure, Kompetenzen, Fähigkeiten und
+Kapazitäten für die Erstellung von Kontexten spiegeln die demographische Vielfalt
+und breit gefächertes Fachwissen in Bezug auf Domänen und Benutzererfahrung wider, und ihre Beteiligung ist dokumentiert.
+Beteiligung ist dokumentiert. Gelegenheiten zur interdisziplinären Kol-
+laboration sind priorisiert.
+KARTE 1.3: Der Auftrag der Organisation und die relevanten Ziele für KI
+Technologie sind verstanden und dokumentiert.
+KARTE 1.4: Der Geschäftswert oder der Kontext der geschäftlichen Nutzung ist
+klar definiert oder - im Falle der Bewertung bestehender KI-Systeme
+- neu bewertet.
+MAP 1.5: Die organisatorische Risikotoleranz ist festgelegt und
+dokumentiert.
+KARTE 1.6: Die Systemanforderungen (z.B. "das System muss die
+die Privatsphäre seiner Benutzer respektieren") werden von den beteiligten KI-Akteuren erfragt und verstanden.
+evant AI-Akteure verstanden. Design-Entscheidungen berücksichtigen sozio-technische Implikatio
+tionen berücksichtigt, um KI-Risiken anzugehen.
+KARTE 2:
+Einstufung des
+des KI-Systems wird
+durchgeführt.
+KARTE 2.1: Die spezifischen Aufgaben und Methoden, die zur Umsetzung der
+Aufgaben, die das KI-System unterstützen soll, werden definiert (z.B. Klassifikatoren,
+generative Modelle, Empfehlungsgeber).
+KARTE 2.2: Informationen über die Wissensgrenzen des KI-Systems
+und wie die Ergebnisse des Systems von Menschen genutzt und überwacht werden können
+ist dokumentiert. Die Dokumentation enthält ausreichende Informationen
+um die relevanten KI-Akteure bei der Entscheidungsfindung und
+Aktionen zu unterstützen.
+Kategorien
+Unterkategorien
+Fortsetzung auf der nächsten Seite
+Seite 26
+
+[PAGE: 32]
+
+NIST AI 100-1
+AI RMF 1.0
+Tabelle 2: Kategorien und Unterkategorien für die MAP-Funktion. (Forts.)
+MAP 2.3: Wissenschaftliche Integrität und TEVV-Überlegungen sind identifiziert
+und dokumentiert, einschließlich derer, die mit der Versuchsplanung
+Datenerhebung und -auswahl (z.B. Verfügbarkeit, Repräsentativität, Eignung)
+Repräsentativität, Eignung), Systemvertrauenswürdigkeit und Konstruktvalidierung
+Validierung.
+KARTE 3: KI
+Fähigkeiten, gezielte
+Nutzung, Ziele und
+erwarteter Nutzen
+und Kosten im Vergleich
+mit geeigneten
+Benchmarks sind
+verstanden.
+KARTE 3.1: Der potenzielle Nutzen der geplanten KI-Systemfunktionalität
+und Leistung sind untersucht und dokumentiert.
+MAP 3.2: Mögliche Kosten, einschließlich nicht-monetärer Kosten, die
+die sich aus erwarteten oder realisierten KI-Fehlern oder der Systemfunktionalität ergeben
+und Vertrauenswürdigkeit - in Verbindung mit der organisatorischen Risikotoleranz
+ance - sind untersucht und dokumentiert.
+MAP 3.3: Der angestrebte Anwendungsbereich ist spezifiziert und dokumentier- t.
+dokumentiert, basierend auf der Fähigkeit des Systems, dem etablierten Kontext und der
+AI-System-Kategorisierung.
+KARTE 3.4: Prozesse für die Beherrschung der Leistung und
+mit der Leistung und Vertrauenswürdigkeit von KI-Systemen - und relevante
+technischen Standards und Zertifizierungen - sind definiert, bewertet und
+dokumentiert.
+KARTE 3.5: Prozesse für die menschliche Aufsicht sind definiert, bewertet,
+und dokumentiert in Übereinstimmung mit den organisatorischen Richtlinien der
+der GOVERN-Funktion.
+KARTE 4: Risiken und
+Nutzen sind abgebildet
+für alle Komponenten
+des KI-Systems
+einschließlich Drittanbieter
+Software und Daten.
+KARTE 4.1: Ansätze zur Abbildung von KI-Technologie und rechtlichen Risiken
+der Komponenten - einschließlich der Verwendung von Daten oder Software Dritter - sind vorhanden.
+Software - sind vorhanden, werden befolgt und dokumentiert, ebenso wie die Risiken der Verletzung
+Verletzung des geistigen Eigentums oder anderer Rechte Dritter.
+MAP 4.2: Interne Risikokontrollen für Komponenten des KI-Systems
+tems, einschließlich KI-Technologien Dritter, sind identifiziert und
+dokumentiert.
+MAP 5: Auswirkungen auf
+Einzelpersonen, Gruppen,
+Gemeinschaften,
+Organisationen und
+Gesellschaft sind
+charakterisiert.
+KARTE 5.1: Wahrscheinlichkeit und Ausmaß der einzelnen identifizierten Auswirkungen
+(sowohl potenziell nützliche als auch schädliche) basierend auf der erwarteten Nutzung,
+früheren Verwendungen von KI-Systemen in ähnlichen Kontexten, öffentlichen Vorfällen
+Vorfällen, Rückmeldungen von Personen außerhalb des Teams, das das
+Team, das das KI-System entwickelt oder eingesetzt hat, oder andere Daten identifiziert und
+dokumentiert.
+Kategorien
+Unterkategorien
+Fortsetzung auf der nächsten Seite
+Seite 27
+
+[PAGE: 33]
+
+NIST AI 100-1
+AI RMF 1.0
+Tabelle 2: Kategorien und Unterkategorien für die MAP-Funktion. (Fortgesetzt)
+MAP 5.2: Praktiken und Personal zur Unterstützung des regelmäßigen En- gagements
+mit relevanten KI-Akteuren und die Integration von Feedback über
+positive, negative und unvorhergesehene Auswirkungen sind vorhanden und
+dokumentiert.
+Kategorien
+Unterkategorien
+5.3
+Messen
+Die Funktion MEASURE setzt quantitative, qualitative oder gemischte Methoden, Techniken und Methoden
+und Methoden, um KI-Risiken und die damit verbundenen Auswirkungen zu analysieren, zu bewerten, zu vergleichen und zu überwachen.
+Auswirkungen. Sie nutzt das Wissen, das für die in der MAP-Funktion identifizierten AI-Risiken relevant ist, und informiert die
+die MANAGE-Funktion. KI-Systeme sollten vor ihrem Einsatz und regelmäßig während des Betriebs getestet werden.
+regelmäßig während des Betriebs getestet werden. Die Messung von KI-Risiken umfasst die Dokumentation von Aspekten der System
+Funktionalität und Vertrauenswürdigkeit der Systeme.
+Die Messung von KI-Risiken umfasst die Verfolgung von Metriken für vertrauenswürdige Eigenschaften, soziale Auswirkungen,
+und Mensch-KI-Konfigurationen. Die in der MEASURE-Funktion entwickelten oder übernommenen Prozesse
+sollten strenge Softwaretests und Methoden zur Leistungsbewertung umfassen, mit
+zugehörigen Messgrößen für die Unsicherheit, Vergleiche mit Leistungs-Benchmarks und eine formalisierte
+Berichterstattung und Dokumentation der Ergebnisse. Prozesse zur unabhängigen Überprüfung können die
+die Effektivität der Tests verbessern und interne Voreingenommenheit und potenzielle Interessenkonflikte abmildern.
+Einschätzung.
+Wo Kompromisse zwischen den vertrauenswürdigen Eigenschaften entstehen, bietet die Messung eine nachvollziehbare
+eine nachvollziehbare Grundlage für Managemententscheidungen. Zu den Optionen können Rekalibrierung, Auswirkungs
+oder die Entfernung des Systems aus dem Design, der Entwicklung, der Produktion oder der Nutzung sowie
+sowie eine Reihe von kompensierenden, aufdeckenden, abschreckenden, anweisenden und wiederherstellenden Kontrollen.
+Nach Abschluss der MEASURE-Funktion werden objektive, wiederholbare oder skalierbare Tests, Evaluierungen,
+Verifizierungs- und Validierungsprozesse (TEVV), einschließlich Metriken, Methoden und Methodolo-.
+Methoden und Verfahren sind vorhanden, werden befolgt und dokumentiert. Metriken und Messmethoden
+sollten wissenschaftlichen, rechtlichen und ethischen Normen entsprechen und in einem offenen und transparenten Prozess durchgeführt werden.
+übergeordneten Prozess durchgeführt werden. Möglicherweise müssen neue Arten der Messung, qualitativ und quantitativ, entwickelt werden.
+entwickelt werden. Das Ausmaß, in dem jede Messmethode einzigartige und aussagekräftige
+Informationen für die Bewertung von KI-Risiken liefert, sollte berücksichtigt werden. Die Nutzer des Frameworks werden
+ihre Fähigkeit verbessern, die Vertrauenswürdigkeit von Systemen umfassend zu bewerten, bestehende
+Risiken zu identifizieren und zu verfolgen und die Wirksamkeit der Messgrößen zu überprüfen. Die Ergebnisse der Messungen werden
+werden in der MANAGE-Funktion verwendet, um die Risikoüberwachung und die Reaktion zu unterstützen. Es liegt in der
+Es obliegt den Nutzern des Frameworks, die Funktion MEASURE weiterhin auf KI-Systeme anzuwenden
+da sich das Wissen, die Methoden, die Risiken und die Auswirkungen mit der Zeit weiterentwickeln.
+Seite 28
+
+[PAGE: 34]
+
+NIST AI 100-1
+AI RMF 1.0
+Praktiken im Zusammenhang mit der Messung von KI-Risiken werden im NIST AI RMF Playbook beschrieben. Tabelle
+3 listet die Kategorien und Unterkategorien der MEASURE-Funktion auf.
+Tabelle 3: Kategorien und Unterkategorien für die MEASURE-Funktion.
+MASSNAHME 1:
+Geeignete
+Methoden und Metriken
+werden identifiziert und
+angewandt.
+MASSNAHME 1.1: Ansätze und Metriken für die Messung von AI
+Risiken, die während der MAP-Funktion aufgezählt wurden, werden für die Umsetzung ausgewählt.
+Implementierung ausgewählt, beginnend mit den wichtigsten KI-Risiken. Die Risiken
+oder Vertrauenswürdigkeitseigenschaften, die nicht - oder nicht mehr - gemessen werden
+nicht gemessen werden können, werden ordnungsgemäß dokumentiert.
+MASSNAHME 1.2: Die Angemessenheit der KI-Metriken und die Wirksamkeit
+der bestehenden Kontrollen werden regelmäßig bewertet und aktualisiert, einschließlich
+Berichte über Fehler und mögliche Auswirkungen auf betroffene Gemeinschaften.
+MASSNAHME 1.3: Interne Experten, die nicht als Frontline
+Entwickler für das System und/oder unabhängige Prüfer werden in die
+an den regelmäßigen Bewertungen und Aktualisierungen beteiligt.
+Fachexperten,
+Nutzer, KI-Akteure außerhalb des Teams, das das System entwickelt oder eingesetzt hat
+KI-System entwickelt oder eingesetzt hat, und betroffene Gemeinden werden zur Unterstützung
+je nach Risikotoleranz der Organisation.
+MASSNAHME 2: KI
+Systeme werden
+bewertet auf
+vertrauenswürdig
+Eigenschaften bewertet.
+MASSNAHME 2.1: Testsätze, Metriken und Details über die verwendeten Tools
+während der TEVV sind dokumentiert.
+MASSNAHME 2.2: Evaluierungen, an denen Menschen beteiligt sind, erfüllen angemessene
+Anforderungen (einschließlich des Schutzes menschlicher Versuchspersonen) und
+sind repräsentativ für die relevante Population.
+MASSNAHME 2.3: Die Leistung des KI-Systems oder die Sicherheitskriterien
+werden qualitativ oder quantitativ gemessen und nachgewiesen
+unter ähnlichen Bedingungen wie im Einsatzgebiet. Die Maßnahmen werden
+dokumentiert.
+MASSNAHME 2.4: Die Funktionalität und das Verhalten des KI-Systems
+tems und seiner Komponenten - wie in der MAP-Funktion identifiziert - werden
+in der Produktion überwacht.
+MASSNAHME 2.5: Das einzusetzende KI-System ist nachweislich
+valide und zuverlässig ist. Beschränkungen der Verallgemeinerbarkeit über die
+den Bedingungen, unter denen die Technologie entwickelt wurde
+sind dokumentiert.
+Kategorien
+Unterkategorien
+Fortsetzung auf der nächsten Seite
+Seite 29
+
+[PAGE: 35]
+
+NIST AI 100-1
+AI RMF 1.0
+Tabelle 3: Kategorien und Unterkategorien für die Funktion MEASURE. (Fortgesetzt)
+MASSNAHME 2.6: Das AI-System wird regelmäßig auf Sicherheits
+Risiken - wie in der Funktion MAP identifiziert - bewertet. Das einzusetzende KI-System
+ist nachweislich sicher, sein negatives Restrisiko übersteigt nicht die
+die Risikotoleranz nicht übersteigt und es sicher versagen kann, insbesondere wenn
+wenn es über seine Wissensgrenzen hinaus betrieben wird. Sicherheitsmetriken reflektieren
+Zuverlässigkeit und Robustheit des Systems, Echtzeitüberwachung und
+Reaktionszeiten bei Ausfällen von KI-Systemen.
+MASSNAHME 2.7: Die Sicherheit und Widerstandsfähigkeit von KI-Systemen - wie in der
+der MAP-Funktion - sind bewertet und dokumentiert.
+MASSNAHME 2.8: Risiken im Zusammenhang mit Transparenz und Rechenschaftspflicht
+Rechenschaftspflicht - wie in der MAP-Funktion identifiziert - sind untersucht und
+dokumentiert.
+MASSNAHME 2.9: Das KI-Modell wird erklärt, validiert und dokumentiert.
+und dokumentiert, und der Output des KI-Systems wird in seinem Kontext interpretiert -
+Kontext - wie in der MAP-Funktion festgelegt - interpretiert, um eine verantwortungsvolle Nutzung und
+Steuerung.
+MASSNAHME 2.10: Das Datenschutzrisiko des KI-Systems - wie in der
+der MAP-Funktion - wird untersucht und dokumentiert.
+MASSNAHME 2.11: Fairness und Verzerrung - wie in der MAP
+Funktion identifiziert - werden bewertet und die Ergebnisse werden dokumentiert.
+MASSNAHME 2.12: Umweltauswirkungen und Nachhaltigkeit von AI
+Modellschulungen und Managementaktivitäten - wie in der
+MAP-Funktion - sind bewertet und dokumentiert.
+MASSNAHME 2.13: Die Effektivität der eingesetzten TEVV-Methoden und -Prozesse
+rics und Prozesse in der Funktion MEASURE sind bewertet und
+dokumentiert.
+MASSNAHME 3:
+Mechanismen zur
+Verfolgung identifizierter
+AI-Risiken im Laufe der Zeit
+sind vorhanden.
+MASSNAHME 3.1: Ansätze, Personal und Dokumentation sind vorhanden
+zur regelmäßigen Identifizierung und Verfolgung bestehender, unvorhergesehener
+und entstehende KI-Risiken auf der Grundlage von Faktoren wie der beabsichtigten und tatsächlichen
+tatsächliche Leistung im Einsatzkontext.
+MASSNAHME 3.2: Ansätze zur Risikoverfolgung werden in Betracht gezogen für
+für Situationen, in denen KI-Risiken mit derzeit verfügbaren
+schwer zu bewerten sind oder für die noch keine Metriken
+verfügbar sind.
+Kategorien
+Unterkategorien
+Fortsetzung auf der nächsten Seite
+Seite 30
+
+[PAGE: 36]
+
+NIST AI 100-1
+AI RMF 1.0
+Tabelle 3: Kategorien und Unterkategorien für die Funktion MEASURE. (Forts.)
+MASSNAHME 3.3: Feedback-Prozesse für Endnutzer und betroffene
+Gemeinschaften, um Probleme zu melden und Systemergebnisse anzufechten, sind
+sind eingerichtet und in die Bewertungsmetriken des KI-Systems integriert.
+MASSNAHME 4:
+Rückmeldungen über
+Wirksamkeit der
+Messung wird
+gesammelt und
+bewertet.
+MASSNAHME 4.1: Messansätze zur Identifizierung von KI-Risiken
+sind mit dem/den Einsatzkontext(en) verbunden und werden durch
+Beratung mit Fachleuten und anderen Endbenutzern.
+An-
+verfahren sind dokumentiert.
+MASSNAHME 4.2: Messergebnisse bezüglich des Vertrauens in KI-Systeme
+Vertrauenswürdigkeit von KI-Systemen in Einsatzkontexten und über den Lebenszyklus
+werden durch Beiträge von Domänenexperten und relevanten KI-Akteuren informiert.
+KI-Akteure, um zu überprüfen, ob das System durchgängig wie beabsichtigt funktioniert.
+beabsichtigt. Die Ergebnisse werden dokumentiert.
+MASSNAHME 4.3: Messbare Leistungsverbesserungen oder -de-
+auf der Grundlage von Konsultationen mit relevanten AI-Akteuren, einschließlich
+einschließlich betroffener Gemeinschaften, und Felddaten über kontext
+kontextrelevante Risiken und Merkmale der Vertrauenswürdigkeit sind identifiziert
+und dokumentiert.
+Kategorien
+Unterkategorien
+5.4
+Verwalten
+Die Funktion MANAGE beinhaltet die Zuweisung von Risikoressourcen zu kartierten und gemessenen Risiken auf
+und gemessenen Risiken auf regelmäßiger Basis und wie von der GOVERN-Funktion definiert. Die Risikobehandlung umfasst Pläne zur
+auf Vorfälle oder Ereignisse zu reagieren, sich davon zu erholen und darüber zu kommunizieren.
+Kontextinformationen, die aus der Konsultation von Experten und dem Input relevanter AI-Akteure gewonnen werden
+- die in GOVERN festgelegt und in MAP ausgeführt werden - werden in dieser Funktion verwendet, um die
+die Wahrscheinlichkeit von Systemausfällen und negativen Auswirkungen zu verringern. Systematische Dokumentationsverfahren
+die in GOVERN eingeführt und in MAP und MEASURE genutzt werden, unterstützen das Risikomanagement von KI
+und erhöhen die Transparenz und Rechenschaftspflicht. Prozesse zur Bewertung neu auftretender Risiken
+sind vorhanden, ebenso wie Mechanismen zur kontinuierlichen Verbesserung.
+Nach Abschluss der Funktion MANAGE werden Pläne für die Priorisierung von Risiken und die regelmäßige Überwachung und Verbesserung
+und Verbesserung vorhanden sein. Die Nutzer des Frameworks werden besser in der Lage sein, die
+die Risiken der eingesetzten KI-Systeme zu managen und Ressourcen für das Risikomanagement auf der Grundlage
+bewerteten und priorisierten Risiken. Es obliegt den Nutzern des Frameworks, die Funktion
+die Funktion MANAGE auf eingesetzte KI-Systeme anzuwenden, wenn sich Methoden, Kontexte, Risiken und Bedürfnisse oder
+Erwartungen der relevanten KI-Akteure sich im Laufe der Zeit weiterentwickeln.
+Seite 31
+
+[PAGE: 37]
+
+NIST AI 100-1
+AI RMF 1.0
+Praktiken für das Management von KI-Risiken werden im NIST AI RMF Playbook beschrieben. Tabelle
+4 listet die Kategorien und Unterkategorien der MANAGE-Funktion auf.
+Tabelle 4: Kategorien und Unterkategorien für die MANAGE-Funktion.
+MANAGE 1: AI
+Risiken basierend auf
+Bewertungen und
+anderen analytischen
+Ergebnisse aus dem
+MAP und MEASURE
+Funktionen werden
+nach Prioritäten geordnet,
+reagiert und
+verwaltet.
+VERWALTEN 1.1: Es wird festgestellt, ob das AI
+System seine beabsichtigten Zwecke und erklärten Ziele erreicht und
+ob seine Entwicklung oder sein Einsatz fortgesetzt werden soll.
+MANAGE 1.2: Die Behandlung der dokumentierten KI-Risiken wird nach Prioritäten geordnet
+basierend auf den Auswirkungen, der Wahrscheinlichkeit und den verfügbaren Ressourcen oder Methoden.
+MANAGE 1.3: Antworten auf die AI-Risiken, die von der MAP-Funktion als hochprioritär
+von der MAP-Funktion identifiziert wurden, werden entwickelt, geplant und dokumentiert.
+umentiert. Zu den Optionen für die Risikoreaktion gehören Abschwächung, Übertragung
+Übertragen, Vermeiden oder Akzeptieren.
+VERWALTEN 1.4: Negative Restrisiken (definiert als die Summe aller
+nicht gemilderten Risiken) sowohl für nachgelagerte Käufer von KI-Systemen
+und Endbenutzer sind dokumentiert.
+MANAGE 2:
+Strategien zur
+KI zu maximieren
+Vorteile zu maximieren und
+Minimierung negativer
+Auswirkungen sind geplant,
+vorbereitet,
+umgesetzt,
+dokumentiert und
+informiert durch Beiträge
+von relevanten AI
+Akteure.
+MANAGEMENT 2.1: Die für das Management von AI-Risiken erforderlichen Ressourcen werden
+berücksichtigt - zusammen mit praktikablen alternativen Systemen, Ansätzen oder Methoden, die keine KI
+oder Methoden, um das Ausmaß oder die Wahrscheinlichkeit von
+potenzieller Auswirkungen.
+MANAGEMENT 2.2: Es sind Mechanismen vorhanden und werden angewandt, um den
+den Wert der eingesetzten KI-Systeme zu erhalten.
+MANAGE 2.3: Es werden Verfahren angewandt, um auf ein bisher unbekanntes Risiko zu reagieren und
+auf ein zuvor unbekanntes Risiko zu reagieren, wenn es erkannt wird.
+MANAGE 2.4: Es sind Mechanismen vorhanden und werden angewandt, und die Verantwortlichkeiten
+Verantwortlichkeiten zugewiesen und verstanden werden, um KI-Systeme zu ersetzen, abzuschalten oder zu
+oder zu deaktivieren, wenn KI-Systeme Leistungen oder Ergebnisse zeigen
+die nicht mit der beabsichtigten Nutzung übereinstimmen.
+MANAGE 3: KI
+risiken und vorteile
+von Dritten
+Unternehmen werden
+verwaltet.
+MANAGE 3.1: KI-Risiken und -Vorteile aus Ressourcen Dritter
+werden regelmäßig überwacht, und Risikokontrollen werden angewendet und
+dokumentiert.
+MANAGE 3.2: Vorgefertigte Modelle, die für die Entwicklung verwendet werden, werden im Rahmen der
+werden im Rahmen der regelmäßigen Überwachung und Wartung des KI-Systems überwacht.
+Wartung überwacht.
+Kategorien
+Unterkategorien
+Fortsetzung auf der nächsten Seite
+Seite 32
+
+[PAGE: 38]
+
+NIST AI 100-1
+AI RMF 1.0
+Tabelle 4: Kategorien und Unterkategorien für die Funktion MANAGE. (Fortgesetzt)
+MANAGE 4: Risiko
+Behandlungen,
+einschließlich Reaktion
+und Wiederherstellung, und
+Kommunikation
+Pläne für die
+identifizierten und
+gemessenen AI-Risiken
+werden dokumentiert und
+regelmäßig überwacht.
+MANAGE 4.1: Pläne zur Überwachung des KI-Systems nach dem Einsatz
+werden umgesetzt, einschließlich Mechanismen zur Erfassung und Bewertung von
+Auswertung der Eingaben von Benutzern und anderen relevanten KI-Akteuren, Berufung
+und Außerkraftsetzung, Außerbetriebnahme, Reaktion auf Vorfälle, Wiederherstellung und
+Änderungsmanagement.
+MANAGE 4.2: Messbare Aktivitäten für kontinuierliche Verbesserungen
+sind in Aktualisierungen des KI-Systems integriert und umfassen die regelmäßige Einbindung
+mit interessierten Parteien, einschließlich relevanter KI-Akteure.
+MANAGE 4.3: Vorfälle und Fehler werden den relevanten
+KI-Akteure, einschließlich der betroffenen Gemeinschaften. Prozesse zur Verfolgung
+Nachverfolgung von Vorfällen und Fehlern, die Reaktion darauf und die
+befolgt und dokumentiert.
+Kategorien
+Unterkategorien
+6.
+AI RMF-Profile
+AI RMF Anwendungsfallprofile sind Implementierungen der AI RMF Funktionen, Kategorien und
+Unterkategorien für eine bestimmte Umgebung oder Anwendung, die auf den Anforderungen, der Risikotoleranz
+und Ressourcen des Framework-Benutzers: zum Beispiel ein AI RMF-Einstellungsprofil oder ein AI
+RMF-Profil für fairen Wohnungsbau. Die Profile können veranschaulichen, wie Risiken in den verschiedenen
+in verschiedenen Phasen des KI-Lebenszyklus oder in bestimmten Sektoren, Technologien oder Endanwendungen
+Anwendungen. KI-RMF-Profile helfen Unternehmen bei der Entscheidung, wie sie am besten vorgehen können
+KI-Risiko am besten managen können, das mit ihren Zielen übereinstimmt, gesetzliche/regulatorische Anforderungen und
+Best Practices berücksichtigt und die Prioritäten des Risikomanagements widerspiegelt.
+Zeitliche AI RMF-Profile sind Beschreibungen entweder des aktuellen Zustands oder des gewünschten Zielzustands
+Zustand bestimmter KI-Risikomanagement-Aktivitäten innerhalb eines bestimmten Sektors, einer Branche, einer Organisation
+oder Anwendungskontext. Ein AI RMF-Zeitprofil gibt an, wie KI derzeit gemanagt wird
+verwaltet wird, und die damit verbundenen Risiken in Bezug auf die aktuellen Ergebnisse. Ein Zielprofil zeigt die
+Ergebnisse, die erforderlich sind, um die gewünschten oder angestrebten AI-Risikomanagementziele zu erreichen.
+Der Vergleich von Ist- und Soll-Profilen zeigt wahrscheinlich Lücken auf, die geschlossen werden müssen, um die Ziele des AI-Risikomanagements
+Management-Ziele zu erreichen. Es können Aktionspläne entwickelt werden, um diese Lücken zu schließen und die
+Ergebnisse in einer bestimmten Kategorie oder Unterkategorie zu erreichen. Die Priorisierung der Lückenbehebung wird bestimmt durch
+den Bedürfnissen des Benutzers und seinen Risikomanagementprozessen. Dieser risikobasierte Ansatz ermöglicht auch
+Benutzer des Frameworks, ihre Ansätze mit anderen Ansätzen zu vergleichen und die
+Ressourcen (z.B. Personal, Finanzierung) abzuschätzen, die erforderlich sind, um die Ziele des AI-Risikomanagements kosteneffektiv und
+effektiv und nach Prioritäten geordnet zu erreichen.
+Seite 33
+
+[PAGE: 39]
+
+NIST AI 100-1
+AI RMF 1.0
+Die sektorübergreifenden Profile der AI RMF decken die Risiken von Modellen oder Anwendungen ab, die über
+Anwendungsfällen oder Sektoren eingesetzt werden können. Sektorübergreifende Profile können auch die Regelung, Abbildung, Messung
+und Risiken für sektorübergreifende Aktivitäten oder Geschäftsprozesse verwalten, wie z.B. die
+Verwendung von großen Sprachmodellen, Cloud-basierten Diensten oder Akquisitionen.
+Dieses Rahmenwerk schreibt keine Profilvorlagen vor und ermöglicht so eine flexible Umsetzung.
+tung.
+Seite 34
+
+[PAGE: 40]
+
+NIST AI 100-1
+AI RMF 1.0
+Anhang A:
+Beschreibungen der AI-Akteur-Aufgaben aus den Abbildungen 2 und 3
+Die Aufgaben des AI-Designs werden während der Phasen Anwendungskontext und Daten und Input
+des KI-Lebenszyklus in Abbildung 2. KI-Design-Akteure erstellen das Konzept und die Ziele von KI
+Systeme und sind verantwortlich für die Planung, das Design und die Datenerfassung und -verarbeitung
+Aufgaben des KI-Systems, damit das KI-System gesetzeskonform und zweckmäßig ist. Zu den Aufgaben gehören die Ar-
+tikulieren und dokumentieren Sie das Konzept und die Ziele des Systems, die zugrunde liegenden Annahmen,
+Kontext und Anforderungen, das Sammeln und Bereinigen von Daten und die Dokumentation der Metadaten und
+und Merkmale des Datensatzes. Zu den KI-Akteuren in dieser Kategorie gehören Datenwissenschaftler, Do-
+Experten, soziokulturelle Analysten, Experten auf dem Gebiet der Vielfalt, Gleichberechtigung, Inklusion
+und Barrierefreiheit, Mitglieder betroffener Gemeinschaften, Experten für menschliche Faktoren (z.B. UX/UI
+Design), Governance-Experten, Dateningenieure, Datenanbieter, Systemfinanzierer, Produktmanager
+Produktmanager, Drittparteien, Evaluatoren sowie Rechts- und Datenschutzbeauftragte.
+Die Aufgaben der KI-Entwicklung werden während der KI-Modellphase des Lebenszyklus in Abbildung
+2. Die Akteure der KI-Entwicklung stellen die anfängliche Infrastruktur von KI-Systemen bereit und sind verantwortlich für
+Sie sind verantwortlich für die Erstellung und Interpretation von Modellen, die die Erstellung, Auswahl, Kalibrierung, das Training und/oder Testen von KI-Modellen beinhalten.
+bration, Training und/oder Testen von Modellen oder Algorithmen. Zu den KI-Akteuren in dieser Kategorie gehören
+Experten für maschinelles Lernen, Datenwissenschaftler, Entwickler, Drittanbieter, Experten für Recht und Datenschutz
+Rechts- und Datenschutzexperten sowie Experten für die soziokulturellen und kontextuellen Faktoren, die mit dem
+dem Einsatzumfeld.
+Die Aufgaben des KI-Einsatzes werden während der Aufgaben- und Ergebnisphase des Lebenszyklus in
+Abbildung 2. Die Akteure des KI-Einsatzes sind für kontextbezogene Entscheidungen verantwortlich, die sich darauf beziehen, wie
+wie das KI-System verwendet wird, um den Einsatz des Systems in der Produktion zu gewährleisten. Zugehörige Aufgaben
+gehören die Erprobung des Systems, die Überprüfung der Kompatibilität mit Altsystemen, die Sicherstellung der
+die Einhaltung von Vorschriften, das Management organisatorischer Veränderungen und die Bewertung der Benutzerfreundlichkeit. AI
+Zu den KI-Akteuren in dieser Kategorie gehören Systemintegratoren, Softwareentwickler, Endbenutzer, Bediener
+Anwender, Bediener und Praktiker, Evaluatoren und Fachleute mit Fachwissen über menschliche Faktoren,
+soziokulturelle Analyse und Governance.
+Die Aufgaben für Betrieb und Überwachung werden in der Phase Anwendungskontext/Betrieb und
+Monitor Phase des Lebenszyklus in Abbildung 2. Diese Aufgaben werden von KI-Akteuren ausgeführt, die
+die für den Betrieb des KI-Systems verantwortlich sind und mit anderen zusammenarbeiten, um regelmäßig die
+Ergebnisse und Auswirkungen zu bewerten. Zu den KI-Akteuren in dieser Kategorie gehören Systembetreiber, Domänenexperten, KI
+Designer, Benutzer, die die Ergebnisse von KI-Systemen interpretieren oder übernehmen, Produktentwickler,
+Evaluatoren und Prüfer, Experten für die Einhaltung von Vorschriften, die Unternehmensleitung und Mitglieder der
+der Forschungsgemeinschaft.
+Test-, Evaluierungs-, Verifizierungs- und Validierungsaufgaben (TEVV) werden während des gesamten
+Lebenszyklus der KI durchgeführt. Sie werden von KI-Akteuren durchgeführt, die das KI-System oder seine Komponenten untersuchen
+Komponenten untersuchen oder Probleme erkennen und beheben. Idealerweise führen die KI-Akteure, die die Verifizierung
+Seite 35
+
+[PAGE: 41]
+
+NIST AI 100-1
+AI RMF 1.0
+und Validierungsaufgaben unterscheiden sich von denen, die Test- und Evaluierungsmaßnahmen durchführen. Die Aufgaben
+können bereits in der Entwurfsphase in eine Phase integriert werden, in der die Tests in Übereinstimmung mit den
+der Designanforderung geplant werden.
+- TEVV-Aufgaben für Design, Planung und Daten können sich auf die interne und externe Validierung von
+der Annahmen für das Systemdesign, die Datenerfassung und die Messungen im
+in Bezug auf den beabsichtigten Kontext des Einsatzes oder der Anwendung.
+- Zu den TEVV-Aufgaben für die Entwicklung (d.h. die Modellerstellung) gehören die Modellvalidierung und
+Bewertung.
+- TEVV-Aufgaben für den Einsatz umfassen die Systemvalidierung und Integration in die Produktion,
+mit Tests und Rekalibrierung für die System- und Prozessintegration, Benutzererfahrung,
+und die Einhaltung bestehender rechtlicher, regulatorischer und ethischer Vorgaben.
+- TEVV-Aufgaben für den Betrieb umfassen die laufende Überwachung für regelmäßige Aktualisierungen, Tests,
+und die Rekalibrierung der Modelle durch Fachexperten (SME), die Verfolgung von gemeldeten Vorfällen
+oder gemeldeten Fehlern und deren Management, die Erkennung von neu auftretenden Eigenschaften und
+und die damit verbundenen Auswirkungen sowie Prozesse zur Abhilfe und Reaktion.
+Die Aufgaben und Aktivitäten im Bereich der menschlichen Faktoren finden sich in allen Dimensionen des KI-Lebenszyklus
+Lebenszyklus. Sie umfassen menschenzentrierte Entwurfspraktiken und -methodiken, die Förderung der
+die aktive Einbeziehung von Endnutzern und anderen interessierten Parteien und relevanten KI-Akteuren, die Einbindung
+die Einbeziehung kontextspezifischer Normen und Werte in das Systemdesign, die Evaluierung und Anpassung der
+Endnutzererfahrungen und die umfassende Integration von Menschen und menschlicher Dynamik in allen Phasen des
+KI-Lebenszyklus. Human Factors-Experten bieten multidisziplinäre Fähigkeiten und Perspektiven
+um den Nutzungskontext zu verstehen, interdisziplinäre und demografische Vielfalt zu informieren, sich
+in Beratungsprozesse einzubinden, Benutzererfahrungen zu entwerfen und zu bewerten, menschenzentrierte
+Evaluierung und Tests und informieren über Folgenabschätzungen.
+Die Aufgaben von Fachexperten beinhalten Beiträge von multidisziplinären Praktikern oder Wissenschaftlern, die
+Wissen oder Expertise in - und über - eine Branche, einen Wirtschaftssektor, einen Kon- text oder einen Anwendungsbereich
+oder Anwendungsbereich einbringen, in dem ein KI-System eingesetzt wird. KI-Akteure, die Fachexperten sind
+KI-Akteure, die Experten auf diesem Gebiet sind, können wichtige Hinweise für das Design und die Entwicklung von KI-Systemen geben und inter
+Sie können die Arbeit der TEVV- und KI-Folgenabschätzungsteams unterstützen.
+Zu den Aufgaben der KI-Folgenabschätzung gehören die Bewertung und Evaluierung der Anforderungen an KI-Systeme
+Rechenschaftspflicht, die Bekämpfung von schädlichen Verzerrungen, die Untersuchung der Auswirkungen von KI-Systemen, Produktsicherheit,
+Haftung und Sicherheit, um nur einige zu nennen. KI-Akteure wie Folgenabschätzer und Evaluatoren
+stellen technisches, menschliches, soziokulturelles und juristisches Fachwissen zur Verfügung.
+Beschaffungsaufgaben werden von KI-Akteuren mit finanzieller, rechtlicher oder politischer Verwaltungsbefugnis wahrgenommen
+für den Erwerb von KI-Modellen, -Produkten oder -Dienstleistungen von einem Drittentwickler,
+Lieferanten oder Auftragnehmern.
+Governance- und Überwachungsaufgaben werden von KI-Akteuren mit Management-, Treuhand-,
+und rechtlichen Befugnissen und der Verantwortung für die Organisation, in der ein KI-System de-
+Seite 36
+
+[PAGE: 42]
+
+NIST AI 100-1
+AI RMF 1.0
+unterzeichnet, entwickelt und/oder eingesetzt werden. Zu den wichtigsten AI-Akteuren, die für die AI-Governance verantwortlich sind, gehören
+die Unternehmensleitung, die oberste Führungsebene und das Board of Directors. Diese Akteure
+sind Parteien, die sich mit der Wirkung und Nachhaltigkeit der Organisation als Ganzes
+als Ganzes.
+Zusätzliche KI-Akteure
+Zu den Drittparteien gehören Anbieter, Entwickler, Verkäufer und Bewerter von Daten, Al-
+gorithmen, Modellen und/oder Systemen und damit verbundenen Dienstleistungen für eine andere Organisation oder die Kunden der Organisation.
+Kunden oder Klienten der Organisation. Drittanbieter sind verantwortlich für KI-Design und
+und Entwicklungsaufgaben zuständig, ganz oder teilweise. Per Definition sind sie außerhalb des Design-, Entwicklungs- oder
+Entwicklungsteam des Unternehmens, das seine Technologien oder Dienstleistungen erwirbt.
+Die von Drittanbietern erworbenen Technologien können komplex oder undurchsichtig sein, und die Risikotoleranz
+und die Risikotoleranzen stimmen möglicherweise nicht mit denen der einführenden oder betreibenden Organisation überein.
+Endnutzer eines KI-Systems sind die Personen oder Gruppen, die das System für bestimmte Zwecke nutzen.
+Zwecke nutzen. Diese Personen oder Gruppen interagieren mit einem KI-System in einem bestimmten Kontext. Ende
+Endnutzer können über unterschiedliche Kompetenzen verfügen, von KI-Experten bis hin zu Endnutzern, die zum ersten Mal mit der Technologie arbeiten.
+Betroffene Personen/Gemeinschaften umfassen alle Personen, Gruppen, Gemeinschaften oder
+Organisationen, die direkt oder indirekt von KI-Systemen oder von Entscheidungen betroffen sind, die auf den Ergebnissen
+von KI-Systemen. Diese Personen interagieren nicht unbedingt mit dem eingesetzten System oder der
+Anwendung.
+Andere KI-Akteure können formale oder quasi-formale Normen oder Richtlinien für die Spezifizierung
+und den Umgang mit KI-Risiken. Dazu gehören Handelsverbände, Organisationen, die Standards entwickeln
+ganisationen, Interessengruppen, Forscher, Umweltgruppen und zivilgesellschaftliche
+Organisationen.
+Die breite Öffentlichkeit wird die positiven und negativen Auswirkungen von KI-Technologien am ehesten direkt erfahren.
+KI-Technologien. Sie kann die Motivation für die Maßnahmen der KI-Akteure liefern. Diese
+Gruppe kann Einzelpersonen, Gemeinschaften und Verbraucher umfassen, die mit dem Kontext, in dem
+in dem ein KI-System entwickelt oder eingesetzt wird.
+Seite 37
+
+[PAGE: 43]
+
+NIST AI 100-1
+AI RMF 1.0
+Anhang B:
+Wie sich KI-Risiken von traditionellen Software-Risiken unterscheiden
+Wie bei herkömmlicher Software können die Risiken von KI-basierter Technologie größer sein als ein Unternehmen.
+Unternehmen, überspannen Organisationen und haben Auswirkungen auf die Gesellschaft. KI-Systeme bringen auch eine Reihe von
+Risiken mit sich, die von den aktuellen Risikorahmenwerken und -ansätzen nicht umfassend berücksichtigt werden.
+Einige Funktionen von KI-Systemen, die Risiken darstellen, können auch von Vorteil sein. Zum Beispiel können vortrainierte
+Modelle und Transfer Learning die Forschung voranbringen und die Genauigkeit und Widerstandsfähigkeit
+im Vergleich zu anderen Modellen und Ansätzen. Die Identifizierung kontextbezogener Faktoren in der MAP
+Funktion hilft den KI-Akteuren bei der Bestimmung des Risikograds und möglicher
+Bemühungen.
+Zu den neuen oder erhöhten KI-spezifischen Risiken im Vergleich zu herkömmlicher Software gehören
+die folgenden:
+- Die Daten, die für die Erstellung eines KI-Systems verwendet werden, sind möglicherweise keine echte oder angemessene Repräsenta- tion des Kontexts oder der
+des Kontexts oder der beabsichtigten Verwendung des KI-Systems sein, und die Basiswahrheit ist entweder
+nicht existieren oder nicht verfügbar sein. Außerdem können schädliche Verzerrungen und andere Probleme mit der Datenqualität
+die Vertrauenswürdigkeit von KI-Systemen beeinträchtigen, was zu negativen Auswirkungen führen kann.
+- Die Abhängigkeit von KI-Systemen und die Abhängigkeit von Daten für Trainingsaufgaben in Verbindung mit
+und Komplexität, die typischerweise mit solchen Daten verbunden sind.
+- Beabsichtigte oder unbeabsichtigte Änderungen während des Trainings können die Leistung von KI-Systemen grundlegend verändern.
+temleistung grundlegend verändern.
+- Datensätze, die zum Trainieren von KI-Systemen verwendet werden, können aus ihrem ursprünglichen und inneren Kontext herausgelöst werden.
+Kontext losgelöst werden oder im Vergleich zum Einsatzkontext veraltet sein.
+- Der Umfang und die Komplexität von KI-Systemen (viele Systeme enthalten Milliarden oder sogar Billionen von
+Entscheidungspunkte), die in eher traditionellen Softwareanwendungen untergebracht sind.
+- Die Verwendung von vortrainierten Modellen, die die Forschung vorantreiben und die Leistung verbessern können, kann
+kann auch die statistische Unsicherheit erhöhen und Probleme beim Umgang mit Verzerrungen verursachen,
+wissenschaftliche Gültigkeit und Reproduzierbarkeit.
+- Höherer Schwierigkeitsgrad bei der Vorhersage von Fehlermodi für emergente Eigenschaften von
+groß angelegten, vortrainierten Modellen.
+- Risiko für den Datenschutz aufgrund der verbesserten Datenaggregationsfähigkeit von KI-Systemen.
+- KI-Systeme erfordern möglicherweise eine häufigere Wartung und Auslöser für die Durchführung einer kor- rektiven Wartung.
+rektive Wartung aufgrund von Daten-, Modell- oder Konzeptabweichungen.
+- Zunehmende Undurchsichtigkeit und Bedenken hinsichtlich der Reproduzierbarkeit.
+- Unterentwickelte Standards für Softwaretests und die Unfähigkeit, KI-gestützte Praktiken so zu dokumentieren
+Praktiken zu dokumentieren, die dem Standard entsprechen, der von traditionell entwickelter Software für alle
+einfachsten Fällen.
+- Schwierigkeiten bei der Durchführung regelmäßiger KI-basierter Softwaretests oder bei der Entscheidung, was getestet werden soll
+zu testen, da KI-Systeme nicht denselben Kontrollen unterliegen wie die traditionelle Code-Entwicklung.
+entwicklung.
+Seite 38
+
+[PAGE: 44]
+
+NIST AI 100-1
+AI RMF 1.0
+- Rechenkosten für die Entwicklung von KI-Systemen und ihre Auswirkungen auf die Umwelt
+und den Planeten.
+- Unfähigkeit, die Nebenwirkungen von KI-basierten Systemen über statistische Maßnahmen hinaus vorherzusagen oder zu erkennen.
+Maßnahmen.
+Überlegungen und Ansätze zum Management von Datenschutz- und Cybersicherheitsrisiken sind anwendbar
+beim Design, der Entwicklung, dem Einsatz, der Bewertung und der Nutzung von KI-Systemen. Datenschutz und
+Cybersecurity-Risiken werden auch als Teil eines umfassenderen Risikomanagements für Unternehmen betrachtet.
+Risikomanagement, das auch KI-Risiken umfassen kann. Als Teil der Bemühungen, die Vertrauenswürdigkeit von KI
+ness-Merkmale wie "Sicher und widerstandsfähig" und "Verbesserter Schutz der Privatsphäre" zu berücksichtigen, können Organisationen
+können Organisationen die Nutzung verfügbarer Standards und Anleitungen in Betracht ziehen, die umfassende Anleitungen für
+Organisationen zur Verfügung stellen, um Sicherheits- und Datenschutzrisiken zu reduzieren, wie z.B. das NIST Cy-
+bersicherheits-Framework, das NIST Privacy Framework, das NIST Risk Management Frame
+work und das Secure Software Development Framework. Diese Rahmenwerke haben einige
+Gemeinsamkeiten mit dem AI RMF. Wie die meisten Ansätze zum Risikomanagement sind sie
+wie die meisten Risikomanagementansätze eher ergebnisorientiert als präskriptiv und sind oft um einen Kernsatz von Funktionen, Kategorien und Unterkategorien strukturiert.
+tionen, Kategorien und Unterkategorien. Es gibt zwar erhebliche Unterschiede zwischen diesen
+Unterschiede zwischen diesen Rahmenwerken gibt - und weil das KI-Risikomanagement die
+viele andere Arten von Risiken berücksichtigt werden müssen, können Rahmenwerke wie die oben erwähnten die
+Überlegungen zu Sicherheit und Datenschutz in den Funktionen MAP, MEASURE und MANAGE der
+AI RMF.
+Gleichzeitig sind die vor der Veröffentlichung dieser KI-RMF verfügbaren Anleitungen nicht umfassend.
+viele Risiken von KI-Systemen nicht vollständig ab. Zum Beispiel sind die bestehenden Rahmenwerke und Anleitungen
+nicht in der Lage:
+- das Problem der schädlichen Verzerrungen in KI-Systemen angemessen zu behandeln;
+- die herausfordernden Risiken im Zusammenhang mit generativer KI anzugehen;
+- die Sicherheitsbedenken in Bezug auf Umgehung, Modellextraktion, Ableitung von
+Verfügbarkeit oder andere Angriffe auf maschinelles Lernen;
+- die komplexe Angriffsfläche von KI-Systemen oder andere durch KI-Systeme ermöglichte Sicherheitsmissbräuche zu berücksichtigen
+durch KI-Systeme; und
+- Risiken im Zusammenhang mit KI-Technologien von Drittanbietern, Transfer-Lernen und Off-Label-Einsatz zu berücksichtigen.
+wo KI-Systeme für die Entscheidungsfindung außerhalb der Sicherheitskontrollen einer Organisation trainiert werden können.
+Sicherheitskontrollen eines Unternehmens trainiert oder in einem Bereich trainiert und dann für einen anderen "feinabgestimmt" werden.
+Sowohl KI als auch herkömmliche Softwaretechnologien und -systeme unterliegen einer schnellen Innovation.
+Die technologischen Fortschritte sollten überwacht und eingesetzt werden, um von diesen Entwicklungen zu profitieren.
+Entwicklungen zu nutzen und auf eine Zukunft der KI hinzuarbeiten, die sowohl vertrauenswürdig als auch verantwortungsvoll ist.
+Seite 39
+
+[PAGE: 45]
+
+NIST AI 100-1
+AI RMF 1.0
+Anhang C:
+KI-Risikomanagement und Interaktion zwischen Mensch und KI
+Organisationen, die KI-Systeme für den Einsatz im operativen Bereich entwerfen, entwickeln oder einsetzen
+können ihr KI-Risikomanagement verbessern, indem sie die derzeitigen Grenzen der Interaktion zwischen Mensch und
+KI-Interaktion verstehen. Die KI-RMF bietet die Möglichkeit, die verschiedenen
+die verschiedenen menschlichen Rollen und Verantwortlichkeiten bei der Nutzung von, der Interaktion mit oder der Verwaltung von KI
+Systeme.
+Viele der datengesteuerten Ansätze, auf die sich KI-Systeme stützen, versuchen, individuelle und soziale Beobachtungs- und Entscheidungspraktiken umzuwandeln oder darzustellen.
+individuellen und sozialen Beobachtungs- und Entscheidungspraktiken in messbare Quantitäten umzuwandeln.
+tionen. Die Darstellung komplexer menschlicher Phänomene mit mathematischen Modellen kann den
+den Preis, dass der notwendige Kontext verloren geht. Dieser Verlust an Kontext kann es wiederum schwierig machen, die
+die individuellen und gesellschaftlichen Auswirkungen zu verstehen, die für das KI-Risikomanagement so wichtig sind.
+Zu den Themen, die weitere Überlegungen und Forschung verdienen, gehören:
+1. Die Rollen und Verantwortlichkeiten der Menschen bei der Entscheidungsfindung und der Überwachung von KI-Systemen
+müssen klar definiert und differenziert werden. Mensch-KI-Konfigurationen können
+von vollständig autonom bis hin zu vollständig manuell. KI-Systeme können selbständig Entscheidungen treffen.
+Entscheidungen treffen, die Entscheidungsfindung an einen menschlichen Experten delegieren oder von einem menschlichen Entscheidungsträger als zusätzliche Meinung genutzt werden.
+Entscheidungsträger als zusätzliche Meinung herangezogen werden. Einige KI-Systeme benötigen möglicherweise keine menschliche Aufsicht,
+wie z.B. Modelle zur Verbesserung der Videokompression. Andere Systeme können speziell
+menschliche Aufsicht erfordern.
+2. Die Entscheidungen, die beim Design, der Entwicklung, dem Einsatz, der Bewertung und der Nutzung
+von KI-Systemen spiegeln systemische und menschliche kognitive Verzerrungen wider. KI-Akteure bringen ihre
+kognitive Voreingenommenheit, sowohl individuell als auch als Gruppe, in den Prozess ein. Voreingenommenheit kann entstehen durch
+Endbenutzer-Entscheidungsaufgaben stammen und über den gesamten KI-Lebenszyklus durch menschliche
+Annahmen, Erwartungen und Entscheidungen während der Design- und Modellierungsaufgaben. Diese
+Vorurteile, die nicht unbedingt immer schädlich sind, können durch die Undurchsichtigkeit des KI-Systems
+Undurchsichtigkeit und den daraus resultierenden Mangel an Transparenz. Systemische Verzerrungen auf organisatorischer Ebene
+Ebene können beeinflussen, wie Teams strukturiert sind und wer die Entscheidungsprozesse
+Entscheidungsprozesse während des gesamten KI-Lebenszyklus. Diese Vorurteile können auch die nachgelagerten
+Entscheidungen von Endnutzern, Entscheidungsträgern und Politikern beeinflussen und zu negativen
+Auswirkungen führen.
+3. Die Ergebnisse der Interaktion zwischen Mensch und KI variieren. Unter bestimmten Bedingungen - zum Beispiel bei
+wahrnehmungsbasierten Beurteilungsaufgaben - kann der KI-Teil der Mensch-KI-Interaktion die menschlichen
+die menschliche Voreingenommenheit verstärken und zu voreingenommeneren Entscheidungen führen als die KI oder der Mensch allein.
+Wenn diese Unterschiede bei der Organisation von Mensch-KI-Teams berücksichtigt werden
+Teams berücksichtigt werden, können sie zu Komplementarität und besserer Gesamtleistung führen.
+Leistung führen.
+Seite 40
+
+[PAGE: 46]
+
+NIST AI 100-1
+AI RMF 1.0
+4. Die Präsentation von Informationen über KI-Systeme für Menschen ist komplex. Menschen nehmen die Informationen und
+und leiten die Bedeutung von KI-Systemen und Erklärungen auf unterschiedliche Weise ab, was
+unterschiedliche individuelle Vorlieben, Eigenschaften und Fähigkeiten widerspiegeln.
+Die GOVERN-Funktion bietet Unternehmen die Möglichkeit, die Rollen und Verantwortlichkeiten der Menschen in der KI zu klären und zu definieren.
+die Rollen und Verantwortlichkeiten für die Menschen in den Mensch-KI-Teamkonfigurationen und
+diejenigen, die die Leistung des KI-Systems beaufsichtigen. Die GOVERN-Funktion schafft außerdem
+Mechanismen, mit denen Unternehmen ihre Entscheidungsprozesse explizit machen können, um
+um systembedingten Verzerrungen entgegenzuwirken.
+Die MAP-Funktion schlägt Möglichkeiten zur Definition und Dokumentation von Prozessen vor, mit denen Betreiber
+und Praktiker, die mit der Leistung von KI-Systemen und Konzepten der Vertrauenswürdigkeit vertraut sind, sowie
+die Definition relevanter technischer Standards und Zertifizierungen. Die Implementierung von MAP-Funktionskategorien
+Funktionskategorien und Unterkategorien kann Organisationen helfen, ihre internen Kompetenzen zu verbessern
+Kontext zu analysieren, Verfahrens- und Systembeschränkungen zu erkennen und die
+Auswirkungen von KI-basierten Systemen in der realen Welt zu untersuchen und Entscheidungsprozesse
+während des gesamten KI-Lebenszyklus.
+Die Funktionen GOVERN und MAP beschreiben die Bedeutung von Interdisziplinarität und demo-
+graphisch vielfältigen Teams und der Nutzung von Feedback von potenziell betroffenen Personen und
+Gemeinschaften. Die im AI RMF genannten AI-Akteure, die Aufgaben und Aktivitäten im Bereich der menschlichen Faktoren wahrnehmen
+Aktivitäten durchführen, können technische Teams unterstützen, indem sie sich in Design- und Entwicklungspraktiken an
+Benutzerabsichten und Vertreter der breiteren KI-Gemeinschaft sowie gesellschaftliche Werte. Diese
+Akteure helfen außerdem dabei, kontextspezifische Normen und Werte in das Systemdesign einzubeziehen und
+die Erfahrungen der Endnutzer zu bewerten - in Verbindung mit KI-Systemen.
+KI-Risikomanagementansätze für Mensch-KI-Konfigurationen werden durch laufende Forschung und Bewertung ergänzt.
+Forschung und Evaluierung ergänzt. Zum Beispiel wird der Grad, in dem Menschen befähigt werden
+und Anreize, die Ergebnisse von KI-Systemen zu hinterfragen, erfordert weitere Studien. Daten über die Fre-
+Häufigkeit und Gründe, mit denen Menschen die Ergebnisse von KI-Systemen in eingesetzten Systemen
+zu sammeln und zu analysieren, könnte nützlich sein.
+Seite 41
+
+[PAGE: 47]
+
+NIST AI 100-1
+AI RMF 1.0
+Appendix D:
+Attribute des AI RMF
+Das NIST beschrieb mehrere Schlüsselattribute des AI RMF, als die Arbeit an dem Framework begann
+begann. Diese Attribute sind bis heute erhalten geblieben und dienten als Leitfaden für die Entwicklung des AI RMF.
+Entwicklung. Sie werden hier als Referenz angegeben.
+Die AI RMF strebt an:
+1. Risikobasiert, ressourceneffizient, innovationsfördernd und freiwillig zu sein.
+2. Konsensorientiert sein und in einem offenen, übergreifenden Prozess entwickelt und regelmäßig aktualisiert werden.
+übergreifenden Prozess. Alle Interessengruppen sollten die Möglichkeit haben, zur Entwicklung der AI
+RMF-Entwicklung beizutragen.
+3. Verwenden Sie eine klare und einfache Sprache, die für ein breites Publikum verständlich ist, einschließlich
+leitende Angestellte, Regierungsbeamte, Führungskräfte von Nichtregierungsorganisationen,
+und diejenigen, die keine KI-Fachleute sind - und dennoch über genügend technischen Tiefgang verfügen, um
+nützlich für Praktiker zu sein. Die AI RMF sollte die Kommunikation von AI-Risiken ermöglichen
+innerhalb einer Organisation, zwischen Organisationen, mit Kunden und an die Öffentlichkeit
+Öffentlichkeit.
+4. Eine gemeinsame Sprache und ein gemeinsames Verständnis für den Umgang mit KI-Risiken bereitstellen. Die AI RMF
+sollte eine Taxonomie, Terminologie, Definitionen, Metriken und Charakterisierungen für
+KI-Risiko.
+5. Sie sollte leicht nutzbar sein und gut mit anderen Aspekten des Risikomanagements zusammenpassen. Die Verwendung des
+Rahmenwerks sollte intuitiv und leicht anpassbar sein als Teil der
+umfassenderen Risikomanagement-Strategie und -Prozesse einer Organisation. Es sollte konsistent oder abgestimmt sein
+mit anderen Ansätzen zum Management von KI-Risiken.
+6. Es sollte für ein breites Spektrum von Perspektiven, Sektoren und Technologiebereichen nützlich sein. Die KI
+RMF sollte universell für jede KI-Technologie und für kontextspezifische
+Anwendungsfälle.
+7. Es sollte ergebnisorientiert und nicht präskriptiv sein. Das Rahmenwerk sollte einen Katalog
+von Ergebnissen und Ansätzen bieten, anstatt pauschale Anforderungen vorzuschreiben.
+8. Nutzen Sie bestehende Standards, Richtlinien, bewährte Praktiken, Methoden und Werkzeuge für den Umgang mit KI und fördern Sie deren Bekanntheit.
+Praktiken, Methoden und Werkzeuge für das Management von KI-Risiken nutzen und den
+Bedarf an zusätzlichen, verbesserten Ressourcen.
+9. Unabhängig von Gesetzen und Vorschriften sein.
+Das Rahmenwerk sollte die Fähigkeit von Organisationen unterstützen
+die Fähigkeit der Organisationen unterstützen, unter den geltenden nationalen und internationalen Rechts- und
+Regimen zu arbeiten.
+10. Ein lebendiges Dokument sein. Das AI RMF sollte leicht aktualisiert werden, wenn sich die Technologie, das Verständnis
+und Ansätze zur KI-Vertrauenswürdigkeit und zur Nutzung von KI ändern und die Beteiligten
+Beteiligten aus der Umsetzung des KI-Risikomanagements im Allgemeinen und diesem Rahmen
+im Besonderen.
+Seite 42
+
+[PAGE: 48]
+
+Diese Publikation ist kostenlos erhältlich bei:
+https://doi.org/10.6028/NIST.AI.100-1

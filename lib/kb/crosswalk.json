@@ -1,0 +1,247 @@
+[
+  {
+    "id": "CW-001",
+    "topic": "AI Risk Management",
+    "description": "Overlapping obligations to identify, assess, mitigate, and continuously manage risks arising from AI systems. The EU AI Act mandates a formal risk management system for high-risk AI; FINMA expects risk classification and proportionate controls; DORA requires ICT risk management frameworks; MaRisk demands integration of AI/model risk into the overall risk management strategy.",
+    "requirements": [
+      "R-AIACT-009",
+      "R-FINMA-001",
+      "R-DORA-006",
+      "R-MARISK-435"
+    ],
+    "standards": [
+      "ISO_42001:Clause 6.1.2",
+      "ISO_23894:Clause 5",
+      "NIST_AI_RMF:Map"
+    ],
+    "topicDe": "KI-Risikomanagement",
+    "descriptionDe": "Überschneidende Pflichten zur Identifikation, Bewertung, Minderung und fortlaufenden Steuerung von Risiken, die aus KI-Systemen entstehen. Der EU AI Act schreibt ein formales Risikomanagementsystem für Hochrisiko-KI-Systeme vor; FINMA erwartet eine Risikoklassifizierung und verhältnismäßige Kontrollmaßnahmen; DORA fordert IKT-Risikomanagement-Rahmenwerke; MaRisk verlangt die Integration von KI- und Modellrisiken in die übergeordnete Risikomanagementstrategie."
+  },
+  {
+    "id": "CW-002",
+    "topic": "Explainability and Transparency",
+    "description": "Converging requirements to ensure AI-driven decisions can be understood and explained to affected persons, supervisors, and internal stakeholders. The EU AI Act requires transparency for high-risk systems; FINMA expects explainability proportionate to risk; MaRisk requires understandable risk models; GDPR mandates meaningful information about the logic of automated processing.",
+    "requirements": [
+      "R-AIACT-013",
+      "R-FINMA-006",
+      "R-MARISK-435",
+      "R-GDPR-013"
+    ],
+    "standards": [
+      "ISO_42001:Clause 6.1.4",
+      "NIST_AI_RMF:Measure 2.5"
+    ],
+    "topicDe": "Erklärbarkeit und Transparenz",
+    "descriptionDe": "Konvergierende Anforderungen, um sicherzustellen, dass KI-gestützte Entscheidungen für betroffene Personen, Aufsichtsbehörden und interne Stakeholder nachvollziehbar und erklärbar sind. Der EU AI Act schreibt Transparenz für Hochrisiko-KI-Systeme vor; FINMA erwartet eine dem Risiko angemessene Erklärbarkeit; MaRisk verlangt verständliche Risikomodelle; GDPR verpflichtet zur Bereitstellung aussagekräftiger Informationen über die Logik automatisierter Verarbeitungsprozesse."
+  },
+  {
+    "id": "CW-003",
+    "topic": "Data Governance and Quality",
+    "description": "Shared obligations to ensure training, validation, and operational data used by AI systems meet quality, accuracy, completeness, and representativeness standards. The EU AI Act sets explicit data governance criteria for high-risk AI; FINMA requires data quality controls; MaRisk demands data integrity in risk processes; GDPR enforces data accuracy and minimisation principles.",
+    "requirements": [
+      "R-AIACT-010",
+      "R-FINMA-003",
+      "R-MARISK-434",
+      "R-GDPR-005"
+    ],
+    "standards": [
+      "ISO_42001:Clause 6.1.3",
+      "ISO_42001:Annex B.3",
+      "NIST_AI_RMF:Map 2.3"
+    ],
+    "topicDe": "Daten-Governance und Datenqualität",
+    "descriptionDe": "Gemeinsame Pflichten zur Sicherstellung, dass Trainings-, Validierungs- und Betriebsdaten, die von KI-Systemen verwendet werden, den Standards für Qualität, Genauigkeit, Vollständigkeit und Repräsentativität entsprechen. Der EU AI Act legt explizite Daten-Governance-Kriterien für Hochrisiko-KI-Systeme fest; FINMA verlangt Kontrollen zur Datenqualität; MaRisk fordert Datenintegrität in Risikoprozessen; GDPR schreibt Grundsätze der Datenrichtigkeit und Datensparsamkeit vor."
+  },
+  {
+    "id": "CW-004",
+    "topic": "Human Oversight",
+    "description": "Requirements ensuring meaningful human control over AI system outputs, particularly for consequential decisions. The EU AI Act mandates human oversight measures for high-risk AI; FINMA expects human-in-the-loop or human-on-the-loop controls proportionate to risk; GDPR grants data subjects the right not to be subject to purely automated decisions with significant effects.",
+    "requirements": [
+      "R-AIACT-014",
+      "R-FINMA-004",
+      "R-GDPR-022"
+    ],
+    "standards": [
+      "ISO_42001:Clause 6.1.4",
+      "NIST_AI_RMF:Govern 1.3"
+    ],
+    "topicDe": "Menschliche Aufsicht",
+    "descriptionDe": "Anforderungen, die eine wirksame menschliche Kontrolle über die Ausgaben von KI-Systemen sicherstellen – insbesondere bei folgenreichen Entscheidungen. Der EU AI Act schreibt Maßnahmen zur menschlichen Aufsicht für Hochrisiko-KI-Systeme vor; FINMA erwartet Human-in-the-loop- oder Human-on-the-loop-Kontrollen, die dem jeweiligen Risiko angemessen sind; die GDPR gewährt betroffenen Personen das Recht, keiner ausschließlich automatisierten Entscheidung mit erheblichen Auswirkungen unterworfen zu werden."
+  },
+  {
+    "id": "CW-005",
+    "topic": "Documentation and Record-Keeping",
+    "description": "Overlapping requirements to maintain comprehensive technical documentation, logs, and audit trails for AI systems. The EU AI Act requires detailed technical documentation and automatic logging; FINMA expects documented model development and validation records.",
+    "requirements": [
+      "R-AIACT-011",
+      "R-FINMA-005"
+    ],
+    "standards": [
+      "ISO_42001:Clause 7.5",
+      "ISO_42001:Annex B.5"
+    ],
+    "topicDe": "Dokumentation und Aufzeichnungspflichten",
+    "descriptionDe": "Überschneidende Anforderungen zur Führung umfassender technischer Dokumentation, Protokolle und Prüfpfade für KI-Systeme. Der EU AI Act fordert eine detaillierte technische Dokumentation sowie automatische Protokollierung; FINMA erwartet dokumentierte Nachweise zur Modellentwicklung und -validierung."
+  },
+  {
+    "id": "CW-006",
+    "topic": "AI Inventory and Registration",
+    "description": "Requirements to maintain a comprehensive inventory of AI systems in use, including risk classification and key metadata. FINMA explicitly expects an AI inventory covering all AI applications; the EU AI Act requires registration of high-risk AI systems in the EU database; BAIT requires an up-to-date IT application inventory covering AI components.",
+    "requirements": [
+      "R-FINMA-002",
+      "R-AIACT-049"
+    ],
+    "standards": [
+      "ISO_42001:Clause 6.1.1",
+      "NIST_AI_RMF:Govern 1.1"
+    ],
+    "topicDe": "KI-Inventar und Registrierung",
+    "descriptionDe": "Anforderungen zur Führung eines umfassenden Inventars der eingesetzten KI-Systeme, einschließlich Risikoklassifizierung und wesentlicher Metadaten. FINMA erwartet ausdrücklich ein KI-Inventar, das alle KI-Anwendungen abdeckt; der EU AI Act verpflichtet zur Registrierung von Hochrisiko-KI-Systemen in der EU-Datenbank; BAIT verlangt ein aktuelles IT-Anwendungsinventar, das KI-Komponenten umfasst."
+  },
+  {
+    "id": "CW-007",
+    "topic": "Testing and Monitoring",
+    "description": "Converging obligations to test AI systems before deployment and continuously monitor their performance, accuracy, and drift in production. The EU AI Act requires testing throughout the AI lifecycle; FINMA expects ongoing monitoring and validation; DORA mandates digital operational resilience testing; BAIT requires systematic testing of IT systems.",
+    "requirements": [
+      "R-FINMA-004",
+      "R-DORA-011"
+    ],
+    "standards": [
+      "ISO_42001:Clause 9.1",
+      "ISO_42005:Clause 7",
+      "NIST_AI_RMF:Measure"
+    ],
+    "topicDe": "Testen und Überwachung",
+    "descriptionDe": "Konvergierende Verpflichtungen zum Testen von KI-Systemen vor dem Einsatz sowie zur kontinuierlichen Überwachung ihrer Leistung, Genauigkeit und Drift im Produktivbetrieb. Der EU AI Act fordert Tests über den gesamten KI-Lebenszyklus; FINMA erwartet eine fortlaufende Überwachung und Validierung; DORA schreibt Tests zur digitalen operationellen Resilienz vor; BAIT verlangt ein systematisches Testen von IT-Systemen."
+  },
+  {
+    "id": "CW-008",
+    "topic": "Third-Party and Outsourcing Risk",
+    "description": "Overlapping requirements for managing risks when AI capabilities are sourced from external providers, cloud platforms, or outsourcing partners. DORA establishes a comprehensive ICT third-party risk framework; FINMA RS 2018/3 requires risk assessment and contractual safeguards for outsourcing; MaRisk mandates outsourcing risk management; BAIT covers IT outsourcing controls.",
+    "requirements": [
+      "R-DORA-028",
+      "R-FINMA-007",
+      "R-MARISK-009",
+      "R-BAIT-003"
+    ],
+    "standards": [
+      "ISO_42001:Clause 8.4",
+      "NIST_AI_RMF:Govern 6"
+    ],
+    "topicDe": "Drittanbieter- und Auslagerungsrisiko",
+    "descriptionDe": "Überschneidende Anforderungen für das Risikomanagement beim Bezug von KI-Leistungen von externen Anbietern, Cloud-Plattformen oder Auslagerungspartnern. DORA etabliert einen umfassenden IKT-Drittparteienrisiko-Rahmen; FINMA RS 2018/3 verlangt eine Risikobewertung sowie vertragliche Schutzmaßnahmen bei Auslagerungen; MaRisk verpflichtet zum Auslagerungsrisikomanagement; BAIT regelt Kontrollen bei IT-Auslagerungen."
+  },
+  {
+    "id": "CW-009",
+    "topic": "Incident Management",
+    "description": "Converging obligations to detect, classify, report, and remediate AI-related incidents including cybersecurity breaches, operational failures, and data protection violations. DORA mandates ICT incident classification and reporting; NIS2 requires significant incident notification; BSIG transposes NIS2 reporting duties; GDPR requires personal data breach notification within 72 hours.",
+    "requirements": [
+      "R-DORA-019",
+      "R-NIS2-023",
+      "R-GDPR-033"
+    ],
+    "standards": [
+      "ISO_42001:Clause 8.2",
+      "NIST_AI_RMF:Manage 4"
+    ],
+    "topicDe": "Incident-Management",
+    "descriptionDe": "Zusammenlaufende Pflichten zur Erkennung, Klassifizierung, Meldung und Behebung KI-bezogener Vorfälle – einschließlich Cybersicherheitsverletzungen, operativer Ausfälle und Datenschutzverstöße. DORA schreibt die Klassifizierung und Meldung von IKT-Vorfällen vor; NIS2 verlangt die Benachrichtigung bei erheblichen Vorfällen; BSIG setzt die Meldepflichten aus NIS2 in nationales Recht um; GDPR verpflichtet zur Meldung von Verletzungen des Schutzes personenbezogener Daten innerhalb von 72 Stunden."
+  },
+  {
+    "id": "CW-010",
+    "topic": "Cybersecurity",
+    "description": "Shared requirements for securing AI systems and their underlying infrastructure against cyber threats. NIS2 establishes baseline cybersecurity risk management measures; DORA requires ICT security policies and controls for financial entities; BSIG implements NIS2 in German law; BAIT specifies IT security requirements for banks including access controls, encryption, and vulnerability management.",
+    "requirements": [
+      "R-NIS2-021",
+      "R-DORA-009",
+      "R-BAIT-004"
+    ],
+    "standards": [
+      "ISO_42001:Clause 6.1.5",
+      "NIST_AI_RMF:Manage 2"
+    ],
+    "topicDe": "Cybersicherheit",
+    "descriptionDe": "Gemeinsame Anforderungen zur Absicherung von KI-Systemen und ihrer zugrunde liegenden Infrastruktur gegen Cyberbedrohungen. NIS2 legt grundlegende Maßnahmen zum Cybersicherheits-Risikomanagement fest; DORA schreibt IKT-Sicherheitsrichtlinien und -kontrollen für Finanzunternehmen vor; BSIG setzt NIS2 in deutsches Recht um; BAIT konkretisiert IT-Sicherheitsanforderungen für Banken, einschließlich Zugriffskontrollen, Verschlüsselung und Schwachstellenmanagement."
+  },
+  {
+    "id": "CW-011",
+    "topic": "DPIA and Impact Assessment",
+    "description": "Overlapping obligations to assess the impact of AI systems on individuals and society before deployment. GDPR requires DPIAs for high-risk processing including profiling; the EU AI Act mandates fundamental rights impact assessments for certain high-risk AI; revDSG requires impact assessments for high-risk data processing by Swiss entities.",
+    "requirements": [
+      "R-GDPR-035",
+      "R-AIACT-027"
+    ],
+    "standards": [
+      "ISO_42005:Clause 5",
+      "ISO_42005:Clause 6",
+      "NIST_AI_RMF:Map 5"
+    ],
+    "topicDe": "Datenschutz-Folgenabschätzung und Folgenabschätzung",
+    "descriptionDe": "Überschneidende Verpflichtungen zur Bewertung der Auswirkungen von KI-Systemen auf Einzelpersonen und die Gesellschaft vor der Inbetriebnahme. Die GDPR schreibt Datenschutz-Folgenabschätzungen (DPIAs) für risikoreiche Verarbeitungsvorgänge einschließlich Profiling vor; der EU AI Act verpflichtet zur Folgenabschätzung in Bezug auf die Grundrechte für bestimmte Hochrisiko-KI-Systeme; das revDSG verlangt Folgenabschätzungen für risikoreiche Datenverarbeitungen durch Schweizer Unternehmen."
+  },
+  {
+    "id": "CW-012",
+    "topic": "Governance and Accountability",
+    "description": "Converging requirements to establish clear governance structures, roles, and accountability for AI systems. The EU AI Act requires providers to assign responsibilities and implement quality management; FINMA expects board-level AI governance and clear accountability; MaRisk mandates management responsibility for risk-relevant processes; BAIT requires IT governance structures.",
+    "requirements": [
+      "R-AIACT-016",
+      "R-FINMA-001",
+      "R-MARISK-003"
+    ],
+    "standards": [
+      "ISO_42001:Clause 5.1",
+      "ISO_42001:Clause 5.3",
+      "NIST_AI_RMF:Govern"
+    ],
+    "topicDe": "Governance und Verantwortlichkeit",
+    "descriptionDe": "Konvergierende Anforderungen zur Einrichtung klarer Governance-Strukturen, Rollen und Verantwortlichkeiten für KI-Systeme. Der EU AI Act verpflichtet Anbieter zur Zuweisung von Zuständigkeiten und zur Implementierung eines Qualitätsmanagementsystems; FINMA erwartet eine KI-Governance auf Vorstandsebene sowie klare Verantwortlichkeiten; MaRisk schreibt die Managementverantwortung für risikorelevante Prozesse vor; BAIT verlangt IT-Governance-Strukturen."
+  },
+  {
+    "id": "CW-013",
+    "topic": "Post-Market Monitoring",
+    "description": "Requirements to systematically monitor AI systems after deployment to detect degradation, emerging risks, or non-compliance. The EU AI Act mandates post-market monitoring systems for high-risk AI providers; FINMA expects continuous monitoring proportionate to AI risk classification; DORA requires ongoing monitoring of ICT systems and digital operational resilience.",
+    "requirements": [
+      "R-AIACT-072",
+      "R-FINMA-004",
+      "R-DORA-010"
+    ],
+    "standards": [
+      "ISO_42001:Clause 9.1",
+      "ISO_42001:Clause 10.1",
+      "NIST_AI_RMF:Manage 3"
+    ],
+    "topicDe": "Marktüberwachung nach dem Inverkehrbringen",
+    "descriptionDe": "Anforderungen zur systematischen Überwachung von KI-Systemen nach deren Einsatz, um Leistungsabfälle, neue Risiken oder Nicht-Konformität zu erkennen. Der EU AI Act schreibt Anbieterinnen und Anbietern von Hochrisiko-KI-Systemen Systeme zur Marktüberwachung nach dem Inverkehrbringen vor; FINMA erwartet eine kontinuierliche Überwachung, die proportional zur Risikoklassifizierung des KI-Systems ist; DORA verlangt eine fortlaufende Überwachung von IKT-Systemen und der digitalen operativen Resilienz."
+  },
+  {
+    "id": "CW-014",
+    "topic": "Automated Decision Rights",
+    "description": "Overlapping data subject and consumer rights relating to automated decision-making and profiling by AI systems. GDPR grants rights against solely automated decisions with legal or significant effects; the EU AI Act provides affected persons rights regarding high-risk AI; revDSG grants Swiss data subjects the right to information and objection regarding automated decisions; BDSG supplements GDPR with national provisions on scoring and automated decisions.",
+    "requirements": [
+      "R-GDPR-022",
+      "R-AIACT-086"
+    ],
+    "standards": [
+      "ISO_42001:Annex B.4",
+      "NIST_AI_RMF:Govern 3"
+    ],
+    "topicDe": "Rechte bei automatisierten Entscheidungen",
+    "descriptionDe": "Überschneidende Rechte von betroffenen Personen und Verbrauchern in Bezug auf automatisierte Entscheidungsfindung und Profiling durch KI-Systeme. Die GDPR gewährt Rechte gegen ausschließlich automatisierte Entscheidungen mit rechtlicher oder erheblicher Wirkung; der EU AI Act räumt betroffenen Personen Rechte in Bezug auf Hochrisiko-KI-Systeme ein; das revDSG gewährt Schweizer betroffenen Personen das Recht auf Information und Widerspruch bei automatisierten Entscheidungen; das BDSG ergänzt die GDPR durch nationale Bestimmungen zum Scoring und zu automatisierten Entscheidungen."
+  },
+  {
+    "id": "CW-015",
+    "topic": "Quality Management System",
+    "description": "Requirements to implement and maintain a quality management system covering the entire AI lifecycle from design through decommissioning. The EU AI Act mandates a QMS for high-risk AI providers covering risk management, testing, data governance, and post-market monitoring; ISO 42001 provides a certifiable AI management system standard.",
+    "requirements": [
+      "R-AIACT-017"
+    ],
+    "standards": [
+      "ISO_42001:Clause 4",
+      "ISO_42001:Clause 6",
+      "ISO_42001:Clause 8",
+      "NIST_AI_RMF:Govern 1"
+    ],
+    "topicDe": "Qualitätsmanagementsystem",
+    "descriptionDe": "Anforderungen zur Einführung und Aufrechterhaltung eines Qualitätsmanagementsystems, das den gesamten KI-Lebenszyklus von der Entwicklung bis zur Außerbetriebnahme abdeckt. Der EU AI Act schreibt ein QMS für Anbieter von Hochrisiko-KI-Systemen vor, das Risikomanagement, Testing, Daten-Governance und Post-Market-Monitoring umfasst; ISO 42001 bietet einen zertifizierbaren Standard für KI-Managementsysteme."
+  }
+]

@@ -1,0 +1,287 @@
+[SOURCE_FILE: FINMA 082024_DE.pdf]
+[EXTRACTION_DATE: 2026-05-20 18:40:04]
+[NUM_PAGES: 8]
+[EXTRACTION_METHOD: pymupdf]
+[OCR_USED: no]
+
+[PAGE: 1]
+
+Laupenstrasse 27, 3003 Bern, Tel. +41 (0)31 327 91 00, www.finma.ch
+
+FINMA-Aufsichtsmitteilung
+08/2024
+Governance und Risikomanagement beim Einsatz Künstlicher
+Intelligenz
+
+18. Dezember 2024
+
+[PAGE: 2]
+
+2/8
+
+Inhaltsverzeichnis
+1
+Einleitung ................................................................................................. 3
+2
+Erkenntnisse aus der Aufsicht .............................................................. 3
+2.1
+Governance ..................................................................................... 4
+2.2
+Inventar und Risikoklassifizierung ................................................... 4
+2.3
+Datenqualität ................................................................................... 5
+2.4
+Tests und laufende Überwachung .................................................. 6
+2.5
+Dokumentation ................................................................................ 6
+2.6
+Erklärbarkeit .................................................................................... 7
+2.7
+Unabhängige Überprüfung .............................................................. 7
+3
+Ausblick ................................................................................................... 7
+
+[PAGE: 3]
+
+3/8
+
+1
+Einleitung
+Der Einsatz von Künstlicher Intelligenz (KI) im Finanzmarkt nimmt zu.1 Für
+die Beaufsichtigten ist dies mit Chancen, aber auch mit Risiken verbunden.
+Mit dieser Aufsichtsmitteilung macht die FINMA auf entsprechende Risiken
+und das Erfordernis einer angemessenen Erfassung, Begrenzung und Kon-
+trolle dieser Risiken aufmerksam.
+Bislang existiert in der Schweiz keine KI-spezifische Gesetzgebung. Im Fi-
+nanzmarktrecht erfassen die technologieneutralen, prinzipienbasierten auf-
+sichtsrechtlichen Anforderungen an eine wirksame Governance und ein
+wirksames Risikomanagement die Risiken aus dem Einsatz von KI. Wie
+auch im internationalen Umfeld gefordert, erwartet die FINMA, dass sich Be-
+aufsichtigte, die KI einsetzen, aktiv mit den Auswirkungen dieser Nutzung
+auf ihr Risikoprofil auseinandersetzen und ihre Governance, ihr Risikoma-
+nagement und ihre Kontrollsysteme entsprechend ausrichten. Dabei sind
+neben Grösse, Komplexität, Struktur und Risikoprofil der Beaufsichtigten ins-
+besondere die Wesentlichkeit der genutzten KI-Anwendungen sowie die Ein-
+trittswahrscheinlichkeit der aus der Nutzung dieser Anwendungen resultie-
+renden Risiken zu berücksichtigen. 2
+2
+Erkenntnisse aus der Aufsicht
+Die Risiken aus dem Einsatz von KI liegen hauptsächlich im Bereich der
+operationellen Risiken3, insbesondere Modellrisiken (z.B. mangelnde Ro-
+bustheit, Korrektheit, Bias und Erklärbarkeit) sowie IT- und Cyber-Risiken.
+Weiter resultieren sie aus einer steigenden Abhängigkeit von Drittparteien
+wie etwa Anbietern von Hardware-Lösungen, Modellen oder Cloud-Dienst-
+leistungen in einem zunehmend konzentrierten Markt.4 Schliesslich beste-
+hen Rechts- und Reputationsrisiken sowie Herausforderungen bei der Zu-
+
+1 Zur Verbreitung von KI im Finanzmarkt siehe FSB, The Financial Stability Implications of Artificial
+Intelligence, 14.11.2024 (nachfolgend: FSB), S. 3 ff.
+2 Mögliche (nicht abschliessende) Faktoren, die die Wesentlichkeit einer Anwendung beeinflussen,
+sind: Bedeutung für die Einhaltung der Finanzmarktgesetzgebung, finanzielle Auswirkungen auf das
+Unternehmen, Rechts- und Reputationsrisiken, Relevanz des Produktes für das Unternehmen, An-
+zahl betroffener Kundinnen und Kunden resp. Anlegerinnen und Anleger, Typen von Kundinnen und
+Kunden resp. Anlegerinnen und Anlegern (retail/institutionell), Wichtigkeit des Produktes für Kundin-
+nen und Kunden resp. Anlegerinnen und Anleger, Konsequenzen bei Fehlern oder Ausfall. Mögliche
+(nicht abschliessende) Faktoren, die die Eintrittswahrscheinlichkeit der mit den Risiken verbundenen
+Ereignisse beeinflussen, sind: Komplexität (z.B. Erklärbarkeit, Vorhersehbarkeit), Art und Menge der
+verwendeten Daten (z.B. unstrukturierte Daten, Integrität, Zweckmässigkeit, Personendaten), unge-
+eignete Entwicklungs- oder Überwachungsprozesse, Grad der Autonomie und Prozesseinbindung,
+Dynamik (z.B. kurze Kalibrierungszyklen), Vernetzung mehrerer Modelle, Potenzial für Angriffe oder
+Ausfälle (z.B. erhöht wegen Outsourcing).
+3 Vgl. Art. 89 ERV: Mit operationellen Risiken wird die Gefahr von Verlusten bezeichnet, die in Folge
+der Unangemessenheit oder des Versagens von internen Verfahren, Menschen oder Systemen oder
+in Folge von externen Ereignissen eintreten.
+4 Vgl. auch FSB, S. 16 ff.
+
+[PAGE: 4]
+
+4/8
+
+ordnung von Verantwortlichkeiten aufgrund des autonomen und schwer er-
+klärbaren Handelns dieser Systeme und verstreuter Zuständigkeiten für KI-
+Anwendungen bei den Beaufsichtigten.
+Nachfolgend sind beispielhaft Massnahmen zur Adressierung spezifisch aus
+KI-Anwendungen resultierender Risiken aufgeführt, die die FINMA im Rah-
+men der laufenden Aufsicht, namentlich bei Aufsichtsgesprächen und in ers-
+ten spezifischen Vor-Ort-Kontrollen, beobachtet hat. Dies soll die Beaufsich-
+tigten dabei unterstützen, Risiken aus internen und externen KI-Anwendun-
+gen zu erkennen, zu beurteilen, zu steuern und zu überwachen.
+2.1 Governance
+Die FINMA beobachtete, dass sich die Beaufsichtigten in erster Linie auf Da-
+tenschutzrisiken, weniger aber auf Modellrisiken wie mangelnde Robustheit
+und Korrektheit, Bias, mangelnde Stabilität und Erklärbarkeit fokussieren.
+Zudem erfolgt die Entwicklung von KI-Anwendungen oftmals dezentral, so-
+dass es herausfordernd ist, konsistente Standards umzusetzen, Verantwort-
+lichkeiten klar und an Mitarbeitende mit entsprechenden Fähigkeiten und
+Erfahrungen zuzuweisen und alle relevanten Risiken zu adressieren. Bei ex-
+tern eingekauften Anwendungen und Dienstleistungen hatten die Beaufsich-
+tigten teilweise Schwierigkeiten, zu eruieren, ob KI enthalten ist, welche Da-
+ten und Methoden verwendet werden und ob eine ausreichende Due Dili-
+gence existiert.
+Die FINMA beurteilte, ob bei Beaufsichtigten mit vielen oder wesentlichen
+Anwendungen eine KI-Governance vorhanden ist, die u.a. ein zentral ge-
+führtes Inventar einschliesslich einer Risikoklassifizierung und daraus fol-
+gender Massnahmen, die Festlegung von Zuständigkeiten und Verantwort-
+lichkeiten bei Entwicklung, Implementierung, Überwachung und Nutzung von
+KI, Vorgaben zu Modell-Tests und unterstützenden Systemkontrollen, Doku-
+mentationsstandards sowie breite Schulungsmassnahmen umfasst. Im Fall
+von Outsourcing beurteilte sie, ob die Beaufsichtigten zusätzliche Tests,
+Kontrollen und Vertragsklauseln, die Verantwortlichkeiten und Haftungsfra-
+gen regeln, implementiert und sichergestellt hatten, dass die betrauten Drit-
+ten über die nötigen Fähigkeiten und Erfahrungen verfügen.
+2.2 Inventar und Risikoklassifizierung
+Die FINMA beobachtete, dass die Beaufsichtigten KI teilweise eng definier-
+ten, um sich auf vermeintlich grössere oder neue Risiken zu fokussieren. Für
+viele Beaufsichtigte stellte es eine Herausforderung dar, die Vollständigkeit
+von Inventaren sicherzustellen, da häufig KI-Entwicklung und -Anwendung
+im Unternehmen breit gestreut und seit dem Aufkommen generativer KI An-
+wendungen für jedermann zugänglich sind. Auch hatten nicht alle Beaufsich-
+tigten konsistente Kriterien festgelegt, um Anwendungen zu identifizieren,
+die aufgrund ihrer Wesentlichkeit sowie ihrer spezifischen Risiken und deren
+
+[PAGE: 5]
+
+5/8
+
+Eintrittswahrscheinlichkeit besonderer Aufmerksamkeit im Risikomanage-
+ment bedürfen.5
+Die FINMA beurteilte, ob bei den Beaufsichtigten eine ausreichend breite
+Definition von KI vorlag,6 da auch klassische Anwendungen ähnliche Risiken
+aufweisen können und gleiche Risiken gleich zu adressieren sind.7 Sodann
+beurteilte sie Vorhandensein und Vollständigkeit von KI-Inventaren sowie die
+Risiko-Klassifizierung von KI-Anwendungen.
+2.3 Datenqualität
+Die FINMA beobachtete, dass die Beaufsichtigten teilweise keine Vorgaben
+und Kontrollen definiert haben, um die Datenqualität bei KI-Anwendungen
+sicherzustellen.
+KI-Anwendungen lernen oftmals automatisiert und ohne menschlichen Ein-
+griff aus Daten. Die Datenqualität ist daher häufig wichtiger als die Auswahl
+des konkreten Modells. Gleichzeitig können Daten falsch, inkonsistent, un-
+vollständig, nicht repräsentativ oder veraltet und daher von schlechter Quali-
+tät sein. Historische Daten können einen Bias enthalten, der sich in zukünfti-
+gen Prognosen weiterträgt, oder sie können aufgrund eines veränderten
+Umfelds für die Prognose nicht mehr repräsentativ sein. Bei eingekauften
+Lösungen haben die Beaufsichtigten häufig keinen Einfluss auf bzw. kennen
+die zugrundeliegenden Daten nicht. Dies kann dazu führen, dass diese für
+die Beaufsichtigten oder das konkrete Anliegen nicht passend sind und die
+Gefahr der unbewussten Verwendung von gezielt manipulierten Daten
+steigt. Seit dem verstärkten Einsatz von KI werden ausserdem mehr unstruk-
+turierte Daten wie Texte und Bilder ausgewertet, für die eine Beurteilung der
+Qualität erschwert sein kann.
+Die FINMA beurteilte, ob die Beaufsichtigten in ihren internen Weisungen
+und Richtlinien Vorgaben definiert haben, um sicherzustellen, dass Daten
+vollständig, korrekt und integer sind und die Verfügbarkeit von und der Zu-
+gang zu Daten gesichert ist.
+
+5 Tendenziell sind Risiken erhöht, wenn KI zur Einhaltung von Aufsichtsrecht oder zur Ausführung
+kritischer Funktionen eingesetzt wird oder wenn die Kundschaft oder Mitarbeitende von ihren Ergeb-
+nissen stark betroffen sind. Die Kriterien zur Klassifizierung sollten von den Beaufsichtigten festge-
+legt werden.
+6 Vgl. den Definitionsansatz der OECD: OECD, Explanatory Memorandum on the Updated OECD
+Definition of an AI System, OECD Artificial Intelligence Papers, March 2024 (No. 8).
+7 KI ist nicht per se eine Hochrisiko-Anwendung. Das mit ihr verbundene Risiko hängt von der Komple-
+xität, Adaptivität und Autonomie der jeweiligen Anwendung, ihrem Anwendungsbereich und ihrer
+Integration in Prozesse ab.
+
+[PAGE: 6]
+
+6/8
+
+2.4 Tests und laufende Überwachung
+Die FINMA beobachtete bei den Beaufsichtigten teilweise Schwächen bei
+der Auswahl von Performance-Indikatoren, Tests und laufender Überwa-
+chung.
+Die FINMA beurteilte, ob die Beaufsichtigten Tests zur Sicherstellung der
+Datenqualität und Funktionsfähigkeit der KI-Anwendungen vorsehen, die
+eine Prüfung auf Genauigkeit, Robustheit und Stabilität sowie ggfs. Bias be-
+inhalten.8 Sie beurteilte, ob Fachpersonen des jeweiligen Anwendungsberei-
+ches hierzu Fragestellungen und vordefinierte Erwartungen lieferten und ob
+vorab festgelegte Performance-Indikatoren gesetzt wurden, um zu beurtei-
+len, wie gut eine KI-Anwendung die gesteckten Ziele erreicht.9 Bei regelmäs-
+sig durchzuführenden Kontrollen beurteilte die FINMA beispielsweise, ob die
+Beaufsichtigten Schwellenwerte oder andere Validierungsmethoden definiert
+hatten, um Korrektheit und fortlaufende Qualität der Outputs zu gewährleis-
+ten.10 Zudem beurteilte sie, ob die Beaufsichtigten Veränderungen in Input-
+Daten überwachen, um sicherzustellen, dass Modelle auch bei verändertem
+Umfeld anwendbar bleiben (Erkennung und Behandlung von Datendrift). Zur
+Überwachung gehört auch die Analyse von Fällen, in denen die Ausgabe
+von den Anwendern ignoriert oder verändert wurde, da solche manuellen
+Korrekturen Rückschluss auf Schwachstellen geben können. Schliesslich
+beurteilte die FINMA, ob die Beaufsichtigten Überlegungen zur Erkennung
+und Behandlung von Ausnahmen vorab anstellen.
+2.5 Dokumentation
+Die FINMA beobachtete, dass die Beaufsichtigten teilweise über keine zent-
+ralen Vorgaben zur Dokumentation verfügen und die vorhandene Dokumen-
+tation teilweise nicht ausreichend detailliert und empfängerorientiert ist.
+Bei wesentlichen Anwendungen beurteilte die FINMA, ob die Beaufsichtigten
+in der Dokumentation den Zweck der Anwendung, Datenauswahl und -auf-
+bereitung, Modellauswahl, Performance-Masse, Annahmen, Limitierungen,
+
+8 Es existiert eine Vielzahl an Tests, um die Leistung und die Ergebnisse einer Anwendung zu beurtei-
+len. Hierzu gehören unter anderem Tests, bei denen die Anwendenden das korrekte Ergebnis ken-
+nen und prüfen, ob die Anwendung es liefert (z.B. Backtesting, Out-of-Sample Testing), konstruierte
+Tests, um zu verstehen, wie sich die Anwendung in bestimmten Grenzfällen verhält (z.B. Sensitivi-
+tätsanalysen oder Stress-Testing), Tests mit falschen Input Daten (z.B. Adversarial Testing), oder
+auch Tests gegen zusätzliche, ggfs. einfachere Benchmark-Modelle. Ausserdem können mit Tests
+potenzielle Grenzen der Anwendung bewertet und Ergebnisse auf "Wiederholbarkeit" geprüft wer-
+den.
+9 Je wesentlicher und komplexer die Anwendung und je weniger über die Funktionsweise des Sys-
+tems oder die zugrundeliegenden Daten bekannt ist, umso wichtiger ist es, vor dem produktiven
+Einsatz, bei Veränderungen und – insbesondere aufgrund der Adaptivität heutiger Anwendungen –
+laufend zu beurteilen, ob die Anwendung entsprechend ihrem Zweck funktioniert. Zudem sind Über-
+legungen zu Fallback-Mechanismen wichtig, um vorbereitet zu sein, wenn die KI sich in eine uner-
+wünschte Richtung entwickelt und nicht mehr die ursprünglich definierten Ziele erfüllt.
+10 Hierzu können z.B. Stichproben, Backtesting, vordefinierte Testfälle oder Benchmarking beitragen.
+
+[PAGE: 7]
+
+7/8
+
+Testing und Kontrollen sowie Fallback-Lösungen adressieren. Bei der Da-
+tenauswahl betrachtete die FINMA, ob die Beaufsichtigten Datenquellen und
+Prüfungen der Datenqualität inklusive Integrität, Korrektheit, Zweckmässig-
+keit, Relevanz, Bias und Stabilität darlegten. Ausserdem betrachtete sie, wie
+die Beaufsichtigten Robustheit und Zuverlässigkeit sowie Nachvollziehbar-
+keit der Anwendung sicherstellen und ob sie eine angemessene Einstufung
+in eine Risikokategorie sowie die dazugehörige Begründung und Prüfung
+vornehmen.
+2.6 Erklärbarkeit
+Die FINMA beobachtete, dass Ergebnisse häufig nicht nachvollzogen, er-
+klärt oder reproduziert und somit nicht kritisch beurteilt werden können.
+Wenn Entscheidungen gegenüber Anlegerinnen und Anlegern, der Kund-
+schaft, den Mitarbeitenden, der Aufsicht oder der Prüfgesellschaft begründet
+werden mussten, beurteilte die FINMA die Erklärbarkeit der Anwendungen
+vertieft. Hierzu gehört u.a. die Treiber der Anwendungen oder das Verhalten
+unter verschiedenen Bedingungen zu verstehen, um die Plausibilität und Ro-
+bustheit der Ergebnisse beurteilen zu können.
+2.7 Unabhängige Überprüfung
+Die FINMA beobachtete nicht in allen Fällen eine klare Abgrenzung zwi-
+schen der Entwicklung von KI-Anwendungen und der unabhängigen Über-
+prüfung.
+Zudem beobachtete sie, dass nur wenige Beaufsichtigte eine unabhängige
+Prüfung des gesamten Modellentwicklungsprozesses durch dafür qualifizier-
+tes Personal durchführen, um Modellrisiken konsistent zu identifizieren und
+zu reduzieren.
+Bei wesentlichen Anwendungen beurteilte die FINMA, ob die unabhängige
+Prüfung die Abgabe einer objektiven, versierten und unvoreingenommenen
+Meinung über die Angemessenheit und Zuverlässigkeit eines Verfahrens für
+einen bestimmten Anwendungsfall umfasst und ob die Ergebnisse der unab-
+hängigen Überprüfung bei der Entwicklung der Anwendung berücksichtigt
+wurden.
+3
+Ausblick
+Das Risikoverständnis beim Einsatz von KI bei Beaufsichtigten ist in Ent-
+wicklung. Gestützt auf ihre Erfahrungen aus der Aufsicht und in Anlehnung
+
+[PAGE: 8]
+
+8/8
+
+an relevante internationale Entwicklungen wird auch die FINMA ihre Erwar-
+tungen an eine angemessene Governance und ein angemessenes Risiko-
+management der Beaufsichtigten im Zusammenhang mit KI weiterentwickeln
+und sofern nötig im Markt transparent machen. Dabei strebt die FINMA wie
+bei anderen relevanten Risikotreibern einen technologieneutralen, proportio-
+nalen sowie sektorübergreifend einheitlichen Ansatz an und berücksichtigt
+wesentliche Unterschiede zwischen den Sektoren sowie internationale Stan-
+dards.

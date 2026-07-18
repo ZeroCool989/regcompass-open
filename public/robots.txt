@@ -1,0 +1,7 @@
+User-agent: *
+Disallow: /api/
+Disallow: /assessment/
+Allow: /
+Allow: /kb
+Allow: /standards
+Allow: /crosswalk

@@ -1,0 +1,24 @@
+{
+  "kbVersion": "39644b9a60f03d63",
+  "generatedAt": "2026-07-17",
+  "totals": {
+    "requirements": 265,
+    "controls": 160,
+    "regulations": 19,
+    "crosswalk": 15
+  },
+  "verification": {
+    "manuallyVerified": 264,
+    "coveragePct": 99.6,
+    "byMethod": {
+      "dual-agent-source-verification": 172,
+      "manual-source-verification": 92,
+      "automated-crosscheck-v1": 1
+    }
+  },
+  "sourceChecksums": {
+    "manifest": "docs/source/CHECKSUMS.sha256",
+    "present": true,
+    "sha256": "e0e7289ddff61a97"
+  }
+}

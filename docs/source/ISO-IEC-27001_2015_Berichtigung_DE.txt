@@ -1,0 +1,74 @@
+[SOURCE_FILE: ISO-IEC-27001_2015_Berichtigung_DE.pdf]
+[EXTRACTION_DATE: 2026-05-19 13:08:06]
+[NUM_PAGES: 2]
+[EXTRACTION_METHOD: pymupdf]
+[OCR_USED: no]
+
+[PAGE: 1]
+
+März 2017
+
+Preisgruppe 99
+DIN Deutsches Institut für Normung e. V. · Jede Art der Vervielfältigung, auch auszugsweise,
+nur mit Genehmigung des DIN Deutsches Institut für Normung e. V., Berlin, gestattet.
+ICS 03.100.70; 35.030
+!%alr"
+2627379
+www.din.de
+Es wird empfohlen, auf der betroffenen Norm
+einen Hinweis auf diese Berichtigung zu
+machen.
+DIN ISO/IEC 27001 Berichtigung 1
+Informationstechnik –
+IT-Sicherheitsverfahren –
+Informationssicherheits-Managementsysteme – Anforderungen
+(ISO/IEC 27001:2013 + Cor. 1:2014),
+Berichtigung zu DIN ISO/IEC 27001:2015-03
+Information technology –
+Security techniques –
+Information security management systems – Requirements
+(ISO/IEC 27001:2013 + Cor. 1:2014),
+Corrigendum to DIN ISO/IEC 27001:2015-03
+Technologies de l’information –
+Techniques de sécurité –
+Systèmes de gestion de sécurité de l’information – Exigences
+(ISO/CEI 27001:2013 + Cor. 1:2014),
+Corrigendum à DIN ISO/IEC 27001:2015-03
+©
+Alleinverkauf der Normen durch Beuth Verlag GmbH, 10772 Berlin
+www.beuth.de
+
+Gesamtumfang 2 Seiten
+D
+DIN-Normenausschuss Informationstechnik und Anwendungen (NIA)
+
+Normen-Download-Beuth-Deloitte GmbH Wirtschaftsprüfungs- gesellschaft-KdNr.7613828-LfNr.7948786001-2017-05-03 10:53
+
+[PAGE: 2]
+
+DIN ISO/IEC 27001 Ber 1:2017-03
+2
+In
+DIN ISO/IEC 27001:2015-03
+ist
+aufgrund
+der
+internationalen
+Berichtigung
+ISO/IEC 27001:2013/Cor 2:2015 folgende Änderung vorzunehmen:
+Abschnitt 6.1.3 d)
+
+d) eine Erklärung zur Anwendbarkeit zu erstellen, welche die erforderlichen Maßnahmen (siehe 6.1.3 b)
+und c)) und Gründe für deren Einbeziehung, unabhängig davon, ob sie nun umgesetzt sind oder nicht,
+sowie Gründe für die Nichteinbeziehung von Maßnahmen aus Anhang A enthält;
+
+ist zu ersetzen durch:
+
+d) eine Erklärung zur Anwendbarkeit zu erstellen, welche
+— die erforderlichen Maßnahmen (siehe 6.1.3 b) und c));
+— Gründe für deren Einbeziehung;
+— ob sie umgesetzt sind oder nicht; sowie
+— Gründe für die Nichteinbeziehung von Maßnahmen aus Anhang A
+enthält;
+
+Normen-Download-Beuth-Deloitte GmbH Wirtschaftsprüfungs- gesellschaft-KdNr.7613828-LfNr.7948786001-2017-05-03 10:53

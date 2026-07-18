@@ -1,0 +1,26 @@
+import type { SourceFile } from './types';
+
+export const SOURCE_FILES: Record<string, SourceFile> = {
+  EU_AI_ACT: { regulationId: 'EU_AI_ACT', file: 'eu_ai_act_DE.txt', title: 'EU AI Act', fullTitle: 'VERORDNUNG (EU) 2024/1689', jurisdiction: 'EU', format: 'eu_regulation', sourceUrl: 'https://eur-lex.europa.eu/legal-content/DE/TXT/HTML/?uri=OJ:L_202401689' },
+  DORA: { regulationId: 'DORA', file: 'eu_dora_act_DE.txt', title: 'DORA', fullTitle: 'VERORDNUNG (EU) 2022/2554', jurisdiction: 'EU', format: 'eu_regulation', sourceUrl: 'https://eur-lex.europa.eu/legal-content/DE/TXT/HTML/?uri=CELEX:32022R2554' },
+  GDPR: { regulationId: 'GDPR', file: 'eu_GDPR_act_DE.txt', title: 'DSGVO', fullTitle: 'VERORDNUNG (EU) 2016/679', jurisdiction: 'EU', format: 'eu_regulation', sourceUrl: 'https://eur-lex.europa.eu/legal-content/DE/TXT/HTML/?uri=CELEX:32016R0679' },
+  NIS2: { regulationId: 'NIS2', file: 'eu_nis2_act_DE.txt', title: 'NIS2', fullTitle: 'RICHTLINIE (EU) 2022/2555', jurisdiction: 'EU', format: 'eu_directive', sourceUrl: 'https://eur-lex.europa.eu/legal-content/DE/TXT/HTML/?uri=CELEX:32022L2555' },
+  DSA: { regulationId: 'DSA', file: 'eu_dsa_act_DE.txt', title: 'DSA', fullTitle: 'VERORDNUNG (EU) 2022/2065', jurisdiction: 'EU', format: 'eu_regulation', sourceUrl: 'https://eur-lex.europa.eu/legal-content/DE/TXT/HTML/?uri=CELEX:32022R2065' },
+  DATA_ACT: { regulationId: 'DATA_ACT', file: 'eu_data_act_DE.txt', title: 'Data Act', fullTitle: 'VERORDNUNG (EU) 2023/2854', jurisdiction: 'EU', format: 'eu_regulation', sourceUrl: 'https://eur-lex.europa.eu/legal-content/DE/TXT/HTML/?uri=CELEX:32023R2854' },
+  PRODUCT_LIABILITY: { regulationId: 'PRODUCT_LIABILITY', file: 'eu_product_liability_directive_DE.txt', title: 'Produkthaftung', fullTitle: 'RICHTLINIE (EU) 2024/2853', jurisdiction: 'EU', format: 'eu_directive', sourceUrl: 'https://eur-lex.europa.eu/legal-content/DE/TXT/HTML/?uri=CELEX:32024L2853' },
+  FINMA_08_2024: { regulationId: 'FINMA_08_2024', file: 'FINMA 082024_DE.txt', title: 'FINMA 08/2024', fullTitle: 'Aufsichtsmitteilung 08/2024', jurisdiction: 'CH', format: 'ch_guidance', sourceUrl: 'https://www.finma.ch/de/dokumentation/finma-aufsichtsmitteilungen/finma-aufsichtsmitteilung-082024/' },
+  FINMA_RS_2023_1: { regulationId: 'FINMA_RS_2023_1', file: 'FINMA RS 2023_1_DE.txt', title: 'FINMA RS 2023/1', fullTitle: 'Rundschreiben 2023/1 — Operationelle Risiken', jurisdiction: 'CH', format: 'ch_circular', sourceUrl: 'https://www.finma.ch/de/regulierung/rundschreiben/finma-rs-2023-01/' },
+  FINMA_RS_2018_3: { regulationId: 'FINMA_RS_2018_3', file: 'FINMA RS 2018_3_DE.txt', title: 'FINMA RS 2018/3', fullTitle: 'Rundschreiben 2018/3 — Outsourcing', jurisdiction: 'CH', format: 'ch_circular', sourceUrl: 'https://www.finma.ch/de/regulierung/rundschreiben/finma-rs-2018-03/' },
+  REVDSG: { regulationId: 'REVDSG', file: 'revDSG_DE.txt', title: 'revDSG', fullTitle: 'Bundesgesetz über den Datenschutz (DSG)', jurisdiction: 'CH', format: 'ch_law', sourceUrl: 'https://www.fedlex.admin.ch/eli/cc/2022/491/de' },
+  MARISK: { regulationId: 'MARISK', file: 'MaRisk_DE.txt', title: 'MaRisk', fullTitle: 'Mindestanforderungen an das Risikomanagement', jurisdiction: 'DE', format: 'de_circular', sourceUrl: 'https://www.bundesbank.de/de/aufgaben/bankenaufsicht/einzelaspekte/risikomanagement/marisk/marisk-598070' },
+  BAIT: { regulationId: 'BAIT', file: 'BAIT_DE.txt', title: 'BAIT', fullTitle: 'Bankaufsichtliche Anforderungen an die IT', jurisdiction: 'DE', format: 'de_circular', sourceUrl: 'https://www.bafin.de/SharedDocs/Veroeffentlichungen/DE/Rundschreiben/2022/rs_2210_bait_ba.html' },
+  BDSG: { regulationId: 'BDSG', file: 'Bundesdatenschutzgesetz (BDSG)_DE.txt', title: 'BDSG', fullTitle: 'Bundesdatenschutzgesetz', jurisdiction: 'DE', format: 'de_law', sourceUrl: 'https://www.gesetze-im-internet.de/bdsg_2018/' },
+  BSIG: { regulationId: 'BSIG', file: 'BSI-Gesetz - BSIG_DE.txt', title: 'BSIG', fullTitle: 'BSI-Gesetz', jurisdiction: 'DE', format: 'de_law', sourceUrl: 'https://www.gesetze-im-internet.de/bsig_2009/' },
+  ISO_27001: { regulationId: 'ISO_27001', file: 'ISO-IEC-27001_2015_DE.txt', title: 'ISO 27001', fullTitle: 'ISO/IEC 27001:2015 — Information Security Management', jurisdiction: 'INTL', format: 'iso_standard', sourceUrl: 'https://www.iso.org/standard/54534.html' },
+  ISO_42001: { regulationId: 'ISO_42001', file: 'ISO-42001_DE.txt', title: 'ISO 42001', fullTitle: 'ISO/IEC 42001:2023 — AI Management System', jurisdiction: 'INTL', format: 'iso_standard', sourceUrl: 'https://www.iso.org/standard/81230.html' },
+  ISO_42005: { regulationId: 'ISO_42005', file: 'Iso-42005-2024-Dis-Standard_DRAFT_DE.txt', title: 'ISO 42005', fullTitle: 'ISO/IEC DIS 42005 — AI Impact Assessment', jurisdiction: 'INTL', format: 'iso_standard', sourceUrl: 'https://www.iso.org/standard/44546.html' },
+  NIST_AI_RMF: { regulationId: 'NIST_AI_RMF', file: 'nist.ai.100-1_DE.txt', title: 'NIST AI RMF', fullTitle: 'NIST AI 100-1 — AI Risk Management Framework', jurisdiction: 'INTL', format: 'nist_framework', sourceUrl: 'https://airc.nist.gov/AI_RMF_Interactivity/NIST-AI-100-1' },
+};
+
+export const REGULATION_IDS = Object.keys(SOURCE_FILES);
+export const DEFAULT_REGULATION = 'EU_AI_ACT';

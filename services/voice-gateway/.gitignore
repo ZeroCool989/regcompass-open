@@ -1,0 +1,5 @@
+# Build output (compiled TS) and local synth/audio samples.
+out/
+dist/
+node_modules/
+.env

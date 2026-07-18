@@ -1,0 +1,1493 @@
+[
+  {
+    "id": "R-NIS2-001",
+    "title": "Gegenstand",
+    "regulation": "NIS2",
+    "article": "Art. 1",
+    "jurisdiction": [
+      "EU"
+    ],
+    "summary": "Defines the subject matter of NIS2: measures to ensure a high common level of cybersecurity across the Union. Establishes obligations for Member States to adopt national cybersecurity strategies and designate competent authorities, CSIRTs, and single points of contact. Sets cybersecurity risk management and reporting obligations for essential and important entities.",
+    "legalText": "Art. 1(1) legt Massnahmen fest, mit denen in der gesamten Union ein hohes gemeinsames Cybersicherheitsniveau sichergestellt werden soll, um so das Funktionieren des Binnenmarkts zu verbessern. Art. 1(2) legt fest: (a) Pflicht fuer alle Mitgliedstaaten, nationale Cybersicherheitsstrategien zu verabschieden sowie zustaendige nationale Behoerden, Behoerden fuer das Cyberkrisenmanagement, zentrale Anlaufstellen und CSIRTs zu benennen oder einzurichten; (b) Pflichten in Bezug auf das Cybersicherheitsrisikomanagement sowie Berichtspflichten fuer Einrichtungen der in Anhang I oder II aufgefuehrten Arten; (c) Vorschriften und Pflichten zum Austausch von Cybersicherheitsinformationen; (d) Aufsichts- und Durchsetzungspflichten fuer die Mitgliedstaaten.",
+    "financialSectorGuidance": "NIS2 ist die horizontale Cybersicherheitsrichtlinie der EU. Fuer Finanzunternehmen gilt jedoch Art. 4: DORA (Verordnung (EU) 2022/2554) ist lex specialis. Wo DORA gleichwertige Anforderungen an Risikomanagement und Vorfallsmeldung stellt, verdraengt DORA die NIS2-Pflichten. NIS2 bleibt aber relevant fuer Aspekte, die DORA nicht abdeckt, und fuer IKT-Drittdienstleister im Finanzsektor.",
+    "riskTier": "all",
+    "audience": [
+      "all"
+    ],
+    "category": "scope",
+    "relevanceForFinancialSector": "high",
+    "tags": [
+      "subject-matter",
+      "scope",
+      "cybersecurity-strategy",
+      "dora-lex-specialis"
+    ],
+    "sourceFile": "docs/source/eu_nis2_act_DE.txt",
+    "sourceUrl": "https://eur-lex.europa.eu/legal-content/DE/TXT/?uri=CELEX:32022L2555",
+    "verified": true,
+    "verifiedBy": "primary-source-extraction-2026-05-19",
+    "verifiedAt": "2026-05-19",
+    "bindingLevel": "mandatory",
+    "enforcementConsequence": "Keine direkte Sanktionsregelung - definitorischer Artikel",
+    "controls": []
+  },
+  {
+    "id": "R-NIS2-002",
+    "title": "Anwendungsbereich",
+    "regulation": "NIS2",
+    "article": "Art. 2",
+    "jurisdiction": [
+      "EU"
+    ],
+    "summary": "Defines the scope of NIS2: applies to public and private entities of the types listed in Annexes I and II that qualify as medium-sized enterprises or exceed the medium-sized enterprise thresholds. Also applies regardless of size to certain critical entities (trust service providers, TLD registries, DNS providers, electronic communications, sole providers of essential services, public administration entities). Excludes entities in national security, defence, and law enforcement.",
+    "legalText": "Art. 2(1) bestimmt, dass diese Richtlinie fuer oeffentliche oder private Einrichtungen der in Anhang I oder II genannten Art gilt, die als mittlere Unternehmen gelten oder die Schwellenwerte ueberschreiten. Art. 2(2) gilt unabhaengig von der Groesse fuer: (a) Anbieter oeffentlicher elektronischer Kommunikationsnetze, Vertrauensdiensteanbieter, TLD-Namenregister, DNS-Diensteanbieter; (b) einzige Anbieter eines unerlasslichen Dienstes; (c) Einrichtungen, deren Stoerung die oeffentliche Ordnung/Sicherheit/Gesundheit beeintraechtigen koennte; (d) Einrichtungen mit Systemrisiko; (e) kritische Einrichtungen; (f) Einrichtungen der oeffentlichen Verwaltung. Art. 2(6)-(8) nimmt nationale Sicherheit, Verteidigung, Strafverfolgung vom Anwendungsbereich aus. Art. 2(10) schliesst von DORA ausgenommene Einrichtungen aus. Art. 2(12) gilt unbeschadet DSGVO und ePrivacy-Richtlinie.",
+    "financialSectorGuidance": "Finanzunternehmen (Banken, Versicherer etc.) fallen grundsaetzlich unter NIS2 Anhang I (Sektoren 3 'Bankwesen' und 4 'Finanzmarktinfrastrukturen'). Jedoch werden sie durch Art. 4 NIS2 i.V.m. DORA von den NIS2-Kernpflichten (Art. 21, 23) befreit, soweit DORA gleichwertige Anforderungen stellt. Art. 2(10) schliesst von DORA ausgenommene Einrichtungen auch von NIS2 aus.",
+    "riskTier": "all",
+    "audience": [
+      "all"
+    ],
+    "category": "scope",
+    "relevanceForFinancialSector": "critical",
+    "tags": [
+      "scope",
+      "medium-enterprise",
+      "size-threshold",
+      "exclusions",
+      "annexes"
+    ],
+    "sourceFile": "docs/source/eu_nis2_act_DE.txt",
+    "sourceUrl": "https://eur-lex.europa.eu/legal-content/DE/TXT/?uri=CELEX:32022L2555",
+    "verified": true,
+    "verifiedBy": "primary-source-extraction-2026-05-19",
+    "verifiedAt": "2026-05-19",
+    "bindingLevel": "mandatory",
+    "enforcementConsequence": "Keine direkte Sanktionsregelung - definitorischer Artikel",
+    "controls": []
+  },
+  {
+    "id": "R-NIS2-003",
+    "title": "Wesentliche und wichtige Einrichtungen",
+    "regulation": "NIS2",
+    "article": "Art. 3",
+    "jurisdiction": [
+      "EU"
+    ],
+    "summary": "Classifies entities into essential entities (large Annex I entities, qualified trust service providers, TLD registries, DNS providers, medium-sized electronic communications providers, central government entities, critical entities under CER Directive) and important entities (all other in-scope entities). Member States must establish and maintain lists of essential and important entities by 17 April 2025.",
+    "legalText": "Art. 3(1) definiert wesentliche Einrichtungen: (a) Einrichtungen in Anhang I, die Schwellenwerte fuer mittlere Unternehmen ueberschreiten; (b) qualifizierte Vertrauensdiensteanbieter, TLD-Namenregister, DNS-Diensteanbieter unabhaengig von der Groesse; (c) mittlere Anbieter oeffentlicher elektronischer Kommunikationsnetze; (d) Einrichtungen der oeffentlichen Verwaltung der Zentralregierung; (e) sonstige gemaess Art. 2(2)(b)-(e) als wesentlich eingestufte Einrichtungen; (f) kritische Einrichtungen gemaess RL (EU) 2022/2557. Art. 3(2): Alle anderen in-scope Einrichtungen gelten als wichtige Einrichtungen. Art. 3(3): Mitgliedstaaten erstellen bis 17.04.2025 eine Liste wesentlicher und wichtiger Einrichtungen. Art. 3(4): Einrichtungen muessen den zustaendigen Behoerden Name, Anschrift, Kontaktdaten, Sektor und Mitgliedstaaten uebermitteln.",
+    "financialSectorGuidance": "Kreditinstitute und Finanzmarktinfrastrukturbetreiber zaehlen als wesentliche Einrichtungen unter NIS2 (Anhang I, Sektoren 3 und 4), da sie typischerweise die Schwellenwerte ueberschreiten. Diese Einstufung ist fuer die Bestimmung der Aufsichtsintensitaet relevant (Art. 32 vs. 33), auch wenn DORA als lex specialis die Kernpflichten verdraengt.",
+    "riskTier": "all",
+    "audience": [
+      "all",
+      "authority"
+    ],
+    "category": "classification",
+    "relevanceForFinancialSector": "high",
+    "tags": [
+      "essential-entities",
+      "important-entities",
+      "classification",
+      "entity-register"
+    ],
+    "sourceFile": "docs/source/eu_nis2_act_DE.txt",
+    "sourceUrl": "https://eur-lex.europa.eu/legal-content/DE/TXT/?uri=CELEX:32022L2555",
+    "verified": true,
+    "verifiedBy": "primary-source-extraction-2026-05-19",
+    "verifiedAt": "2026-05-19",
+    "bindingLevel": "mandatory",
+    "enforcementConsequence": "Keine direkte Sanktionsregelung - klassifikatorischer Artikel",
+    "controls": []
+  },
+  {
+    "id": "R-NIS2-004",
+    "title": "Sektorspezifische Rechtsakte der Union",
+    "regulation": "NIS2",
+    "article": "Art. 4",
+    "jurisdiction": [
+      "EU"
+    ],
+    "summary": "Establishes the lex specialis principle: where sector-specific EU acts require equivalent cybersecurity risk management measures or incident reporting, those acts take precedence over NIS2 (including supervision and enforcement). DORA is the primary sector-specific act for the financial sector. Equivalence requires that risk management measures are at least equivalent to Art. 21(1)-(2) or incident reporting provides direct access to CSIRTs with requirements equivalent to Art. 23(1)-(6).",
+    "legalText": "Art. 4(1): Wenn wesentliche oder wichtige Einrichtungen gemaess sektorspezifischen Rechtsakten der Union entweder Massnahmen zum Cybersicherheitsrisikomanagement ergreifen oder erhebliche Sicherheitsvorfaelle melden muessen und wenn die entsprechenden Anforderungen in ihrer Wirkung den in dieser Richtlinie festgelegten Verpflichtungen zumindest gleichwertig sind, finden die einschlaegigen Bestimmungen dieser Richtlinie, einschliesslich der Bestimmungen ueber Aufsicht und Durchsetzung in Kapitel VII, keine Anwendung. Art. 4(2): Gleichwertigkeit liegt vor, wenn: (a) Risikomanagementmassnahmen Art. 21(1)-(2) mindestens gleichwertig sind, oder (b) unmittelbarer Zugang zu Vorfallsmeldungen durch CSIRTs mit Anforderungen mindestens gleichwertig zu Art. 23(1)-(6). Art. 4(3): Kommission stellt bis 17.07.2023 Leitlinien bereit.",
+    "financialSectorGuidance": "Dies ist die Schluesselbestimmung fuer den Finanzsektor: DORA (Verordnung (EU) 2022/2554) gilt als sektorspezifischer Rechtsakt, der die NIS2-Kernpflichten verdraengt. Finanzunternehmen muessen primaer DORA befolgen, nicht NIS2 Art. 21/23. Jedoch: (1) NIS2 bleibt anwendbar, wo DORA keine gleichwertigen Anforderungen stellt; (2) IKT-Drittdienstleister, die nicht nur Finanzunternehmen bedienen, unterliegen weiterhin NIS2; (3) Die Aufsichtszusammenarbeit zwischen NIS2- und DORA-Behoerden ist in Art. 32(10) und 33(6) geregelt.",
+    "riskTier": "all",
+    "audience": [
+      "all",
+      "financial-entity",
+      "authority"
+    ],
+    "category": "scope",
+    "relevanceForFinancialSector": "critical",
+    "tags": [
+      "lex-specialis",
+      "dora",
+      "sector-specific",
+      "equivalence",
+      "financial-sector"
+    ],
+    "sourceFile": "docs/source/eu_nis2_act_DE.txt",
+    "sourceUrl": "https://eur-lex.europa.eu/legal-content/DE/TXT/?uri=CELEX:32022L2555",
+    "verified": true,
+    "verifiedBy": "primary-source-extraction-2026-05-19",
+    "verifiedAt": "2026-05-19",
+    "bindingLevel": "mandatory",
+    "enforcementConsequence": "Keine direkte Sanktionsregelung - definitorischer Artikel",
+    "controls": []
+  },
+  {
+    "id": "R-NIS2-005",
+    "title": "Mindestharmonisierung",
+    "regulation": "NIS2",
+    "article": "Art. 5",
+    "jurisdiction": [
+      "EU"
+    ],
+    "summary": "Establishes NIS2 as a minimum harmonisation directive: Member States may adopt or maintain provisions ensuring a higher level of cybersecurity, provided such provisions are consistent with their obligations under Union law.",
+    "legalText": "Art. 5: Diese Richtlinie hindert die Mitgliedstaaten nicht daran, Bestimmungen zu erlassen oder beizubehalten, die ein hoeheres Cybersicherheitsniveau gewaehrleisten, sofern diese Bestimmungen mit den Pflichten der Mitgliedstaaten nach dem Unionsrecht im Einklang stehen.",
+    "financialSectorGuidance": "Fuer den Finanzsektor bedeutet dies, dass nationale Umsetzungsgesetze strengere Cybersicherheitsanforderungen vorsehen koennen. In Deutschland hat das BSI-Gesetz (BSIG) bereits vor NIS2 strenge Anforderungen gestellt. Finanzaufsichtsbehoerden (BaFin, EZB) koennen im Rahmen von BAIT/MaRisk zusaetzliche Anforderungen stellen, die ueber NIS2 hinausgehen.",
+    "riskTier": "all",
+    "audience": [
+      "all",
+      "authority"
+    ],
+    "category": "scope",
+    "relevanceForFinancialSector": "medium",
+    "tags": [
+      "minimum-harmonisation",
+      "national-law",
+      "gold-plating"
+    ],
+    "sourceFile": "docs/source/eu_nis2_act_DE.txt",
+    "sourceUrl": "https://eur-lex.europa.eu/legal-content/DE/TXT/?uri=CELEX:32022L2555",
+    "verified": true,
+    "verifiedBy": "primary-source-extraction-2026-05-19",
+    "verifiedAt": "2026-05-19",
+    "bindingLevel": "mandatory",
+    "enforcementConsequence": "Keine direkte Sanktionsregelung - Rahmenvorgabe",
+    "controls": []
+  },
+  {
+    "id": "R-NIS2-006",
+    "title": "Begriffsbestimmungen",
+    "regulation": "NIS2",
+    "article": "Art. 6",
+    "jurisdiction": [
+      "EU"
+    ],
+    "summary": "Provides 41 key definitions for NIS2 including: network and information system, security of network and information systems, cybersecurity, national cybersecurity strategy, near-miss, security incident, large-scale cybersecurity incident, incident handling, risk, cyber threat, significant cyber threat, ICT product/service/process, vulnerability, managed service provider, managed security service provider, cloud computing service, data centre service, content delivery network, social networking services platform, representative, public administration entity, and research institution.",
+    "legalText": "Art. 6 definiert 41 Ausdruecke, darunter: (1) Netz- und Informationssystem; (2) Sicherheit von Netz- und Informationssystemen; (3) Cybersicherheit; (4) nationale Cybersicherheitsstrategie; (5) Beinahe-Vorfall; (6) Sicherheitsvorfall; (7) Cybersicherheitsvorfall grossen Ausmasses; (8) Bewaeltigung von Sicherheitsvorfaellen; (9) Risiko; (10) Cyberbedrohung; (11) erhebliche Cyberbedrohung; (12)-(14) IKT-Produkt, IKT-Dienst, IKT-Prozess; (15) Schwachstelle; (16)-(17) Norm, technische Spezifikation; (18)-(21) Internet-Knoten, DNS, DNS-Diensteanbieter, TLD-Namenregister; (22)-(27) Domainregistrierungsdienste, digitaler Dienst, Vertrauensdienst/-anbieter, qualifiziert; (28)-(33) Online-Marktplatz, -Suchmaschine, Cloud-Computing-Dienst, Rechenzentrumsdienst, Inhaltszustellnetz, Plattform sozialer Netzwerke; (34) Vertreter; (35) Einrichtung der oeffentlichen Verwaltung; (36)-(38) oeffentliches Kommunikationsnetz/-dienst, Einrichtung; (39)-(40) Anbieter verwalteter Dienste/Sicherheitsdienste; (41) Forschungseinrichtung.",
+    "financialSectorGuidance": "Die NIS2-Definitionen sind komplementaer zu den DORA-Definitionen in Art. 3 DORA. Besonders relevant: Die Definition von 'Sicherheitsvorfall' (Nr. 6) in NIS2 ist breiter als 'IKT-bezogener Vorfall' in DORA, da NIS2 auch physische Sicherheit umfasst. Die Definition von 'Anbieter verwalteter Dienste' (Nr. 39) und 'Anbieter verwalteter Sicherheitsdienste' (Nr. 40) ist relevant fuer KI-Dienstleister im Finanzsektor, die als IKT-Drittdienstleister agieren.",
+    "riskTier": "all",
+    "audience": [
+      "all"
+    ],
+    "category": "definitions",
+    "relevanceForFinancialSector": "medium",
+    "tags": [
+      "definitions",
+      "terminology",
+      "incident",
+      "risk",
+      "managed-services"
+    ],
+    "sourceFile": "docs/source/eu_nis2_act_DE.txt",
+    "sourceUrl": "https://eur-lex.europa.eu/legal-content/DE/TXT/?uri=CELEX:32022L2555",
+    "verified": true,
+    "verifiedBy": "primary-source-extraction-2026-05-19",
+    "verifiedAt": "2026-05-19",
+    "bindingLevel": "mandatory",
+    "enforcementConsequence": "Keine direkte Sanktionsregelung - definitorischer Artikel",
+    "controls": []
+  },
+  {
+    "id": "R-NIS2-007",
+    "title": "Nationale Cybersicherheitsstrategie",
+    "regulation": "NIS2",
+    "article": "Art. 7",
+    "jurisdiction": [
+      "EU"
+    ],
+    "summary": "Requires each Member State to adopt a national cybersecurity strategy covering strategic objectives, resources, and regulatory measures. The strategy must include supply chain security policies, vulnerability handling, SME support, advanced technology promotion, cybersecurity education, and active cyber protection. Strategies must be notified to the Commission and reviewed at least every five years.",
+    "legalText": "Art. 7(1): Jeder Mitgliedstaat erlaesst eine nationale Cybersicherheitsstrategie mit: (a) Zielen und Prioritaeten; (b) Steuerungsrahmen; (c) Aufgaben- und Zustaendigkeitsrahmen; (d) Mechanismus zur Ermittlung von Anlagen und Risikobewertung; (e) Vorsorge, Reaktionsfaehigkeit und Wiederherstellung; (f) Liste der beteiligten Behoerden; (g) Koordinierung mit CER-Richtlinie; (h) Plan zur Steigerung der Cybersicherheitssensibilisierung. Art. 7(2): Konzepte fuer: (a) Lieferkettensicherheit; (b) Cybersicherheitsanforderungen bei oeffentlicher Auftragsvergabe; (c) Schwachstellenmanagement; (d) offenes Internet; (e) fortgeschrittene Technologien; (f) Bildung und Schulung; (g) Forschungseinrichtungen; (h) Informationsaustausch; (i) SME-Unterstuetzung; (j) aktiver Cyberschutz. Art. 7(3)-(4): Notifizierung innerhalb von 3 Monaten; Ueberpruefung mindestens alle 5 Jahre.",
+    "financialSectorGuidance": "Die nationale Cybersicherheitsstrategie bildet den uebergreifenden Rahmen, in den auch die DORA-Umsetzung und die Finanzaufsicht eingebettet sind. Fuer Finanzunternehmen ist besonders Art. 7(2)(a) relevant: die Lieferkettensicherheit fuer IKT-Produkte und -Dienste. KI-Systeme, die von Cloud-Anbietern bezogen werden, fallen unter diese Lieferkettensicherheitspolitik. Die SME-Unterstuetzung (Art. 7(2)(i)) kann auch kleinere FinTechs und InsurTechs betreffen.",
+    "riskTier": "all",
+    "audience": [
+      "all",
+      "authority"
+    ],
+    "category": "governance",
+    "relevanceForFinancialSector": "medium",
+    "tags": [
+      "national-strategy",
+      "supply-chain",
+      "sme-support",
+      "education",
+      "vulnerability-management"
+    ],
+    "sourceFile": "docs/source/eu_nis2_act_DE.txt",
+    "sourceUrl": "https://eur-lex.europa.eu/legal-content/DE/TXT/?uri=CELEX:32022L2555",
+    "verified": true,
+    "verifiedBy": "primary-source-extraction-2026-05-19",
+    "verifiedAt": "2026-05-19",
+    "bindingLevel": "mandatory",
+    "enforcementConsequence": "Mitgliedstaatenverpflichtung - keine direkte Sanktion gegenueber Einrichtungen",
+    "controls": []
+  },
+  {
+    "id": "R-NIS2-008",
+    "title": "Zustaendige Behoerden und zentrale Anlaufstellen",
+    "regulation": "NIS2",
+    "article": "Art. 8",
+    "jurisdiction": [
+      "EU"
+    ],
+    "summary": "Requires each Member State to designate one or more competent authorities for cybersecurity and supervisory tasks, and a single point of contact to ensure cross-border cooperation. The single point of contact serves as liaison for cross-border and cross-sector cooperation. Competent authorities and single points of contact must be adequately resourced.",
+    "legalText": "Art. 8(1)-(2): Jeder Mitgliedstaat benennt zustaendige Behoerden fuer Cybersicherheit und Aufsichtsaufgaben. Art. 8(3)-(4): Jeder Mitgliedstaat benennt eine zentrale Anlaufstelle als Verbindungsstelle fuer grenzueberschreitende und sektoruebergreifende Zusammenarbeit. Art. 8(5): Angemessene Ressourcenausstattung. Art. 8(6): Notifizierung der Kommission.",
+    "financialSectorGuidance": "In Deutschland ist das BSI die zentrale zustaendige Behoerde fuer NIS2. Fuer Finanzunternehmen ist die Zusammenarbeit zwischen BSI und BaFin (Art. 13(4)-(5) NIS2 i.V.m. DORA) relevant. KI-Systeme im Finanzsektor koennen sowohl der BSI-Aufsicht (NIS2) als auch der BaFin-Aufsicht (DORA, BAIT) unterliegen.",
+    "riskTier": "all",
+    "audience": [
+      "authority"
+    ],
+    "category": "governance",
+    "relevanceForFinancialSector": "medium",
+    "tags": [
+      "competent-authority",
+      "single-point-of-contact",
+      "cross-border",
+      "resources"
+    ],
+    "sourceFile": "docs/source/eu_nis2_act_DE.txt",
+    "sourceUrl": "https://eur-lex.europa.eu/legal-content/DE/TXT/?uri=CELEX:32022L2555",
+    "verified": true,
+    "verifiedBy": "primary-source-extraction-2026-05-19",
+    "verifiedAt": "2026-05-19",
+    "bindingLevel": "mandatory",
+    "enforcementConsequence": "Mitgliedstaatenverpflichtung",
+    "controls": []
+  },
+  {
+    "id": "R-NIS2-009",
+    "title": "Nationale Rahmen fuer das Cyberkrisenmanagement",
+    "regulation": "NIS2",
+    "article": "Art. 9",
+    "jurisdiction": [
+      "EU"
+    ],
+    "summary": "Requires each Member State to designate crisis management authorities for large-scale cybersecurity incidents and crises, and to adopt a national response plan. The plan must define objectives, procedures, coordination channels, preparedness measures including exercises, and ensure effective participation in EU-level coordinated management.",
+    "legalText": "Art. 9(1): Jeder Mitgliedstaat benennt Behoerden fuer das Cyberkrisenmanagement mit angemessenen Ressourcen. Art. 9(2): Bei mehreren Behoerden Benennung eines Koordinators. Art. 9(3): Ermittlung von Kapazitaeten und Verfahren. Art. 9(4): Nationaler Reaktionsplan mit: (a) Zielen; (b) Aufgaben und Zustaendigkeiten; (c) Verfahren und Informationsaustauschkanaelen; (d) Vorsorgermassnahmen, Uebungen, Ausbildung; (e) Interessentraedern und Infrastruktur; (f) Verfahren fuer EU-Ebene.",
+    "financialSectorGuidance": "Grossflaechige Cybervorfaelle im Finanzsektor (z.B. Ausfall eines kritischen IKT-Drittdienstleisters wie eines Cloud-Anbieters) koennen nationale Cyberkrisen ausloesen. Die Krisenmanagement-Rahmen nach Art. 9 muessen mit den DORA-Krisenmanagement-Regelungen (Art. 11 DORA) und dem EU-CyCLONe (Art. 16 NIS2) koordiniert werden.",
+    "riskTier": "all",
+    "audience": [
+      "authority"
+    ],
+    "category": "governance",
+    "relevanceForFinancialSector": "high",
+    "tags": [
+      "crisis-management",
+      "incident-response",
+      "exercises",
+      "coordination"
+    ],
+    "sourceFile": "docs/source/eu_nis2_act_DE.txt",
+    "sourceUrl": "https://eur-lex.europa.eu/legal-content/DE/TXT/?uri=CELEX:32022L2555",
+    "verified": true,
+    "verifiedBy": "primary-source-extraction-2026-05-19",
+    "verifiedAt": "2026-05-19",
+    "bindingLevel": "mandatory",
+    "enforcementConsequence": "Mitgliedstaatenverpflichtung",
+    "controls": []
+  },
+  {
+    "id": "R-NIS2-010",
+    "title": "Computer-Notfallteams (CSIRTs)",
+    "regulation": "NIS2",
+    "article": "Art. 10",
+    "jurisdiction": [
+      "EU"
+    ],
+    "summary": "Requires each Member State to designate or establish one or more CSIRTs covering all sectors in Annexes I and II. CSIRTs must be adequately resourced, have secure communication infrastructure, cooperate with sectoral groupings, and participate in peer reviews. CSIRTs may cooperate with third-country counterparts.",
+    "legalText": "Art. 10(1): Jeder Mitgliedstaat benennt ein oder mehrere CSIRTs, die mindestens die Sektoren in Anhang I und II abdecken. Art. 10(2)-(3): Angemessene Ressourcen und sichere Kommunikationsinfrastruktur. Art. 10(4)-(5): Zusammenarbeit mit sektorspezifischen Gruppierungen und Peer Reviews. Art. 10(6)-(8): Zusammenarbeit im CSIRTs-Netzwerk und mit Drittlaendern. Art. 10(9): Notifizierung der Kommission.",
+    "financialSectorGuidance": "CSIRTs sind die operativen Ansprechpartner fuer Cybervorfaelle. Finanzunternehmen melden schwerwiegende IKT-bezogene Vorfaelle primaer nach DORA an die Finanzaufsichtsbehoerden, aber die CSIRTs erhalten nach Art. 13(2) NIS2 ebenfalls Zugang zu den Meldungen. Die Zusammenarbeit zwischen Finanz-CSIRTs und allgemeinen nationalen CSIRTs ist fuer die Bewaeltigung grossflaechiger Cyberangriffe auf den Finanzsektor entscheidend.",
+    "riskTier": "all",
+    "audience": [
+      "authority"
+    ],
+    "category": "cybersecurity",
+    "relevanceForFinancialSector": "medium",
+    "tags": [
+      "csirt",
+      "incident-response",
+      "cooperation",
+      "resources"
+    ],
+    "sourceFile": "docs/source/eu_nis2_act_DE.txt",
+    "sourceUrl": "https://eur-lex.europa.eu/legal-content/DE/TXT/?uri=CELEX:32022L2555",
+    "verified": true,
+    "verifiedBy": "primary-source-extraction-2026-05-19",
+    "verifiedAt": "2026-05-19",
+    "bindingLevel": "mandatory",
+    "enforcementConsequence": "Mitgliedstaatenverpflichtung",
+    "controls": []
+  },
+  {
+    "id": "R-NIS2-011",
+    "title": "Anforderungen an die CSIRTs sowie technische Kapazitaeten und Aufgaben",
+    "regulation": "NIS2",
+    "article": "Art. 11",
+    "jurisdiction": [
+      "EU"
+    ],
+    "summary": "Specifies CSIRT requirements (high availability, secure premises, request management, confidentiality, trained personnel, redundancy) and core tasks including: monitoring and analysing cyber threats, early warnings, incident response support, forensic analysis, proactive vulnerability scanning, participation in CSIRTs network, and coordinated vulnerability disclosure.",
+    "legalText": "Art. 11(1): CSIRTs muessen: (a) hohe Verfuegbarkeit der Kommunikationskanaele; (b) sichere Standorte; (c) Anfragenverwaltungssystem; (d) Vertraulichkeit; (e) staendige Bereitschaft und geschultes Personal; (f) Redundanzsysteme und Ausweichraeume. Art. 11(3): Aufgaben: (a) Ueberwachung und Analyse von Cyberbedrohungen und Echtzeitunterstuetzung; (b) Fruehwarnungen und Alarmmeldungen; (c) Reaktion auf Sicherheitsvorfaelle; (d) forensische Datenerhebung und Lagebeurteilung; (e) proaktive Schwachstellenscans; (f) Beteiligung am CSIRTs-Netzwerk; (g) koordinierte Schwachstellenoffenlegung; (h) sichere Instrumente fuer Informationsaustausch.",
+    "financialSectorGuidance": "Die CSIRT-Aufgaben nach Art. 11(3) umfassen proaktive Schwachstellenscans (Abs. 3(e)), die auch KI-Systeme und -Infrastruktur im Finanzsektor betreffen koennen. CSIRTs koennen oeffentlich zugaengliche Systeme proaktiv scannen, was fuer Finanzunternehmen mit oeffentlich erreichbaren Schnittstellen (Online-Banking, APIs) relevant ist.",
+    "riskTier": "all",
+    "audience": [
+      "authority"
+    ],
+    "category": "cybersecurity",
+    "relevanceForFinancialSector": "medium",
+    "tags": [
+      "csirt-requirements",
+      "incident-response",
+      "vulnerability-scanning",
+      "forensics",
+      "early-warning"
+    ],
+    "sourceFile": "docs/source/eu_nis2_act_DE.txt",
+    "sourceUrl": "https://eur-lex.europa.eu/legal-content/DE/TXT/?uri=CELEX:32022L2555",
+    "verified": true,
+    "verifiedBy": "primary-source-extraction-2026-05-19",
+    "verifiedAt": "2026-05-19",
+    "bindingLevel": "mandatory",
+    "enforcementConsequence": "Mitgliedstaatenverpflichtung",
+    "controls": []
+  },
+  {
+    "id": "R-NIS2-012",
+    "title": "Koordinierte Offenlegung von Schwachstellen und europaeische Schwachstellendatenbank",
+    "regulation": "NIS2",
+    "article": "Art. 12",
+    "jurisdiction": [
+      "EU"
+    ],
+    "summary": "Establishes coordinated vulnerability disclosure (CVD): each Member State designates a CSIRT as coordinator. The coordinator identifies affected entities, supports reporters (including anonymously), and negotiates disclosure timelines. ENISA develops and maintains a European vulnerability database accessible to all stakeholders.",
+    "legalText": "Art. 12(1): Jeder Mitgliedstaat benennt ein CSIRT als Koordinator fuer koordinierte Schwachstellenoffenlegung. Der Koordinator: (a) ermittelt und kontaktiert betreffende Einrichtungen; (b) unterstuetzt meldende Personen; (c) verhandelt Offenlegungszeitplaene. Anonyme Meldung muss moeglich sein. Art. 12(2): ENISA entwickelt und pflegt eine europaeische Schwachstellendatenbank mit: (a) Beschreibung der Schwachstelle; (b) betroffene IKT-Produkte/-Dienste und Ausmass; (c) Verfuegbarkeit von Patches oder Orientierungshilfen.",
+    "financialSectorGuidance": "Die koordinierte Schwachstellenoffenlegung ist relevant fuer Finanzunternehmen, die eigene Software entwickeln oder IKT-Produkte einsetzen. Schwachstellen in KI-Modellen oder ML-Frameworks koennen ueber diesen Mechanismus gemeldet und koordiniert behoben werden. Die ENISA-Schwachstellendatenbank ist eine zusaetzliche Informationsquelle neben CVE/NVD.",
+    "riskTier": "all",
+    "audience": [
+      "all"
+    ],
+    "category": "cybersecurity",
+    "relevanceForFinancialSector": "medium",
+    "tags": [
+      "vulnerability-disclosure",
+      "cvd",
+      "enisa-database",
+      "patches",
+      "coordination"
+    ],
+    "sourceFile": "docs/source/eu_nis2_act_DE.txt",
+    "sourceUrl": "https://eur-lex.europa.eu/legal-content/DE/TXT/?uri=CELEX:32022L2555",
+    "verified": true,
+    "verifiedBy": "primary-source-extraction-2026-05-19",
+    "verifiedAt": "2026-05-19",
+    "bindingLevel": "mandatory",
+    "enforcementConsequence": "Mitgliedstaatenverpflichtung - ENISA-Pflicht",
+    "controls": []
+  },
+  {
+    "id": "R-NIS2-013",
+    "title": "Zusammenarbeit auf nationaler Ebene",
+    "regulation": "NIS2",
+    "article": "Art. 13",
+    "jurisdiction": [
+      "EU"
+    ],
+    "summary": "Requires cooperation between competent authorities, single points of contact, and CSIRTs at national level. Ensures information sharing on incidents and threats. Mandates cooperation with law enforcement, data protection authorities, sectoral authorities under DORA, CER Directive, and electronic communications framework.",
+    "legalText": "Art. 13(1): Zustaendige Behoerden, zentrale Anlaufstellen und CSIRTs arbeiten zusammen. Art. 13(2): Meldungen gemaess Art. 23 und 30 werden CSIRTs/zustaendigen Behoerden uebermittelt. Art. 13(4): Zusammenarbeit mit Strafverfolgungsbehoerden, Datenschutzbehoerden, Behoerden nach VO (EU) 2022/2554 (DORA), RL (EU) 2022/2557 (CER), RL (EU) 2018/1972 und sektorspezifischen Behoerden. Art. 13(5): Regelmaessiger Informationsaustausch mit DORA- und CER-Behoerden.",
+    "financialSectorGuidance": "Art. 13(4) und (5) sind zentral fuer den Finanzsektor: Sie stellen sicher, dass NIS2-Behoerden (BSI) mit DORA-Behoerden (BaFin, EZB-SSM) zusammenarbeiten. Bei KI-bezogenen Cybervorfaellen im Finanzsektor muessen alle relevanten Behoerden koordiniert informiert werden.",
+    "riskTier": "all",
+    "audience": [
+      "authority"
+    ],
+    "category": "cooperation",
+    "relevanceForFinancialSector": "high",
+    "tags": [
+      "national-cooperation",
+      "law-enforcement",
+      "data-protection",
+      "dora-cooperation",
+      "information-sharing"
+    ],
+    "sourceFile": "docs/source/eu_nis2_act_DE.txt",
+    "sourceUrl": "https://eur-lex.europa.eu/legal-content/DE/TXT/?uri=CELEX:32022L2555",
+    "verified": true,
+    "verifiedBy": "primary-source-extraction-2026-05-19",
+    "verifiedAt": "2026-05-19",
+    "bindingLevel": "mandatory",
+    "enforcementConsequence": "Mitgliedstaatenverpflichtung",
+    "controls": []
+  },
+  {
+    "id": "R-NIS2-014",
+    "title": "Kooperationsgruppe",
+    "regulation": "NIS2",
+    "article": "Art. 14",
+    "jurisdiction": [
+      "EU"
+    ],
+    "summary": "Establishes the NIS Cooperation Group composed of Member State representatives, Commission, and ENISA to support strategic cooperation, information exchange, and trust-building. ESAs and DORA authorities may participate. Tasks include guidance, best practice exchange, coordinated supply chain risk assessments, peer review methodology, and policy coordination.",
+    "legalText": "Art. 14(1)-(2): Kooperationsgruppe mit zweijahreslichen Arbeitsprogrammen. Art. 14(3): Zusammensetzung: Mitgliedstaaten, Kommission, ENISA; ESAs und DORA-Behoerden koennen teilnehmen. Art. 14(4): Aufgaben umfassen u.a.: (a) Orientierungshilfen; (c) Austausch bewaehrter Verfahren; (i) koordinierte Risikobewertungen kritischer Lieferketten gemaess Art. 22; (q) Peer-Review-Methodik; (s) Eroeretung von Cyberbedrohungen und Ransomware.",
+    "financialSectorGuidance": "Die Beteiligung der ESAs (EBA, EIOPA, ESMA) und DORA-Behoerden an der Kooperationsgruppe (Art. 14(3) i.V.m. Art. 47(1) DORA) stellt sicher, dass finanzspezifische Cybersicherheitsbelange auf EU-Ebene beruecksichtigt werden. Koordinierte Risikobewertungen kritischer Lieferketten (Art. 14(4)(i)) koennen auch Cloud-KI-Anbieter betreffen.",
+    "riskTier": "all",
+    "audience": [
+      "authority"
+    ],
+    "category": "cooperation",
+    "relevanceForFinancialSector": "medium",
+    "tags": [
+      "cooperation-group",
+      "strategic-cooperation",
+      "supply-chain-risk",
+      "peer-review",
+      "esas"
+    ],
+    "sourceFile": "docs/source/eu_nis2_act_DE.txt",
+    "sourceUrl": "https://eur-lex.europa.eu/legal-content/DE/TXT/?uri=CELEX:32022L2555",
+    "verified": true,
+    "verifiedBy": "primary-source-extraction-2026-05-19",
+    "verifiedAt": "2026-05-19",
+    "bindingLevel": "mandatory",
+    "enforcementConsequence": "Institutionelle Verpflichtung - keine Sanktion",
+    "controls": []
+  },
+  {
+    "id": "R-NIS2-015",
+    "title": "CSIRTs-Netzwerk",
+    "regulation": "NIS2",
+    "article": "Art. 15",
+    "jurisdiction": [
+      "EU"
+    ],
+    "summary": "Establishes the CSIRTs network for rapid and effective operational cooperation between Member States. Composed of national CSIRTs and CERT-EU. Tasks include information exchange on capabilities, technologies, incidents, threats and vulnerabilities, coordinated incident response, interoperability, and cooperation with Security Operations Centres.",
+    "legalText": "Art. 15(1)-(2): CSIRTs-Netzwerk aus nationalen CSIRTs und CERT-EU, Kommission als Beobachter, ENISA fuehrt Sekretariat. Art. 15(3): Aufgaben: (a)-(e) Informationsaustausch; (f)-(g) Koordinierte Reaktion auf Vorfaelle; (h)-(i) grenzueberschreitende Unterstuetzung und Schwachstellenoffenlegung; (j)-(p) weitere operative Zusammenarbeit. Art. 15(4): Zweijahresliche Fortschrittsbewertung.",
+    "financialSectorGuidance": "Das CSIRTs-Netzwerk ist die operative Ebene fuer grenzueberschreitende Cybervorfaelle. Bei systemischen Cyberangriffen auf den Finanzsektor (z.B. Angriff auf SWIFT-Infrastruktur, Cloud-Ausfall) koordiniert das Netzwerk die Reaktion. Die Zusammenarbeit mit Security Operations Centres (Art. 15(3)(n)) betrifft auch SOCs von Grossbanken.",
+    "riskTier": "all",
+    "audience": [
+      "authority"
+    ],
+    "category": "cooperation",
+    "relevanceForFinancialSector": "medium",
+    "tags": [
+      "csirts-network",
+      "operational-cooperation",
+      "incident-coordination",
+      "cert-eu"
+    ],
+    "sourceFile": "docs/source/eu_nis2_act_DE.txt",
+    "sourceUrl": "https://eur-lex.europa.eu/legal-content/DE/TXT/?uri=CELEX:32022L2555",
+    "verified": true,
+    "verifiedBy": "primary-source-extraction-2026-05-19",
+    "verifiedAt": "2026-05-19",
+    "bindingLevel": "mandatory",
+    "enforcementConsequence": "Institutionelle Verpflichtung",
+    "controls": []
+  },
+  {
+    "id": "R-NIS2-016",
+    "title": "EU-CyCLONe (Europaeisches Netzwerk der Verbindungsorganisationen fuer Cyberkrisen)",
+    "regulation": "NIS2",
+    "article": "Art. 16",
+    "jurisdiction": [
+      "EU"
+    ],
+    "summary": "Establishes EU-CyCLONe for coordinated management of large-scale cybersecurity incidents and crises at operational level. Composed of Member State crisis management authorities and the Commission. Tasks include crisis preparedness, situational awareness, impact assessment, coordination of management, and political-level decision support.",
+    "legalText": "Art. 16(1): EU-CyCLONe unterstuetzt das koordinierte Management von Cybersicherheitsvorfaellen grossen Ausmasses und Krisen. Art. 16(2): Zusammensetzung aus Vertretern der Behoerden fuer Cyberkrisenmanagement und Kommission. ENISA fuehrt Sekretariat. Art. 16(3): Aufgaben: (a) Vorsorge; (b) gemeinsame Lageerfassung; (c) Bewertung von Folgen und Auswirkungen; (d) Koordinierung und Entscheidungsunterstuetzung; (e) Eroerterung nationaler Reaktionsplaene.",
+    "financialSectorGuidance": "EU-CyCLONe ist relevant fuer systemische Cyberrisiken im Finanzsektor. Ein grossflaechiger Cyberangriff auf Finanzmarktinfrastrukturen (z.B. Zentralverwahrer, Handelsplaetze) wuerde EU-CyCLONe aktivieren. Die politische Entscheidungsunterstuetzung (Art. 16(3)(d)) kann Massnahmen wie die Aussetzung von Handelsaktivitaeten oder Notfallkommunikation betreffen.",
+    "riskTier": "all",
+    "audience": [
+      "authority"
+    ],
+    "category": "cooperation",
+    "relevanceForFinancialSector": "high",
+    "tags": [
+      "eu-cyclone",
+      "crisis-management",
+      "large-scale-incidents",
+      "situational-awareness"
+    ],
+    "sourceFile": "docs/source/eu_nis2_act_DE.txt",
+    "sourceUrl": "https://eur-lex.europa.eu/legal-content/DE/TXT/?uri=CELEX:32022L2555",
+    "verified": true,
+    "verifiedBy": "primary-source-extraction-2026-05-19",
+    "verifiedAt": "2026-05-19",
+    "bindingLevel": "mandatory",
+    "enforcementConsequence": "Institutionelle Verpflichtung",
+    "controls": []
+  },
+  {
+    "id": "R-NIS2-017",
+    "title": "Internationale Zusammenarbeit",
+    "regulation": "NIS2",
+    "article": "Art. 17",
+    "jurisdiction": [
+      "EU"
+    ],
+    "summary": "Allows the EU to conclude international agreements with third countries or international organisations enabling their participation in Cooperation Group, CSIRTs network, and EU-CyCLONe activities, in compliance with EU data protection law.",
+    "legalText": "Art. 17: Die Union kann internationale Uebereinkuenfte mit Drittlaendern oder internationalen Organisationen im Einklang mit Art. 218 AEUV schliessen, in denen deren Beteiligung an bestimmten Taetigkeiten der Kooperationsgruppe, dem CSIRTs-Netzwerk und dem EU-CyCLONe ermoeglicht und geregelt wird. Solche Uebereinkuenfte muessen mit dem Datenschutzrecht der Union im Einklang stehen.",
+    "financialSectorGuidance": "Internationale Zusammenarbeit ist relevant fuer global taetige Finanzunternehmen, deren IKT-Drittdienstleister (z.B. US-Cloud-Anbieter) in Drittlaendern angesiedelt sind. Kuenftige internationale Abkommen koennten den Informationsaustausch ueber Cyberbedrohungen mit Drittlandsbehoerden erleichtern.",
+    "riskTier": "all",
+    "audience": [
+      "authority"
+    ],
+    "category": "cooperation",
+    "relevanceForFinancialSector": "low",
+    "tags": [
+      "international-cooperation",
+      "third-countries",
+      "data-protection"
+    ],
+    "sourceFile": "docs/source/eu_nis2_act_DE.txt",
+    "sourceUrl": "https://eur-lex.europa.eu/legal-content/DE/TXT/?uri=CELEX:32022L2555",
+    "verified": true,
+    "verifiedBy": "primary-source-extraction-2026-05-19",
+    "verifiedAt": "2026-05-19",
+    "bindingLevel": "mandatory",
+    "enforcementConsequence": "Rahmenbestimmung",
+    "controls": []
+  },
+  {
+    "id": "R-NIS2-018",
+    "title": "Bericht ueber den Stand der Cybersicherheit in der Union",
+    "regulation": "NIS2",
+    "article": "Art. 18",
+    "jurisdiction": [
+      "EU"
+    ],
+    "summary": "Requires ENISA to adopt a biennial report on the state of cybersecurity in the EU, presented to the European Parliament. The report must assess cybersecurity risks, capacity development, awareness levels, peer review results, and alignment of national strategies. Must include policy recommendations.",
+    "legalText": "Art. 18(1): ENISA nimmt zweijahreslichen Bericht an mit: (a) Bewertung der Cybersicherheitsrisiken auf Unionsebene; (b) Entwicklung von Kapazitaeten; (c) Sensibilisierungsgrad; (d) aggregierte Peer-Review-Ergebnisse; (e) aggregierte Bewertung der Kapazitaeten und Ressourcen. Art. 18(2): Politische Empfehlungen und Zusammenfassung technischer Lageberichte.",
+    "financialSectorGuidance": "Der ENISA-Bericht liefert eine unionsweite Cybersicherheitslagebewertung, die auch fuer die Risikoeinschaetzung von Finanzunternehmen relevant ist. Insbesondere die Bewertung sektoraler Kapazitaeten (Art. 18(1)(e)) kann Aufschluss ueber Cybersicherheitsluecken im Finanzsektor geben.",
+    "riskTier": "all",
+    "audience": [
+      "authority"
+    ],
+    "category": "monitoring",
+    "relevanceForFinancialSector": "low",
+    "tags": [
+      "enisa-report",
+      "cybersecurity-assessment",
+      "capacity",
+      "awareness"
+    ],
+    "sourceFile": "docs/source/eu_nis2_act_DE.txt",
+    "sourceUrl": "https://eur-lex.europa.eu/legal-content/DE/TXT/?uri=CELEX:32022L2555",
+    "verified": true,
+    "verifiedBy": "primary-source-extraction-2026-05-19",
+    "verifiedAt": "2026-05-19",
+    "bindingLevel": "mandatory",
+    "enforcementConsequence": "ENISA-Pflicht",
+    "controls": []
+  },
+  {
+    "id": "R-NIS2-019",
+    "title": "Peer Reviews",
+    "regulation": "NIS2",
+    "article": "Art. 19",
+    "jurisdiction": [
+      "EU"
+    ],
+    "summary": "Establishes voluntary peer review mechanism for Member States. Reviews cover cybersecurity risk management implementation, authority capacities, CSIRT capabilities, mutual assistance, and information sharing. Conducted by designated cybersecurity experts from at least two other Member States. Results reported to Cooperation Group and CSIRTs network.",
+    "legalText": "Art. 19(1): Kooperationsgruppe legt bis 17.01.2025 Methode und Organisation der Peer Reviews fest. Freiwillige Teilnahme. Reviews erstrecken sich auf: (a) Umsetzung von Art. 21 und 23; (b) Kapazitaeten der zustaendigen Behoerden; (c) operative Kapazitaeten der CSIRTs; (d) Amtshilfe gemaess Art. 37; (e) Informationsaustausch gemaess Art. 29; (f) grenz-/sektoruebergreifende Fragen. Art. 19(6)-(7): Physische/virtuelle Besuche; Sperre von 2 Jahren nach Review. Art. 19(9): Ergebnisberichte mit Empfehlungen.",
+    "financialSectorGuidance": "Peer Reviews koennen die Qualitaet der NIS2-Umsetzung in den Mitgliedstaaten bewerten, was indirekt die Cybersicherheitsumgebung fuer Finanzunternehmen beeinflusst. Ergebnisse koennen Aufschluss ueber Schwaechen in der nationalen Aufsicht geben.",
+    "riskTier": "all",
+    "audience": [
+      "authority"
+    ],
+    "category": "monitoring",
+    "relevanceForFinancialSector": "low",
+    "tags": [
+      "peer-review",
+      "mutual-assessment",
+      "best-practices",
+      "capacity-building"
+    ],
+    "sourceFile": "docs/source/eu_nis2_act_DE.txt",
+    "sourceUrl": "https://eur-lex.europa.eu/legal-content/DE/TXT/?uri=CELEX:32022L2555",
+    "verified": true,
+    "verifiedBy": "primary-source-extraction-2026-05-19",
+    "verifiedAt": "2026-05-19",
+    "bindingLevel": "best_practice",
+    "enforcementConsequence": "Freiwillige Teilnahme - keine Sanktion",
+    "controls": []
+  },
+  {
+    "id": "R-NIS2-020",
+    "title": "Governance",
+    "regulation": "NIS2",
+    "article": "Art. 20",
+    "jurisdiction": [
+      "EU"
+    ],
+    "summary": "Establishes management body accountability for cybersecurity: management bodies of essential and important entities must approve cybersecurity risk management measures, oversee their implementation, and can be held liable for non-compliance with Art. 21. Members of management bodies must undergo cybersecurity training, and entities are encouraged to offer regular training to all employees.",
+    "legalText": "Art. 20(1): Die Mitgliedstaaten stellen sicher, dass die Leitungsorgane wesentlicher und wichtiger Einrichtungen die Risikomanagementmassnahmen im Bereich der Cybersicherheit gemaess Art. 21 billigen, ihre Umsetzung ueberwachen und fuer Verstoesse verantwortlich gemacht werden koennen. Art. 20(2): Die Mitgliedstaaten stellen sicher, dass die Mitglieder der Leitungsorgane an Schulungen teilnehmen muessen, und fordern alle Mitarbeiter regelmaessig Schulungen anzubieten, um ausreichende Kenntnisse und Faehigkeiten zur Erkennung und Bewertung von Risiken sowie Managementpraktiken im Bereich der Cybersicherheit zu erwerben.",
+    "financialSectorGuidance": "Art. 20 spiegelt die Governance-Anforderungen aus DORA Art. 5 wider. Fuer Finanzunternehmen gilt primaer DORA, aber die NIS2-Governance-Pflichten unterstreichen die persoenliche Verantwortung der Geschaeftsleitung. Bei KI-Systemen bedeutet dies: Vorstand/Geschaeftsfuehrung muss die Cybersicherheitsrisiken von KI-Systemen kennen, genehmigen und ueberwachen. Schulungspflichten umfassen auch KI-spezifische Cybersicherheitsrisiken (adversarial attacks, data poisoning, model extraction).",
+    "riskTier": "all",
+    "audience": [
+      "all"
+    ],
+    "category": "governance",
+    "relevanceForFinancialSector": "critical",
+    "tags": [
+      "management-body",
+      "accountability",
+      "liability",
+      "training",
+      "cybersecurity-governance"
+    ],
+    "sourceFile": "docs/source/eu_nis2_act_DE.txt",
+    "sourceUrl": "https://eur-lex.europa.eu/legal-content/DE/TXT/?uri=CELEX:32022L2555",
+    "verified": true,
+    "verifiedBy": "primary-source-extraction-2026-05-19",
+    "verifiedAt": "2026-05-19",
+    "bindingLevel": "mandatory",
+    "enforcementConsequence": "Geldbussen gemaess Art. 34: bis zu EUR 10 Mio. oder 2% des weltweiten Umsatzes fuer wesentliche Einrichtungen; bis zu EUR 7 Mio. oder 1,4% fuer wichtige Einrichtungen",
+    "controls": []
+  },
+  {
+    "id": "R-NIS2-021",
+    "title": "Risikomanagementmassnahmen im Bereich der Cybersicherheit",
+    "regulation": "NIS2",
+    "article": "Art. 21",
+    "jurisdiction": [
+      "EU"
+    ],
+    "summary": "Core obligation: essential and important entities must take appropriate and proportionate technical, operational, and organisational measures to manage cybersecurity risks. Measures must be state-of-the-art, risk-proportionate, and cover at least 10 domains: (a) risk analysis policies, (b) incident handling, (c) business continuity and crisis management, (d) supply chain security, (e) secure acquisition/development/maintenance, (f) effectiveness assessment, (g) cyber hygiene and training, (h) cryptography, (i) personnel security and access control, (j) multi-factor authentication and secure communications.",
+    "legalText": "Art. 21(1): Wesentliche und wichtige Einrichtungen ergreifen geeignete und verhaeltnismaessige technische, operative und organisatorische Massnahmen, um die Risiken fuer die Sicherheit der Netz- und Informationssysteme zu beherrschen. Massnahmen muessen unter Beruecksichtigung des Stands der Technik und einschlaegiger Normen ein dem Risiko angemessenes Sicherheitsniveau gewaehrleisten. Art. 21(2): Mindestmassnahmen auf Basis eines gefahrenuebergreifenden Ansatzes: (a) Risikoanalyse und Sicherheitskonzepte; (b) Bewaeltigung von Sicherheitsvorfaellen; (c) Betriebskontinuitaet, Backup, Wiederherstellung, Krisenmanagement; (d) Lieferkettensicherheit; (e) Sicherheit bei Erwerb, Entwicklung und Wartung inkl. Schwachstellenmanagement; (f) Bewertung der Wirksamkeit; (g) Cyberhygiene und Schulungen; (h) Kryptografie und Verschluesselung; (i) Personalsicherheit, Zugriffskontrolle, Anlagenmanagement; (j) MFA, gesicherte Kommunikation, Notfallkommunikation. Art. 21(3): Beruecksichtigung spezifischer Lieferantenschwachstellen und koordinierter Risikobewertungen nach Art. 22. Art. 21(4): Unverzuegliche Korrekturmassnahmen bei Nichtkonformitaet. Art. 21(5): Kommission erlaesst Durchfuehrungsrechtsakte fuer bestimmte Sektoren.",
+    "financialSectorGuidance": "Art. 21 ist die zentrale Pflicht der NIS2, wird aber fuer Finanzunternehmen durch DORA Art. 5-16 verdraengt (lex specialis gemaess Art. 4 NIS2). Dennoch ist Art. 21 als Benchmark relevant: Die 10 Mindestdomaenen entsprechen weitgehend den DORA-Anforderungen. Fuer KI-Systeme im Finanzsektor sind besonders relevant: (d) Lieferkettensicherheit fuer Cloud-KI-Anbieter; (e) sichere Entwicklung von ML-Modellen; (f) Bewertung der Wirksamkeit von KI-Sicherheitsmassnahmen; (h) Kryptografie fuer den Schutz von Trainingsdaten und Modellparametern; (j) MFA fuer Zugriff auf KI-Systeme.",
+    "riskTier": "all",
+    "audience": [
+      "all"
+    ],
+    "category": "risk-management",
+    "relevanceForFinancialSector": "critical",
+    "tags": [
+      "risk-management",
+      "cybersecurity-measures",
+      "supply-chain",
+      "incident-handling",
+      "business-continuity",
+      "cryptography",
+      "mfa",
+      "access-control",
+      "state-of-the-art"
+    ],
+    "sourceFile": "docs/source/eu_nis2_act_DE.txt",
+    "sourceUrl": "https://eur-lex.europa.eu/legal-content/DE/TXT/?uri=CELEX:32022L2555",
+    "verified": true,
+    "verifiedBy": "primary-source-extraction-2026-05-19",
+    "verifiedAt": "2026-05-19",
+    "bindingLevel": "mandatory",
+    "enforcementConsequence": "Geldbussen gemaess Art. 34: bis zu EUR 10 Mio. oder 2% des weltweiten Umsatzes fuer wesentliche Einrichtungen; bis zu EUR 7 Mio. oder 1,4% fuer wichtige Einrichtungen. Zusaetzlich: Aussetzung der Zertifizierung/Genehmigung und voruebergehendes Taetigkeitsverbot fuer Leitungspersonen (Art. 32(5)).",
+    "controls": []
+  },
+  {
+    "id": "R-NIS2-022",
+    "title": "Koordinierte Risikobewertungen in Bezug auf die Sicherheit kritischer Lieferketten",
+    "regulation": "NIS2",
+    "article": "Art. 22",
+    "jurisdiction": [
+      "EU"
+    ],
+    "summary": "Allows the Cooperation Group, together with the Commission and ENISA, to conduct coordinated risk assessments of critical ICT supply chains, considering both technical and non-technical risk factors. The Commission determines which specific critical ICT services, systems, or products shall be subject to such assessments.",
+    "legalText": "Art. 22(1): Die Kooperationsgruppe kann in Zusammenarbeit mit der Kommission und der ENISA koordinierte Risikobewertungen in Bezug auf die Sicherheit der Lieferketten bestimmter kritischer IKT-Dienste, -Systeme oder -Produkte unter Beruecksichtigung technischer und erforderlichenfalls nichttechnischer Risikofaktoren durchfuehren. Art. 22(2): Die Kommission legt nach Konsultation fest, welche IKT-Dienste, -Systeme oder -Produkte bewertet werden.",
+    "financialSectorGuidance": "Koordinierte Risikobewertungen kritischer Lieferketten sind hoch relevant fuer den Finanzsektor: Cloud-Anbieter (AWS, Azure, Google Cloud), KI-Anbieter (OpenAI, Anthropic) und kritische Software-Lieferanten koennten Gegenstand solcher Bewertungen werden. Die Ergebnisse muessen von Einrichtungen bei ihren Lieferkettensicherheitsmassnahmen nach Art. 21(2)(d) beruecksichtigt werden.",
+    "riskTier": "all",
+    "audience": [
+      "all",
+      "authority"
+    ],
+    "category": "risk-management",
+    "relevanceForFinancialSector": "high",
+    "tags": [
+      "supply-chain-risk",
+      "coordinated-assessment",
+      "critical-ict",
+      "concentration-risk"
+    ],
+    "sourceFile": "docs/source/eu_nis2_act_DE.txt",
+    "sourceUrl": "https://eur-lex.europa.eu/legal-content/DE/TXT/?uri=CELEX:32022L2555",
+    "verified": true,
+    "verifiedBy": "primary-source-extraction-2026-05-19",
+    "verifiedAt": "2026-05-19",
+    "bindingLevel": "mandatory",
+    "enforcementConsequence": "Keine direkte Sanktion - Rahmenbestimmung fuer Kooperationsgruppe",
+    "controls": []
+  },
+  {
+    "id": "R-NIS2-023",
+    "title": "Berichtspflichten",
+    "regulation": "NIS2",
+    "article": "Art. 23",
+    "jurisdiction": [
+      "EU"
+    ],
+    "summary": "Core incident reporting obligation with strict timelines: entities must report significant security incidents to their CSIRT/competent authority. Reporting timeline: (a) early warning within 24 hours, (b) incident notification within 72 hours with initial assessment, (c) intermediate reports on request, (d) final report within one month. A significant incident is one causing serious operational disruption, financial losses, or material/immaterial damage to others. Trust service providers have 24-hour notification deadline.",
+    "legalText": "Art. 23(1): Unverzuegliche Meldung jedes erheblichen Sicherheitsvorfalls an CSIRT/zustaendige Behoerde. Art. 23(3): Erheblichkeit, wenn: (a) schwerwiegende Betriebsstoerungen oder finanzielle Verluste; (b) erheblicher materieller oder immaterieller Schaden fuer andere Personen. Art. 23(4): Meldefristen: (a) Fruehwarnung innerhalb von 24 Stunden, ob rechtswidrige Handlungen vermutet werden und ob grenzueberschreitende Auswirkungen; (b) Vorfallsmeldung innerhalb von 72 Stunden mit Schweregrad, Auswirkungen, Kompromittierungsindikatoren; (c) Zwischenberichte auf Anfrage; (d) Abschlussbericht innerhalb eines Monats mit: (i) ausfuehrlicher Beschreibung; (ii) Art der Bedrohung/Ursache; (iii) getroffene Abhilfemassnahmen; (iv) grenzueberschreitende Auswirkungen. Art. 23(5): CSIRT antwortet innerhalb von 24 Stunden mit Orientierungshilfen. Art. 23(7): Oeffentliche Information bei Bedarf. Art. 23(9): Vierteljahresliche zusammenfassende Berichte an ENISA.",
+    "financialSectorGuidance": "Die NIS2-Meldefristen (24h/72h/1 Monat) sind strukturell aehnlich zu den DORA-Meldefristen (Art. 19 DORA). Fuer Finanzunternehmen gelten primaer die DORA-Meldepflichten, aber die NIS2-Fristen setzen den Benchmark. Bei KI-bezogenen Sicherheitsvorfaellen (z.B. Kompromittierung eines ML-Modells, adversarial attack auf ein Kreditscoring-System) sind die Erheblichkeitsschwellen nach Art. 23(3) zu pruefen: Betriebsstoerungen und finanzielle Verluste durch KI-Ausfaelle koennen meldepflichtig sein.",
+    "riskTier": "all",
+    "audience": [
+      "all"
+    ],
+    "category": "incident-reporting",
+    "relevanceForFinancialSector": "critical",
+    "tags": [
+      "incident-reporting",
+      "24-hour-warning",
+      "72-hour-notification",
+      "significant-incident",
+      "final-report",
+      "csirt-response"
+    ],
+    "sourceFile": "docs/source/eu_nis2_act_DE.txt",
+    "sourceUrl": "https://eur-lex.europa.eu/legal-content/DE/TXT/?uri=CELEX:32022L2555",
+    "verified": true,
+    "verifiedBy": "primary-source-extraction-2026-05-19",
+    "verifiedAt": "2026-05-19",
+    "bindingLevel": "mandatory",
+    "enforcementConsequence": "Geldbussen gemaess Art. 34: bis zu EUR 10 Mio. oder 2% des weltweiten Umsatzes fuer wesentliche Einrichtungen; bis zu EUR 7 Mio. oder 1,4% fuer wichtige Einrichtungen",
+    "controls": []
+  },
+  {
+    "id": "R-NIS2-024",
+    "title": "Nutzung der europaeischen Schemata fuer die Cybersicherheitszertifizierung",
+    "regulation": "NIS2",
+    "article": "Art. 24",
+    "jurisdiction": [
+      "EU"
+    ],
+    "summary": "Allows Member States to require essential and important entities to use certified ICT products, services, and processes under EU cybersecurity certification schemes. The Commission may adopt delegated acts specifying which categories of entities must use certified products when an insufficient cybersecurity level is identified.",
+    "legalText": "Art. 24(1): Mitgliedstaaten koennen wesentliche und wichtige Einrichtungen zur Verwendung zertifizierter IKT-Produkte/-Dienste/-Prozesse verpflichten (gemaess Art. 49 VO (EU) 2019/881). Art. 24(2): Kommission kann durch delegierte Rechtsakte festlegen, welche Einrichtungskategorien bestimmte zertifizierte Produkte nutzen oder Zertifikate erlangen muessen. Art. 24(3): Steht kein geeignetes Schema zur Verfuegung, kann die Kommission ENISA zur Ausarbeitung auffordern.",
+    "financialSectorGuidance": "Cybersicherheitszertifizierung koennte kuenftig auch fuer KI-Systeme relevant werden, insbesondere im Zusammenhang mit dem EU AI Act. Fuer Finanzunternehmen koennten zertifizierte Cloud-Dienste und KI-Plattformen eine Rolle bei der Erfuellung von DORA-Anforderungen an IKT-Drittdienstleister spielen.",
+    "riskTier": "all",
+    "audience": [
+      "all"
+    ],
+    "category": "standards",
+    "relevanceForFinancialSector": "medium",
+    "tags": [
+      "certification",
+      "eu-cybersecurity-act",
+      "ict-products",
+      "delegated-acts"
+    ],
+    "sourceFile": "docs/source/eu_nis2_act_DE.txt",
+    "sourceUrl": "https://eur-lex.europa.eu/legal-content/DE/TXT/?uri=CELEX:32022L2555",
+    "verified": true,
+    "verifiedBy": "primary-source-extraction-2026-05-19",
+    "verifiedAt": "2026-05-19",
+    "bindingLevel": "mandatory",
+    "enforcementConsequence": "Kann durch delegierte Rechtsakte verbindlich werden",
+    "controls": []
+  },
+  {
+    "id": "R-NIS2-025",
+    "title": "Normung",
+    "regulation": "NIS2",
+    "article": "Art. 25",
+    "jurisdiction": [
+      "EU"
+    ],
+    "summary": "Promotes the use of European and international standards and technical specifications for network and information system security without imposing or favouring specific technologies. ENISA provides guidance on technical areas and existing applicable standards.",
+    "legalText": "Art. 25(1): Mitgliedstaaten foerdern die Anwendung europaeischer und internationaler Normen und technischer Spezifikationen ohne Bevorzugung bestimmter Technologiearten. Art. 25(2): ENISA bietet Beratung und Leitlinien zu technischen Bereichen und bestehenden Normen.",
+    "financialSectorGuidance": "Fuer den Finanzsektor sind internationale Standards wie ISO 27001, ISO 22301 (Business Continuity) und branchenspezifische Standards relevant. Fuer KI-Systeme kommen ISO 42001 (AI Management System), ISO 23894 (AI Risk Management) und das NIST AI Risk Management Framework in Betracht.",
+    "riskTier": "all",
+    "audience": [
+      "all"
+    ],
+    "category": "standards",
+    "relevanceForFinancialSector": "medium",
+    "tags": [
+      "standards",
+      "iso",
+      "technical-specifications",
+      "enisa-guidance",
+      "technology-neutrality"
+    ],
+    "sourceFile": "docs/source/eu_nis2_act_DE.txt",
+    "sourceUrl": "https://eur-lex.europa.eu/legal-content/DE/TXT/?uri=CELEX:32022L2555",
+    "verified": true,
+    "verifiedBy": "primary-source-extraction-2026-05-19",
+    "verifiedAt": "2026-05-19",
+    "bindingLevel": "best_practice",
+    "enforcementConsequence": "Keine Sanktion - Foerderung, nicht Pflicht",
+    "controls": []
+  },
+  {
+    "id": "R-NIS2-026",
+    "title": "Zustaendigkeit und Territorialitaet",
+    "regulation": "NIS2",
+    "article": "Art. 26",
+    "jurisdiction": [
+      "EU"
+    ],
+    "summary": "Establishes jurisdiction rules: entities are subject to the jurisdiction of the Member State where they are established, with exceptions for electronic communications providers (where services are provided), digital infrastructure providers (where their main establishment is), and public administration entities (Member State that established them). Non-EU entities providing services in the EU must designate a representative.",
+    "legalText": "Art. 26(1): Einrichtungen unterliegen der Zustaendigkeit des Mitgliedstaats ihrer Niederlassung, ausser: (a) Anbieter oeffentlicher elektronischer Kommunikationsnetze: wo Dienste erbracht werden; (b) DNS-Diensteanbieter, TLD-Namenregister, Cloud-Computing, Rechenzentren, CDN, verwaltete Dienste, Online-Marktplaetze, Suchmaschinen, soziale Netzwerke: Hauptniederlassung in der Union; (c) oeffentliche Verwaltung: gruendender Mitgliedstaat. Art. 26(2): Hauptniederlassung dort, wo Cybersicherheitsentscheidungen getroffen werden. Art. 26(3): Nicht-EU-Einrichtungen muessen Vertreter in der Union benennen.",
+    "financialSectorGuidance": "Die Zustaendigkeitsregeln sind relevant fuer grenzueberschreitend taetige Finanzunternehmen und ihre IKT-Drittdienstleister. Cloud-KI-Anbieter ohne EU-Niederlassung muessen einen Vertreter benennen. Dies betrifft auch KI-Startups aus Drittlaendern, die Dienste an EU-Finanzunternehmen erbringen.",
+    "riskTier": "all",
+    "audience": [
+      "all",
+      "authority"
+    ],
+    "category": "scope",
+    "relevanceForFinancialSector": "medium",
+    "tags": [
+      "jurisdiction",
+      "main-establishment",
+      "representative",
+      "cross-border",
+      "territorial-scope"
+    ],
+    "sourceFile": "docs/source/eu_nis2_act_DE.txt",
+    "sourceUrl": "https://eur-lex.europa.eu/legal-content/DE/TXT/?uri=CELEX:32022L2555",
+    "verified": true,
+    "verifiedBy": "primary-source-extraction-2026-05-19",
+    "verifiedAt": "2026-05-19",
+    "bindingLevel": "mandatory",
+    "enforcementConsequence": "Rechtliche Schritte durch jeden Mitgliedstaat bei fehlendem Vertreter",
+    "controls": []
+  },
+  {
+    "id": "R-NIS2-027",
+    "title": "Register der Einrichtungen",
+    "regulation": "NIS2",
+    "article": "Art. 27",
+    "jurisdiction": [
+      "EU"
+    ],
+    "summary": "Requires ENISA to create and maintain a register of DNS providers, TLD registries, domain name registration service providers, cloud computing providers, data centre providers, CDN operators, managed service providers, managed security service providers, and online marketplace/search engine/social network platform providers. Entities must submit registration data by 17 January 2025.",
+    "legalText": "Art. 27(1): ENISA erstellt und pflegt ein Register bestimmter Einrichtungskategorien. Art. 27(2): Bis 17.01.2025 Uebermittlung von: (a) Name; (b) Sektor/Teilsektor; (c) Anschrift der Hauptniederlassung; (d) Kontaktdaten; (e) Mitgliedstaaten der Diensterbringung; (f) IP-Adressbereiche. Art. 27(3): Aenderungsmeldung innerhalb von drei Monaten.",
+    "financialSectorGuidance": "Das Register betrifft primaer digitale Infrastrukturanbieter, nicht Finanzunternehmen direkt. Jedoch: Cloud-Computing-Anbieter und Anbieter verwalteter Sicherheitsdienste, die dem Finanzsektor dienen, muessen sich registrieren. Dies erhoet die Transparenz ueber IKT-Drittdienstleister.",
+    "riskTier": "all",
+    "audience": [
+      "all",
+      "ict-third-party-provider"
+    ],
+    "category": "registration",
+    "relevanceForFinancialSector": "medium",
+    "tags": [
+      "entity-register",
+      "enisa",
+      "registration",
+      "digital-infrastructure",
+      "deadline-2025"
+    ],
+    "sourceFile": "docs/source/eu_nis2_act_DE.txt",
+    "sourceUrl": "https://eur-lex.europa.eu/legal-content/DE/TXT/?uri=CELEX:32022L2555",
+    "verified": true,
+    "verifiedBy": "primary-source-extraction-2026-05-19",
+    "verifiedAt": "2026-05-19",
+    "bindingLevel": "mandatory",
+    "enforcementConsequence": "Aufsichtsrechtliche Massnahmen bei Nichtregistrierung",
+    "controls": []
+  },
+  {
+    "id": "R-NIS2-028",
+    "title": "Datenbank der Domaennamen-Registrierungsdaten",
+    "regulation": "NIS2",
+    "article": "Art. 28",
+    "jurisdiction": [
+      "EU"
+    ],
+    "summary": "Requires TLD registries and domain name registration service providers to collect and maintain accurate WHOIS data in dedicated databases. Non-personal data must be made publicly available. Legitimate access requesters must receive access to specific data within 72 hours. Data must include domain name, registration date, registrant name, email, and phone number.",
+    "legalText": "Art. 28(1)-(2): TLD-Namenregister und Registrierungsdienste sammeln genaue und vollstaendige Registrierungsdaten: (a) Domaenennamen; (b) Registrierungsdatum; (c) Name, E-Mail, Telefon des Inhabers; (d) Kontaktdaten des Verwalters. Art. 28(3): Ueberpruefungsverfahren fuer Datengenauigkeit. Art. 28(4): Nicht personenbezogene Daten oeffentlich zugaenglich. Art. 28(5): Zugang fuer berechtigte Nachfrager innerhalb von 72 Stunden.",
+    "financialSectorGuidance": "Fuer Finanzunternehmen relevant im Zusammenhang mit Betrugsbekaempfung und Phishing-Erkennung. Genaue WHOIS-Daten erleichtern die Identifizierung boesartiger Domaenen, die fuer Phishing-Angriffe auf Bankkunden verwendet werden.",
+    "riskTier": "all",
+    "audience": [
+      "all"
+    ],
+    "category": "data",
+    "relevanceForFinancialSector": "low",
+    "tags": [
+      "whois",
+      "domain-registration",
+      "data-accuracy",
+      "legitimate-access"
+    ],
+    "sourceFile": "docs/source/eu_nis2_act_DE.txt",
+    "sourceUrl": "https://eur-lex.europa.eu/legal-content/DE/TXT/?uri=CELEX:32022L2555",
+    "verified": true,
+    "verifiedBy": "primary-source-extraction-2026-05-19",
+    "verifiedAt": "2026-05-19",
+    "bindingLevel": "mandatory",
+    "enforcementConsequence": "Aufsichtsrechtliche Massnahmen",
+    "controls": []
+  },
+  {
+    "id": "R-NIS2-029",
+    "title": "Vereinbarungen ueber den Austausch von Informationen zur Cybersicherheit",
+    "regulation": "NIS2",
+    "article": "Art. 29",
+    "jurisdiction": [
+      "EU"
+    ],
+    "summary": "Enables voluntary cybersecurity information sharing between in-scope and out-of-scope entities, including information on cyber threats, near-misses, vulnerabilities, techniques, indicators of compromise, adversary tactics, and cybersecurity alerts. Information sharing must be aimed at preventing, detecting, or responding to incidents and enhancing cybersecurity levels.",
+    "legalText": "Art. 29(1): Einrichtungen koennen auf freiwilliger Basis relevante Cybersicherheitsinformationen austauschen, sofern: (a) Ziel ist Verhinderung/Erkennung/Reaktion auf Vorfaelle; (b) Erhoehung des Cybersicherheitsniveaus. Art. 29(2): Austausch innerhalb von Gemeinschaften wesentlicher und wichtiger Einrichtungen und ihrer Lieferanten. Art. 29(3): Mitgliedstaaten erleichtern die Festlegung der Vereinbarungen. Art. 29(5): ENISA unterstuetzt durch bewaehrte Verfahren und Orientierungshilfen.",
+    "financialSectorGuidance": "Der freiwillige Informationsaustausch ergaenzt den im Finanzsektor bereits etablierten Austausch ueber FS-ISACs (Financial Services Information Sharing and Analysis Centres). DORA Art. 45 regelt den Informationsaustausch spezifisch fuer den Finanzsektor. NIS2 Art. 29 bietet den Rahmen fuer sektoruebergreifenden Austausch, z.B. mit IKT-Dienstleistern.",
+    "riskTier": "all",
+    "audience": [
+      "all"
+    ],
+    "category": "cooperation",
+    "relevanceForFinancialSector": "high",
+    "tags": [
+      "information-sharing",
+      "threat-intelligence",
+      "ioc",
+      "voluntary",
+      "fs-isac"
+    ],
+    "sourceFile": "docs/source/eu_nis2_act_DE.txt",
+    "sourceUrl": "https://eur-lex.europa.eu/legal-content/DE/TXT/?uri=CELEX:32022L2555",
+    "verified": true,
+    "verifiedBy": "primary-source-extraction-2026-05-19",
+    "verifiedAt": "2026-05-19",
+    "bindingLevel": "best_practice",
+    "enforcementConsequence": "Freiwillige Regelung - keine Sanktion",
+    "controls": []
+  },
+  {
+    "id": "R-NIS2-030",
+    "title": "Freiwillige Meldung relevanter Informationen",
+    "regulation": "NIS2",
+    "article": "Art. 30",
+    "jurisdiction": [
+      "EU"
+    ],
+    "summary": "Allows voluntary reporting of incidents, cyber threats, and near-misses to CSIRTs/competent authorities by both in-scope entities (beyond mandatory reporting under Art. 23) and out-of-scope entities. Voluntary reports are processed using the Art. 23 procedure but may be de-prioritised in favour of mandatory reports. Voluntary reporting must not impose additional obligations on the reporting entity.",
+    "legalText": "Art. 30(1): Freiwillige Meldungen koennen uebermittelt werden durch: (a) wesentliche und wichtige Einrichtungen in Bezug auf Sicherheitsvorfaelle, Cyberbedrohungen und Beinahe-Vorfaelle; (b) andere Einrichtungen in Bezug auf erhebliche Sicherheitsvorfaelle, Cyberbedrohungen und Beinahe-Vorfaelle. Art. 30(2): Bearbeitung nach Art. 23-Verfahren. Pflichtmeldungen koennen vorrangig bearbeitet werden. Freiwillige Meldungen duerfen keine zusaetzlichen Verpflichtungen fuer die meldende Einrichtung begruenden.",
+    "financialSectorGuidance": "Fuer Finanzunternehmen bietet Art. 30 die Moeglichkeit, auch nicht-meldepflichtige Cybervorfaelle und Beinahe-Vorfaelle freiwillig zu melden, ohne zusaetzliche Haftungsrisiken einzugehen. Dies kann zur Verbesserung der gesamten Cyberresilienz des Finanzsektors beitragen.",
+    "riskTier": "all",
+    "audience": [
+      "all"
+    ],
+    "category": "incident-reporting",
+    "relevanceForFinancialSector": "medium",
+    "tags": [
+      "voluntary-reporting",
+      "near-miss",
+      "cyber-threats",
+      "no-additional-obligations"
+    ],
+    "sourceFile": "docs/source/eu_nis2_act_DE.txt",
+    "sourceUrl": "https://eur-lex.europa.eu/legal-content/DE/TXT/?uri=CELEX:32022L2555",
+    "verified": true,
+    "verifiedBy": "primary-source-extraction-2026-05-19",
+    "verifiedAt": "2026-05-19",
+    "bindingLevel": "best_practice",
+    "enforcementConsequence": "Freiwillige Regelung - keine Sanktion",
+    "controls": []
+  },
+  {
+    "id": "R-NIS2-031",
+    "title": "Allgemeine Aspekte der Aufsicht und Durchsetzung",
+    "regulation": "NIS2",
+    "article": "Art. 31",
+    "jurisdiction": [
+      "EU"
+    ],
+    "summary": "Establishes general supervision and enforcement principles: competent authorities must effectively supervise compliance and take necessary measures. Authorities may prioritise supervisory tasks using a risk-based approach. Requires cooperation with GDPR supervisory authorities on data breach incidents and with DORA authorities for entities designated as critical ICT third-party service providers.",
+    "legalText": "Art. 31(1): Zustaendige Behoerden beaufsichtigen die Einhaltung wirksam. Art. 31(2): Risikobasierte Priorisierung der Aufsicht. Art. 31(3): Zusammenarbeit mit Datenschutzbehoerden (VO (EU) 2016/679). Art. 31(4): Operative Unabhaengigkeit bei Aufsicht ueber oeffentliche Verwaltung.",
+    "financialSectorGuidance": "Die risikobasierte Priorisierung der Aufsicht (Art. 31(2)) spiegelt den Proportionalitaetsgrundsatz wider. Fuer die NIS2-Aufsicht ueber IKT-Drittdienstleister im Finanzsektor ist die Zusammenarbeit mit dem DORA-Ueberwachungsforum (Art. 32(10), 33(6)) besonders relevant.",
+    "riskTier": "all",
+    "audience": [
+      "authority"
+    ],
+    "category": "enforcement",
+    "relevanceForFinancialSector": "high",
+    "tags": [
+      "supervision",
+      "enforcement",
+      "risk-based",
+      "gdpr-cooperation",
+      "dora-cooperation"
+    ],
+    "sourceFile": "docs/source/eu_nis2_act_DE.txt",
+    "sourceUrl": "https://eur-lex.europa.eu/legal-content/DE/TXT/?uri=CELEX:32022L2555",
+    "verified": true,
+    "verifiedBy": "primary-source-extraction-2026-05-19",
+    "verifiedAt": "2026-05-19",
+    "bindingLevel": "mandatory",
+    "enforcementConsequence": "Mitgliedstaatenverpflichtung",
+    "controls": []
+  },
+  {
+    "id": "R-NIS2-032",
+    "title": "Aufsichts- und Durchsetzungsmassnahmen in Bezug auf wesentliche Einrichtungen",
+    "regulation": "NIS2",
+    "article": "Art. 32",
+    "jurisdiction": [
+      "EU"
+    ],
+    "summary": "Ex-ante and ex-post supervisory regime for essential entities. Supervisory powers include: on-site inspections, security audits, ad-hoc audits after incidents, security scans, information requests, and evidence requests. Enforcement powers include: warnings, binding instructions, cease and desist orders, compliance orders, public disclosure of violations, fines (Art. 34), and — as ultima ratio — suspension of certifications/authorisations and temporary management bans. Personal liability for management body members.",
+    "legalText": "Art. 32(2): Aufsichtsbefugnisse: (a) Vor-Ort-Kontrollen und Stichproben; (b) regelmaessige/gezielte Sicherheitspruefungen; (c) Ad-hoc-Pruefungen nach Vorfaellen; (d) Sicherheitsscans; (e) Anforderung von Informationen; (f) Zugang zu Daten und Dokumenten; (g) Nachweis der Umsetzung. Art. 32(4): Durchsetzungsbefugnisse: (a) Warnungen; (b) verbindliche Anweisungen; (c) Unterlassungsanordnungen; (d) Konformitaetsanordnungen; (e) Anweisung zur Information Betroffener; (f) Umsetzung von Sicherheitspruefungsempfehlungen; (g) Benennung eines Ueberwachungsbeauftragten; (h) oeffentliche Bekanntmachung; (i) Geldbussen gemaess Art. 34. Art. 32(5): Aussetzung von Zertifizierungen/Genehmigungen und voruebergehendes Taetigkeitsverbot fuer Leitungspersonen. Art. 32(6): Persoenliche Haftung der Verantwortlichen. Art. 32(10): Zusammenarbeit mit DORA-Behoerden und Unterrichtung des DORA-Ueberwachungsforums bei IKT-Drittdienstleistern.",
+    "financialSectorGuidance": "Art. 32 ist das schaerfste Aufsichtsinstrument der NIS2. Fuer Finanzunternehmen gelten primaer die DORA-Aufsichtsmassnahmen. Jedoch: IKT-Drittdienstleister (z.B. Cloud-KI-Anbieter), die als wesentliche Einrichtungen unter NIS2 eingestuft sind UND als kritische IKT-Drittdienstleister unter DORA, unterliegen einer doppelten Aufsicht. Art. 32(10) regelt die Zusammenarbeit. Das voruebergehende Taetigkeitsverbot fuer Leitungspersonen (Art. 32(5)(b)) geht ueber die DORA-Sanktionen hinaus.",
+    "riskTier": "all",
+    "audience": [
+      "all",
+      "authority"
+    ],
+    "category": "enforcement",
+    "relevanceForFinancialSector": "critical",
+    "tags": [
+      "supervision",
+      "enforcement",
+      "on-site-inspection",
+      "security-audit",
+      "binding-instructions",
+      "certification-suspension",
+      "management-ban",
+      "personal-liability"
+    ],
+    "sourceFile": "docs/source/eu_nis2_act_DE.txt",
+    "sourceUrl": "https://eur-lex.europa.eu/legal-content/DE/TXT/?uri=CELEX:32022L2555",
+    "verified": true,
+    "verifiedBy": "primary-source-extraction-2026-05-19",
+    "verifiedAt": "2026-05-19",
+    "bindingLevel": "mandatory",
+    "enforcementConsequence": "Geldbussen bis EUR 10 Mio. oder 2% des weltweiten Umsatzes; Aussetzung von Zertifizierungen/Genehmigungen; voruebergehendes Taetigkeitsverbot fuer Leitungspersonen; persoenliche Haftung",
+    "controls": []
+  },
+  {
+    "id": "R-NIS2-033",
+    "title": "Aufsichts- und Durchsetzungsmassnahmen in Bezug auf wichtige Einrichtungen",
+    "regulation": "NIS2",
+    "article": "Art. 33",
+    "jurisdiction": [
+      "EU"
+    ],
+    "summary": "Ex-post supervisory regime for important entities (lighter than for essential entities). Competent authorities act when evidence of non-compliance is presented. Supervisory powers similar to Art. 32 but without proactive regular audits. Enforcement powers include warnings, binding instructions, compliance orders, security audit implementation orders, public disclosure, and fines (Art. 34), but without certification suspension or management bans.",
+    "legalText": "Art. 33(1): Nachtraegliche Aufsichtsmassnahmen bei Nachweisen/Hinweisen auf Nichtkonformitaet. Art. 33(2): Aufsichtsbefugnisse: (a) Vor-Ort-Kontrollen; (b) gezielte Sicherheitspruefungen; (c) Sicherheitsscans; (d)-(f) Informationsanforderungen. Art. 33(4): Durchsetzungsbefugnisse: (a)-(g) Warnungen, Anweisungen, Unterlassungs-/Konformitaetsanordnungen, oeffentliche Bekanntmachung, Geldbussen. Art. 33(5): Art. 32(6)-(8) gilt entsprechend. Art. 33(6): Zusammenarbeit mit DORA-Behoerden.",
+    "financialSectorGuidance": "Wichtige Einrichtungen im Finanzsektor (z.B. kleinere Finanzunternehmen, die die Schwellenwerte fuer wesentliche Einrichtungen nicht erreichen) unterliegen einer leichteren Aufsicht. Fuer die meisten Finanzunternehmen ist DORA massgeblich. Die leichteren NIS2-Aufsichtsbedingungen fuer wichtige Einrichtungen sind relevant fuer kleinere IKT-Dienstleister, die an Finanzunternehmen liefern.",
+    "riskTier": "all",
+    "audience": [
+      "all",
+      "authority"
+    ],
+    "category": "enforcement",
+    "relevanceForFinancialSector": "high",
+    "tags": [
+      "supervision",
+      "enforcement",
+      "ex-post",
+      "important-entities",
+      "lighter-regime"
+    ],
+    "sourceFile": "docs/source/eu_nis2_act_DE.txt",
+    "sourceUrl": "https://eur-lex.europa.eu/legal-content/DE/TXT/?uri=CELEX:32022L2555",
+    "verified": true,
+    "verifiedBy": "primary-source-extraction-2026-05-19",
+    "verifiedAt": "2026-05-19",
+    "bindingLevel": "mandatory",
+    "enforcementConsequence": "Geldbussen bis EUR 7 Mio. oder 1,4% des weltweiten Umsatzes; keine Zertifizierungsaussetzung oder Managementverbot (nur fuer wesentliche Einrichtungen)",
+    "controls": []
+  },
+  {
+    "id": "R-NIS2-034",
+    "title": "Allgemeine Bedingungen fuer die Verhaengung von Geldbussen",
+    "regulation": "NIS2",
+    "article": "Art. 34",
+    "jurisdiction": [
+      "EU"
+    ],
+    "summary": "Sets fine levels for NIS2 violations: essential entities face fines up to EUR 10 million or 2% of worldwide annual turnover (whichever is higher) for violations of Art. 21 or 23. Important entities face fines up to EUR 7 million or 1.4% of worldwide turnover. Fines must be effective, proportionate, and dissuasive, considering the criteria in Art. 32(7). Member States may also impose periodic penalty payments.",
+    "legalText": "Art. 34(1): Geldbussen muessen wirksam, verhaeltnismaessig und abschreckend sein. Art. 34(4): Wesentliche Einrichtungen: Hoechstbetrag mindestens EUR 10.000.000 oder mindestens 2% des weltweiten Jahresumsatzes. Art. 34(5): Wichtige Einrichtungen: Hoechstbetrag mindestens EUR 7.000.000 oder mindestens 1,4% des weltweiten Jahresumsatzes. Art. 34(6): Zwangsgelder moeglich. Art. 34(7): Mitgliedstaaten koennen Regelungen fuer oeffentliche Verwaltung festlegen.",
+    "financialSectorGuidance": "Die NIS2-Geldbussen sind mit den DORA-Sanktionen (Art. 50-52 DORA) und den DSGVO-Bussgeldern (Art. 83) vergleichbar. Bei Konkurrenz von NIS2- und DSGVO-Bussgeldern fuer denselben Verstoss gilt Art. 35 NIS2 (keine Doppelbestrafung). Fuer Finanzunternehmen koennen kumulativ DORA-Sanktionen, NIS2-Bussgelder (soweit anwendbar) und DSGVO-Bussgelder drohen.",
+    "riskTier": "all",
+    "audience": [
+      "all",
+      "authority"
+    ],
+    "category": "penalties",
+    "relevanceForFinancialSector": "critical",
+    "tags": [
+      "fines",
+      "penalties",
+      "10-million",
+      "2-percent",
+      "7-million",
+      "1-4-percent",
+      "proportionality"
+    ],
+    "sourceFile": "docs/source/eu_nis2_act_DE.txt",
+    "sourceUrl": "https://eur-lex.europa.eu/legal-content/DE/TXT/?uri=CELEX:32022L2555",
+    "verified": true,
+    "verifiedBy": "primary-source-extraction-2026-05-19",
+    "verifiedAt": "2026-05-19",
+    "bindingLevel": "mandatory",
+    "enforcementConsequence": "Wesentliche Einrichtungen: bis EUR 10 Mio. oder 2% des weltweiten Umsatzes; Wichtige Einrichtungen: bis EUR 7 Mio. oder 1,4% des weltweiten Umsatzes; zusaetzlich Zwangsgelder moeglich",
+    "controls": []
+  },
+  {
+    "id": "R-NIS2-035",
+    "title": "Verstoesse mit Verletzungen des Schutzes personenbezogener Daten",
+    "regulation": "NIS2",
+    "article": "Art. 35",
+    "jurisdiction": [
+      "EU"
+    ],
+    "summary": "Prevents double jeopardy between NIS2 and GDPR: where a NIS2 violation results in a personal data breach reportable under GDPR Art. 33, competent authorities inform GDPR supervisory authorities. If the GDPR authority imposes a fine under Art. 58(2)(i), no additional NIS2 fine may be imposed for the same conduct (but other enforcement measures remain available).",
+    "legalText": "Art. 35(1): Zustaendige Behoerden unterrichten Datenschutzbehoerden, wenn ein NIS2-Verstoss eine DSGVO-Datenschutzverletzung zur Folge haben kann. Art. 35(2): Verhaengt die Datenschutzbehoerde eine Geldbusse nach DSGVO Art. 58(2)(i), darf keine zusaetzliche NIS2-Geldbusse nach Art. 34 fuer denselben Verstoss verhaengt werden. Andere Durchsetzungsmassnahmen bleiben moeglich.",
+    "financialSectorGuidance": "Fuer Finanzunternehmen, die sowohl NIS2 als auch DSGVO unterliegen, ist die Doppelbestrafungsregelung wichtig. Ein Cyberangriff auf eine Bank, der sowohl ein erheblicher Sicherheitsvorfall (NIS2) als auch eine Datenschutzverletzung (DSGVO) ist, kann nur eine Geldbusse ausloesen, aber beide Aufsichtsregimes koennen sonstige Massnahmen ergreifen.",
+    "riskTier": "all",
+    "audience": [
+      "all",
+      "authority"
+    ],
+    "category": "enforcement",
+    "relevanceForFinancialSector": "high",
+    "tags": [
+      "gdpr",
+      "data-breach",
+      "double-jeopardy",
+      "ne-bis-in-idem",
+      "data-protection"
+    ],
+    "sourceFile": "docs/source/eu_nis2_act_DE.txt",
+    "sourceUrl": "https://eur-lex.europa.eu/legal-content/DE/TXT/?uri=CELEX:32022L2555",
+    "verified": true,
+    "verifiedBy": "primary-source-extraction-2026-05-19",
+    "verifiedAt": "2026-05-19",
+    "bindingLevel": "mandatory",
+    "enforcementConsequence": "Keine Doppelbestrafung NIS2/DSGVO fuer denselben Verstoss",
+    "controls": []
+  },
+  {
+    "id": "R-NIS2-036",
+    "title": "Sanktionen",
+    "regulation": "NIS2",
+    "article": "Art. 36",
+    "jurisdiction": [
+      "EU"
+    ],
+    "summary": "Requires Member States to lay down rules on sanctions applicable to infringements of national measures transposing NIS2. Sanctions must be effective, proportionate, and dissuasive. Member States must notify the Commission of their sanction rules by 17 January 2025.",
+    "legalText": "Art. 36: Die Mitgliedstaaten erlassen Vorschriften ueber Sanktionen bei Verstoessen gegen die gemaess dieser Richtlinie erlassenen nationalen Massnahmen. Sanktionen muessen wirksam, verhaeltnismaessig und abschreckend sein. Notifizierung der Kommission bis 17.01.2025.",
+    "financialSectorGuidance": "Die nationale Sanktionsregelung ist relevant fuer Finanzunternehmen, die in mehreren EU-Mitgliedstaaten taetig sind, da die Umsetzung variieren kann. In Deutschland erfolgt die Umsetzung durch das NIS-2-Umsetzungs- und Cybersicherheitsstaerkungsgesetz (NIS2UmsuCG).",
+    "riskTier": "all",
+    "audience": [
+      "all",
+      "authority"
+    ],
+    "category": "penalties",
+    "relevanceForFinancialSector": "medium",
+    "tags": [
+      "sanctions",
+      "national-transposition",
+      "notification",
+      "deadline-2025"
+    ],
+    "sourceFile": "docs/source/eu_nis2_act_DE.txt",
+    "sourceUrl": "https://eur-lex.europa.eu/legal-content/DE/TXT/?uri=CELEX:32022L2555",
+    "verified": true,
+    "verifiedBy": "primary-source-extraction-2026-05-19",
+    "verifiedAt": "2026-05-19",
+    "bindingLevel": "mandatory",
+    "enforcementConsequence": "Mitgliedstaatenverpflichtung zur Sanktionsregelung",
+    "controls": []
+  },
+  {
+    "id": "R-NIS2-037",
+    "title": "Amtshilfe",
+    "regulation": "NIS2",
+    "article": "Art. 37",
+    "jurisdiction": [
+      "EU"
+    ],
+    "summary": "Establishes mutual assistance between competent authorities of different Member States for cross-border entities. Includes information exchange, consultation on supervisory and enforcement measures, and joint supervisory activities. Authorities may refuse assistance only in limited circumstances (lack of competence, disproportionality, or national security concerns).",
+    "legalText": "Art. 37(1): Zusammenarbeit und Unterstuetzung bei grenzueberschreitenden Einrichtungen: (a) Unterrichtung und Konsultation zu Aufsichts-/Durchsetzungsmassnahmen; (b) Ersuchen um Ergreifung von Massnahmen; (c) Amtshilfe bei Auskunftsersuchen und Aufsichtsmassnahmen. Ablehnung nur bei fehlender Zustaendigkeit, Unverhaeltnismaessigkeit oder nationalem Sicherheitsinteresse. Art. 37(2): Gemeinsame Aufsichtsmassnahmen im gegenseitigen Einvernehmen.",
+    "financialSectorGuidance": "Die grenzueberschreitende Amtshilfe ist relevant fuer global taetige IKT-Drittdienstleister, die Finanzunternehmen in mehreren EU-Mitgliedstaaten bedienen. Die gemeinsamen Aufsichtsmassnahmen (Art. 37(2)) koennten fuer grosse Cloud-Anbieter relevant werden.",
+    "riskTier": "all",
+    "audience": [
+      "authority"
+    ],
+    "category": "enforcement",
+    "relevanceForFinancialSector": "medium",
+    "tags": [
+      "mutual-assistance",
+      "cross-border",
+      "joint-supervision",
+      "cooperation"
+    ],
+    "sourceFile": "docs/source/eu_nis2_act_DE.txt",
+    "sourceUrl": "https://eur-lex.europa.eu/legal-content/DE/TXT/?uri=CELEX:32022L2555",
+    "verified": true,
+    "verifiedBy": "primary-source-extraction-2026-05-19",
+    "verifiedAt": "2026-05-19",
+    "bindingLevel": "mandatory",
+    "enforcementConsequence": "Mitgliedstaatenverpflichtung",
+    "controls": []
+  },
+  {
+    "id": "R-NIS2-038",
+    "title": "Ausuebung der Befugnisuebertragung",
+    "regulation": "NIS2",
+    "article": "Art. 38",
+    "jurisdiction": [
+      "EU"
+    ],
+    "summary": "Establishes the framework for delegated acts under NIS2: the Commission receives delegated powers for five years from 16 January 2023 (regarding cybersecurity certification requirements under Art. 24(2)). European Parliament or Council may revoke the delegation at any time.",
+    "legalText": "Art. 38(1)-(2): Befugnisuebertragung an die Kommission fuer 5 Jahre ab 16.01.2023 gemaess Art. 24(2). Art. 38(3)-(6): Widerrufsmoelichkeit durch EP oder Rat; Konsultation von Sachverstaendigen; Uebermittlung und Einspruchsfrist von 2 Monaten.",
+    "financialSectorGuidance": "Delegierte Rechtsakte koennten kuenftig Zertifizierungsanforderungen fuer IKT-Produkte festlegen, die auch fuer den Finanzsektor relevant sein koennten.",
+    "riskTier": "all",
+    "audience": [
+      "authority"
+    ],
+    "category": "governance",
+    "relevanceForFinancialSector": "low",
+    "tags": [
+      "delegated-acts",
+      "commission-powers",
+      "certification"
+    ],
+    "sourceFile": "docs/source/eu_nis2_act_DE.txt",
+    "sourceUrl": "https://eur-lex.europa.eu/legal-content/DE/TXT/?uri=CELEX:32022L2555",
+    "verified": true,
+    "verifiedBy": "primary-source-extraction-2026-05-19",
+    "verifiedAt": "2026-05-19",
+    "bindingLevel": "mandatory",
+    "enforcementConsequence": "Rahmenbestimmung",
+    "controls": []
+  },
+  {
+    "id": "R-NIS2-039",
+    "title": "Ausschussverfahren",
+    "regulation": "NIS2",
+    "article": "Art. 39",
+    "jurisdiction": [
+      "EU"
+    ],
+    "summary": "Establishes a committee procedure for the adoption of implementing acts under NIS2, in accordance with Regulation (EU) No 182/2011.",
+    "legalText": "Art. 39(1): Kommission wird von einem Ausschuss im Sinne der VO (EU) Nr. 182/2011 unterstuetzt. Art. 39(2): Verweis auf Art. 5 der VO (EU) Nr. 182/2011 (Pruefverfahren).",
+    "financialSectorGuidance": "Das Ausschussverfahren ist der Mechanismus fuer Durchfuehrungsrechtsakte, die technische und methodische Anforderungen an Risikomanagementmassnahmen und Vorfallsmeldungen konkretisieren (Art. 21(5), 23(11)).",
+    "riskTier": "all",
+    "audience": [
+      "authority"
+    ],
+    "category": "governance",
+    "relevanceForFinancialSector": "low",
+    "tags": [
+      "committee-procedure",
+      "implementing-acts"
+    ],
+    "sourceFile": "docs/source/eu_nis2_act_DE.txt",
+    "sourceUrl": "https://eur-lex.europa.eu/legal-content/DE/TXT/?uri=CELEX:32022L2555",
+    "verified": true,
+    "verifiedBy": "primary-source-extraction-2026-05-19",
+    "verifiedAt": "2026-05-19",
+    "bindingLevel": "mandatory",
+    "enforcementConsequence": "Rahmenbestimmung",
+    "controls": []
+  },
+  {
+    "id": "R-NIS2-040",
+    "title": "Ueberpruefung",
+    "regulation": "NIS2",
+    "article": "Art. 40",
+    "jurisdiction": [
+      "EU"
+    ],
+    "summary": "Requires the Commission to review NIS2 application by 17 October 2027 and every 36 months thereafter, reporting to the European Parliament and Council. The review assesses the relevance of entity size and sectors, considering Cooperation Group and CSIRTs network reports on strategic and operational experience.",
+    "legalText": "Art. 40: Bis zum 17.10.2027 und danach alle 36 Monate ueberprueft die Kommission die Anwendung dieser Richtlinie. Bericht bewertet Relevanz der Groesse der Einrichtungen und der Sektoren in Anhang I und II. Beruecksichtigung der Berichte der Kooperationsgruppe und des CSIRTs-Netzwerks. Erforderlichenfalls Gesetzgebungsvorschlag.",
+    "financialSectorGuidance": "Die Ueberpruefung koennte zu Aenderungen fuehren, die auch den Finanzsektor betreffen, z.B. Erweiterung des Anwendungsbereichs oder Verschaerfung der Anforderungen.",
+    "riskTier": "all",
+    "audience": [
+      "authority"
+    ],
+    "category": "governance",
+    "relevanceForFinancialSector": "low",
+    "tags": [
+      "review",
+      "evaluation",
+      "commission-report",
+      "2027-deadline"
+    ],
+    "sourceFile": "docs/source/eu_nis2_act_DE.txt",
+    "sourceUrl": "https://eur-lex.europa.eu/legal-content/DE/TXT/?uri=CELEX:32022L2555",
+    "verified": true,
+    "verifiedBy": "primary-source-extraction-2026-05-19",
+    "verifiedAt": "2026-05-19",
+    "bindingLevel": "mandatory",
+    "enforcementConsequence": "Kommissionspflicht",
+    "controls": []
+  },
+  {
+    "id": "R-NIS2-041",
+    "title": "Umsetzung",
+    "regulation": "NIS2",
+    "article": "Art. 41",
+    "jurisdiction": [
+      "EU"
+    ],
+    "summary": "Sets the transposition deadline: Member States must adopt and publish national measures transposing NIS2 by 17 October 2024, with application from 18 October 2024.",
+    "legalText": "Art. 41(1): Mitgliedstaaten erlassen und veroeffentlichen bis 17.10.2024 die erforderlichen Vorschriften. Anwendung ab 18.10.2024. Art. 41(2): Bezugnahme auf diese Richtlinie bei Erlass.",
+    "financialSectorGuidance": "Der Umsetzungstermin 17.10.2024 ist bereits verstrichen. In Deutschland erfolgt die Umsetzung durch das NIS2UmsuCG. Finanzunternehmen muessen die nationalen Umsetzungsgesetze beachten, auch wenn DORA als lex specialis die Kernpflichten verdraengt.",
+    "riskTier": "all",
+    "audience": [
+      "all",
+      "authority"
+    ],
+    "category": "transitional-provisions",
+    "relevanceForFinancialSector": "medium",
+    "tags": [
+      "transposition",
+      "deadline",
+      "october-2024",
+      "national-law"
+    ],
+    "sourceFile": "docs/source/eu_nis2_act_DE.txt",
+    "sourceUrl": "https://eur-lex.europa.eu/legal-content/DE/TXT/?uri=CELEX:32022L2555",
+    "verified": true,
+    "verifiedBy": "primary-source-extraction-2026-05-19",
+    "verifiedAt": "2026-05-19",
+    "bindingLevel": "mandatory",
+    "enforcementConsequence": "Mitgliedstaatenverpflichtung - Vertragsverletzungsverfahren bei Nichtumsetzung",
+    "controls": []
+  },
+  {
+    "id": "R-NIS2-042",
+    "title": "Aenderungen und Aufhebung",
+    "regulation": "NIS2",
+    "article": "Art. 42-44",
+    "jurisdiction": [
+      "EU"
+    ],
+    "summary": "Art. 42 amends Regulation (EU) No 910/2014 (eIDAS) by deleting Art. 19 on security requirements for trust service providers. Art. 43 amends Directive (EU) 2018/1972 (EECC) by deleting Arts. 40 and 41. Art. 44 repeals Directive (EU) 2016/1148 (NIS1) with effect from 18 October 2024. All amendments apply from 18 October 2024.",
+    "legalText": "Art. 42: In VO (EU) Nr. 910/2014 wird Art. 19 mit Wirkung vom 18.10.2024 gestrichen. Art. 43: In RL (EU) 2018/1972 werden Art. 40 und 41 mit Wirkung vom 18.10.2024 gestrichen. Art. 44: RL (EU) 2016/1148 wird mit Wirkung vom 18.10.2024 aufgehoben. Bezugnahmen auf NIS1 gelten als Bezugnahmen auf NIS2 gemaess Anhang III.",
+    "financialSectorGuidance": "Die Aufhebung von NIS1 und Integration der Sicherheitsanforderungen fuer Vertrauensdiensteanbieter (eIDAS) und elektronische Kommunikationsdienste in NIS2 vereinfacht die Regulierungslandschaft. Finanzunternehmen, die eIDAS-Vertrauensdienste (z.B. qualifizierte elektronische Signaturen) nutzen, profitieren von einheitlichen Cybersicherheitsanforderungen.",
+    "riskTier": "all",
+    "audience": [
+      "all",
+      "authority"
+    ],
+    "category": "transitional-provisions",
+    "relevanceForFinancialSector": "low",
+    "tags": [
+      "amendments",
+      "repeal",
+      "nis1",
+      "eidas",
+      "eecc",
+      "october-2024"
+    ],
+    "sourceFile": "docs/source/eu_nis2_act_DE.txt",
+    "sourceUrl": "https://eur-lex.europa.eu/legal-content/DE/TXT/?uri=CELEX:32022L2555",
+    "verified": true,
+    "verifiedBy": "primary-source-extraction-2026-05-19",
+    "verifiedAt": "2026-05-19",
+    "bindingLevel": "mandatory",
+    "enforcementConsequence": "Rahmenbestimmung",
+    "controls": []
+  },
+  {
+    "id": "R-NIS2-045",
+    "title": "Inkrafttreten und Adressaten",
+    "regulation": "NIS2",
+    "article": "Art. 45-46",
+    "jurisdiction": [
+      "EU"
+    ],
+    "summary": "Art. 45: NIS2 enters into force on the twentieth day following its publication in the Official Journal of the EU (published 27 December 2022, in force from 16 January 2023). Art. 46: The directive is addressed to the Member States.",
+    "legalText": "Art. 45: Diese Richtlinie tritt am zwanzigsten Tag nach ihrer Veroeffentlichung im Amtsblatt der Europaeischen Union in Kraft. Art. 46: Diese Richtlinie ist an die Mitgliedstaaten gerichtet. Geschehen zu Strassburg am 14. Dezember 2022.",
+    "financialSectorGuidance": "NIS2 ist seit 16.01.2023 in Kraft. Die nationale Umsetzungsfrist war 17.10.2024. Als Richtlinie gilt NIS2 nicht direkt, sondern ueber nationales Umsetzungsrecht (in DE: NIS2UmsuCG). DORA hingegen ist als Verordnung seit 17.01.2025 direkt anwendbar.",
+    "riskTier": "all",
+    "audience": [
+      "all"
+    ],
+    "category": "application-timeline",
+    "relevanceForFinancialSector": "low",
+    "tags": [
+      "entry-into-force",
+      "january-2023",
+      "directive",
+      "member-states"
+    ],
+    "sourceFile": "docs/source/eu_nis2_act_DE.txt",
+    "sourceUrl": "https://eur-lex.europa.eu/legal-content/DE/TXT/?uri=CELEX:32022L2555",
+    "verified": true,
+    "verifiedBy": "primary-source-extraction-2026-05-19",
+    "verifiedAt": "2026-05-19",
+    "bindingLevel": "mandatory",
+    "enforcementConsequence": "Rahmenbestimmung",
+    "controls": []
+  },
+  {
+    "id": "R-NIS2-A01",
+    "title": "Anhang I: Sektoren mit hoher Kritikalitaet",
+    "regulation": "NIS2",
+    "article": "Annex I",
+    "jurisdiction": [
+      "EU"
+    ],
+    "summary": "Lists 11 sectors of high criticality whose entities are classified as 'essential' (if exceeding medium-sized enterprise thresholds) under NIS2: (1) Energy (electricity, district heating, oil, gas, hydrogen), (2) Transport (air, rail, maritime, road), (3) Banking (credit institutions), (4) Financial market infrastructures (trading venues, CCPs), (5) Health (providers, labs, pharma R&D, pharma manufacturing, critical medical devices), (6) Drinking water, (7) Wastewater, (8) Digital infrastructure (IXPs, DNS, TLDs, cloud, data centres, CDNs, trust services, electronic communications), (9) ICT service management B2B (managed services, managed security services), (10) Public administration, (11) Space.",
+    "legalText": "Anhang I listet 11 Sektoren: (1) Energie: (a) Elektrizitaet (Elektrizitaetsunternehmen, Verteiler-/Uebertragungsnetzbetreiber, Erzeuger, nominierte Strommarktbetreiber, Aggregierungs-/Laststeuerungsdienste, Ladepunktbetreiber); (b) Fernwaerme/-kaelte; (c) Erdoel; (d) Erdgas; (e) Wasserstoff. (2) Verkehr: (a) Luftverkehr; (b) Schienenverkehr; (c) Schifffahrt; (d) Strassenverkehr. (3) Bankwesen: Kreditinstitute nach VO (EU) Nr. 575/2013. (4) Finanzmarktinfrastrukturen: Handelsplatzbetreiber, zentrale Gegenparteien. (5) Gesundheitswesen: Gesundheitsdienstleister, EU-Referenzlaboratorien, Pharma-F&E, Pharma-Herstellung, kritische Medizinprodukte. (6) Trinkwasser. (7) Abwasser. (8) Digitale Infrastruktur: Internet-Knoten, DNS, TLD, Cloud-Computing, Rechenzentren, CDN, Vertrauensdiensteanbieter, oeffentliche Kommunikationsnetze/-dienste. (9) Verwaltung von IKT-Diensten (B2B): verwaltete Dienste, verwaltete Sicherheitsdienste. (10) Oeffentliche Verwaltung: Zentral- und Regionalregierung. (11) Weltraum: Bodeninfrastrukturbetreiber.",
+    "financialSectorGuidance": "Sektoren 3 (Bankwesen) und 4 (Finanzmarktinfrastrukturen) betreffen den Finanzsektor direkt. Kreditinstitute und Betreiber von Handelsplaetzen/CCPs sind als Einrichtungen in Sektoren mit hoher Kritikalitaet eingestuft. Als wesentliche Einrichtungen unterliegen sie der strengeren Aufsicht nach Art. 32, obwohl DORA als lex specialis die Kernpflichten verdraengt. Sektoren 8 (Digitale Infrastruktur) und 9 (IKT-Dienstverwaltung) betreffen IKT-Drittdienstleister des Finanzsektors.",
+    "riskTier": "all",
+    "audience": [
+      "all",
+      "financial-entity",
+      "ict-third-party-provider"
+    ],
+    "category": "scope",
+    "relevanceForFinancialSector": "critical",
+    "tags": [
+      "annex-i",
+      "high-criticality-sectors",
+      "banking",
+      "financial-market-infrastructure",
+      "digital-infrastructure",
+      "energy",
+      "transport",
+      "health"
+    ],
+    "sourceFile": "docs/source/eu_nis2_act_DE.txt",
+    "sourceUrl": "https://eur-lex.europa.eu/legal-content/DE/TXT/?uri=CELEX:32022L2555",
+    "verified": true,
+    "verifiedBy": "primary-source-extraction-2026-05-19",
+    "verifiedAt": "2026-05-19",
+    "bindingLevel": "mandatory",
+    "enforcementConsequence": "Definitorischer Anhang - bestimmt den Anwendungsbereich",
+    "controls": []
+  },
+  {
+    "id": "R-NIS2-A02",
+    "title": "Anhang II: Sonstige kritische Sektoren",
+    "regulation": "NIS2",
+    "article": "Annex II",
+    "jurisdiction": [
+      "EU"
+    ],
+    "summary": "Lists 7 other critical sectors whose entities are classified as 'important' under NIS2: (1) Postal and courier services, (2) Waste management, (3) Chemicals (manufacture, production, trade), (4) Food (production, processing, distribution - wholesale and industrial), (5) Manufacturing (medical devices, electronics, electrical equipment, machinery, motor vehicles, other transport equipment), (6) Digital service providers (online marketplaces, search engines, social networking platforms), (7) Research institutions.",
+    "legalText": "Anhang II listet 7 Sektoren: (1) Post- und Kurierdienste. (2) Abfallbewirtschaftung. (3) Produktion, Herstellung und Handel mit chemischen Stoffen (nach REACH-Verordnung). (4) Produktion, Verarbeitung und Vertrieb von Lebensmitteln (Grosshandel und industrielle Produktion). (5) Verarbeitendes Gewerbe: (a) Medizinprodukte und In-vitro-Diagnostika; (b) Datenverarbeitungsgeraete, elektronische und optische Erzeugnisse (NACE C26); (c) Elektrische Ausruestungen (NACE C27); (d) Maschinenbau (NACE C28); (e) Kraftwagen und -teile (NACE C29); (f) Sonstiger Fahrzeugbau (NACE C30). (6) Anbieter digitaler Dienste: Online-Marktplaetze, -Suchmaschinen, Plattformen fuer soziale Netzwerke. (7) Forschung: Forschungseinrichtungen.",
+    "financialSectorGuidance": "Anhang II betrifft den Finanzsektor nicht direkt, aber indirekt: Viele Unternehmen in diesen Sektoren (insbesondere Verarbeitendes Gewerbe) sind Kunden von Finanzdienstleistungen. Deren Cybersicherheitsniveau beeinflusst das Risikoprofil der finanzierenden Banken und Versicherer. Anbieter digitaler Dienste (Sektor 6) koennen auch als IKT-Drittdienstleister fuer Finanzunternehmen agieren.",
+    "riskTier": "all",
+    "audience": [
+      "all"
+    ],
+    "category": "scope",
+    "relevanceForFinancialSector": "medium",
+    "tags": [
+      "annex-ii",
+      "other-critical-sectors",
+      "manufacturing",
+      "food",
+      "chemicals",
+      "digital-services",
+      "research"
+    ],
+    "sourceFile": "docs/source/eu_nis2_act_DE.txt",
+    "sourceUrl": "https://eur-lex.europa.eu/legal-content/DE/TXT/?uri=CELEX:32022L2555",
+    "verified": true,
+    "verifiedBy": "primary-source-extraction-2026-05-19",
+    "verifiedAt": "2026-05-19",
+    "bindingLevel": "mandatory",
+    "enforcementConsequence": "Definitorischer Anhang - bestimmt den Anwendungsbereich",
+    "controls": []
+  }
+]

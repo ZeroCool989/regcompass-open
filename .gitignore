@@ -1,0 +1,75 @@
+# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
+
+# dependencies
+/node_modules
+/.pnp
+.pnp.*
+.yarn/*
+!.yarn/patches
+!.yarn/plugins
+!.yarn/releases
+!.yarn/versions
+
+# testing
+/coverage
+
+# next.js
+/.next/
+/out/
+
+# production
+/build
+
+# misc
+.DS_Store
+*.pem
+
+# debug
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.pnpm-debug.log*
+
+# env files (can opt-in for committing if needed)
+.env*
+!.env.example
+
+# vercel
+.vercel
+
+# typescript
+*.tsbuildinfo
+next-env.d.ts
+
+/app/generated/prisma
+
+# claude code — local settings stay ignored, shared agent definitions are tracked
+.claude/*
+!.claude/agents/
+
+# reference extracts (local only)
+reference/
+
+# build/throwaway scripts (e.g. intent-eval) stay local; seed-users and the
+# governance/CI gates are tracked, permanent tools (validate-kb and
+# check-doc-links run in CI; kb-migrate-governance and generate-kb-manifest
+# are the documented KB migration/manifest tooling). Nested scripts/ dirs
+# (e.g. the voice-gateway probe) stay local as before.
+/scripts/*
+!/scripts/seed-users.ts
+!/scripts/validate-kb.ts
+!/scripts/check-doc-links.ts
+!/scripts/kb-migrate-governance.ts
+!/scripts/generate-kb-manifest.ts
+services/voice-gateway/scripts/
+
+# regulatory source PDFs (local only — re-download from official sources)
+lib/kb/sources/
+
+# 3D model source assets (kept local; only the converted GLB ships)
+models-source/
+
+# local database
+*.db
+*.db-journal
+local.db*

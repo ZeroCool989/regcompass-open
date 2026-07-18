@@ -1,0 +1,519 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Get a free hosted Postgres database in seconds: `npx create-db`
+
+generator client {
+  provider = "prisma-client"
+  output   = "../app/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+// Registered users. Auth gates AEGIS (the AI assistant) so only approved
+// people can spend Claude API tokens. Self-signup is allowed but a new account
+// is PENDING until an admin approves it; ADMIN_EMAILS are auto-approved admins.
+
+
+enum AiProvider {
+  ANTHROPIC
+  OPENAI
+  GOOGLE
+}
+
+model UserAiCredential {
+  id                 String     @id @default(cuid())
+  userId             String
+  provider           AiProvider
+  encryptedApiKey    String
+  keyFingerprint     String
+  preferredModel     String?
+  enabled            Boolean    @default(true)
+  lastValidatedAt    DateTime?
+  lastValidationError String?
+  createdAt          DateTime   @default(now())
+  updatedAt          DateTime   @updatedAt
+  user               User       @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, provider])
+  @@index([userId, enabled])
+}
+
+/// D10 "Sign in with Claude": one subscription connection per user. Tokens are
+/// AES-256-GCM encrypted with the BYOK master key and never leave the server.
+/// The feature is env-gated (see docs/aegis/SIGN_IN_WITH_CLAUDE.md) — rows can
+/// only exist once Anthropic has issued RegCompass an OAuth client.
+model UserClaudeOAuth {
+  id                    String    @id @default(cuid())
+  userId                String    @unique
+  encryptedAccessToken  String
+  encryptedRefreshToken String?
+  tokenType             String    @default("Bearer")
+  scope                 String?
+  expiresAt             DateTime?
+  connectedAt           DateTime  @default(now())
+  lastRefreshAt         DateTime?
+  lastError             String?
+  createdAt             DateTime  @default(now())
+  updatedAt             DateTime  @updatedAt
+  user                  User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+enum UserStatus {
+  PENDING // signed up, cannot use AEGIS yet
+  APPROVED // may use AEGIS
+  BLOCKED // access revoked
+}
+
+enum UserRole {
+  USER
+  ADMIN
+}
+
+model User {
+  id           String     @id @default(uuid())
+  email        String     @unique
+  /// Display name shown in the UI. Nullable only for legacy rows created before
+  /// usernames; required at registration going forward.
+  username     String?    @unique
+  passwordHash String
+  status       UserStatus @default(PENDING)
+  role         UserRole   @default(USER)
+  createdAt    DateTime   @default(now())
+  approvedAt   DateTime?
+  /// Set when the user proved control of their email via the verification link
+  /// (self-service signup, D7). Null for seeded/allowlisted accounts — those
+  /// authenticate via AUTH_ALLOWLIST instead. Login requires allowlist OR this.
+  emailVerifiedAt DateTime?
+  /// Preferred Aegis TTS voice (Phase 4). Provider-agnostic token:
+  /// "cartesia:<uuid>" | "browser" | "browser:<voiceURI>". Null = Aegis default
+  /// (the recommended voice). See lib/aegis/voices.ts.
+  voiceId      String?
+  /// Voice-experience preferences (rate, volume, autoRead, pushToTalk, vad).
+  /// Shape: VoicePrefs in lib/aegis/voices.ts. Null = defaults.
+  voicePrefs   Json?
+  /// Optional BYOK provider preference for AEGIS. Runtime currently only switches to ANTHROPIC.
+  preferredAiProvider AiProvider?
+
+  soulEntries    SoulEntry[]
+  soulProposals  SoulProposal[]
+  soulAudits     SoulAudit[]
+  aiCredentials  UserAiCredential[]
+  claudeOAuth    UserClaudeOAuth?
+
+  @@index([status])
+}
+
+// ── Personalization (soul.md) — Phase 3 ──────────────────────────────────────
+// STYLE-ONLY user preferences that shape how AEGIS communicates. NEVER business,
+// regulatory, RAG, or customer data (enforced by the content firewall in
+// lib/aegis/soul.ts). The AI may only create SoulProposal rows; nothing enters
+// SoulEntry without explicit user approval. Canonical source of truth is these
+// rows — the UI renders them as soul.md but no literal file is stored.
+
+enum SoulProposalStatus {
+  PENDING
+  ACCEPTED
+  EDITED
+  REJECTED
+}
+
+/// Lifecycle of an approved preference. AGING is DERIVED at read time from
+/// lastConfirmedAt (not stored); only ACTIVE/ARCHIVED are persisted. Removal is
+/// a hard delete. Stages: Proposed(SoulProposal) → Active → Aging(derived) →
+/// Archived → Removed.
+enum SoulEntryStatus {
+  ACTIVE
+  ARCHIVED
+}
+
+/// An APPROVED preference. Only ACTIVE entries are injected into AEGIS (as a
+/// fenced style-only block). Governance (Phase 3.1) keeps the set fresh,
+/// non-contradictory, and de-duplicated.
+model SoulEntry {
+  id              String          @id @default(uuid())
+  userId          String
+  section         String // SoulSection key (communication_style, output_formats, …)
+  content         String
+  /// How many observations corroborate this preference (corroboration input).
+  signalCount     Int             @default(1)
+  status          SoulEntryStatus @default(ACTIVE)
+  /// Last time the user created or re-confirmed it — drives freshness/aging.
+  lastConfirmedAt DateTime        @default(now())
+  /// Times injected into a real turn — a usefulness proxy.
+  usedCount       Int             @default(0)
+  createdAt       DateTime        @default(now())
+  user            User            @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId, section])
+  @@index([userId, status])
+}
+
+/// An AI-proposed preference awaiting the user's accept/edit/reject. Never
+/// injected until approved (→ SoulEntry).
+model SoulProposal {
+  id        String             @id @default(uuid())
+  userId    String
+  section   String
+  content   String
+  /// Why the AI proposed it, shown to the user.
+  reason    String
+  /// References to the signals behind it (conversation ids / turn seqs).
+  evidence  Json?
+  status    SoulProposalStatus @default(PENDING)
+  createdAt DateTime           @default(now())
+  decidedAt DateTime?
+  user      User               @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId, status])
+}
+
+/// Immutable audit of every personalization decision (incl. rejections/revokes).
+model SoulAudit {
+  id        String   @id @default(uuid())
+  userId    String
+  action    String // accepted | edited | rejected | revoked
+  section   String
+  content   String
+  createdAt DateTime @default(now())
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId, createdAt])
+}
+
+// Uploaded documents (gap-analysis policies, Excel templates, filled outputs).
+// Replaces the old in-memory Map — must survive serverless cold starts and be
+// shared across instances. Rows expire after a TTL; expiry is enforced on read
+// and cleaned up lazily on write.
+model AegisDocument {
+  id          String   @id @default(uuid())
+  /// Owning browser session (signed cookie). Reads are always scoped to it.
+  sessionId   String
+  filename    String
+  type        String // "policy" | "template"
+  textContent String
+  excelData   Json?
+  excelBuffer Bytes?
+  createdAt   DateTime @default(now())
+  expiresAt   DateTime
+
+  // AEGIS Translate (DeepL): an uploaded doc may be detected as a foreign
+  // language; a translation is a NEW AegisDocument working copy linked back to
+  // the original. Translation NEVER curates the KB — machine-translated only.
+  originalLanguage String? // detected DeepL source lang (e.g. "ES"), cached
+  isTranslation    Boolean @default(false)
+  translatedFromId String? // id of the original AegisDocument, when this is a translation
+  targetLanguage   String? // "DE" | "EN"
+  qualityWarnings  Json? // deterministic translation-quality warnings (warnings-only)
+
+  @@index([sessionId])
+  @@index([expiresAt])
+}
+
+// Fixed-window rate-limit state, shared across serverless instances.
+// One row per `${scope}:${identifier}`; count resets when the window expires.
+model RateLimitBucket {
+  key     String   @id
+  count   Int
+  resetAt DateTime
+}
+
+// Persistent multi-turn AEGIS conversations (Phase 2 memory).
+// Owned by the anonymous browser session, same pattern as AegisDocument.
+// `expiresAt` = lastTurnAt + retention window (30 days), refreshed per turn;
+// enforced on read and hard-deleted by the daily retention cron.
+model AegisConversation {
+  id         String   @id @default(uuid())
+  sessionId  String
+  /// Owning user once signed in (auth gates AEGIS). Lets history be scoped to
+  /// the account across sessions/devices. Null only for legacy anonymous rows.
+  userId     String?
+  mode       String // mode of the first turn; per-turn mode lives on the message
+  language   String   @default("de")
+  title      String? // deterministic: first user message, truncated
+  createdAt  DateTime @default(now())
+  lastTurnAt DateTime @default(now())
+  expiresAt  DateTime
+
+  /// Context compaction (Phase 2): a structured ConversationDigest of turns up
+  /// to `digestThroughSeq`. When set, the resume seed replays the digest + only
+  /// later turns instead of the full history. The transcript stays authoritative
+  /// (digest is a derived view), so compaction is non-destructive/reversible.
+  digest          Json?
+  digestThroughSeq Int?
+  digestAt        DateTime?
+
+  messages AegisMessage[]
+
+  @@index([sessionId, lastTurnAt])
+  @@index([userId, lastTurnAt])
+  @@index([expiresAt])
+}
+
+model AegisMessage {
+  id             String            @id @default(cuid())
+  conversationId String
+  conversation   AegisConversation @relation(fields: [conversationId], references: [id], onDelete: Cascade)
+  /// Dense, server-assigned ordering — written transactionally.
+  seq            Int
+  role           String // "user" | "assistant"
+  content        String // sanitized user input / final assistant text
+  citedIds       String[] @default([])
+  status         String   @default("complete") // "complete" | "failed"
+  exitReason     String? // done | verify_failed | timeout | cost_limit | aborted | …
+  model          String? // routed model for this turn (assistant rows)
+  mode           String? // per-turn mode (assistant rows; conversations can switch)
+  /// Audit sidecar: full tool activity [{name, input, result, isError}].
+  /// Never replayed into a prompt — display & audit only.
+  toolCalls      Json?
+  /// Join key to AegisUsageLog (cost source of truth — no duplicated columns).
+  traceId        String?
+  createdAt      DateTime @default(now())
+
+  @@unique([conversationId, seq])
+  @@index([conversationId, seq])
+}
+
+model AegisUsageLog {
+  id             String   @id @default(cuid())
+  traceId        String
+  conversationId String
+
+  // Request
+  mode     String
+  model    String
+  /** Served model (response.model). Distinct set joined; null if unknown. */
+  servedModel String?
+  language String   @default("de")
+
+  // Tokens — stored raw per bucket so cost can be recomputed after a rate change.
+  inputTokens         Int
+  outputTokens        Int
+  cachedTokens        Int @default(0) // prompt-cache READ tokens
+  cacheCreationTokens Int @default(0) // prompt-cache WRITE tokens (both TTLs)
+
+  // Cost in USD cents (4 decimals retained via Float)
+  costCents      Float
+  pricingVersion String @default("legacy") // rate table version used for costCents
+
+  // How the run ended: "done" (clean), an AegisError code (cost_limit,
+  // verify_failed, iteration_limit, upstream_error, …), or "aborted"
+  // (client disconnected mid-stream). Lets the dashboard separate billed-but-
+  // failed spend from successful spend.
+  exitReason String @default("unknown")
+
+  // Performance
+  latencyMs  Int
+  iterations Int @default(1)
+  toolCalls  Int @default(0)
+
+  // Quality
+  verifyPassed        Boolean
+  citationCount       Int      @default(0)
+  guardrailsTriggered String[] @default([])
+
+  // KB
+  kbVersion String
+
+  createdAt DateTime @default(now())
+
+  @@index([createdAt])
+  @@index([mode])
+  @@index([model])
+  @@index([conversationId])
+}
+
+// ── Sectioned generation (AEGIS jobs) ────────────────────────────────────────
+// A SECTIONED deliverable: plan-pass outline + sequentially generated sections,
+// persisted after every section so a run can pause cleanly before the platform
+// deadline and resume on the next SSE connection (client reconnect = new
+// invocation). Ownership is derived via conversationId → AegisConversation
+// (sessionId/userId) — jobs carry no auth scope of their own, resume MUST join
+// through the conversation. `expiresAt` follows the AegisConversation pattern
+// and is enforced by the daily retention cron.
+
+model AegisJob {
+  id             String   @id @default(cuid())
+  conversationId String
+  status         String // 'planning' | 'running' | 'paused' | 'done' | 'failed'
+  planJson       Json
+  /// Shared vocabulary from the plan pass (entities, jurisdictions,
+  /// terminology decisions, citation style) — injected into every section call.
+  vocabJson      Json
+  /// Next open section index (sections below it are 'done' or 'degraded').
+  cursor         Int      @default(0)
+  /// Resume invocations consumed — hard-capped by AEGIS_JOB_MAX_RESUMES,
+  /// then the job fails closed (with an audit log entry).
+  resumeCount    Int      @default(0)
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+  expiresAt      DateTime
+
+  sections AegisJobSection[]
+
+  @@index([conversationId])
+  @@index([expiresAt])
+}
+
+model AegisJobSection {
+  id            String   @id @default(cuid())
+  jobId         String
+  index         Int
+  title         String
+  /// Scope contract from the plan pass: covers[], coversNot[], kbDomains[],
+  /// grounded (boolean), outputShape ('prose' | 'table'), estTokens.
+  scopeJson     Json
+  status        String // 'pending' | 'writing' | 'revising' | 'done' | 'degraded'
+  contentMd     String?
+  /// Structured digest (claims, citedRegs, definedTerms, openReferences) —
+  /// Haiku-extracted after completion, passed to every FOLLOWING section.
+  digestJson    Json?
+  citationsJson Json?
+  verifyJson    Json?
+  /// Whether the section passed verify on the first pass (quality metric:
+  /// sectionsFirstPassOk / sectionsTotal per job).
+  firstPassOk   Boolean?
+  job           AegisJob @relation(fields: [jobId], references: [id], onDelete: Cascade)
+
+  @@unique([jobId, index])
+}
+
+// ── Regulatory radar (daily cron) ────────────────────────────────────────────
+
+enum RegulatoryJurisdiction {
+  EU
+  DE
+  CH
+  INTL
+}
+
+enum RegulatorySuggestionStatus {
+  PROPOSED
+  ACCEPTED
+  REJECTED
+}
+
+enum RegulatoryRunStatus {
+  OK
+  EMPTY
+  ERROR
+}
+
+/// Trusted official sources the radar draws from (EUR-Lex, BaFin, FINMA, …).
+model RegulatorySource {
+  id           String                 @id @default(uuid())
+  name         String                 @unique
+  url          String
+  jurisdiction RegulatoryJurisdiction
+  active       Boolean                @default(true)
+  createdAt    DateTime               @default(now())
+}
+
+/// Public news-feed item — always grounded in a real source URL.
+model RegulatoryNewsItem {
+  id           String                 @id @default(uuid())
+  title        String
+  summary      String
+  /// Why it matters for the financial sector / IT compliance / AI compliance.
+  relevance    String
+  sourceName   String
+  sourceUrl    String
+  publishedAt  DateTime?
+  jurisdiction RegulatoryJurisdiction
+  tags         String[]               @default([])
+  /// Stable dedupe key (normalized url|title|date) — blocks re-inserting the same item.
+  dedupeKey    String                 @unique
+  createdAt    DateTime               @default(now())
+
+  @@index([jurisdiction])
+  @@index([createdAt])
+}
+
+/// Internal-only proposal to add/change a KB requirement. NEVER auto-applied to
+/// the production KB — a human must accept it first.
+model RegulatoryKbSuggestion {
+  id                          String                     @id @default(uuid())
+  sourceName                  String
+  sourceUrl                   String
+  regulation                  String
+  proposedRequirementId       String?
+  proposedRequirementText     String
+  relevanceForFinancialSector String // critical | high | medium | low
+  bindingLevel                String // mandatory | supervisory_expectation | best_practice
+  rationale                   String
+  status                      RegulatorySuggestionStatus @default(PROPOSED)
+  dedupeKey                   String                     @unique
+  reviewedBy                  String?
+  reviewedAt                  DateTime?
+  createdAt                   DateTime                   @default(now())
+
+  @@index([status])
+  @@index([createdAt])
+}
+
+/// Run log for each daily radar execution (observability).
+model RegulatoryRunLog {
+  id                 String              @id @default(uuid())
+  startedAt          DateTime            @default(now())
+  finishedAt         DateTime?
+  newsFound          Int                 @default(0)
+  suggestionsCreated Int                 @default(0)
+  status             RegulatoryRunStatus @default(OK)
+  error              String?
+
+  @@index([startedAt])
+}
+
+/// Lifecycle of a document ingested from an accepted KB suggestion.
+enum RegulatoryDocumentStatus {
+  INGESTING // fetch/convert in progress (kicked off after Accept)
+  INGESTED // converted text + markdown stored; live in Bibliothek + AEGIS
+  FAILED // fetch/convert failed — retryable
+  NEEDS_INPUT // could not auto-resolve a document — admin must paste a link / upload
+}
+
+/// A regulation document fetched + converted when an admin accepts a radar
+/// suggestion. Runtime-mutable (Postgres) because Vercel's filesystem is
+/// read-only and the bundled KB cannot grow at runtime. Surfaced in the
+/// Bibliothek and searched by AEGIS via `search_ingested_documents` — always
+/// as an UNVERIFIED raw source (never promoted into the curated KB).
+model RegulatoryDocument {
+  id           String                   @id @default(uuid())
+  suggestionId String? // the accepted RegulatoryKbSuggestion that triggered this
+  sourceName   String
+  sourceUrl    String // the landing page captured by the radar
+  documentUrl  String? // resolved direct PDF/HTML document, if found
+  regulation   String
+  title        String
+  jurisdiction RegulatoryJurisdiction
+  contentType  String? // pdf | html | manual-upload
+  rawText      String? // converted plaintext — Bibliothek body
+  markdown     String? // generated markdown — AEGIS corpus
+  byteSize     Int                      @default(0)
+  status       RegulatoryDocumentStatus @default(INGESTING)
+  error        String?
+  dedupeKey    String                   @unique // normalized documentUrl ?? sourceUrl; translations use "translate:{originalId}:{target}"
+  fetchedAt    DateTime?
+  createdAt    DateTime                 @default(now())
+  updatedAt    DateTime                 @updatedAt
+
+  // AEGIS Translate (DeepL). A translation is a NEW RegulatoryDocument row that
+  // reuses `status` (INGESTING→INGESTED) for Bibliothek/search gating, links to
+  // its source, and is ALWAYS machine-translated (never curated KB).
+  originalLanguage    String? // detected DeepL source lang (e.g. "ES"), cached on every doc
+  isTranslation       Boolean   @default(false)
+  originalDocumentId  String? // source RegulatoryDocument.id, when this is a translation
+  targetLanguage      String? // "DE" | "EN"
+  translationProvider String? // "DeepL"
+  translatedAt        DateTime?
+  translatedBy        String? // reviewer email who triggered the translation
+  translationStatus   String? // mirror of lifecycle for audit: TRANSLATING | TRANSLATED | FAILED
+  qualityWarnings     Json? // deterministic translation-quality warnings (warnings-only)
+
+  @@unique([originalDocumentId, targetLanguage]) // idempotent: one translation per (source, target)
+  @@index([status])
+  @@index([regulation])
+  @@index([isTranslation])
+}

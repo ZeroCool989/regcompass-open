@@ -1,0 +1,455 @@
+@import "tailwindcss";
+
+:root {
+  --background: #FFFFFF;
+  --foreground: #1A1A1A;
+  --text-secondary: #6B7280;
+  --surface: #F5F5F5;
+  --border-brand: #E0E0E0;
+  --nav-bg: rgba(255, 255, 255, 0.85);
+  --brand-primary: #00BFFF;
+  --brand-secondary: #7b8cde;
+  --brand-yellow: #e8e44a;
+  --risk-minimal: #4caf50;
+  --risk-limited: #ffc107;
+  --risk-high: #f44336;
+  --risk-prohibited: #b71c1c;
+}
+
+.dark {
+  --background: #0A0A0A;
+  --foreground: #F5F5F5;
+  --text-secondary: #9CA3AF;
+  --surface: #1A1A1A;
+  --border-brand: #3A3A3A;
+  --nav-bg: rgba(26, 26, 26, 0.85);
+  --brand-primary: #00BFFF;
+  --brand-secondary: #7b8cde;
+  --brand-yellow: #e8e44a;
+  --risk-minimal: #4caf50;
+  --risk-limited: #ffc107;
+  --risk-high: #f44336;
+  --risk-prohibited: #b71c1c;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-text-secondary: var(--text-secondary);
+  --color-surface: var(--surface);
+  --color-border-brand: var(--border-brand);
+  --color-nav: var(--nav-bg);
+  --color-brand-primary: var(--brand-primary);
+  --color-brand-secondary: var(--brand-secondary);
+  --color-brand-yellow: var(--brand-yellow);
+  --color-risk-minimal: var(--risk-minimal);
+  --color-risk-limited: var(--risk-limited);
+  --color-risk-high: var(--risk-high);
+  --color-risk-prohibited: var(--risk-prohibited);
+  --font-heading: "Bandeins Strange Bold", system-ui, sans-serif;
+  --font-body: "Sen", system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", monospace;
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-body);
+}
+
+/* Compass spin animation */
+@keyframes spin-slow {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+
+.animate-spin-slow {
+  animation: spin-slow 20s linear infinite;
+}
+
+/* Wizard step fade-in */
+@keyframes step-fade-in {
+  from { opacity: 0; transform: translateY(6px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.step-fade-in {
+  animation: step-fade-in 200ms ease-out both;
+}
+
+/* Animated trailing dots for loading text */
+.loading-dots::after {
+  display: inline-block;
+  width: 1.2em;
+  text-align: left;
+  content: '.';
+  animation: loading-dots 1.2s steps(4, end) infinite;
+}
+@keyframes loading-dots {
+  0%   { content: '';    }
+  25%  { content: '.';   }
+  50%  { content: '..';  }
+  75%  { content: '...'; }
+}
+
+/* Result page card stagger fade-in */
+@keyframes card-rise {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.card-rise {
+  animation: card-rise 300ms ease-out both;
+}
+
+/* Tier badge scale-in */
+@keyframes tier-pop {
+  0%   { opacity: 0; transform: scale(0.92); }
+  60%  { opacity: 1; transform: scale(1.02); }
+  100% { transform: scale(1); }
+}
+.tier-pop {
+  animation: tier-pop 400ms cubic-bezier(0.34, 1.56, 0.64, 1) both;
+}
+
+/* AEGIS voice button — equalizer bars */
+@keyframes equalizer {
+  0%, 100% { height: 4px; }
+  50%      { height: 16px; }
+}
+.aegis-voice-bar {
+  width: 3px;
+  border-radius: 1.5px;
+  background: var(--brand-primary);
+  height: 4px;
+}
+.aegis-voice-bar.recording:nth-child(1) { animation: equalizer 0.50s ease-in-out infinite; }
+.aegis-voice-bar.recording:nth-child(2) { animation: equalizer 0.35s ease-in-out infinite 0.10s; }
+.aegis-voice-bar.recording:nth-child(3) { animation: equalizer 0.45s ease-in-out infinite 0.05s; }
+.aegis-voice-bar.recording:nth-child(4) { animation: equalizer 0.40s ease-in-out infinite 0.15s; }
+.aegis-voice-bar.recording:nth-child(5) { animation: equalizer 0.55s ease-in-out infinite 0.08s; }
+.aegis-voice-bar.processing { height: 10px; opacity: 0.5; }
+
+/* AEGIS particle ring — the ring itself is the border; no halo/bubble around it */
+.aegis-orb-wrap {
+  /* intentionally no box-shadow — the ring is the only edge */
+}
+.aegis-orb-wrap-speaking {
+  animation: aegis-orb-speak-pulse 1.6s ease-in-out infinite;
+}
+@keyframes aegis-orb-speak-pulse {
+  0%, 100% { transform: scale(1); }
+  50%      { transform: scale(1.04); }
+}
+
+/* Continuous shell rotation — speed depends on state */
+.aegis-spin {
+  transform-origin: 50% 50%;
+  will-change: transform;
+}
+.aegis-spin-idle      { animation: aegis-spin 32s linear infinite; }
+.aegis-spin-thinking  { animation: aegis-spin 12s linear infinite; }
+.aegis-spin-speaking  { animation: aegis-spin 18s linear infinite; }
+@keyframes aegis-spin {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+
+/* Breathing wobble — the rim morphs in and out, intensity per state */
+.aegis-wobble {
+  transform-origin: 50% 50%;
+  will-change: transform;
+}
+.aegis-wobble-idle      { animation: aegis-wobble 6.0s ease-in-out infinite; }
+.aegis-wobble-thinking  { animation: aegis-wobble 3.4s ease-in-out infinite; }
+.aegis-wobble-speaking  { animation: aegis-wobble 2.0s ease-in-out infinite; }
+@keyframes aegis-wobble {
+  0%, 100% { transform: scale(1.00, 1.00); }
+  33%      { transform: scale(1.04, 0.97); }
+  66%      { transform: scale(0.97, 1.04); }
+}
+
+/* Rim glow halo pulse — intensity per state */
+.aegis-glow {
+  transform-origin: 50% 50%;
+  will-change: opacity, transform;
+}
+.aegis-glow-idle      { animation: aegis-glow-pulse 4.5s ease-in-out infinite; }
+.aegis-glow-thinking  { animation: aegis-glow-pulse 2.4s ease-in-out infinite; }
+.aegis-glow-speaking  { animation: aegis-glow-pulse 1.6s ease-in-out infinite; }
+@keyframes aegis-glow-pulse {
+  0%, 100% { opacity: 0.7; transform: scale(0.98); }
+  50%      { opacity: 1;   transform: scale(1.05); }
+}
+
+/* Inner volume equalizer (mic-style) shown inside the orb ring */
+.aegis-eq {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  height: 24%;
+}
+.aegis-eq-bar {
+  width: 5px;
+  height: 100%;
+  border-radius: 2.5px;
+  background: linear-gradient(to top, rgba(0, 120, 255, 0.45), rgba(90, 205, 255, 0.95));
+  box-shadow: 0 0 8px rgba(40, 180, 255, 0.6);
+  transform: scaleY(0.2);
+  transform-origin: center;
+}
+.aegis-eq-idle .aegis-eq-bar {
+  animation: aegis-eq-idle 1.8s ease-in-out infinite;
+}
+.aegis-eq-speaking .aegis-eq-bar {
+  animation: aegis-eq-speak 0.7s ease-in-out infinite;
+}
+@keyframes aegis-eq-idle {
+  0%, 100% { transform: scaleY(0.16); }
+  50%      { transform: scaleY(0.42); }
+}
+@keyframes aegis-eq-speak {
+  0%, 100% { transform: scaleY(0.25); }
+  50%      { transform: scaleY(1); }
+}
+
+/* Inner neural-network shown inside the orb ring while thinking */
+.aegis-tnet-svg {
+  width: 62%;
+  height: 62%;
+  overflow: visible;
+  filter: drop-shadow(0 0 6px rgba(40, 180, 255, 0.5));
+}
+.aegis-tnet-node {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: aegis-tnet-pulse 2.4s ease-in-out infinite;
+}
+@keyframes aegis-tnet-pulse {
+  0%, 100% { opacity: 0.55; transform: scale(0.8); }
+  50%      { opacity: 1;    transform: scale(1.25); }
+}
+
+/* Speaking: expanding ripples + drifting mist */
+.aegis-wave {
+  transform-box: fill-box;
+  transform-origin: center;
+  will-change: transform, opacity;
+  animation: aegis-wave 2.6s ease-out infinite;
+}
+@keyframes aegis-wave {
+  0%   { transform: scale(0.6);  opacity: 0.5; }
+  100% { transform: scale(1.7);  opacity: 0; }
+}
+.aegis-mist {
+  transform-box: fill-box;
+  transform-origin: center;
+  will-change: transform, opacity;
+  animation: aegis-mist 3.2s ease-in-out infinite;
+}
+@keyframes aegis-mist {
+  0%, 100% { opacity: 0.15; transform: scale(1); }
+  50%      { opacity: 0.35; transform: scale(1.16); }
+}
+
+/* ─────────────────────────── Library reader (Kindle / EUR-Lex style) ─────────────────────────── */
+
+.law-reader {
+  font-family: Georgia, 'Times New Roman', 'Noto Serif', serif;
+  font-size: 1.125rem;
+  line-height: 2;
+  letter-spacing: 0.01em;
+  max-width: 42rem;
+  margin: 0 auto;
+  padding: 2rem 4rem 6rem;
+  color: var(--foreground);
+  /* Subtle warm tint in dark mode for less eye strain. */
+  background: rgba(255, 248, 240, 0.02);
+}
+.law-reader-focus {
+  max-width: 50rem;
+  padding: 3rem 5rem 8rem;
+}
+
+@media (max-width: 768px) {
+  .law-reader { padding: 1.25rem 1.5rem 4rem; }
+  .law-reader-focus { padding: 1.5rem 2rem 5rem; }
+}
+
+/* Reading progress bar — sticky strip at the top of the reader pane. */
+.law-progress-track {
+  position: sticky;
+  top: 0;
+  height: 2px;
+  width: 100%;
+  background: transparent;
+  z-index: 5;
+  pointer-events: none;
+}
+.law-progress-fill {
+  height: 100%;
+  background: var(--brand-primary);
+  transition: width 120ms ease-out;
+  box-shadow: 0 0 6px rgba(0, 191, 255, 0.6);
+}
+
+/* Chapters */
+.law-chapter {
+  text-align: center;
+  text-transform: uppercase;
+  font-weight: 700;
+  font-size: 1.1em;
+  letter-spacing: 0.15em;
+  margin-top: 4rem;
+  margin-bottom: 0.5rem;
+  color: var(--brand-primary);
+}
+.law-chapter-title {
+  text-align: center;
+  text-transform: uppercase;
+  font-weight: 700;
+  font-size: 1em;
+  letter-spacing: 0.1em;
+  margin-top: 0.25rem;
+  margin-bottom: 2rem;
+  color: var(--brand-primary);
+  opacity: 0.85;
+}
+
+/* Articles — each article is a self-contained card with breathing room. */
+.law-article {
+  margin-top: 3rem;
+  padding-top: 2rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
+}
+.law-article:first-of-type { border-top: 0; }
+.law-article-number {
+  text-align: center;
+  font-weight: 700;
+  font-size: 1.25em;
+  margin-bottom: 0.25rem;
+}
+.law-article-title {
+  text-align: center;
+  font-style: italic;
+  font-weight: 600;
+  margin-top: 0.15rem;
+  margin-bottom: 1.5rem;
+  color: var(--brand-primary);
+}
+
+/* Numbered paragraphs inside articles — hanging indent. */
+.law-paragraph {
+  margin-bottom: 1rem;
+  padding-left: 2rem;
+  text-indent: -2rem;
+  text-align: justify;
+  hyphens: auto;
+}
+.law-paragraph-marker {
+  font-weight: 700;
+  display: inline-block;
+  min-width: 2rem;
+}
+
+/* Lettered subparagraphs — deeper indent, no justify (often short). */
+.law-subparagraph {
+  margin-bottom: 0.5rem;
+  padding-left: 3.5rem;
+  text-indent: -1.5rem;
+}
+.law-subparagraph-marker {
+  font-weight: 700;
+  display: inline-block;
+  min-width: 1.5rem;
+}
+
+/* Plain text blocks between paragraphs. */
+.law-text {
+  margin-bottom: 1rem;
+  text-align: justify;
+  hyphens: auto;
+}
+
+/* Recitals (Erwägungsgründe) — block-style, brand-colored numbers. */
+.law-recital {
+  margin-bottom: 1.5rem;
+  text-align: justify;
+  hyphens: auto;
+}
+.law-recital-marker {
+  font-weight: 600;
+  color: var(--brand-primary);
+  margin-right: 0.5rem;
+}
+.law-recital-text {
+  /* Slightly heavier opening for the first sentence — applied via :first-line. */
+}
+.law-recital-text::first-line {
+  font-weight: 500;
+}
+.law-recital-preface {
+  /* "VERORDNUNG (EU)...", "vom 13. Juni 2024", "DAS EUROPÄISCHE PARLAMENT…" lines
+     that sit above the numbered recitals. */
+  margin-bottom: 1rem;
+  text-align: justify;
+}
+
+/* Glossary terms inline — dashed underline, tooltip on hover. */
+.glossary-term {
+  border-bottom: 1px dashed rgba(0, 191, 255, 0.45);
+  cursor: help;
+  transition: border-color 0.2s, background-color 0.2s;
+}
+.glossary-term:hover {
+  border-bottom-color: var(--brand-primary);
+  background-color: rgba(0, 191, 255, 0.08);
+}
+
+/* Custom scrollbar for the Library navigation. */
+.library-nav::-webkit-scrollbar { width: 4px; }
+.library-nav::-webkit-scrollbar-track { background: transparent; }
+.library-nav::-webkit-scrollbar-thumb {
+  background: var(--brand-primary);
+  border-radius: 2px;
+  opacity: 0.3;
+}
+.library-nav::-webkit-scrollbar-thumb:hover {
+  opacity: 0.6;
+}
+.library-nav {
+  scrollbar-width: thin;
+  scrollbar-color: var(--brand-primary) transparent;
+}
+
+/* Respect users who prefer reduced motion: drop the spins/pulses, keep
+   the static sphere visible with a subtle glow. */
+@media (prefers-reduced-motion: reduce) {
+  .aegis-spin,
+  .aegis-wobble,
+  .aegis-glow,
+  .aegis-wave,
+  .aegis-mist,
+  .aegis-eq-bar,
+  .aegis-tnet-node,
+  .aegis-orb-wrap-speaking {
+    animation: none !important;
+  }
+  .aegis-eq-idle .aegis-eq-bar,
+  .aegis-eq-speaking .aegis-eq-bar { transform: scaleY(0.4); }
+  .aegis-glow {
+    opacity: 0.85;
+  }
+  .aegis-orb-wrap-speaking {
+    box-shadow: 0 0 18px rgba(0, 200, 255, 0.3);
+  }
+}
+
+/* Voice Mode: pulsing "listening" ring around the orb. */
+@keyframes aegis-listening-pulse {
+  0% { box-shadow: 0 0 0 0 rgba(0, 191, 255, 0.45); }
+  70% { box-shadow: 0 0 0 22px rgba(0, 191, 255, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(0, 191, 255, 0); }
+}
+.aegis-listening-ring {
+  animation: aegis-listening-pulse 1.4s ease-out infinite;
+}

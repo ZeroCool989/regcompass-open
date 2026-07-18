@@ -1,0 +1,3746 @@
+[SOURCE_FILE: ISO-42001_EN.pdf]
+[EXTRACTION_DATE: 2026-05-19 13:18:01]
+[NUM_PAGES: 61]
+[EXTRACTION_METHOD: ocr-forced]
+[OCR_USED: yes]
+[WARNING: OCR was used on at least one page; text quality may be reduced]
+[TRANSLATED_FROM: en -> de via DeepL 2026-05-19 13:53:58]
+
+[PAGE: 1]
+[PAGE_METHOD: ocr]
+
+BS ISO/IEC 42001:2023
+
+INTERNATIONALE ISO/IEC
+NORM 42001
+
+Erste Ausgabe
+2023-12
+
+Informationstechnologie - Künstliche
+Intelligenz - Managementsystem
+
+Informationstechnologien - Künstliche Intelligenz - Managementsystem
+de management
+
+Referenznummer
+
+IT SO ] EC ISO/IEC 42001:2023(E)
+<=" ---- |
+
+© ISO/IEC 2023
+
+[PAGE: 2]
+[PAGE_METHOD: ocr]
+
+BS ISO/IEC 42001:2023
+ISO/IEC 42001:2023(E)
+
+A ee DOKUMENT
+
+© ISO/IEC 2023
+
+Alle Rechte vorbehalten. Sofern nicht anders angegeben oder im Zusammenhang mit der Implementierung erforderlich, darf kein Teil dieser Veröffentlichung
+in irgendeiner Form oder mit irgendwelchen Mitteln, elektronisch oder mechanisch, einschließlich Fotokopie oder Veröffentlichung im Internet oder Intranet, ohne vorherige schriftliche Genehmigung vervielfältigt oder anderweitig verwendet werden.
+im Internet oder Intranet, ohne vorherige schriftliche Genehmigung. Die Erlaubnis kann entweder bei 60 unter der folgenden Adresse angefordert werden
+oder bei der I8O-Mitgliedsstelle in dem Land des Antragstellers.
+
+150 Copyright-Büro
+
+CP 401+ Ch. de Blandonmet 8
+
+CH-1214 Vernier, Genf
+
+Telefon: +41 22 749 01 11
+G copyright@iso.org,
+
+= Wr 0
+
+Veröffentlicht in der Schweiz
+
+ii © 1SO0/1EC 2023 - Alle Rechte vorbehalten
+
+[PAGE: 3]
+[PAGE_METHOD: ocr]
+
+BS ISO/IEC 42001:2023
+ISO/IEC 42001:2023(E)
+
+Inhalt Seite
+Einleitung.
+1 Anwendungsbereich.
+z Normative Verweise
+3 Begriffe und Definitionen
+4 Kontext der Organisation.
+4.1 Das Verständnis der Organisation und ihres Kontextes...
+4.2 Verstehen der Bedürfnisse und Erwartungen der interessierten Parteien
+43 Bestimmung des Umfangs des KI-Managementsystems
+44 Almanagement-System... nlaeeeeerreeeees
+5 Führungsqualitäten
+$1 Führung und Engagement.
+52 KI-Politik.
+5.3 Rollen, Verantwortlichkeiten und Befugnisse
+6 RI ge rerce cypress
+61 Maßnahmen zur Bewältigung von Risiken und Chancen...
+6.1.1 Allgemeines...
+6.12 AlRisikobewertung
+6.1.3 AlRisikobehandlung.
+6.14 AlSystemfolgenabschätzung...
+62 AlZiele und - was erreichen
+63 Planung von Änderungen...
+71 Ressourcen
+72 Kompetenz
+73 Bewusstseinsbildung...
+7A Kommunikation
+7S Dokumentierte Informationen : peta: :
+75.1 Allgemeines... - a
+75.2 Erstellen von dokumentierten Informationen
+75.3 mvieni Informationen...
+Li} Betrieb
+81 Betriebsplan lam Kontrolle -
+Pe Al rish'as sessmel
+Al fon reatment .
+em Folgenabschätzung
+9 ne uation .
+Mot , Messung, t, Analyse und Bewertung
+Int Audit, : - : .
+9.21 Allgemeines...
+9.2.2 Internes Auditprogramm...
+93 Managementprüfung .
+9.3.1 Allgemeines...
+9.3.2 Input für die Managementprüfung:
+9.3.3 Ergebnisse der Managementprüfung_
+10 Verbesserung...
+
+Anhang A(normativ) Referenzkontrollziele und Kontrollen.
+
+10.1 Kontinuierliche Verbesserung
+10.2. Nichtkonformität und Abhilfemaßnahmen
+
+€ (ISO/IEC 2023 - Alle Rechte vorbehalten iii
+
+[PAGE: 4]
+[PAGE_METHOD: ocr]
+
+BS ISO/IEC 42001:2023
+ISO/IEC 42001:2023(E)
+
+Anhang B (normativ) Umsetzungsleitfaden für KI-Kontrollen 200000... er + |
+Anhang C (informativ) Mögliche KI-bezogene Organisationsziele und Risikoquellen___........ 46
+Anhang D (informativ) Anwendung des KI-Managementsystems in verschiedenen Bereichen oder Sektoren ee)
+Literaturverzeichnis = z : 4 2: 51
+
+iv ISO/IEC 2023 - Alle Rechte vorbehalten
+
+[PAGE: 5]
+[PAGE_METHOD: ocr]
+
+BS ISO/IEC 42001:2023
+ISO/IEC 42001:2023(E)
+
+Vorwort
+
+ISO (die Internationale Organisation für Normung) und IEC (die Internationale Elektrotechnische Kommission) bilden das
+Kommission) bilden das spezialisierte System für die weltweite Normung. Nationale Gremien, die
+80 oder der IEC sind, beteiligen sich an der Entwicklung von Internationalen Normen durch technische
+technischen Komitees, die von der jeweiligen Organisation für bestimmte technische Bereiche
+Tätigkeit. Die technischen Ausschüsse der [SO und der IEC arbeiten in Bereichen von gemeinsamem Interesse zusammen. Andere internationale
+Organisationen, Regierungs- und Nichtregierungsorganisationen, die in Verbindung mit ISO und IEC stehen, nehmen ebenfalls an der
+Arbeit,
+
+Die Verfahren, die zur Entwicklung dieses Dokuments verwendet wurden und die für seine weitere Pflege vorgesehen sind
+sind in den ISO/IEC-Richtlinien, Teil 1, beschrieben. Insbesondere die verschiedenen Genehmigungskriterien
+die für die verschiedenen Arten von Dokumenten erforderlich sind, sollten beachtet werden. Dieses Dokument wurde verfasst in
+den redaktionellen Regeln der ISO/IEC-Direktiven, Teil 2 (siehe
+
+www.iec.ch/members_experts/refdocs). "y 7"
+180 und IEC weisen auf die Möglichkeit hin, dass die Umsetzung dieses Dokuments m; eine om
+Verwendung von (einem) Patent(en). ISO und IEC nehmen keine Stellung bezüglich des Nachweises, der Idität oder der
+
+Patentrechte in Bezug auf dieses Dokument. Zum Zeitpunkt der Veröffentlichung dieses Dokuments haben ISO und IEC
+keine Benachrichtigung über (ein) Patent(e) erhalten, das/die für die Veröffentlichung dieses Dokuments erforderlich sein könnte(n). Allerdings,
+Implementierer werden jedoch darauf hingewiesen, dass dies möglicherweise nicht der letzte Stand der Dinge ist, den Sie
+der Patentdatenbank unter www.iso.org/patents und . 180 abgerufen werden können und IEC
+Die IEC übernimmt keine Verantwortung für die Identifizierung solcher Patentrechte.
+
+Jeder in diesem Dokument verwendete Markenname ist eine Information für die Benutzer und stellt keine
+eine Befürwortung dar.
+
+Für eine Erklärung des freiwilligen Charakters von ISO-spezifischen Begriffen und
+Ausdrücke im Zusammenhang mit der Konformitätsbewertung sowie Informationen über die Einhaltung von 150°s
+
+den Prinzipien der Welthandelsorganisation (WTO) im Bereich der technischen Handelshemmnisse (TET) finden Sie unter
+www iso.org/iso/foreword.html, In der IEC, siehe Normen.
+
+Dieses Dokument wurde von al agg cal Cena e ISO/LEC JTC 1, Informationstechnologie, erstellt,
+Unterkomitee SC 42, Künstliche Intelligenz *
+
+oor on mae |
+Rückmeldungen oder Fragen zu diesem Dokument richten Sie bitte an das nationale Normungsgremium des Benutzers.
+Gremium. Eine vollständige Liste finden Sie unter und
+
+Ma"
+Fe
+eo
+
+€ IS0/1EC 2023 - Alle Rechte vorbehalten Vv
+
+[PAGE: 6]
+[PAGE_METHOD: ocr]
+
+BS ISO/IEC 42001:2023
+ISO/IEC 42001:2023(E)
+
+Einleitung
+
+Künstliche Intelligenz (KI) wird zunehmend in allen Sektoren eingesetzt, die Informationstechnologie nutzen
+und wird voraussichtlich eine der wichtigsten wirtschaftlichen Triebkräfte sein. Eine Folge dieses Trends ist, dass bestimmte
+Anwendungen in den nächsten Jahren zu gesellschaftlichen Herausforderungen führen können.
+
+Dieses Dokument soll Organisationen dabei helfen, ihre Rolle in Bezug auf KI-Systeme verantwortungsbewusst wahrzunehmen
+(z.B. bei der Verwendung, Entwicklung, Überwachung oder Bereitstellung von Produkten oder Dienstleistungen, die Al verwenden). KI wirft potenziell
+spezifische Überlegungen wie:
+
+- Die Verwendung von KI zur automatischen Entscheidungsfindung, manchmal in einer nicht transparenten und nicht erklärbaren
+kann eine besondere Verwaltung erfordern, die über die Verwaltung klassischer IT-Systeme hinausgeht.
+
+- Die Verwendung von Datenanalysen, Erkenntnissen und maschinellem Lernen anstelle von menschlich kodierter Logik zur Gestaltung von
+Systeme, erhöht sowohl die Anwendungsmöglichkeiten für KI-Systeme als auch die Art und Weise, wie solche Systeme entwickelt, begründet und eingesetzt werden.
+Systeme entwickelt, begründet und eingesetzt werden.
+
+rc
+ty
+- KI-Systeme, die kontinuierlich lernen, ändern ihr Verhalten während der Nutzung. Sie bedürfen
+besondere Aufmerksamkeit, um sicherzustellen, dass ihre verantwortungsvolle Nutzung auch bei verändertem Verhalten fortgesetzt wird.
+
+Dieses Dokument enthält Anforderungen für die Einführung, Umsetzung, Aufrechterhaltung und kontinuierliche
+Verbesserung eines KI-Managementsystems im Rahmen einer Organisation. Von den Organisationen wird erwartet
+sich bei der Anwendung der Anforderungen auf Merkmale konzentrieren, die für KI einzigartig sind! "Bestimmte Merkmale von KI, wie
+wie die Fähigkeit, kontinuierlich zu lernen und sich zu verbessern, oder ein Mangel an Transparenz und Erklärbarkeit, können andere Schutzmaßnahmen rechtfertigen.
+andere Sicherheitsvorkehrungen rechtfertigen, wenn sie zusätzliche Bedenken im Vergleich zu der Art und Weise aufwerfen, wie die Aufgabe traditionell ausgeführt werden würde.
+durchgeführt werden. Die Einführung eines KI-Managementsystems zur Erweiterung der bestehenden Managementstrukturen ist eine
+eine strategische Entscheidung für eine Organisation. () .
+
+Die Bedürfnisse und Ziele der Organisation, die Prozesse, die Größe und die Erwartungen der
+verschiedenen interessierten Parteien beeinflussen die Einrichtung und Umsetzung des KI-Managementsystems.
+Eine weitere Gruppe von Faktoren, die die Einführung und Umsetzung des KI-Managementsystems beeinflussen, sind die vielen Anwendungsfälle für KI.
+Management-Systems beeinflussen, sind die vielen Anwendungsfälle für KI und die Notwendigkeit, ein angemessenes Gleichgewicht zwischen Governance-Mechanismen und Innovation zu finden.
+zwischen Governance-Mechanismen und Innovation zu finden. Die Unternehmen entscheiden sich für die Anwendung dieser Anforderungen
+einen risikobasierten Ansatz zu verwenden, um sicherzustellen, dass das richtige Maß an Kontrolle für die jeweiligen
+Al Anwendungsfälle, Dienstleistungen oder Produkte ein oh var al Umfang. Alle diese Einflussfaktoren werden
+werden sich voraussichtlich ändern und von Zeit zu Zeit überprüft werden.
+
+~ ¥
+
+* me
+Das KI-Managementsystem sollte mit den Prozessen und der allgemeinen Managementstruktur der Organisation in Einklang stehen.
+Managementstruktur. Bei der Gestaltung von Prozessen und Informationssystemen und Kontrollen sollten spezifische KI-Inhalte berücksichtigt werden,
+Informationssysteme und Kontrollen berücksichtigen. Beispiele für solche Managementprozesse sind:
+
+- Festlegung der organisatorischen Vorgaben, Einbeziehung der interessierten Parteien und der Organisations
+Politik; O Y
+
+- Management von Risiken und Chancen;
+
+- ry
+
+- Prozesse für die Bewältigung von Problemen im Zusammenhang mit der Vertrauenswürdigkeit von KI-Systemen, wie z.B.
+Sicherheit, Fairness, Transparenz, Datenqualität und Qualität von KI-Systemen während ihres gesamten Lebenszyklus
+Lebenszyklus;
+
+- Prozesse für das Management von Lieferanten, Partnern und Dritten, die KI-Systeme für die Organisation bereitstellen oder entwickeln.
+Systeme für die Organisation entwickeln.
+
+Dieses Dokument enthält Richtlinien für den Einsatz geeigneter Kontrollen zur Unterstützung solcher Prozesse,
+
+Dieses Dokument vermeidet spezifische Anleitungen für Managementprozesse. Die Organisation kann Folgendes kombinieren
+allgemein anerkannte Rahmenwerke, andere internationale Standards und ihre eigenen Erfahrungen kombinieren, um
+wichtige Prozesse wie Risikomanagement, Lebenszyklusmanagement und Datenqualitätsmanagement zu implementieren, die
+die für die spezifischen KI-Anwendungsfälle, Produkte oder Dienstleistungen innerhalb des Geltungsbereichs geeignet sind.
+
+vi © ISO/IEC 2023 - Alle Rechte vorbehalten
+
+[PAGE: 7]
+[PAGE_METHOD: ocr]
+
+BS ISO/IEC 42001:2023
+ISO/IEC 42001:2023(E)
+
+Eine Organisation, die die Anforderungen dieses Dokuments erfüllt, kann einen Nachweis über ihre
+Verantwortung und Rechenschaftspflicht bezüglich ihrer Rolle in Bezug auf KI-Systeme nachweisen.
+
+Die Reihenfolge, in der die Anforderungen in diesem Dokument aufgeführt sind, spiegelt weder ihre Wichtigkeit wider noch
+impliziert nicht die Reihenfolge, in der sie umgesetzt werden. Die Aufzählung dient nur zu Referenzzwecken
+nur als Referenz.
+
+Kompatibilität mit anderen Managementsystem-Standards
+
+Dieses Dokument wendet die harmonisierte Struktur (identische Abschnittsnummern, Abschnittsüberschriften, Text und
+gemeinsame Begriffe und Kerndefinitionen), die entwickelt wurde, um die Angleichung zwischen Managementsystem
+Standards (MSS) zu verbessern. Das KI-Managementsystem enthält spezifische Anforderungen für das Management der Probleme
+und Risiken, die sich aus der Verwendung von KI in einer Organisation ergeben. Dieser gemeinsame Ansatz erleichtert die Implementierung
+und die Kohärenz mit anderen Managementsystemstandards, z.B. in Bezug auf Qualität, Sicherheit, ~ A
+Privatsphäre.
+
+€ (ISO/IEC 2023 - Alle Rechte vorbehalten vii
+
+[PAGE: 8]
+[PAGE_METHOD: ocr]
+
+BS ISO/IEC 42001:2023
+
+[PAGE: 9]
+[PAGE_METHOD: ocr]
+
+BS ISO/IEC 42001:2023
+INTERNATIONALE NORM 1S0/TEC 42001:2023(E)
+
+Informationstechnik - Künstliche Intelligenz -
+Verwaltungssystem
+
+1 Umfang
+
+Dieses Dokument spezifiziert die Anforderungen und bietet eine Anleitung für die Einrichtung, Implementierung,
+und die kontinuierliche Verbesserung eines KI-Managementsystems (künstliche Intelligenz) im
+Kontext einer Organisation.
+
+Dieses Dokument ist für Organisationen gedacht, die Produkte oder Dienstleistungen anbieten oder nutzen, die
+KI-Systeme verwenden. Dieses Dokument soll der Organisation helfen, KI-Systeme zu entwickeln, bereitzustellen oder zu nutzen.
+Systeme verantwortungsvoll zu entwickeln, bereitzustellen oder zu nutzen, um ihre Ziele zu verfolgen und die geltenden Anforderungen, Verpflichtungen gegenüber
+interessierten Parteien und die Erwartungen an diese.
+
+Dieses Dokument gilt für jede Organisation, unabhängig von ihrer Größe, Art und Beschaffenheit, die Produkte oder Dienstleistungen anbietet oder
+Produkte oder Dienstleistungen anbietet oder nutzt, die KI-Systeme verwenden.
+
+2 Normative Referenzen
+
+Auf die folgenden Dokumente wird im Text so verwiesen, dass ihr Inhalt teilweise oder vollständig
+Anforderungen dieses Dokuments darstellen. Bei datierten Verweisen gilt nur die angegebene Ausgabe. Für
+undatierten Verweisen gilt die letzte Ausgabe des referenzierten Dokuments (einschließlich aller Änderungen).
+
+ISO/IEC 22989;2022, Informationstechnologie - Künstliche Intelligenz - Konzepte der künstlichen Intelligenz
+und Terminologie
+
+3 Begriffe und Definitionen
+
+Für die Zwecke dieses Dokuments gelten die in ISO/TEC 22989 und im Folgenden aufgeführten Begriffe und Definitionen.
+gelten.
+
+180 und IEC unterhalten Datenbanken mit Begriffsdefinitionen zur Verwendung in der Normung unter den folgenden Adressen:
+
+- 180 Online Browsing Plattform: verfügbar unter https://www.iso.org/obp
+
+- IEC Electropedia; abrufbar unterhttps://www.electropedia.org/
+
+3.1
+
+Organisation
+
+eine Person oder ein gewachsenes Unternehmen, das seine eigenen Funktionen mit Verantwortlichkeiten, Befugnissen und Beziehungen hat
+um ihre Ziele zu erreichen{3.6)
+
+Anmerkung 1 zum Eintrag: Der Begriff der Organisation umfasst, ist aber nicht beschränkt auf Einzelkaufmann, Gesellschaft, Körperschaft, Firma,
+Unternehmen, Behörde, Partnerschaft, Wohltätigkeitsorganisation oder Institution oder Teile oder Kombinationen davon, unabhängig davon, ob sie eingetragen oder
+nat, öffentlich oder privat.
+
+Anmerkung 2 zum Eintrag: Wenn die Organisation Teil einer größeren Einheit ist, bezieht sich der Begriff "Organisation" nur auf den Teil der
+größeren Organisation, der in den Anwendungsbereich des KI-Managementsystems fällt (3,4).
+
+32
+
+interessierte Partei
+
+Person oder Organisation (3,1), die eine Entscheidung beeinflussen kann, von ihr betroffen ist oder sich von ihr betroffen fühlt
+oder Aktivität
+
+Anmerkung 1 zum Eintrag: Eine Übersicht über interessierte Parteien in KI ist in ISO/IEC 22989:2022, 5.19 enthalten.
+
+€ IS0/1EC 2023 - Alle Rechte vorbehalten i
+
+[PAGE: 10]
+[PAGE_METHOD: ocr]
+
+BS ISO/IEC 42001:2023
+ISO/IEC 42001:2023(E)
+
+3.3
+Top-Management
+Person oder Gruppe von Personen, die eine Organisation (3.1) auf höchster Ebene leitet und kontrolliert
+
+Anmerkung 1 zum Eintrag: Das Topmanagement hat die Befugnis, Befugnisse zu delegieren und Ressourcen innerhalb der Organisation bereitzustellen.
+Organisation bereitzustellen.
+
+Anmerkung 2 zum Eintrag: Wenn der Geltungsbereich des Managementsystems (3.4) nur einen Teil einer Organisation umfasst, dann bezieht sich das Topmanagement
+Management auf diejenigen, die diesen Teil der Organisation leiten und kontrollieren.
+
+34
+
+Managementsystem
+
+eine Reihe von miteinander verbundenen oder interagierenden Elementen einer Organisation (3.1) zur Festlegung von Richtlinien (3.5) und
+Ziele (3.6) sowie Prozesse (3.8), um diese Ziele zu erreichen
+
+Anmerkung 1zum Eintrag: Ein Managementsystem kann eine einzelne Disziplin oder mehrere Disziplinen betreffen.
+
+Anmerkung 2 zum Eintrag: Zu den Elementen des Managementsystems gehören die Struktur der Organisation, die Rollen und die Verantwortung
+
+Planung und Betrieb, "y
+35 x% O
+Politik
+
+Absichten und Richtung einer Organisation (3,1), wie sie formal von ihrem Chef ausgedrückt werden (3.3)
+
+36 RS O°
+
+Zielsetzung
+
+zu erzielendes Ergebnis aus
+r
+
+Anmerkung 1 zum Eintrag: Ein Ziel kann strategisch, taktisch oder operativ sein. o"
+
+Anmerkung 2 zum Eintrag: Ziele können sich auf verschiedene Disziplinen beziehen (z.B. Ry Sicherheit und Umwelt).
+Sie können z.B. organisationsweit oder spezifisch für ein Projekt, ein Produkt oder einen Prozess sein (3.8).
+
+Anmerkung 3 zum Eintrag: Das Ziel kann in o , Og. in beabsichtigtes Ergebnis, als Zweck, als ein
+operatives Kriterium, als KI-Ziel oder durch das x) ie ine & ith ähnliche Bedeutung (z.B. aim, goal, oder
+Ziel).
+
+Anmerkung 4 zum Eintrag: Im Kontext von Al mang werden die Ziele von atten tems Sava von der Organisation festgelegt (3.1),
+
+im Einklang mit der KI-Politik (3.5), um die Ziele zu erreichen.
+3.7
+
+risiko ro eo
+
+Auswirkung der Unsicherheit
+
+Anmerkung 1 zum Eintrag: Eine Auswirkung ist oe Vee, erwartet - positiv oder negativ.
+Gie ie
+
+Anmerkung 2 zum Eintrag: Unce: auch teilweise, des Mangels an Informationen in Bezug auf, Verständnis oder
+Wissen über, eine sogar: ic aie} "oder Wahrscheinlichkeit.
+
+Anmerkung 3 zum Eintrag: Das Risiko wird durch Bezugnahme auf mögliche Ereignisse (wie in ISO Guide 73 definiert) und
+Konsequenzen (wie in ISO Guide 73 definiert) oder einer Kombination davon.
+
+Anmerkung 4 zum Eintrag: Das Risiko wird oft als eine Kombination aus den Folgen eines Ereignisses (einschließlich
+Änderungen der Umstände) und der damit verbundenen Eintrittswahrscheinlichkeit (wie in ISO Guide 73 definiert) ausgedrückt.
+
+3.8
+
+Prozess
+eine Reihe miteinander verbundener oder interagierender Aktivitäten, die Inputs verwenden oder umwandeln, um ein Ergebnis zu erzielen
+
+Anmerkung 1 zum Eintrag: Ob das Ergebnis eines Prozesses als Output, Produkt oder Dienstleistung bezeichnet wird, hängt vom Kontext ab
+der Referenz ab.
+
+| © ISO/IEC 2023 - Alle Rechte vorbehalten
+
+*
+
+[PAGE: 11]
+[PAGE_METHOD: ocr]
+
+BS ISO/IEC 42001:2023
+ISO/IEC 42001:2023(E)
+
+3.9
+Kompetenz
+Fähigkeit, Kenntnisse und Fertigkeiten anzuwenden, um die beabsichtigten Ergebnisse zu erzielen
+
+3.10
+
+dokumentierte Informationen
+
+Informationen, die von einer Organisation kontrolliert und aufbewahrt werden müssen (3.1), sowie das Medium, auf dem sie gespeichert sind
+auf dem sie enthalten sind
+
+Anmerkung 1 zum Eintrag: Dokumentierte Informationen können in jedem Format und Medium und aus jeder Quelle stammen.
+Anmerkung 2 zum Eintrag: Dokumentierte Informationen können sich beziehen auf:
+
+- das Managementsystem (3.4), einschließlich der damit verbundenen Prozesse (3.8);
+
+- Informationen, die erstellt werden, damit die Organisation arbeiten kann (Dokumentation);
+
+- Nachweise der erzielten Ergebnisse (Aufzeichnungen).
+
+3.11
+
+Leistung xy
+
+messbares Ergebnis 2a
+
+Anmerkung 1 zum Eintrag: Leistung kann sich entweder auf quantitative oder qualitative Ergebnisse beziehen. @
+
+Anmerkung 2 zum Eintrag: Leistung kann sich auf das Management von Aktivitäten, Prozessen } P(edukte, Dienstleistungen, Systeme oder
+Organisationen (3.1).
+
+Anmerkung 3 zum Eintrag: Im Kontext dieses Dokuments bezieht sich Leistung auf. die Nutzung von KI-Systemen
+und Ergebnisse im Zusammenhang mit dem KI-Managementsystem (3.4). T 2 inte ae tion des Begriffs ist klar aus dem
+
+Kontext seiner Verwendung.
+
+312
+
+Kontinuierliche Verbesserung
+
+wiederkehrende Aktivität zur Verbesserung der av. S|
+3.13
+
+Effektivität re
+Ausmaß, in dem die geplanten Ergebnisse erreicht werden.
+3.14 Y
+Anforderung Ly Oo
+Notwendigkeit oder Erwartung, die implizit oder obligatorisch ist
+Anmerkung 1 zum Eintrag: "G iy iniplied" s, dass es für die Organisation üblich oder üblich ist (3.1) und
+interessierte Parteien es t der Bedarf oder die Erwartung, um die es geht, impliziert ist.
+fr
+Anmerkung 2 zum Eintrag: Eine spezifizierte. Anforderung ist eine, die angegeben wird, z.B. in dokumentierten Informationen (3.10).
+3.15 xz
+Konformität
+Erfüllung einer Anforderung (3.14)
+
+3.16
+
+Nichtkonformität
+Nicht-Erfüllung einer Anforderung (3.14)
+
+317
+Abhilfemaßnahme
+Maßnahme zur Beseitigung der Ursache(n) einer Nichtkonformität (3.16) und zur Verhinderung eines erneuten Auftretens
+
+€ IS0/1EC 2023 - Alle Rechte vorbehalten Kj
+
+[PAGE: 12]
+[PAGE_METHOD: ocr]
+
+BS ISO/IEC 42001:2023
+ISO/IEC 42001:2023(E)
+
+3.18
+
+Prüfung
+
+systematischer und unabhängiger Prozess (3.8) zur Erlangung von Nachweisen und deren objektiver Bewertung, um
+zu bestimmen, inwieweit die Prüfungskriterien erfüllt sind
+
+Anmerkung 1 zum Eintrag: Eine Prüfung kann eine interne Prüfung (erste Partei) oder eine externe Prüfung (zweite Partei oder dritte Partei) sein,
+und sie kann eine kombinierte Prüfung sein (die zwei oder mehr Disziplinen kombiniert).
+
+Anmerkung 2 zum Eintrag: Ein internes Audit wird von der Organisation (3.1) selbst oder von einer externen Partei in ihrem Namen durchgeführt.
+Auftrag.
+
+Anmerkung 3 zum Eintrag: Die Begriffe "Auditnachweis" und "Auditkriterien" sind in ISO 19011 definiert.
+3.19
+
+Messung
+Prozess (3,8) zur Bestimmung eines Wertes
+
+3.20
+
+Überwachung oO"
+
+Bestimmung des Status eines Systems, eines Prozesses (3,8) oder einer Aktivität Ky
+
+Anmerkung 1 zum Eintrag: Um den Status zu bestimmen, kann es notwendig sein, zu prüfen, zu überwachen oder zu meiden 1)
+/
+
+3.21 @ 6?
+kontral eS
+<Risiko> Maßnahme, die das Risiko aufrechterhält und/oder modifiziert (3.7)
+
+Anmerkung 1 zum Eintrag: Kontrollen umfassen, sind aber nicht beschränkt auf alle Prozesse, 'on evice, & oder andere Bedingungen
+und/oder Aktionen, die das Risiko aufrechterhalten und/oder verändern.
+
+Anmerkung 2 zum Eintrag: Kontrollen üben möglicherweise nicht immer die beabsichtigten oder ass! mierten Wirkungen aus.
+[QUELLE: ISO 31000:2018, 3.8, geändert - cm Anwendungsbereich hinzugefügt ]
+
+3.22 herabgesetzt
+Leitungsorgan x
+Person oder Gruppe von Personen, die für die Konformität der Organisation verantwortlich ist.
+
+Anmerkung 1 zum Eintrag: Nicht alle Organisationen, insbesondere kleine Organisationen, haben ein von der Geschäftsführung getrenntes Leitungsgremium.
+obersten Management.
+
+Anmerkung 2 zum Eintrag: Ein Leitungsorgan kann unter anderem ein Vorstand, Ausschüsse des Vorstands,
+Aufsichtsrat, Treuhänder oder andere Gremien "YY
+[QUELLE: ISO/IEC 38500:2 29, wh ink Anmerkungen zum Eintrag hinzugefügt]
+lief
+3.23 WY
+
+Informationssicherheit | "sy
+Wahrung der Vertraulichkeit, Integrität und Verfügbarkeit von Informationen
+
+Anmerkung 1 zum Eintrag: Andere Eigenschaften wie Authentizität, Rechenschaftspflicht, Unleugbarkeit und Zuverlässigkeit können ebenfalls
+beteiligt sein.
+
+[QUELLE: IS0/1EC 27000:2018, 3.28]
+
+3.24
+
+KI-Systemfolgenabschätzung
+
+Formaler, dokumentierter Prozess, durch den die Auswirkungen auf Einzelpersonen, Gruppen von Einzelpersonen oder beides und
+Gesellschaften von einer Organisation, die Produkte oder Dienstleistungen entwickelt, anbietet oder nutzt, die künstliche Intelligenz nutzen, identifiziert, bewertet und behandelt werden.
+Produkte oder Dienstleistungen unter Verwendung von künstlicher Intelligenz
+
+4 © ISO/IEC 2023 - Alle Rechte vorbehalten
+
+[PAGE: 13]
+[PAGE_METHOD: ocr]
+
+BS ISO/IEC 42001:2023
+ISO/IEC 42001:2023(E)
+
+3.25
+Datenqualität
+Eigenschaft von Daten, dass die Daten die Datenanforderungen der Organisation für einen bestimmten Kontext erfüllen
+
+(QUELLE: ISO/IEC 5259-1:-), 3.4]
+
+3.26
+Erklärung der Anwendbarkeit
+Dokumentation aller notwendigen Kontrollen (3,23) und Begründung für die Einbeziehung oder den Ausschluss von Kontrollen
+
+Anmerkung 1 zum Eintrag: Organisationen benötigen möglicherweise nicht alle in Anhang A aufgeführten Kontrollen oder können sogar über die Liste in
+Anhang A durch zusätzliche, von der Organisation selbst festgelegte Kontrollen überschreiten,
+
+Anmerkung 2 zum Eintrag: Alle identifizierten Risiken müssen von der Organisation gemäß den Anforderungen von
+
+dieses Dokuments. Alle identifizierten Risiken und die Risikomanagementmaßnahmen (Kontrollen), die zur Bewältigung dieser Risiken
+£_\
+
+müssen in der Erklärung zur Anwendbarkeit wiedergegeben werden. i,
+*
+4 Kontext der Organisation oO"
+} _/
+4.1 Verstehen der Organisation und ihres Kontexts oO
+_
+
+Die Organisation muss die externen und internen Themen bestimmen, die für sie relevant sind und die
+die ihre Fähigkeit beeinträchtigen, das/die beabsichtigte(n) Ergebnis(se) ihrer Al men Sa CO)
+
+O
+
+ant Thema.
+
+Die Organisation soll bestimmen, ob der Klimawandel ein
+
+t entwickelt, bereitgestellt oder
+
+Die Organisation soll den beabsichtigten Zweck von t!
+in ihrer Rolle in Bezug auf diese KI-Systeme.
+
+die von der Organisation verwendet werden. Die Organisation muss festlegen
+
+ANMERKUNG1 Um die Organisation und ihren Kontext zu verstehen, muss die Organisation ihre
+Rolle in Bezug auf das KI-System zu bestimmen. Diese Rollen können eine oder mehrere der folgenden sein, sind aber nicht darauf beschränkt
+
+- KI-Anbieter, einschließlich des KI-Plattformanbieters py} rodue(aDienstanbieter;
+
+- KI-Produzenten, einschließlich KI-Entwickler, KI-Designer, KI-Betreiber, KI-Tester und -Bewerter, KI-Einsatzkräfte, KI
+Fachleute für menschliche Faktoren, Domai erts, KI-Folgenabschätzer, Beschaffer, KI-Governance und Aufsicht
+Fachleute; C
+
+Owes
+- KI-Kunden, einschließlich KI-Nutzer; "y
+
+- Al Partner, einschließlich Alystein intpal@hes und Datenanbieter;
+
+- Al Subjekte, einschließlich "yee andere Subjekte;
+"
+- zuständige Behörden, einschließlich pol
+ir
+Eine ausführliche Beschreibung der Rollen findet sich in ISO/IEC 22989.
+Beziehung zum Al " €in Lebenszyklus werden auch im NIST Al-Risikomanagement-Rahmenwerk beschrieben.|24) Die
+
+icymakers und Regulierungsbehörden.
+
+die Rolle der Organisation: die Anwendbarkeit und den Umfang der Anwendbarkeit der Anforderungen und Kontrollen
+in diesem Dokument.
+
+ANMERKUNG2 Externe und interne Fragen, die im Rahmen dieses Abschnitts zu behandeln sind, können je nach Rolle und Zuständigkeit der Organisation variieren.
+Rollen und Zuständigkeiten der Organisation und deren Auswirkungen auf die Fähigkeit, das/die beabsichtigte(n) Ziel(e) des KI-Managementsystems zu erreichen, variieren.
+Systems zu erreichen. Dazu können gehören, sind aber nicht beschränkt auf
+a) externe kontextbezogene Überlegungen wie:
+
+1) geltende rechtliche Anforderungen, einschließlich verbotener Verwendungen von KI;
+
+2) "Politiken, Richtlinien und Entscheidungen von Regulierungsbehörden, die sich auf die Auslegung oder
+Durchsetzung rechtlicher Anforderungen bei der Entwicklung und Nutzung von KI-Systemen haben;
+
+1) In Vorbereitung. Stand zum Zeitpunkt der Veröffentlichung ISO/IEC DIS 5259-1:2023.
+
+© ISO/IEC 2023 - Alle Rechte vorbehalten 5
+
+[PAGE: 14]
+[PAGE_METHOD: ocr]
+
+BS ISO/IEC 42001:2023
+ISO/IEC 42001:2023(E)
+
+3) Anreize oder Konsequenzen im Zusammenhang mit dem beabsichtigten Zweck und der Verwendung von KI-Systemen;
+4) Kultur, Traditionen, Werte, Normen und Ethik in Bezug auf die Entwicklung und den Einsatz von KI;
+5) Wettbewerbsumfeld und Trends für neue Produkte und Dienstleistungen, die KI-Systeme nutzen;
+b) interne kontextbezogene Überlegungen wie:
+1) organisatorischer Kontext, Führung, Ziele (siehe 6.2), Richtlinien und Verfahren;
+2) vertragliche Verpflichtungen;
+3) Verwendungszweck des zu entwickelnden oder zu nutzenden KI-Systems.
+HINWEIS Die Rollenbestimmung kann durch Verpflichtungen in Bezug auf Datenkategorien der Organisation erfolgen
+
+verarbeitet (z.B. Verarbeiter von personenbezogenen Daten (PII) oder Pll-Verantwortlicher bei der Verarbeitung von PII). Siehe
+
+ISO/IEC 29100 für Pll und verwandte Rollen. Die Rollen können sich auch aus den für KI-Systeme spezifischen rechtlichen Anforderungen ergeben.
+
+4.2 Verstehen der Bedürfnisse und Erwartungen der interessierten Parteien 'Ny
+Die Organisation muss bestimmen: Ky oO"
+- die interessierten Parteien, die für das KI-Managementsystem relevant sind; OY
+
+- die relevanten Anforderungen dieser interessierten Parteien; c IXY OW
+
+- welche dieser Anforderungen durch die KI-Zeichen berücksichtigt werden ao
+
+HINWEIS Relevante interessierte Parteien können Anforderungen in Bezug auf das Klimamanagement haben.
+4.3 Festlegung des Geltungsbereichs des KI-Managements
+Die Organisation muss die Grenzen ihres KI-Managementsystems festlegen, um
+
+seinen Geltungsbereich festzulegen.
+
+Bei der Festlegung dieses Geltungsbereichs muss die Kommes?
+- die externen und internen Fragen seine igs 4.1;
+
+- die in 4.2 genannten Anforderungen, | + i"
+
+Der Anwendungsbereich ist als Dosis aed tpt verfügbar
+
+die Anforderungen dieses Dokuments: in bhe nagement system, leadership, planning, support, operation,
+
+Der Geltungsbereich des KI-Managementsystems soll die Aktivitäten der Organisation im Hinblick auf
+Leistung, Bewertungen, Kontrollen und Ziele.
+
+44 Al ey bei apa
+
+Die Organisation soll ein KI-Managementsystem einführen, aufrechterhalten, kontinuierlich verbessern und dokumentieren.
+Managementsystem einführen, aufrechterhalten, kontinuierlich verbessern und dokumentieren, einschließlich der erforderlichen Prozesse und ihrer Wechselwirkungen, in Übereinstimmung mit den
+Anforderungen dieses Dokuments.
+
+6 © ISO/IEC 2023 - Alle Rechte vorbehalten
+
+[PAGE: 15]
+[PAGE_METHOD: ocr]
+
+BS ISO/IEC 42001:2023
+ISO/IEC 42001:2023(E)
+
+5 Führerschaft
+
+5.1 Führung und Engagement
+
+Die oberste Führungsebene muss in Bezug auf das KI-Managementsystem Führungsstärke und Engagement zeigen
+system durch:
+
+- sicherstellt, dass die KI-Politik (siehe 5.2) und die KI-Ziele (siehe 6.2) festgelegt werden und mit der strategischen Ausrichtung der Organisation vereinbar sind
+mit der strategischen Ausrichtung der Organisation vereinbar sind;
+
+- Sicherstellung der Integration der Anforderungen des KI-Managementsystems in die Geschäftsprozesse der Organisation
+Geschäftsprozesse der Organisation:
+
+- Sicherstellung, dass die für das KI-Managementsystem erforderlichen Ressourcen verfügbar sind;
+
+- Kommunikation der Bedeutung eines effektiven KI-Managementsystems
+Systemanforderungen;
+
+CY
+- Sicherstellen, dass das KI-Managementsystem die beabsichtigten Ergebnisse erzielt; oO"
+- Anweisung und Unterstützung von Personen, die zur Wirksamkeit des Managementsystems beitragen;
+- Förderung der kontinuierlichen Verbesserung;
+
+- Unterstützung anderer relevanter Rollen, damit sie ihr Können in ihren Verantwortungsbereichen unter Beweis stellen
+Verantwortung.
+
+HINWEIS1 Die Bezugnahme auf "Geschäft" in diesem Dokument kann sich auf die Aktivitäten beziehen, die
+
+die für die Existenz der Organisation von zentraler Bedeutung sind.
+ANMERKUNG 2 Der Aufbau, die Ermutigung und das Vorbild einer nO) 2 Organisation, die einen verantwortungsvollen
+verantwortungsbewusst mit der Nutzung, Entwicklung und Verwaltung von Al ¢ysterns umzugehen, kann eine wichtige Demonstration des Engagements sein.
+
+und Führung durch das Topmanagement sein. Die Sicherstellung des Bewusstseins und der Einhaltung eines solchen verantwortungsvollen Ansatzes und
+zur Unterstützung des KI-Managementsystems durch die}) Führung 'anaid the success of the KI management system.
+
+CS
+52 KI-Politik eV ny
+
+Die oberste Führungsebene legt eine KI-Politik fest, die
+a) für den Zweck angemessen ist: par i i
+
+b) einen Rahmen für die Festlegung von KI-Zielen bietet (siehe 6.2);
+
+c) enthält eine Maßnahme zur Erfüllung der anwendbaren Anforderungen;
+
+d) enthält eine Anleitung für die kontinuierliche Verbesserung des KI-Managementsystems.
+Die KI A) O
+
+- verfügbare -mangelnde Informationen;
+
+- verweisen, soweit relevant, auf andere Organisationsrichtlinien;
+
+- innerhalb der Organisation weitergegeben werden;
+
+- ggf. für interessierte Parteien verfügbar sein.
+
+Kontrollziele und Kontrollen für die Einführung einer KI-Politik finden Sie in A.2 in Tabelle AL
+Eine Anleitung zur Durchführung dieser Kontrollen finden Sie in B.2.
+
+HINWEIS Überlegungen für Organisationen bei der Entwicklung von KI-Richtlinien sind in ISO/IEC 38507 enthalten.
+
+© ISO/IEC 2023 - Alle Rechte vorbehalten '7
+
+[PAGE: 16]
+[PAGE_METHOD: ocr]
+
+BS ISO/IEC 42001:2023
+ISO/IEC 42001:2023(E)
+
+5.3. Rollen, Verantwortlichkeiten und Befugnisse
+
+Die oberste Leitung stellt sicher, dass die Zuständigkeiten und Befugnisse für die relevanten Rollen zugewiesen
+und innerhalb der Organisation kommuniziert werden.
+
+Die oberste Leitung muss die Verantwortung und die Befugnisse für Folgendes zuweisen:
+
+a) sicherzustellen, dass das KI-Managementsystem mit den Anforderungen dieses Dokuments übereinstimmt;
+
+b) die Berichterstattung über die Leistung des KI-Managementsystems an die oberste Leitung.
+
+HINWEIS Eine Kontrolle für die Definition und Zuweisung von Rollen und Verantwortlichkeiten ist in A.3.2 in Tabelle KI enthalten.
+Eine Anleitung zur Umsetzung dieser Kontrolle finden Sie in B32.
+
+6 Planung
+
+6.1 Maßnahmen zur Bewältigung von Risiken und Chancen
+
+om
+6.1.1 Allgemeines x O
+
+Bei der Planung des KI-Managementsystems muss die Organisation die in
+4.1 und die in 4.2 genannten Anforderungen berücksichtigen und die Risiken und R "O" bestimmen, die behandelt werden müssen
+behandelt werden müssen:
+
+- zu gewährleisten, dass das KI-Managementsystem seinen Zweck erfüllen kann
+- unerwünschte Auswirkungen zu verhindern oder zu reduzieren; O wv
+
+- eine kontinuierliche Verbesserung zu erreichen. Q ~~
+Die Organisation muss KI-Risikorichtlinien einführen und aufrechterhalten, die sie unterstützen:
+
+- die Unterscheidung zwischen akzeptablen und nicht akzeptablen (Risiken; I}
+
+- die Durchführung von KI-Risikobewertungen; LG, .
+
+- Bewertung der Auswirkungen von KI-Risiken. Y "y
+
+ANMERKUNG1 Überlegungen zur Bestimmung der Art des Risikos, das eine Organisation bereit ist, einzugehen oder
+zu übernehmen oder zu behalten, finden Sie in ISO/IEC seen und [20/1 3894.
+
+- KI-Risikobehandlung durchführen;
+
+Die Organisation muss die Risiken und Chancen gemäß den folgenden Kriterien bestimmen:
+
+- der Domäne und der Gpniction ciate eines KI-Systems;
+
+- dem Verwendungszweck; gO
+- dem in 4,1 beschriebenen externen und internen Kontext.
+
+ANMERKUNG2 Im Rahmen des KI-Managementsystems kann mehr als ein KI-System berücksichtigt werden. In diesem Fall wird die
+Bestimmung der Möglichkeiten und Verwendungszwecke für jedes KI-System oder jede Gruppierung von KI-Systemen durchgeführt.
+
+Die Organisation muss planen:
+a) Maßnahmen zur Bewältigung dieser Risiken und Chancen;
+b) wie sie:
+1) die Maßnahmen in ihre KI-Managementsystemprozesse zu integrieren und umzusetzen;
+
+2) die Wirksamkeit dieser Maßnahmen zu bewerten,
+
+8 © ISO/IEC 2023 - Alle Rechte vorbehalten
+
+[PAGE: 17]
+[PAGE_METHOD: ocr]
+
+BS ISO/IEC 42001:2023
+ISO/IEC 42001:2023(E)
+
+Die Organisation muss dokumentierte Informationen über Maßnahmen aufbewahren, die zur Identifizierung und Behandlung von KI-Risiken
+und KI-Chancen,
+
+ANMERKUNG3 Eine Anleitung zur Umsetzung des Risikomanagements für Organisationen, die KI-Produkte, -Systeme und -Dienstleistungen entwickeln, bereitstellen oder nutzen, ist in
+Produkte, Systeme und Dienstleistungen entwickeln, bereitstellen oder nutzen, ist in ISO/IEC 23894 enthalten.
+
+HINWEIS4 Der Kontext der Organisation und ihrer Aktivitäten kann einen Einfluss auf das Risikomanagement der Organisation haben.
+Risikomanagement der Organisation auswirken,
+
+HINWEISE Die Art und Weise, wie Risiken definiert werden und wie man sich daher das Risikomanagement vorstellt, kann je nach Sektor und Branche unterschiedlich sein.
+Branchen variieren. Die Risikodefinition in 3.7 ermöglicht eine weit gefasste Sichtweise des Risikos, die an jeden Sektor angepasst werden kann, z.B. an die in Anhang D genannten Sektoren.
+In jedem Fall ist es die Aufgabe der Organisation, im Rahmen der Risikobewertung zunächst eine
+eine an ihren Kontext angepasste Risikovision zu entwickeln. Dazu kann es gehören, sich dem Risiko über die Definitionen zu nähern, die in den Sektoren verwendet werden, für die
+für die das KI-System entwickelt und verwendet wird, wie z.B. die Definition aus dem ISO/IEC Guide 51.
+
+6.1.2 KI-Risikobewertung
+
+Die Organisation muss einen KI-Risikobewertungsprozess definieren und einführen, der: o"
+a) sich an der KI-Politik (siehe 5.2) und den KI-Zielen (siehe 6.2) orientiert und mit diesen abgestimmt ist; '@)
+HINWEIS Bei der Bewertung der Folgen im Rahmen von 6.1.2 d) 1), die ae wir ein KI-System
+
+Folgenabschätzung wie in 6.1.4 angegeben.
+
+b) ist so konzipiert, dass wiederholte KI-Risikobewertungen vergleichbare Ergebnisse liefern.
+Ergebnisse; cy
+
+c) Risiken identifiziert, die das Erreichen seiner KI-Ziele fördern oder verhindern; io
+
+d) die KI-Risiken analysiert, um:
+
+1) die potenziellen Folgen für eine Lom ae und die Gesellschaft zu bewerten, die
+
+die sich ergeben würden, wenn die identifizierten Risiken eintreten würden;
+2) gegebenenfalls die Realis Ge yalihond @ identifizierten Risiken zu bewerten;
+3) die Höhe des Risikos bestimmen; LG) Y
+Oo YY
+e) bewertet die Al Risiken zu: Oy : &
+1) Vergleichen Sie die Ergebnisse der Risikobewertung mit den Risikokriterien (siehe 6.1.1);
+2) die bewerteten Risiken/für die Risikobehandlung zu priorisieren.
+
+Die Organisation sollte Informationen über den Prozess der Risikobewertung bereithalten.
+
+6.13 Al serene'
+
+Unter Berücksichtigung der Ergebnisse der Risikobewertung soll die Organisation einen Prozess für die Behandlung von Risiken definieren
+Prozess zu: &.
+
+a) geeignete KI-Risikobehandlungsoptionen auszuwählen;
+
+b) alle Kontrollen zu bestimmen, die für die Umsetzung der gewählten Optionen zur Behandlung des KI-Risikos erforderlich sind und
+die Kontrollen mit denen in Anhang A zu vergleichen, um zu überprüfen, dass keine notwendigen Kontrollen ausgelassen wurden;
+
+HINWEIS1 Anhang A enthält Referenzkontrollen zur Erreichung der organisatorischen Ziele und zum Umgang mit Risiken
+im Zusammenhang mit der Gestaltung und Nutzung von KI-Systemen.
+
+c) Berücksichtigen Sie die Kontrollen aus Anhang A, die für die Umsetzung der KI-Risikobehandlungsoptionen relevant sind.
+Optionen;
+
+d) zu ermitteln, ob zusätzliche Kontrollen über die in Anhang Ain genannten hinaus erforderlich sind, um alle Risikobehandlungsoptionen umzusetzen
+Behandlungsoptionen umzusetzen;
+
+© ISO/IEC 2023 - Alle Rechte vorbehalten 9
+
+[PAGE: 18]
+[PAGE_METHOD: ocr]
+
+BS ISO/IEC 42001:2023
+ISO/IEC 42001:2023(E)
+
+e) berücksichtigen Sie die Hinweise in Anhang B für die Durchführung der unter b) und c) festgelegten Kontrollen;
+
+HINWEIS2 Die Kontrollziele sind implizit in den ausgewählten Kontrollen enthalten. Die Organisation kann eine
+Kontrollziele und Kontrollen aus Anhang A auswählen. Die in Anhang A aufgeführten Kontrollen sind nicht erschöpfend
+und es können zusätzliche Kontrollziele und Kontrollen erforderlich sein. Wenn andere oder zusätzliche Kontrollen erforderlich sind
+die über die in Anhang A aufgeführten hinausgehen, kann die Organisation solche Kontrollen entwerfen oder sie aus bestehenden Quellen übernehmen. Al
+Das Risikomanagement kann in andere Managementsysteme integriert werden, falls zutreffend,
+
+f) eine Erklärung zur Anwendbarkeit erstellen, die die notwendigen Kontrollen enthält [siehe b), c) und d)] und
+eine Begründung für die Aufnahme und den Ausschluss von Kontrollen liefern. Gründe für den Ausschluss können sein
+wenn die Kontrollen durch die Risikobewertung nicht als notwendig erachtet werden und wenn sie nicht
+nicht erforderlich sind (oder für die Ausnahmen gemäß den geltenden externen Anforderungen gelten).
+
+HINWEIS3 Die Organisation kann dokumentierte Begründungen für den Ausschluss von Kontrollzielen im
+allgemein oder für bestimmte KI-Systeme, unabhängig davon, ob diese in Anhang A aufgeführt sind oder von der Organisation selbst festgelegt wurden.
+
+g) einen Plan zur Behandlung von KI-Risiken zu formulieren.
+
+Die Organisation muss die Genehmigung der zuständigen Leitung für die KI-Risikobehandlung einholen -
+und für die Akzeptanz der verbleibenden Al-Risiken. Die erforderlichen Genehmigungen müssen erteilt werden: XK)
+
+- auf die Ziele in 6.2 abgestimmt sein; oO
+
+- als dokumentierte Information verfügbar; . 4) D /
+
+- innerhalb der Organisation kommuniziert; "> QO
+
+- für interessierte Parteien verfügbar, soweit angemessen. WO rQ
+
+Die Organisation soll dokumentierte Informationen über den Prozess aufbewahren.
+
+6.14 Alsystemfolgenabschätzung 2
+
+Die Organisation soll einen Prozess definieren, um die Auswirkungen auf Einzelpersonen oder
+Personen oder Gruppen von Personen oder beides, und Gesellschaften meine cal kes ie Entwicklung, Bereitstellung oder Nutzung von K
+Systemen.
+
+Die KI-Folgenabschätzung untersucht die potenziellen Folgen der KI-Systeme
+Einsatz, die beabsichtigte Nutzung und die forcierte Nutzung eines KI-Systems auf Einzelpersonen oder Gruppen von Einzelpersonen oder beides hat,
+
+und Gesellschaften. "Yy
+
+Die KI-Folgenabschätzung untersucht den spezifischen technischen und gesellschaftlichen Kontext
+in dem das KI-System soe apy -ablé Zuständigkeiten ist,
+
+Das Ergebnis der KI-Folgenabschätzung ist zu dokumentieren. Gegebenenfalls wird das Ergebnis der
+das Ergebnis der Systembewertung den relevanten interessierten Parteien zur Verfügung gestellt, wie von der
+Organisation.
+
+Die Organisation muss die Ergebnisse der KI-Systemfolgenabschätzung in der Risikobewertung
+(siehe 61,2). AS in saan oe Kontrollen für die Abschätzung der Auswirkungen von KI-Systemen.
+
+HINWEIS In manchen Kontexten (z.B. bei sicherheits- oder datenschutzkritischen KI-Systemen) kann die Organisation verlangen, dass
+
+die Organisation verlangen, dass disziplinspezifische Abschätzungen der Auswirkungen von KI-Systemen (z.B. Auswirkungen auf die Sicherheit, den Datenschutz oder die Sicherheit) als Teil der
+der allgemeinen Risikomanagementaktivitäten einer Organisation durchgeführt werden.
+
+6.2 KI-Ziele und Planung zu ihrer Erreichung
+
+Die Organisation muss KI-Ziele für die relevanten Funktionen und Ebenen festlegen,
+Die KI-Ziele müssen:
+
+a) im Einklang mit der KI-Politik stehen (siehe 5.2);
+
+10 ISO/IEC 2023 - Alle Rechte vorbehalten
+
+[PAGE: 19]
+[PAGE_METHOD: ocr]
+
+BS ISO/IEC 42001:2023
+ISO/IEC 42001:2023(E)
+
+b) messbar sein (falls durchführbar);
+
+¢) die geltenden Anforderungen berücksichtigen;
+
+d) überwacht werden;
+
+e) kommuniziert werden;
+
+fF) ggf. aktualisiert werden;
+
+f@) als dokumentierte Information verfügbar sein.
+
+Wenn die Organisation plant, wie sie ihre KI-Ziele erreichen will, muss sie festlegen:
+
+- was getan werden soll;
+
+- welcheRessourcen benötigt werden; NY :
+- wer verantwortlich sein wird, O
+- wann es abgeschlossen sein wird; Oo" ©
+
+- wie die Ergebnisse bewertet werden sollen.
+
+ANMERKUNG Eine nicht abschließende Liste von Al-Zielen in Bezug auf das Risikomanagement finden Sie in Anhang _C. Kontrolle
+Ziele und Kontrollen zur Identifizierung von Zielen für den verantwortlichen Manager von KI-Systemen und
+Maßnahmen zur Erreichung dieser Ziele finden Sie in A.6.1 und A.9.3 in den BSS-Anleitungen für diese
+
+Kontrollen sind in B.6.1 und B.9.3 enthalten.
+ist
+
+6.3 Planung von Änderungen
+
+Wenn die Organisation die Notwendigkeit von Ror am OS-Managementsystem feststellt, müssen die Änderungen
+in geplanter Weise durchgeführt werden.
+
+7 Unterstützung Ke . oO
+7.1 Ressourcen oy . a"
+
+Die Organisation muss die für die Einführung,
+Implementierung, Aufrechterhaltung und kontinuierliche Verbesserung des KI-Managementsystems benötigt werden.
+
+r
+ANMERKUNG Kontrollobjekte und Rollen für KI-Ressourcen sind in Aa in Tabelle A.1 aufgeführt. [mDurchführung
+Anleitungen für diese Kontrollen finden Sie in Abschnitt B.4.
+
+7.2 Comp nice
+Die Organisation iO"
+
+- die erforderliche Kompetenz der Person(en) bestimmen, die unter ihrer Kontrolle Arbeiten ausführen, die sich auf ihre KI
+Leistung auswirken;
+
+- stellt sicher, dass diese Personen auf der Grundlage einer angemessenen Ausbildung, Schulung oder Erfahrung kompetent sind
+Erfahrung;
+
+- gegebenenfalls Maßnahmen zu ergreifen, um die erforderliche Kompetenz zu erwerben, und die Wirksamkeit zu bewerten
+der ergriffenen Maßnahmen.
+
+Geeignete dokumentierte Informationen müssen als Nachweis der Kompetenz zur Verfügung stehen,
+
+ANMERKUNG 1 Eine Anleitung für die Umsetzung der Humanressourcen, einschließlich der Berücksichtigung der erforderlichen Fachkenntnisse, finden Sie
+finden Sie in 6.4.6.
+
+€ (ISO/IEC 2023 - Alle Rechte vorbehalten li
+
+[PAGE: 20]
+[PAGE_METHOD: ocr]
+
+BS ISO/IEC 42001:2023
+ISO/IEC 42001:2023(E)
+
+ANMERKUNG2 Anwendbare Maßnahmen können z.B. sein: die Bereitstellung von Schulungen, die Betreuung von oder die
+oder die Einstellung oder Beauftragung von kompetenten Personen,
+
+7.3. Sensibilisierung
+Personen, die unter der Kontrolle der Organisation arbeiten, müssen sich bewusst sein, dass:
+- die KI-Richtlinie (siehe 5.2);
+
+- ihren Beitrag zur Wirksamkeit des KI-Managementsystems, einschließlich der Vorteile einer
+verbesserter KI-Leistung;
+
+- die Folgen einer Nichteinhaltung der Anforderungen des KI-Managementsystems,
+
+7.4 Kommunikation
+
+Die Organisation muss die interne und externe Kommunikation festlegen, die für das ALY
+Managementsystem einschließlich: Oder
+
+- was sie kommunizieren wird; x
+
+- wann es kommunizieren soll; OY }
+nL /
+
+- mit wem sie kommuniziert; &\ O°
+
+- wie man kommuniziert. AY
+
+7.5 Dokumentierte Informationen nv Y
+
+O
+7.5.1 Allgemeines i Qy
+
+Das KI-Managementsystem der Organisation muss
+O die in diesem Dokument geforderten Informationen
+a) dokumentierte Informationen, die in diesem Dokument
+
+b) dokumentierte Informationen, die von der Organisation als notwendig für die Wirksamkeit
+
+des KI-Managementsystems erforderlich sind. O ae
+t
+
+HINWEIS Der Umfang der dokumentierten Informationen für das KI-Managementsystem kann sich von einer Organisation
+von einer Organisation zur anderen variieren, und zwar aufgrund von
+
+- der Größe der Organisation und der Art der Produkte und Dienstleistungen, der Prozesse und der Produkte;
+f
+- die Komplexität der Interaktionen:
+
+- die Kompetenz pers
+
+7.5.2 Informationen erstellen und auf 2.
+
+Bei der Erstellung und Aktualisierung von dokumentierten Informationen muss die Organisation für eine angemessene:
+- Identifizierung und Beschreibung (z.B. Titel, Datum, Autor oder Referenznummer);
+
+- Format (z.B. Sprache, Softwareversion, Grafiken) und Medium (z.B. Papier, elektronisch);
+
+- Überprüfung und Genehmigung auf Eignung und Angemessenheit.
+
+12 ISO/IEC 2023 - Alle Rechte vorbehalten
+
+[PAGE: 21]
+[PAGE_METHOD: ocr]
+
+BS ISO/IEC 42001:2023
+ISO/IEC 42001:2023(E)
+
+7.5.3 Kontrolle der dokumentierten Informationen
+
+Die vom KI-Managementsystem und von diesem Dokument geforderten dokumentierten Informationen müssen
+kontrolliert werden, um sicherzustellen:
+
+a) sie verfügbar sind und verwendet werden können, wo und wann sie benötigt werden;
+b) sie angemessen geschützt sind (z.B. vor Verlust der Vertraulichkeit, unsachgemäßer Verwendung oder Verlust der Integrität).
+
+Für die Kontrolle der dokumentierten Informationen muss die Organisation je nach Fall die folgenden Aktivitäten durchführen
+zutreffend:
+
+- Verteilung, Zugriff, Abruf und Verwendung;
+
+- Speicherung und Aufbewahrung, einschließlich der Erhaltung der Lesbarkeit; 4
+
+- Kontrolle von Änderungen (z.B. Versionskontrolle); wy "
+- Aufbewahrung und Disposition.
+
+Dokumentierte Informationen externen Ursprungs, die von der Organisation als wichtig für die Planung und den Betrieb des
+für die Planung und den Betrieb des KI-Managementsystems erforderlich sind, werden entsprechend gekennzeichnet und kontrolliert.
+
+ANMERKUNG Der Zugriff kann eine Entscheidung über die Erlaubnis beinhalten, nC Dokumentenformatin nur einzusehen, oder
+die Erlaubnis und Befugnis, den dokumentierten Vorgang einzusehen und zu ändern
+
+a =
+8 Vorgang OC ~ "OQ
+oy Y
+~W) OY
+
+8.1 Operative Planung und Kontrolle
+
+Die Organisation muss die Prozesse planen, implementieren und kontrollieren, die zur Erfüllung der Anforderungen und zur
+die in Klausel 6 festgelegten Maßnahmen umzusetzen, bis?)
+
+die Festlegung von Kriterien für die Prozesse; 4 WO)
+- die Kontrolle der Prozesse anhand der Kriterien durchführen.
+Die Organisation muss die gemäß 6.1.3 festgelegten Kriterien, die sich auf die
+
+Betrieb des Al manage! "~ Al-Systementwicklung und -nutzung Lebenszyklus bezogen
+Kontrollen).
+
+Die Wirksamkeit der Kontrollen wird überwacht und Korrekturmaßnahmen werden in Betracht gezogen
+wenn die beabsichtigten Kontrollen nicht durchgeführt werden Anhang A listet Referenzkontrollen auf und Anhang B enthält
+
+Durchführung e für dann'
+
+Dokumentiert (1 Cutettaatio wird in dem Umfang zur Verfügung stehen, der notwendig ist, um darauf vertrauen zu können, dass die
+Prozesse wie geplant durchgeführt wurden.
+
+Die Organisation muss geplante Änderungen kontrollieren und die Folgen unbeabsichtigter Änderungen überprüfen,
+und ergreift bei Bedarf Maßnahmen zur Abschwächung nachteiliger Auswirkungen.
+
+Die Organisation muss sicherstellen, dass von außen bereitgestellte Prozesse, Produkte oder Dienstleistungen, die für das
+die für das KI-Managementsystem relevant sind, kontrolliert werden.
+
+8.2 KI-Risikobewertung
+
+Die Organisation muss KI-Risikobewertungen in Übereinstimmung mit 6.1.2 in geplanten Abständen oder
+wenn wesentliche Änderungen vorgeschlagen werden oder auftreten.
+
+Die Organisation muss die Ergebnisse aller KI-Risikobewertungen in einer Dokumentation festhalten.
+
+€ (ISO/IEC 2023 - Alle Rechte vorbehalten 13
+
+[PAGE: 22]
+[PAGE_METHOD: ocr]
+
+BS ISO/IEC 42001:2023
+ISO/IEC 42001:2023(E)
+
+8.3 Behandlung von Altrisiken
+
+Die Organisation muss den Plan zur Behandlung des Al-Risikos gemäß 61.3 umsetzen und seine
+Wirksamkeit.
+
+Wenn bei den Risikobewertungen neue Risiken festgestellt werden, die eine Behandlung erfordern, muss für diese Risiken ein Risikobehandlungsprozess gemäß
+gemäß 6.1.3 für diese Risiken durchgeführt werden.
+
+Wenn die im Risikobehandlungsplan festgelegten Optionen zur Risikobehandlung nicht wirksam sind, müssen diese Behandlungsoptionen
+werden diese Behandlungsoptionen im Anschluss an den Risikobehandlungsprozess gemäß 6.1.3 überprüft und revalidiert und
+der Risikobehandlungsplan muss aktualisiert werden.
+
+Die Organisation muss dokumentierte Informationen über die Ergebnisse aller KI-Risikobehandlungen aufbewahren.
+
+8.4 Bewertung der Auswirkungen auf das System
+
+Die Organisation muss KI-Systemfolgenabschätzungen gemäß 6.1.4 in geplanten Abständen durchführen
+oder wenn wesentliche Änderungen geplant sind.
+
+Die Organisation muss dokumentierte Informationen über die Ergebnisse aller KI-Systemfolgenabschätzungen aufbewahren.
+Bewertungen aufbewahren,
+
+9 Leistungsbewertung
+
+9.1 Überwachung, Messung, Analyse und Bewertung
+Die Organisation soll bestimmen:
+= was überwacht und gemessen werden muss;
+
+- die Methoden für die Überwachung, Messung, Analyse und Bewertung, soweit zutreffend, um gültige
+Ergebnisse zu gewährleisten;
+
+- wann die Überwachung und Messung durchgeführt werden soll;
+- wann die Ergebnisse der Überwachung und Messung analysiert und ausgewertet werden sollen.
+Zum Nachweis der Ergebnisse müssen dokumentierte Informationen verfügbar sein.
+
+Die Organisation muss die Leistung und die Wirksamkeit des KI-Managementsystems bewerten.
+9.2 Interne Prüfung
+
+92.1 Allgemein
+
+Die Organisation muss in geplanten Abständen interne Audits durchführen, um Informationen darüber zu erhalten, ob
+das KI-Managementsystem
+
+a) übereinstimmt mit:
+1) den eigenen Anforderungen der Organisation an ihr KI-Managementsystem;
+2) den Anforderungen dieses Dokuments;
+
+b) wirksam umgesetzt und aufrechterhalten wird.
+
+9.2.2 Internes Auditprogramm
+
+Die Organisation muss (ein) Auditprogramm(e) planen, einführen, umsetzen und aufrechterhalten, einschließlich der
+Häufigkeit, Methoden, Verantwortlichkeiten, Planungsanforderungen und Berichterstattung,
+
+14 ISO/IEC 2023 - Alle Rechte vorbehalten
+
+[PAGE: 23]
+[PAGE_METHOD: ocr]
+
+BS ISO/IEC 42001:2023
+ISO/IEC 42001:2023(E)
+
+Bei der Erstellung des/der internen Auditprogramms/-programme muss die Organisation die Bedeutung der
+der betreffenden Prozesse und die Ergebnisse früherer Audits,
+
+Die Organisation muss:
+
+a) die Audit-Ziele, Kriterien und den Umfang für jedes Audit festlegen;
+
+b) wählt die Auditoren aus und führt die Audits durch, um Objektivität und Unparteilichkeit des Auditprozesses zu gewährleisten;
+c) sicherstellen, dass die Ergebnisse der Audits den zuständigen Führungskräften mitgeteilt werden.
+
+Als Nachweis für die Durchführung des/der Audit-Programme(s) und der Auditergebnisse müssen dokumentierte Informationen verfügbar sein
+und die Auditergebnisse.
+
+9.3 Überprüfung durch das Management
+
+¥
+9.3.1 Allgemeines ¥
+
+Die oberste Leitung muss das KI-Managementsystem der Organisation überprüfen, um sicherzustellen
+seine fortwährende Eignung, Angemessenheit und Wirksamkeit sicherzustellen. /
+
+Cy -
+9.3.2 Managementüberprüfung Eingaben 7) ras)
+. Qo
+Die Managementbewertung muss Folgendes umfassen: ~. co \~
+~
+a) den Status der Maßnahmen aus früheren Managementbewertungen" , " 7
+b) Änderungen bei externen und internen Themen, die für das Aa nagementsystem re! ve) sind;
+¢) Änderungen der Bedürfnisse und Erwartungen von "= tie otha ive, die für das Aa nagement
+system;
+d) Informationen über das KI-Managementsystem, einschließlich Trends in:
+
+1) Nichtkonformitäten und Verstöße, "C
+2) ~=Überwachung und Coon
+3) Auditergebnisse; . "y
+
+e) Gelegenheiten für Kom Oa
+
+9.3.3 Managemes trey) oe ays"
+
+Die Ergebnisse der Überprüfung umfassen Entscheidungen über die kontinuierliche Verbesserung
+Gelegenheiten§ und die Notwendigkeit von Änderungen am KI-Managementsystem.
+-
+
+{
+Als Nachweis für die Ergebnisse der Managementbewertungen müssen dokumentierte Unterlagen zur Verfügung stehen.
+
+10 Verbesserung
+
+10.1 Kontinuierliche Verbesserung
+
+Die Organisation muss die Eignung, Angemessenheit und Wirksamkeit des KI-Systems kontinuierlich verbessern.
+Managementsystems,
+
+€ (ISO/IEC 2023 - Alle Rechte vorbehalten 15.
+
+[PAGE: 24]
+[PAGE_METHOD: ocr]
+
+BS ISO/IEC 42001:2023
+ISO/IEC 42001:2023(E)
+
+10.2 Nichtkonformität und Abhilfemaßnahmen
+
+Wenn eine Nichtkonformität auftritt, muss die Organisation:
+
+a)
+
+b)
+
+c)
+d)
+
+e)
+
+16
+
+auf die Nichtkonformität zu reagieren und gegebenenfalls:
+1) Maßnahmen zur Kontrolle und Korrektur ergreifen;
+2) mit den Konsequenzen umgehen;
+
+die Notwendigkeit von Maßnahmen zur Beseitigung der Ursache(n) der Nichtkonformität bewerten, so dass sie nicht erneut auftritt
+oder an anderer Stelle auftritt, durch:
+
+1) die Überprüfung der Nichtkonformität;
+
+2) die Ursachen für die Nichtkonformität ermitteln;
+
+3) Feststellung, ob ähnliche Abweichungen bestehen oder möglicherweise auftreten können; AY
+Umsetzung aller erforderlichen Maßnahmen; x) oO"
+Überprüfung der Wirksamkeit der ergriffenen Korrekturmaßnahmen; -O
+
+Änderungen am KI-Managementsystem vornehmen, falls erforderlich. 4)
+
+Die Korrekturmaßnahmen müssen den Auswirkungen der Verstöße angemessen sein. a)
+Es müssen dokumentierte Informationen vorliegen, die Folgendes belegen: oe
+
+die Art der Nichtkonformitäten und alle nachfolgenden ee
+die Ergebnisse der Korrekturmaßnahmen. RQ
+
+nein O
+
+nein oy
+ow
+Se ~
+
+OO"
+
+© ISO/IEC 2023 - Alle Rechte vorbehalten
+
+[PAGE: 25]
+[PAGE_METHOD: ocr]
+
+BS ISO/IEC 42001:2023
+ISO/IEC 42001:2023(E)
+
+Anhang A
+(normativ)
+
+Referenzkontrollziele und Kontrollen
+
+A.1 Allgemeines
+
+Die in Tabelle A.1 aufgeführten Kontrollen bieten der Organisation eine Referenz für die Erfüllung der organisatorischen
+Ziele zu erreichen und Risiken im Zusammenhang mit der Gestaltung und dem Betrieb von KI-Systemen zu bekämpfen. Nicht alle Kontroll
+Kontrollziele und Kontrollen, die in Tabelle A.1 aufgeführt sind, müssen nicht verwendet werden.
+ihre eigenen Kontrollen einführen (siehe 6.1.3). xy "
+
+Anhang E enthält eine Anleitung zur Durchführung aller in Tabelle A.1 aufgeführten Kontrollen.
+
+C+
+oO
+xy )
+Tabelle A.1 - Kontrollziele und Kontrollen
+
+A.2 Maßnahmen in Bezug auf Al 4) </
+Zielsetzung: Bereitstellung von Managementrichtlinien und Unterstützung für KI-Systeme, die die Anforderungen an die Transparenz erfüllen,
+Thema Kontrolle wo)
+
+KI-Richtlinie Die Orga nisation iene eine Richtlinie für die Tauop-
+
+Abgleich mit anderen Organisations- ati definieren, wo andere Richtlinien
+tionalen Richtlinien 5 g zu, den Zielen der Organisation
+
+§ erforderlich, um ihre fortwährende Eignung zu gewährleisten,
+
+Überprüfung der KI-Politik ig Die KI-Politik wird in geplanten Abständen überprüft oder
+; Wirksamkeit.
+
+A.3 Interne Organisation
+Zielsetzung: Die Rechenschaftspflicht einer Organisation zu etablieren, um ihren verantwortungsvollen Ansatz für die Umsetzung der KI-Politik aufrechtzuerhalten.
+
+Einführung, Betrieb und Verwaltung von AT-Systemen.
+
+=
+Topie Sy [Kontrolle
+
+Ang2 KI-Rollen und -Zuständigkeiten Rollen und Zuständigkeiten für KI müssen definiert und entsprechend den Bedürfnissen der Organisation zugewiesen werden.
+A je nach den Bedürfnissen der Organisation festgelegt.
+
+A" a
+A338 Meldeverfahren Die Organisation soll ein Verfahren definieren und einführen, um
+um Bedenken über die Rolle der Organisation in Bezug auf
+
+OQ - zu einem KI-System während seines gesamten Lebenszyklus.
+
+AA Ressource für KI-Systeme
+Zielsetzung: Alyse der Organisation für die Ressourcen (einschließlich KI-Systemkomponenten und
+
+Vermögenswerte) des KI-Systems:
+Thema
+AAZ Ressourcendokumentation Die Organisation soll relevante Ressourcen identifizieren und dokumentieren.
+
+Ressourcen, die für die Aktivitäten in bestimmten Lebenszyklusphasen des KI-Systems
+Lebenszyklusphasen und andere KI-bezogene Aktivitäten, die für die
+
+um Risiken und Auswirkungen vollständig zu verstehen und anzugehen,
+
+Organisation.
+
+AAD Datenressourcen Als Teil der Ressourcenidentifikation soll die Organisation
+Informationen über die für das KI-System genutzten Datenressourcen
+für das KI-System.
+
+AAA Tooling-Ressourcen Im Rahmen der Ressourcenidentifikation muss die Organisation
+
+Informationen über die für das KI-System eingesetzten
+für das KI-System.
+
+€ (ISO/IEC 2023 - Alle Rechte vorbehalten 17
+
+[PAGE: 26]
+[PAGE_METHOD: ocr]
+
+BS ISO/IEC 42001:2023
+ISO/IEC 42001:2023(E)
+
+Tabelle A.1 [Fortsetzung
+
+AAS
+
+System und Rechenressourcen
+
+Als Teil der Ressourcenidentifikation muss die Organisation
+Informationen über das System und die Computerressourcen dokumentieren
+Ressourcen, die für das Alsystem verwendet werden.
+
+AAG
+
+A.5 Bewertung
+
+Menschliche Ressourcen
+
+Auswirkungen von KI-Systemen
+
+Im Rahmen der Identifizierung der Ressourcen muss die Organisation
+Informationen über die Humanressourcen und
+ihre Kompetenzen, die für die Entwicklung, den Einsatz
+Betrieb, Änderungsmanagement, Wartung und Stilllegung
+Übertragung und Stilllegung sowie für die Verifizierung und
+Integration des KI-Systems.
+
+Zielsetzung: Bewertung der Auswirkungen des KI-Systems auf einzelne
+durch das KI-System während seines gesamten Lebenszyklus.
+
+Ist oder Gruppen von Individuen, oder beides, und Gesellschaften betroffen
+
+Thema
+
+Kontrolle
+
+A.6 KI-System
+
+AS2 KI-Systemfolgenabschätzung Die Organisation muss ein Verfahren zur Bewertung der
+Prozess: Potenzielle Folgen für Einzelpersonen oder Gruppen von ii Lie@
+viduals, oder beides, und Gesellschaften, die sich aus tl
+System während seines gesamten Lebenszyklus ergeben. Ry
+A5.3 Dokumentation von KI-Systemim- - |Die Organisation muss die Ergebnisse der KI-System
+Folgenabschätzungen dokumentieren und die Ergebnisse für einen begrenzten Zeitraum aufbewahren.
+od.
+ASA Bewertung der Auswirkungen von KI-Systemen auf potenzielle
+Auswirkungen von KI-Systemen auf Einzelpersonen oder Gruppen von Einzelpersonen:
+als über den gesamten Lebenszyklus des Systems
+ASS Bewertung der gesellschaftlichen Auswirkungen von Al i a
+
+Systeme
+
+Lebenszyklus
+
+A.6.1 Management-Anleitung für die Entwicklung von KI-Systemen
+
+Zielsetzung: Sicherstellen, dass die Organisation bei
+die verantwortliche Gestaltung und Entwicklung von KI-Systemen!
+
+Caibjtve und implementiert Prozesse für
+
+Thema rn! ntrol
+A612 Ziele für die verantwortliche Entwicklung von Al-Systemen Die Organisation muss Ziele identifizieren und dokumentieren.
+Die Organisation muss die Ziele für die verantwortungsvolle Entwicklung von Al-Systemen identifizieren und dokumentieren und die
+Ziele zu berücksichtigen und Maßnahmen zu integrieren, um
+(iis sie in den Lebenszyklus der Entwicklung.
+A.6.1.3 Prozesse für die Entwicklung von Systemen Die Organisation muss die spezifischen Prozesse für die Entwicklung von Systemen definieren und dokumentieren.
+a
+
+temdesign und -entwicklung
+
+Prozesse für den verantwortlichen Entwurf und die Entwicklung des
+des KI-Systems.
+
+A.6.2 Lebensdauer des KI-Systems
+
+'Zielsetzung: Die Definition von tl
+
+Anforderungen für jede Phase des Lebenszyklus eines KI-Systems.
+
+Thema Kontrolle
+A.6.2.2 KI-Anforderungen und -Spezifikationen Die Organisation muss die Anforderungen an neue KI-Systeme oder
+Anforderungen für neue KI-Systeme oder wesentliche Erweiterungen von
+bestehenden Systemen.
+A235 Dokumentation des KI-Systementwurfs |Die Organisation muss den KI-Systementwurf und die
+und Entwicklung des KI-Systems auf der Grundlage von Organisationszielen, dokumentierten
+dokumentierten Anforderungen und Spezifikationskriterien.
+A624 Verifizierung und Validierung von KI-Systemen |Die Organisation muss die Verifizierung von KI-Systemen definieren und dokumentieren.
+
+tion
+
+KI-System-Einführung
+
+und Validierungsmaßnahmen für das KI-System und legen
+Kriterien für deren Einsatz,
+
+Die Organisation muss einen Einführungsplan dokumentieren und
+
+sicherstellen, dass die entsprechenden Anforderungen vor der
+Einsatz.
+
+18
+
+ISO/IEC 2023 - Alle Rechte vorbehalten
+
+[PAGE: 27]
+[PAGE_METHOD: ocr]
+
+BS ISO/IEC 42001:2023
+ISO/IEC 42001:2023(E)
+
+Tabelle A.1 (Fortsetzung)
+4.6.2.6 Betrieb und Überwachung des KI-Systems | Die Organisation muss die notwendigen Elemente für den laufenden Betrieb des KI-Systems definieren und dokumentieren.
+Elemente für den laufenden Betrieb des KI-Systems definieren und dokumentieren. Zumindest
+sollte dies mindestens die System- und Leistungs
+Überwachung, Reparaturen, Updates und Support umfassen.
+A627 Technische Dokumentation des KI-Systems| Die Organisation muss festlegen, welche technischen Elemente des KI-Systems
+
+A628
+
+cal Dokumentation für jede relevante Kategorie von
+interessierten Parteien, wie z.B. Benutzer, Partner, Aufsichtsbehörden
+Partner, Aufsichtsbehörden, und stellen ihnen die technische Dokumentation
+in der entsprechenden Form zur Verfügung.
+
+KI-Systemaufzeichnung von Ereignisprotokollen |Die Organisation muss festlegen, in welchen Phasen des
+Lebenszyklus des KI-Systems die Aufzeichnung von Ereignisprotokollen ermöglicht werden soll.
+aktiviert werden soll, mindestens jedoch, wenn das KI-System in Betrieb ist.
+
+A.7 Daten für KI-Systeme
+
+Zielsetzung: Sicherstellen, dass die Organisation die Rolle und die Auswirkungen von Daten in KI-Systemen versteht _~ die Anwendung
+Entwicklung, Bereitstellung und Nutzung von KI-Systemen während ihres gesamten Lebenszyklus.
+
+Thema Kontrolle
+Daten zur Entwicklung und Verbesserung-| Die Organisation Eee dokumentieren und lementieren
+Die Organisation dokumentiert und entwickelt die Datenverwaltungsprozesse von KI-Systemen: für die Entwicklung von
+
+KI-Systemen. (2, a
+
+Beschaffung von Daten Die Organisation sollte die Details
+über die Beschaffung der in der KI verwendeten Daten
+
+systemen.
+
+Die Qualität der Daten für KI-Systeme definiert und dokumentiert Anforderungen
+der Daten, die zur Entwicklung und
+und diese Anforderungen zu erfüllen.
+Die Datenherkunft sollte einen Prozess für die
+für die Pflege der in den KI-Systemen verwendeten Daten
+über die Lebenszyklen der Daten und des KI-Systems.
+
+Die Datenaufbereitung muss ihre Kriterien definieren und dokumentieren.
+für die Datenaufbereitung und die Datenaufbereitung
+s verwendet werden sollen.
+
+Sie müssen die notwendigen Informationen haben, um die Daten zu verstehen und zu bewerten.
+
+die Risiken und ihre Auswirkungen zu verstehen und zu bewerten ra ive sat
+
+Thema Kontrolle
+
+A.8.2
+
+System di Die Organisation muss die notwendigen Informationen
+Informationen für die Benutzer des KI-Systems.
+
+ABS
+
+Die Organisation soll interessierten Parteien die Möglichkeit geben
+die Möglichkeit, nachteilige Auswirkungen des KI-Systems zu melden.
+
+ABE
+
+ao ar von Vorfällen Die Organisation muss einen Plan festlegen und dokumentieren, um
+Kommunikation von Vorfällen an die Benutzer des KI-Systems.
+
+Informationen für interessierte Parteien Die Organisation soll ihre
+Verpflichtungen zur Meldung von Informationen über das KI-System
+an interessierte Parteien.
+
+A.9 Einsatz von KI-Systemen
+
+Zielsetzung: Sicherstellen, dass die Organisation KI-Systeme verantwortungsvoll und gemäß den Unternehmensrichtlinien einsetzt.
+
+Thema Kontrolle
+
+A9.Z Prozesse für die verantwortungsvolle Nutzung von KI Die Organisation muss die Prozesse für die verantwortungsvolle Nutzung von KI definieren und dokumentieren.
+für die verantwortungsvolle Nutzung von KI-Systemen,
+
+ADS Ziele für den verantwortungsvollen Umgang mit KI Die Organisation muss Ziele für den verantwortungsvollen Umgang mit KI festlegen und dokumentieren.
+die den verantwortungsvollen Umgang mit KI-Systemen leiten.
+
+€ (ISO/IEC 2023 - Alle Rechte vorbehalten 19
+
+[PAGE: 28]
+[PAGE_METHOD: ocr]
+
+BS ISO/IEC 42001:2023
+ISO/IEC 42001:2023(E)
+
+Tabelle A.1 (Fortsetzung)
+
+AD4 Vorgesehener Verwendungszweck des KI-Systems
+
+Die Organisation muss sicherstellen, dass das KI-System verwendet wird
+entsprechend der beabsichtigten Verwendung des KI-Systems und der
+Begleitdokumentation verwendet wird.
+
+A10 Beziehungen zu Dritten und Kunden
+
+Zielsetzung: Sicherstellen, dass die Organisation versteht
+angemessen aufgeteilt werden, wenn Dritte eine
+
+in jeder Phase des Lebenszyklus eines KI-Systems beteiligt sind.
+
+ihre Verantwortung wahrnimmt und rechenschaftspflichtig bleibt und Risiken
+
+[Thema
+
+Kontrolle
+
+AAO.2 Zuweisung von Verantwortlichkeiten
+
+Die Organisation muss sicherstellen, dass die Verantwortlichkeiten innerhalb
+Lebenszyklus ihres KI-Systems zwischen der Organisation
+zwischen der Organisation, ihren Partnern, Lieferanten, Kunden und Dritten.
+
+A103 Lieferanten
+
+Die Organisation muss einen Prozess einrichten, der sicherstellt, dass
+dass die Nutzung von Dienstleistungen, Produkten oder Materialien, die von
+Lieferanten mit dem Ansatz der Organisation zur verantwortungsvollen
+verantwortungsvollen Entwicklung und Nutzung von Alsystems entspricht.
+
+ALO4 Kunden
+
+Die Organisation muss sicherstellen, dass ihr verantwortungsbewusster ayy,
+für die Entwicklung und den Einsatz von ALsystems im Einklang mit
+
+die Erwartungen und Bedürfnisse der Kunden berücksichtigt.
+
+20
+
+ISO/IEC 2023 - Alle Rechte vorbehalten
+
+[PAGE: 29]
+[PAGE_METHOD: ocr]
+
+BS ISO/IEC 42001:2023
+ISO/IEC 42001:2023(E)
+
+Anhang B
+(normativ)
+
+Anleitung zur Durchführung von KI-Kontrollen
+
+B.1 Allgemeines
+
+Die in diesem Anhang dokumentierte Anleitung zur Durchführung bezieht sich auf die in Tabelle A.1 aufgeführten Kontrollen. Er
+stellt Informationen zur Verfügung, um die Durchführung der in Tabelle A.1 aufgeführten Kontrollen zu unterstützen und um das
+Organisationen müssen jedoch die Aufnahme oder den Ausschluss von Durchführungsanweisungen in der Anwendbarkeitserklärung nicht dokumentieren oder rechtfertigen.
+Implementierungsanleitung in der Erklärung zur Anwendbarkeit (siehe 6.1.3).
+
+Die Durchführungsanweisungen sind nicht immer in allen Situationen geeignet oder ausreichend und erfüllen nicht immer
+die spezifischen Kontrollanforderungen der Organisation erfüllen. Die Organisation kann den Leitfaden erweitern oder modifizieren
+Implementierungsanleitung erweitern oder modifizieren oder ihre eigene Implementierung einer Kontrolle definieren.
+Anforderungen und den Bedürfnissen der Risikobehandlung.
+
+Dieser Anhang dient als Leitfaden für die Festlegung und Umsetzung von Maßnahmen zur KI-Risikobehandlung
+in dem in diesem Dokument definierten KI-Managementsystem. Zusätzliche organisatorische und technische
+Kontrollen, die nicht in diesem Anhang enthalten sind, können festgelegt werden (siehe A;-system management risk
+Behandlung in 6.1.3). Dieser Anhang kann als Ausgangspunkt für die Entwicklung organisationsspezifischer
+Implementierung von Kontrollen.
+
+B.2 Richtlinien in Bezug auf KI
+
+8.2.1 Zielsetzung
+
+Bereitstellung von Managementrichtlinien und Seehäfen für Ai'syitems entsprechend den Geschäftsanforderungen.
+
+B.2.2 KI-Politik
+
+Kontrolle
+
+Die Organisation sollte eine Richtlinie für die Entwicklung oder den Einsatz von KI-Systemen dokumentieren.
+Anleitung zur Implementierung
+
+Die KI-Richtlinie sollte von folgenden Faktoren beeinflusst werden:
+
+- der Geschäftsstrategie;
+
+- der Organisationsstruktur und -kultur sowie der Höhe des Risikos, das die Organisation bereit ist, einzugehen oder
+behalten;
+
+- die Höhe des Risikos, das von den KI-Systemen ausgeht;
+
+- rechtliche Anforderungen, einschließlich Verträge;
+
+- das Risikoumfeld der Organisation;
+
+- Auswirkungen auf relevante interessierte Parteien (siehe 6.1.4).
+
+Die KI-Politik sollte (zusätzlich zu den Anforderungen in 5.2) umfassen:
+
+- Grundsätze, die alle Aktivitäten der Organisation im Zusammenhang mit KI leiten;
+
+€ (ISO/IEC 2023 - Alle Rechte vorbehalten 21
+
+[PAGE: 30]
+[PAGE_METHOD: ocr]
+
+BS ISO/IEC 42001:2023
+ISO/IEC 42001:2023(E)
+
+- Prozesse für den Umgang mit Abweichungen und Ausnahmen von der Richtlinie.
+
+Die KI-Richtlinie sollte bei Bedarf themenspezifische Aspekte berücksichtigen, um zusätzliche Anleitungen zu geben oder
+Querverweise auf andere Richtlinien, die sich mit diesen Aspekten befassen, enthalten. Beispiele für solche Themen sind:
+
+- AlRessourcen und Vermögenswerte;
+- Systemfolgenabschätzungen (siehe 6.1.4);
+- AlsSystementwicklung.
+
+Einschlägige Richtlinien sollten die Entwicklung, den Kauf, den Betrieb und die Nutzung von KI-Systemen leiten.
+
+B.2.3 Abgleich mit anderen Unternehmensrichtlinien
+Kontrolle
+
+Die Organisation sollte bestimmen, wo andere Richtlinien von den Zielen der Organisation in Bezug auf KI-Systeme beeinflusst werden können oder auf diese anwendbar sind.
+Ziele der Organisation in Bezug auf KI-Systeme.
+
+Anleitung zur Implementierung
+
+Es gibt viele Bereiche, die sich mit KI überschneiden, darunter Qualität, Sicherheit und Privaéy. Die (Organisation
+sollte eine gründliche Analyse in Erwägung ziehen, um festzustellen, ob und wo sich aktuelle Richtlinien zwangsläufig
+überschneiden, und entweder diese Richtlinien aktualisieren, wenn Aktualisierungen erforderlich sind, oder Bestimmungen in die KI-Richtlinie aufnehmen.
+
+Andere Informationen
+
+Die Richtlinien, die das Führungsgremium im Namen der Organisation festlegt, sollten in die KI-Richtlinie einfließen.
+ISO/IEC 38507 bietet eine Anleitung für Mitglieder des Leitungsgremiums einer Organisation, um das KI-System während seines gesamten Lebenszyklus zu ermöglichen und zu steuern.
+das KI-System während seines gesamten Lebenszyklus zu ermöglichen und zu steuern.
+
+B.2.4 Überprüfung der KI-Politik
+Kontrolle
+
+Die KI-Politik sollte in geplanten Abständen oder zusätzlich nach Bedarf überprüft werden, um sicherzustellen, dass sie weiterhin
+Eignung, Angemessenheit und Wirksamkeit sicherzustellen.
+
+Anleitung zur Umsetzung
+
+Eine von der Geschäftsleitung genehmigte Stelle sollte für die Entwicklung, Überprüfung und Bewertung der
+der KI-Politik oder ihrer Bestandteile zuständig sein. Die Überprüfung sollte auch die Bewertung von Möglichkeiten zur
+Die Überprüfung sollte die Bewertung von Möglichkeiten zur Verbesserung der Richtlinien und des Ansatzes der Organisation zur Verwaltung von KI-Systemen als Reaktion auf Änderungen
+des organisatorischen Umfelds, der geschäftlichen Umstände, der rechtlichen Bedingungen oder des technischen Umfelds.
+
+Bei der Überprüfung der KI-Politik sollten die Ergebnisse der Managementbewertungen berücksichtigt werden.
+
+B.3 Interne Organisation
+
+B.3.1 Zielsetzung
+
+Schaffung von Verantwortlichkeit innerhalb der Organisation zur Aufrechterhaltung ihres verantwortungsvollen Ansatzes bei der
+Implementierung, Betrieb und Verwaltung von KI-Systemen.
+
+6.3.2 KI-Rollen und Verantwortlichkeiten
+Kontrolle
+Die Rollen und Zuständigkeiten für KI sollten entsprechend den Bedürfnissen des Unternehmens definiert und zugewiesen werden.
+
+Organisation zugewiesen werden.
+
+22 ISO/IEC 2023 - Alle Rechte vorbehalten
+
+[PAGE: 31]
+[PAGE_METHOD: ocr]
+
+BS ISO/IEC 42001:2023
+ISO/IEC 42001:2023(E)
+
+Anleitung zur Implementierung
+
+Die Definition von Rollen und Verantwortlichkeiten ist entscheidend für die Sicherstellung der Verantwortlichkeit in der gesamten Organisation
+für ihre Rolle in Bezug auf das KI-System während seines gesamten Lebenszyklus. Die Organisation sollte die KI
+KI-Richtlinien, KI-Ziele und identifizierte Risiken bei der Zuweisung von Rollen und Verantwortlichkeiten berücksichtigen, um sicherzustellen
+Die Organisation kann bei der Zuweisung von Rollen und Zuständigkeiten Prioritäten setzen, um sicherzustellen, dass alle relevanten Bereiche abgedeckt sind.
+zugewiesen werden. Beispiele für Bereiche, die definierte Rollen und Verantwortlichkeiten erfordern können, sind:
+
+- Risikomanagement;
+- Bewertungen der Auswirkungen auf das System;
+- Asset- und Ressourcenmanagement;
+
+- Sicherheit;
+
+- Sicherheit; "\Y
+
+- Privatsphäre; O
+- Entwicklung; KU O
+
+- Leistung: A & A, )
+
+- menschliche Aufsicht: Ss O°
+
+- Lieferantenbeziehungen;
+- seine Fähigkeit unter Beweis stellen, die gesetzlichen - vgl.
+- Datenqualitätsmanagement (während der gesamten Lebensdauer Gel
+
+Die Zuständigkeiten der verschiedenen Rollen sollten so festgelegt werden, dass die einzelnen Personen ihre
+ihre Aufgaben zu erfüllen.
+
+8.3.3 Meldung von Bedenken Ke . ©
+
+Kontrolle 'ee
+
+ntrol ey XY
+
+Die Organisation sollte einen Prozess festlegen, um Bedenken bezüglich der Rolle der Organisation im
+Rolle der Organisation in Bezug auf den Lebenszyklus eines Al-Systems melden.
+
+Anleitung zur Implementierung
+
+Das Meldeverfahren sollte 1. die folgenden Funktionen erfüllen:
+
+a) Optionen vertraulich
+
+b) verfügbare Sica für Beschäftigte und Vertragsnehmer;
+sl
+
+tiatität oder Anonymität oder beides;
+c) mit qualifizierten Personen besetzt ist;
+
+d) angemessene Untersuchungs- und Abwicklungsbefugnisse für die in c) genannten Personen vorsieht;
+e) Mechanismen zur rechtzeitigen Meldung und Eskalation an das Management vorsieht;
+
+f}_ einen wirksamen Schutz vor Repressalien sowohl für die Personen, die mit der Meldung und
+Untersuchung (z.B. durch die Möglichkeit, Meldungen anonym und vertraulich zu machen);
+
+@) liefert Berichte gemäß 4.4 und gegebenenfalls e); unter Wahrung der Vertraulichkeit und
+unter Wahrung der Vertraulichkeit und Anonymität in a) und unter Berücksichtigung allgemeiner Erwägungen zur Wahrung des Geschäftsgeheimnisses;
+
+h) Reaktionsmechanismen innerhalb eines angemessenen Zeitrahmens bereitstellt.
+
+€ (ISO/IEC 2023 - Alle Rechte vorbehalten 23
+
+[PAGE: 32]
+[PAGE_METHOD: ocr]
+
+BS ISO/IEC 42001:2023
+ISO/IEC 42001:2023(E)
+
+ANMERKUNG Die Organisation kann bestehende Berichterstattungsmechanismen als Teil dieses Prozesses nutzen,
+Andere Informationen
+
+Zusätzlich zu den in diesem Abschnitt gegebenen Implementierungsanweisungen sollte die Organisation außerdem
+ISO 37002 in Betracht ziehen,
+
+B.4 Ressourcen für KI-Systeme
+
+B.4.1 Zielsetzung
+
+Sicherstellen, dass die Organisation die Ressourcen (einschließlich KI-Systemkomponenten und Vermögenswerte)
+des Alsystems berücksichtigt, um Risiken und Auswirkungen vollständig zu verstehen und anzugehen.
+
+B.4.2, Dokumentation der Ressourcen
+
+Kontrolle
+
+Die Organisation sollte die relevanten Ressourcen identifizieren und dokumentieren, die für die Aktivitäten in den angegebenen
+KI-Lebenszyklusphasen und andere KI-bezogene Aktivitäten, die für die Organisation relevant sind.
+
+Anleitung zur Implementierung
+
+Die Dokumentation der Ressourcen des KI-Systems ist entscheidend für das Verständnis der Risiken, 7 °sowie der potenziellen
+Auswirkungen des KI-Systems (sowohl positiv als auch negativ) auf Einzelpersonen oder Gruppen von Einzelpersonen, oder beides, und
+Gesellschaften. Die Dokumentation solcher Ressourcen (z.B. in Form von Datenflussdiagrammen oder
+Systemarchitekturdiagramme) kann in die KI-Systemfolgenabschätzung einfließen {siehe 8,5).
+
+Zu den Ressourcen können unter anderem gehören:
+
+- AlsSystemkomponenten;
+
+- Datenquellen, d.h. Daten, die in jeder Phase des Lebenszyklus eines Systems verwendet werden;
+- Tooling-Ressourcen (z.B. Algorithmen, Modi oder Tools);
+
+- System- und Computerressourcen (z.B. 16-Hardware zur Entwicklung und Ausführung von KI-Modellen, Speicher für Daten und
+Tooling-Ressourcen);
+
+- Personalressourcen, d. h. Menschen mit dem notwendigen Fachwissen (z. B. für Entwicklung, Vertrieb, Schulung,
+Betrieb und Wartung des KI-Systems) in Bezug auf die Rolle der Organisation während des Lebenszyklus des KI-Systems.
+Lebenszyklus des Systems.
+
+Die Ressourcen können von der Organisation selbst, von ihren Kunden oder von Dritten bereitgestellt werden.
+
+Andere Informationen
+
+Die Dokumentation der Ressourcen kann auch dabei helfen, festzustellen, ob Ressourcen verfügbar sind, und, falls sie nicht verfügbar sind
+Wenn sie nicht verfügbar sind, sollte die Organisation* die Designspezifikation des KI-Systems oder seine
+Anforderungen.
+
+6.4.3 Daten-Ressourcen
+Kontrolle
+
+Als Teil der Ressourcenidentifikation sollte die Organisation Informationen über die Daten
+Ressourcen dokumentieren, die für das KI-System verwendet werden.
+
+24 ISO/IEC 2023 - Alle Rechte vorbehalten
+
+[PAGE: 33]
+[PAGE_METHOD: ocr]
+
+BS ISO/IEC 42001:2023
+ISO/IEC 42001:2023(E)
+
+Anleitung zur Implementierung
+
+Die Dokumentation der Daten sollte unter anderem die folgenden Themen umfassen:
+
+- die Herkunft der Daten;
+
+- das Datum, an dem die Daten zuletzt aktualisiert oder geändert wurden (z.B. Datumsangabe in den Metadaten);
+- bei maschinellem Lernen die Datenkategorien (z.B. Trainings-, Validierungs-, Test- und Produktionsdaten);
+- Kategorien von Daten (z.B. wie in ISO/IEC 19944-1 definiert);
+
+- Verfahren zur Kennzeichnung von Daten;
+
+- die beabsichtigte Verwendung der Daten;
+
+- Qualität der Daten (z.B. wie in der ISO/IEC 5259 Serie beschrieben?));
+
+- geltende Richtlinien zur Datenaufbewahrung und -entsorgung; O
+- bekannte oder potenzielle Verzerrungen in den Daten; Ky ©)
+
+- Datenaufbereitung. von
+
+B.4.4 Ressourcen für die Werkzeuge RS O°
+
+Kontrolle
+
+Als Teil der Ressourcenidentifikation muss die Organisation über die
+Ressourcen, die für das Alsystem verwendet werden.
+
+Anleitung zur Implementierung Q- Qy
+
+Tooling-Ressourcen für ein KI-System und insbesondere für das maschinelle Lernen können unter anderem sein
+aber nicht beschränkt auf: Oy
+
+- Algorithmentypen und Modelle für maschinelles Lernen; &
+
+eo
+
+- Datenaufbereitungstools oder 1oue <
+
+- Optimierungsmethoden;
+- Auswertungsmethoden; v (oO
+- Bereitstellung zu reso
+
+- Tools zur Unterstützung von ng anes
+
+- Softwarean hardysarevor Al Systemdesign, Entwicklung und Einsatz.
+
+¥
+
+Andere Informati
+
+ISO/IEC 23053 bietet eine detaillierte Anleitung zu den Typen, Methoden und Ansätzen für verschiedene Hilfsmittel
+Ressourcen für maschinelles Lernen.
+
+B.4.5 System- und Rechenressourcen
+Steuerung
+
+Als Teil der Ressourcenidentifikation sollte die Organisation Informationen über das System und die
+Computerressourcen dokumentieren, die für das KI-System verwendet werden.
+
+2) In Vorbereitung. Stand zum Zeitpunkt der Veröffentlichung: [S0/1EC DIS 5259-1:2023, ISO/IEC DIS 5259-2:2023, 1S0/
+IEC DIS §259-3:2023, ISO/IEC DIS 5259-42023, ISO/IEC CD 5259-5:2023.
+
+€ (ISO/IEC 2023 - Alle Rechte vorbehalten 25
+
+[PAGE: 34]
+[PAGE_METHOD: ocr]
+
+BS [S0/IEC 42001:2023
+ISO/IEC 42001:2023(E)
+
+Anleitung zur Implementierung
+Informationen über System- und Computerressourcen für ein KI-System können unter anderem Folgendes umfassen:
+
+- Ressourcenanforderungen des KI-Systems (z.B. um sicherzustellen, dass das System auf Geräten mit eingeschränkten Ressourcen laufen kann)
+Geräten mit begrenzten Ressourcen laufen kann);
+
+- wo sich das System und die Rechenressourcen befinden (z.B. vor Ort, in der Cloud oder am Rande des Netzwerks)
+Computing);
+
+- Verarbeitungsressourcen (einschließlich Netzwerk und Speicher);
+
+- die Auswirkungen der Hardware, die für die Ausführung der Arbeitslasten des KI-Systems verwendet wird (z.B. die Auswirkungen auf die Umwelt
+entweder durch die Nutzung oder die Herstellung der Hardware oder die Kosten für die Nutzung der Hardware).
+
+Die Organisation sollte berücksichtigen, dass verschiedene Ressourcen erforderlich sein können, um eine kontinuierliche
+Verbesserung der KI-Systeme zu ermöglichen. Entwicklung, Einsatz und Betrieb des Systems können unterschiedliche
+Systembedürfnisse und -anforderungen haben.
+
+In NOTE 180/TEC 22989 werden verschiedene Überlegungen zu Systemressourcen beschrieben.
+
+6.4.6 Menschliche Ressourcen
+Kontrolle
+
+Als Teil der Ressourcenidentifikation sollte die Organisation die Personalressourcen und deren
+Ressourcen und ihre Kompetenzen, die für die Entwicklung, den Einsatz, den Betrieb, das Änderungsmanagement
+Betrieb, Änderungsverwaltung, Wartung, Übertragung und Stilllegung sowie die Verifizierung und Integration des
+KI-Systems.
+
+Anleitung zur Implementierung
+
+Die Organisation sollte den Bedarf an verschiedenen Fachkenntnissen berücksichtigen und die für das System erforderlichen Rollen einbeziehen.
+für das System. So kann die Organisation zum Beispiel bestimmte demografische Gruppen einbeziehen, die mit den Daten
+die zum Trainieren von maschinellen Lernmodellen verwendet werden, wenn diese eine notwendige Komponente des Systems sind.
+Entwurfs. Zu den erforderlichen Humanressourcen können unter anderem gehören:
+
+- Datenwissenschaftler;
+
+- Funktionen im Zusammenhang mit der menschlichen Aufsicht über KI-Systeme;
+
+- Experten für vertrauenswürdige Themen wie Sicherheit, Schutz und Privatsphäre;
+
+- KI-Forscher und -Spezialisten sowie KI-Experten, die für die KI-Systeme relevant sind.
+
+In den verschiedenen Phasen des Lebenszyklus von KI-Systemen können unterschiedliche Ressourcen erforderlich sein.
+
+B.S Abschätzung der Auswirkungen von KI-Systemen
+
+B.5.1 Zielsetzung
+
+Abschätzung der Auswirkungen von KI-Systemen auf Einzelpersonen oder Gruppen von Einzelpersonen oder beides sowie auf Gesellschaften, die von
+das Alsystem während seines gesamten Lebenszyklus.
+
+8.5.2 Prozess der Bewertung der Auswirkungen von KI-Systemen
+
+Kontrolle
+
+Die Organisation sollte einen Prozess zur Bewertung der möglichen Folgen für Einzelpersonen oder
+oder Gruppen von Personen oder beides und Gesellschaften zu bewerten, die sich aus dem KI-System während seines gesamten Lebenszyklus ergeben können.
+
+26 ISO/IEC 2023 - Alle Rechte vorbehalten
+
+[PAGE: 35]
+[PAGE_METHOD: ocr]
+
+BS ISO/IEC 42001:2023
+ISO/IEC 42001:2023(E)
+
+Anleitung zur Implementierung
+
+Da KI-Systeme potenziell erhebliche Auswirkungen auf Einzelpersonen, Gruppen von Einzelpersonen , oder
+und Gesellschaften haben können, sollte die Organisation, die solche Systeme bereitstellt und nutzt, auf der Grundlage des beabsichtigten
+Zweck und Verwendung dieser Systeme die möglichen Auswirkungen dieser Systeme auf diese Gruppen bewerten.
+
+Die Organisation sollte berücksichtigen, ob ein KI-System Auswirkungen hat auf:
+- die rechtliche Stellung oder die Lebenschancen von Einzelpersonen;
+- das physische oder psychische Wohlbefinden von Personen;
+
+- die allgemeinen Menschenrechte;
+
+- Gesellschaften.
+Die Verfahren der Organisation sollten unter anderem Folgendes umfassen: ¥
+a) Umstände, unter denen eine KI-Folgenabschätzung durchgeführt werden sollte, z.B.
+umfassen, sind aber nicht beschränkt auf: C)
+; /
+1) die Kritikalität des beabsichtigten Zwecks und des Kontexts, in dem das KI-System verwendet wird, oder jede wesentliche
+Änderungen an diesen; g, 4,
+2) "Komplexität der KI-Technologie und der Grad der Sicherheit des Systems" oder wesentliche
+Änderungen daran; CQ
+
+das; oy
+W
+b) Elemente, die Teil der KI-Systemfolgenabschätzung sind: menos, die Folgendes umfassen können:
+
+1) Identifizierung (z.B. Quellen, Ereignisse und om
+
+): O)
+3) Bewertung (z.B. Akzeptanzentscheidungen);
+4) Behandlung (z.B. Neo; wina's
+conimumication (siehe 7.4, 7.5 und B.3.3);
+
+c) wer die Al stern ma iene durchführt
+
+d) wie die Bewertung der Auswirkungen des KI-Systems genutzt werden kann [z.B. wie sie die Gestaltung oder Nutzung des Systems beeinflussen kann
+Systems (siehe Bohne B.S), ob sie Überprüfungen und Genehmigungen auslösen kann];
+e} siattaiSaotie ai Gesellschaften, die aufgrund des Verwendungszwecks des Systems potenziell betroffen sind,
+
+Nutzung und den Merkmalen des Systems (z. B. Bewertung für Einzelpersonen, Gruppen von Einzelpersonen oder Gesellschaften).
+sl
+
+Bei der Folgenabschätzung sollten verschiedene Aspekte des KI-Systems berücksichtigt werden, darunter die für die Entwicklung des KI-Systems verwendeten Daten
+für die Entwicklung des KI-Systems, die verwendeten KI-Technologien und die Funktionalität des Gesamtsystems.
+Systems.
+
+3) Empfindlichkeit der vom KI-System verarbeiteten Datentypen und -quellen gegenüber wesentlichen Änderungen an
+
+2) Analyse (z.B. Folgen und Auswirkungen
+
+5) Dokumentation, Berichtswesen
+
+Die Prozesse können je nach der Rolle der Organisation und dem Bereich der KI-Anwendung und
+je nach den spezifischen Disziplinen, für die die Auswirkungen bewertet werden (z.B. Sicherheit, Datenschutz und Sicherheit).
+
+Andere Informationen
+
+Für einige Disziplinen oder Organisationen ist eine detaillierte Betrachtung der Auswirkungen auf Einzelpersonen oder Gruppen
+von Einzelpersonen oder Gruppen von Einzelpersonen, oder beides, und Gesellschaften ist Teil des Risikomanagements, insbesondere in Disziplinen wie
+Informationssicherheit, Sicherheit und Umweltmanagement. Die Organisation sollte bestimmen
+
+€ (ISO/IEC 2023 - Alle Rechte vorbehalten 27
+
+[PAGE: 36]
+[PAGE_METHOD: ocr]
+
+BS [S0/IEC 42001:2023
+ISO/IEC 42001:2023(E)
+
+wenn disziplinspezifische Folgenabschätzungen, die als Teil eines solchen Risikomanagementprozesses durchgeführt werden
+KI-Überlegungen für diese spezifischen Aspekte (z.B. Datenschutz) ausreichend berücksichtigen.
+
+ANMERKUNG ISO/TEC 23894 beschreibt, wie eine Organisation Auswirkungsanalysen für die Organisation selbst durchführen kann,
+
+zusammen mit Einzelpersonen oder Gruppen von Einzelpersonen oder beidem und Gesellschaften als Teil eines allgemeinen Risikomanagementprozesses
+Prozesses.
+
+6.5.3 Dokumentation von KI-Systemfolgenabschätzungen
+Kontrolle
+
+Die Organisation sollte die Ergebnisse von KI-Systemfolgenabschätzungen dokumentieren und die Ergebnisse für einen
+bestimmten Zeitraum aufbewahren.
+
+Anleitung zur Implementierung
+
+Die Dokumentation kann bei der Festlegung der Informationen hilfreich sein, die an die Benutzer
+und andere relevante interessierte Parteien.
+
+KI-Folgenabschätzungen sollten aufbewahrt und bei Bedarf aktualisiert werden, und zwar in Übereinstimmung mit den
+Elemente einer KI-Folgenabschätzung, die in 6.5.2 dokumentiert sind. Die Aufbewahrungsfristen können sich an
+Aufbewahrungsfristen können sich an den Aufbewahrungsplänen der Organisation orientieren oder durch gesetzliche Vorschriften oder andere Anforderungen bestimmt sein.
+
+Zu den Punkten, die die Organisation dokumentieren sollte, gehören unter anderem:
+- die beabsichtigte Verwendung des KI-Systems und jede vernünftigerweise vorhersehbare missbräuchliche Verwendung des Alsystems;
+
+- positive und negative Auswirkungen des KI-Systems auf die betroffenen Personen oder Personengruppen,
+oder beides, und Gesellschaften;
+
+vorhersehbare Ausfälle, ihre möglichen Auswirkungen und Maßnahmen, die ergriffen werden, um sie abzumildern;
+- relevante demographische Gruppen, auf die das System anwendbar ist;
+- Komplexität des Systems;
+
+- die Rolle des Menschen in der Beziehung zum System, einschließlich menschlicher Kontrollmöglichkeiten, Prozesse
+und Maßnahmen, die zur Vermeidung negativer Auswirkungen zur Verfügung stehen;
+
+- Beschäftigung und Qualifizierung des Personals.
+6.5.4 Bewertung der Auswirkungen des KI-Systems auf Einzelpersonen oder Gruppen von Einzelpersonen
+Kontrolle
+
+Die Organisation sollte die möglichen Auswirkungen von KI-Systemen auf Einzelpersonen oder
+Gruppen von Personen während des gesamten Lebenszyklus des Systems.
+
+Anleitung zur Implementierung
+
+Bei der Bewertung der Auswirkungen auf Einzelpersonen oder Gruppen von Einzelpersonen oder beides und auf die Gesellschaft sollte die
+Organisation ihre Führungsprinzipien, KI-Richtlinien und -Ziele, Einzelpersonen, die das KI-System
+Personen, die das KI-System nutzen oder deren Pll durch das KI-System verarbeitet werden, können Erwartungen in Bezug auf die
+Vertrauenswürdigkeit des KI-Systems haben. Besondere Schutzbedürfnisse von Gruppen wie Kindern, behinderten
+Personen, älteren Menschen und Arbeitnehmern sollte Rechnung getragen werden. Die Organisation sollte diese Erwartungen bewerten
+Die Organisation sollte diese Erwartungen bewerten und im Rahmen der Folgenabschätzung des Systems prüfen, wie sie ihnen gerecht werden können.
+
+Je nach Zweck und Verwendung des KI-Systems können die zu berücksichtigenden Bereiche der Auswirkungen im Rahmen der
+Bewertung zu berücksichtigen sind, umfassen, sind aber nicht darauf beschränkt:
+
+- Fairness;
+
+- Rechenschaftspflicht;
+
+28 ISO/IEC 2023 - Alle Rechte vorbehalten
+
+[PAGE: 37]
+[PAGE_METHOD: ocr]
+
+BS ISO/IEC 42001:2023
+ISO/IEC 42001:2023(E)
+
+- Transparenz und Erklärbarkeit;
+- Sicherheit und Datenschutz;
+
+- Sicherheit und Gesundheit;
+
+- finanzielle Folgen;
+
+- Zugänglichkeit;
+
+- Menschenrechte.
+
+Andere Informationen
+
+Falls erforderlich, sollte die Organisation Experten konsultieren (z.B. Forscher, Fachleute und
+Nutzer) zu Rate ziehen, um ein umfassendes Verständnis der möglichen Auswirkungen des KI-Systems auf Einzelpersonen oder Gruppen von
+
+Einzelpersonen oder Gruppen von Einzelpersonen oder beides und auf die Gesellschaft. auf ¥
+B.5.5 Bewertung der gesellschaftlichen Auswirkungen von KI-Systemen ~~ :
+
+Kontrolle x C /
+
+CY :
+Die Organisation soll die potentiellen gesellschaftlichen Auswirkungen ihrer KI-Systeme bewerten und dokumentieren 6F
+
+während ihres gesamten Lebenszyklus. Oe QD
+Anleitung zur Umsetzung > QO
+
+/ co)
+Die gesellschaftlichen Auswirkungen können sehr unterschiedlich sein, je nachdem, welche Art von KI-Systemen die Organisation einsetzt.
+Die gesellschaftlichen Auswirkungen von KI-Systemen können sowohl vorteilhaft a | Beispiele für diese potenziellen
+
+Auswirkungen auf die Gesellschaft können sein: ~) ~)
+- Nachhaltigkeit der Umwelt (einschließlich der Auswirkungen auf die Ressourcen von Surat und die Treibhausgas
+Emissionen);
+
+- Wirtschaft (einschließlich Zugang zu rnancK? Dienstleistungsmöglichkeiten, Steuern, Handel und
+Handel); Ky ~N
+
+- Regierung (einschließlich Gesetzgebungsprozesse, Tifsinformation für politischen Gewinn, nationale Sicherheit
+und Strafrechtssysteme) ~
+
+- Gesundheit und Sicherheit (einschließlich Gesundheitsfürsorge, medizinische Diagnose und Behandlung sowie mögliche
+physische und psychologische Schäden);
+
+- Normen, Traditionen, Gepflogenheiten {einschließlich Fehlinformationen, die zu Verzerrungen oder Schädigungen von
+Individuen oder Organisationen, Individuen oder beides, und Gesellschaften).
+Andere Informationen (
+_) "Y
+
+Entwicklung und KI-Systeme können rechenintensiv sein, was sich auf die
+Auswirkungen auf die Umwelt haben (z.B. Treibhausgasemissionen durch erhöhten Stromverbrauch, Auswirkungen auf
+auf Wasser, Land, Flora und Fauna). Ebenso können KI-Systeme eingesetzt werden, um die ökologische
+Nachhaltigkeit anderer Systeme (z.B. Verringerung der Treibhausgasemissionen im Zusammenhang mit Gebäuden und
+Transportwesen). Die Organisation sollte die Auswirkungen ihrer KI-Systeme im Zusammenhang mit ihren
+Ziele und Strategien der ökologischen Nachhaltigkeit berücksichtigen.
+
+Die Organisation sollte überlegen, wie ihre KI-Systeme missbraucht werden können, um gesellschaftlichen Schaden anzurichten und wie
+sie genutzt werden können, um historische Schäden zu beseitigen. Können KI-Systeme zum Beispiel den Zugang zu finanziellen
+Finanzdienstleistungen wie Darlehen, Zuschüssen, Versicherungen und Investitionen verhindern und können KI-Systeme den Zugang zu diesen
+zu diesen Instrumenten verbessern?
+
+KI-Systeme wurden eingesetzt, um den Ausgang von Wahlen zu beeinflussen und Fehlinformationen zu verbreiten (z.B.
+
+Deepfakes in digitalen Medien), die zu politischen und sozialen Unruhen führen können. Der Einsatz von KI-Systemen durch die Regierung
+zu Strafverfolgungszwecken hat das Risiko von Vorurteilen gegenüber Gesellschaften, Einzelpersonen oder Gruppen von
+
+€ (ISO/IEC 2023 - Alle Rechte vorbehalten 29
+
+[PAGE: 38]
+[PAGE_METHOD: ocr]
+
+BS ISO/IEC 42001:2023
+ISO/IEC 42001:2023(E)
+
+Personen. Die Organisation sollte analysieren, wie Akteure KI-Systeme missbrauchen können und wie die KI-Systeme
+unerwünschte historische soziale Vorurteile verstärken können.
+
+KI-Systeme können zur Diagnose und Behandlung von Krankheiten und zur Bestimmung von Qualifikationen für Gesundheitsleistungen verwendet werden.
+Leistungen. KI-Systeme werden auch in Szenarien eingesetzt, in denen Fehlfunktionen zu Tod oder Verletzung von Menschen führen können
+Menschen führen können (z.B. selbstfahrende Autos, Mensch-Maschine-Teams). Das Unternehmen sollte
+sowohl die positiven als auch die negativen Folgen des Einsatzes von KI-Systemen in Betracht ziehen, z. B. in gesundheits- und sicherheitsbezogenen
+Szenarien.
+
+ANMERKUNG ISO/IEC TR 24368 bietet einen Überblick über ethische und gesellschaftliche Bedenken im Zusammenhang mit KI
+Systemen und Anwendungen.
+
+B.6 Lebenszyklus von KI-Systemen
+
+B.6.1 Management-Leitfaden für die Entwicklung von KI-Systemen
+
+B.6.1.1 Zielsetzung
+
+Sicherstellen, dass die Organisation Ziele identifiziert und dokumentiert und Prozesse für die
+verantwortungsvolle Gestaltung und Entwicklung von KI-Systemen.
+
+B.6.1.2 Ziele für die verantwortungsvolle Entwicklung von KI-Systemen
+Kontrolle
+
+Die Organisation sollte Ziele zur Steuerung der verantwortungsvollen Entwicklung von KI-Systemen identifizieren und dokumentieren.
+von KI-Systemen zu leiten, und diese Ziele berücksichtigen und Maßnahmen zu ihrer Erreichung in den
+Lebenszyklus der Entwicklung.
+
+Anleitung zur Implementierung
+
+Die Organisation sollte die Ziele (siehe 6.27) identifizieren, die sich auf den Entwurfs- und Entwicklungsprozess von KI-Systemen auswirken.
+Diese Ziele sollten in den Design- und Entwicklungsprozessen berücksichtigt werden,
+Wenn eine Organisation zum Beispiel "Fairness" als ein Ziel definiert, sollte dies in die
+der Anforderungsspezifikation, der Datenerfassung, der Datenaufbereitung, der Modellschulung, der Verifizierung und
+Validierung, etc. Die Organisation sollte bei Bedarf Anforderungen und Richtlinien vorgeben, um sicherzustellen
+um sicherzustellen, dass die Maßnahmen in die verschiedenen Phasen integriert werden (z.B. die Anforderung, ein bestimmtes Testwerkzeug
+oder Methode zur Bekämpfung von Unfairness oder unerwünschten Verzerrungen), um diese Ziele zu erreichen.
+
+Andere Informationen
+
+KI-Techniken werden eingesetzt, um Sicherheitsmaßnahmen wie die Erkennung von Bedrohungsprognosen und die
+Prävention von Sicherheitsangriffen: Dies ist eine Anwendung von KI-Techniken, die zur Verstärkung von
+Sicherheitsmaßnahmen zum Schutz virtueller Systeme und herkömmlicher, nicht auf KI basierender Softwaresysteme. Der Anhang (
+enthält Beispiele für organisatorische Ziele für das Risikomanagement, die bei der Festlegung von Zielen für KI-Systeme hilfreich sein können.
+Ziele für die Entwicklung von KI-Systemen.
+
+6.6.1.3 Prozesse für die verantwortungsvolle Gestaltung und Entwicklung von KI-Systemen
+Kontrolle
+
+Die Organisation sollte die spezifischen Prozesse für den verantwortungsvollen Entwurf und die Entwicklung des KI-Systems definieren und dokumentieren.
+Entwicklung des KI-Systems definieren und dokumentieren.
+
+30 ISO/IEC 2023 - Alle Rechte vorbehalten
+
+[PAGE: 39]
+[PAGE_METHOD: ocr]
+
+BS ISO/IEC 42001:2023
+ISO/IEC 42001:2023(E)
+
+Anleitung zur Implementierung
+
+Die verantwortliche Entwicklung von KI-Systemprozessen sollte ohne Einschränkung Folgendes berücksichtigen
+die folgenden Punkte:
+
+- Lebenszyklusstadien (ein generisches KI-System-Lebenszyklusmodell wird von ISO/IEC 22989 bereitgestellt, aber die
+Organisation kann jedoch ihre eigenen Lebenszyklusphasen festlegen);
+
+- Testanforderungen und geplante Mittel für den Test;
+
+- Anforderungen an die menschliche Aufsicht, einschließlich Prozesse und Werkzeuge, insbesondere wenn das KI-System
+natürliche Personen betreffen kann;
+
+- in welchen Phasen KI-Systemfolgenabschätzungen durchgeführt werden sollten;
+
+- Erwartungen an Trainingsdaten und Regeln (z.B. welche Daten verwendet werden können, zugelassene Datenlieferanten, Hilfe bei der
+Kennzeichnung); NN "
+
+- erforderliche Fachkenntnisse (Fachgebiet oder andere) oder Ausbildung für eee von iam oder
+beides;
+
+- Freigabekriterien;
+
+-
+rar }
+- Genehmigungen und Freigaben, die in verschiedenen Phasen erforderlich sind; & lo) "
+- Änderungskontrolle; ~ y O -
+_/ ay
+- Benutzerfreundlichkeit und Kontrollierbarkeit; } ana
+y y IY oy
+- Einbindung der interessierten Parteien.
+
+~
+Die spezifischen Design- und Entwicklungsprozesse Qe bereeenn ity und die KI-Technologien
+die für das KI-System verwendet werden sollen. ~,
+
+8.6.2 Lebenszyklus des KI-Systems 4 O
+x &
+B.6.2.1 Zielsetzung Ay XY
+
+Definition der Kriterien und Anforderungen an den Lebenszyklus von KI-Systemen.
+
+B62.2 Alsystem pies ets apd @eciication
+
+Steuerung
+
+Die Organisation: om "mecity und dokumentieren Anforderungen für neue KI-Systeme oder Material
+
+eae sine ane
+Implementierung moe
+sh
+
+Die Organisation sollte die Gründe für die Entwicklung eines KI-Systems und dessen Ziele dokumentieren. Einige der
+Faktoren, die in Betracht gezogen, dokumentiert und verstanden werden sollten, können sein:
+
+a) warum das KI-System entwickelt werden soll, z.B. aufgrund eines Geschäftsvorfalls, eines Kundenwunsches
+Kundenwunsch oder durch die Politik der Regierung;
+
+b) wie das Modell trainiert werden kann und wie die Datenanforderungen erfüllt werden können.
+
+Die Anforderungen an das KI-System sollten spezifiziert werden und den gesamten Lebenszyklus des KI-Systems umfassen. Solche
+Anforderungen sollten in Fällen überprüft werden, in denen das entwickelte KI-System nicht wie vorgesehen funktioniert
+oder neue Informationen auftauchen, die zur Änderung und Verbesserung der Anforderungen genutzt werden können. Für
+Zum Beispiel kann es aus finanzieller Sicht nicht mehr möglich sein, das KI-System zu entwickeln.
+
+€ (ISO/IEC 2023 - Alle Rechte vorbehalten 31
+
+[PAGE: 40]
+[PAGE_METHOD: ocr]
+
+BS [S0/IEC 42001:2023
+ISO/IEC 42001:2023(E)
+
+Andere Informationen
+
+Die Prozesse zur Beschreibung des Lebenszyklus von KI-Systemen werden von ISO/IEC 5338 bereitgestellt. Für weitere Informationen
+über menschzentriertes Design für interaktive Systeme finden Sie in [SO 9241-210,
+
+6.6.2.3 Dokumentation des Entwurfs und der Entwicklung von KI-Systemen
+Steuerung
+
+Die Organisation sollte den Entwurf und die Entwicklung des KI-Systems auf der Grundlage der organisatorischen
+Ziele, dokumentierte Anforderungen und Spezifikationskriterien,
+
+Anleitung zur Implementierung
+
+Für ein KI-System sind viele Design-Entscheidungen erforderlich, darunter unter anderem:
+
+- Ansatz des maschinellen Lernens (z.B. überwacht vs. unbeaufsichtigt);
+
+- Lernalgorithmus und Art des verwendeten maschinellen Lernmodells;
+
+- wie das Modell trainiert werden soll und welche Datenqualität (siehe B.7);
+Bewertung und Verfeinerung der Modelle;
+
+- Hardware- und Softwarekomponenten;
+
+- Sicherheitsbedrohungen, die während des gesamten Lebenszyklus eines KI-Systems berücksichtigt werden; zu den für KI-Systeme spezifischen Sicherheitsthréats gehören
+Systeme sind u.a. Data Poisoning, Modelldiebstahl oder Modellinversionsangriffe;
+
+- Schnittstelle und Präsentation der Ergebnisse;
+- wie Menschen mit dem System interagieren können;
+- Überlegungen zur Interoperabilität und Portabilität.
+
+Es kann mehrere Iterationen zwischen Design und Entwicklung geben, aber die Dokumentation des Stadiums
+sollte gepflegt werden und eine endgültige Dokumentation der Systemarchitektur sollte verfügbar sein.
+
+Andere Informationen
+
+Weitere Informationen zum menschengerechten Design interaktiver Systeme finden Sie in [SO 9241-210.
+
+B.6.2.4 Verifizierung und Validierung von KI-Systemen
+Kontrolle
+
+Die Organisation sollte Verifizierungs- und Validierungsmaßnahmen für das KI-System definieren und dokumentieren
+und Kriterien für deren Anwendung festlegen.
+
+Anleitung zur Implementierung
+
+Die Verifizierungs- und Validierungsmaßnahmen können unter anderem Folgendes umfassen:
+
+- Testmethoden und -werkzeuge;
+
+- die Auswahl der Testdaten und deren Darstellung des beabsichtigten Anwendungsbereichs;
+
+- Anforderungen an die Freigabekriterien.
+
+Die Organisation sollte Bewertungskriterien definieren und dokumentieren, wie z.B., aber nicht beschränkt auf:
+
+- aPlan zur Bewertung der KI-Systemkomponenten und des gesamten KI-Systems im Hinblick auf Risiken in Bezug auf Auswirkungen
+auf Einzelpersonen oder Gruppen von Einzelpersonen, oder beides, und auf die Gesellschaft;
+
+32 ISO/IEC 2023 - Alle Rechte vorbehalten
+
+[PAGE: 41]
+[PAGE_METHOD: ocr]
+
+BS ISO/IEC 42001:2023
+ISO/IEC 42001:2023(E)
+
+- Der Bewertungsplan kann zum Beispiel auf folgenden Kriterien basieren:
+
+- Zuverlässigkeits- und Sicherheitsanforderungen des KI-Systems, einschließlich akzeptabler Fehlerraten für die KI
+Leistung des Systems;
+
+- verantwortungsvolle Ziele für die Entwicklung und den Einsatz des KI-Systems, wie z.B. in B.6.1.2 und B.9.3;
+
+- betriebliche Faktoren wie Datenqualität, Verwendungszweck, einschließlich akzeptabler Bereiche für jeden
+Betriebsfaktoren;
+
+- alle beabsichtigten Verwendungszwecke, die die Festlegung strengerer Betriebsfaktoren erfordern können, einschließlich
+andere akzeptable Bereiche für Betriebsfaktoren oder niedrigere Fehlerquoten;
+
+- die Methoden, Anleitungen oder Metriken, die verwendet werden sollen, um zu bewerten, ob relevante interessierte Parteien, die
+Entscheidungen treffen oder von Entscheidungen betroffen sind, die auf den Ergebnissen des KI-Systems basieren, die Ergebnisse des KI-Systems angemessen interpretieren können.
+die Ergebnisse des KI-Systems angemessen interpretieren können. Die Häufigkeit der Bewertung sollte festgelegt werden und kann auf den
+Ergebnisse einer KI-Systemfolgenabschätzung;
+
+- alle akzeptablen Faktoren, die dazu führen können, dass ein angestrebtes Minimum nicht erreicht werden kann.
+Die Häufigkeit der Evaluierung sollte auf der Grundlage der Ergebnisse einer KI-Folgenabschätzung festgelegt werden, insbesondere dann, wenn das KI-System auf die Auswirkungen auf Einzelpersonen oder Gruppen von Menschen oder beides bewertet wird.
+oder beides, und Gesellschaften (z.B. schlechte Bildauflösung für Computer Vision Systeme oder unklare Geräusche
+die sich auf Spracherkennungssysteme auswirken). Mechanismen für den Umgang mit einer schlechten Systemleistung
+dieser Faktoren sollten ebenfalls dokumentiert werden. "
+ty
+Das KI-System sollte anhand der dokumentierten Bewertungen bewertet werden:
+
+Wenn das KI-System die dokumentierten Kriterien für die KI-Entwicklung und die KI-Nutzung nicht erfüllen kann
+Entwicklung und Nutzung des KI-Systems nicht erfüllen kann (siehe 8,6,1,2 und ), sollte die Ny tisierung die
+die Mängel der beabsichtigten Nutzung des A}- syeter, S Leistungsanforderungen und wie
+die Organisation die Auswirkungen auf Einzelpersonen / oder Gruppen von Einzelpersonen oder beides effektiv angehen kann,
+und Gesellschaften.
+
+HINWEIS Weitere Informationen zur Dea oyen Oe von neuronalen Netzen finden Sie in
+ISO/IEC TR 24029-1, Cr P \ at)
+
+x
+
+Die Organisation sollte einen Plan aufstellen und sicherstellen, dass die entsprechenden Anforderungen erfüllt sind.
+vor dem Einsatz erfüllt sind. ny
+
+Anleitung zur Implementierung GQ Y
+
+KI-Systeme können in verschiedenen Umgebungen entwickelt und in anderen eingesetzt werden (z.B. vor Ort entwickelt
+und de| Senne 2 Cloud Computing) und die Organisation sollte diese Unterschiede
+bei der Erstellung des Entwicklungsplans berücksichtigen. Die Organisation sollte auch berücksichtigen, ob Komponenten
+separat eingesetzt werden (z.B. können Software und Modell unabhängig voneinander eingesetzt werden). Außerdem sollte die
+Organisation über eine Reihe von Anforderungen verfügen, die vor der Freigabe und Bereitstellung erfüllt werden müssen (manchmal als
+als "Freigabekriterien" bezeichnet). Dazu können Verifizierungs- und Validierungsmaßnahmen gehören, die erfüllt werden müssen
+die erfüllt werden müssen, Leistungskennzahlen, die erfüllt werden müssen, Benutzertests, die abgeschlossen werden müssen, sowie Management
+Genehmigungen und Absegnungen, die eingeholt werden müssen. Der Einführungsplan sollte die Perspektiven
+der relevanten interessierten Parteien und deren Auswirkungen berücksichtigen.
+
+B.6.2.5 Einführung des KI-Systems
+
+Kontrolle
+
+8.6.2.6 Betrieb und Überwachung des KI-Systems
+Steuerung
+
+Die Organisation sollte die notwendigen Elemente für den laufenden Betrieb des KI-Systems definieren und dokumentieren.
+KI-Systems festlegen und dokumentieren. Dies sollte mindestens die Überwachung des Systems und der Leistung, Reparaturen, Updates
+und Unterstützung.
+
+€ (ISO/IEC 2023 - Alle Rechte vorbehalten 33
+
+[PAGE: 42]
+[PAGE_METHOD: ocr]
+
+BS ISO/IEC 42001:2023
+ISO/IEC 42001:2023(E)
+
+Anleitung zur Implementierung
+
+Jede Mindestaktivität für Betrieb und Überwachung kann verschiedene Überlegungen berücksichtigen. Für
+Beispiel:
+
+- Die System- und Leistungsüberwachung kann sowohl die Überwachung auf allgemeine Fehler und Ausfälle als auch die
+und ob das System bei Produktionsdaten wie erwartet funktioniert. Technische Leistung
+Kriterien können die Erfolgsquote bei der Lösung von Problemen oder der Erfüllung von Aufgaben oder die Konfidenzrate sein,
+Andere Kriterien können sich auf die Erfüllung von Verpflichtungen oder Erwartungen und Bedürfnissen der interessierten Parteien beziehen,
+Dazu gehört z.B. die laufende Überwachung der Einhaltung von Kundenanforderungen oder
+geltenden rechtlichen Anforderungen.
+
+- Einige eingesetzte KI-Systeme entwickeln ihre Leistung als Ergebnis von ML weiter, wobei Produktionsdaten
+und Ausgabedaten verwendet werden, um das ML-Modell weiter zu trainieren. Wo kontinuierliches Lernen eingesetzt wird, sollte die 7
+Organisation die Leistung des KI-Systems überwachen, um sicherzustellen, dass es weiterhin =,
+seine Designziele erfüllt und wie vorgesehen mit Produktionsdaten arbeitet. auf ¥
+
+- Die Leistung einiger KI-Systeme kann sich auch dann ändern, wenn diese Systeme kein kontinuierliches Lernen verwenden... ©
+in der Regel aufgrund von Konzept- oder Datenabweichungen in den Produktionsdaten. In solchen Fällen kann die Überwachung die
+dass eine Nachschulung erforderlich ist, um sicherzustellen, dass das Alsystem weiterhin wie beabsichtigt mit den Design- und Produktionsdaten arbeitet,
+Produktionsdaten wie beabsichtigt. Weitere Informationen finden Sie in [S0/IEC 230
+
+- Reparaturen können Reaktionen auf Fehler und Ausfälle im System beinhalten. Th 5 aie uld have
+Prozesse für die Reaktion und Reparatur dieser Probleme. Zusatz A Supdat Leobe notwendig
+wenn sich das System weiterentwickelt oder wenn kritische Probleme identifiziert werden oder wenn die von außen identifizierten Probleme
+(z.B. Nichteinhaltung von Kundenerwartungen oder gesetzlichen Vorschriften). Es sollte Prozesse geben
+für die Aktualisierung des Systems, einschließlich der betroffenen Komponenten, vorhanden sein.
+Benutzer darüber informieren, was in der Aktualisierung enthalten ist.
+
+; ~y
+Systemaktualisierungen können auch Änderungen am System oder an den beabsichtigten Verwendungszwecken von Sy beinhalten,
+oder andere Änderungen der Systemfunktionalität. Die Organisation sollte über Verfahren verfügen, um
+für betriebliche Änderungen, einschließlich der Kommunikation mit den Benutzern,
+
+- Der Support für das System kann intern, extern oder beides sein und hängt von den Bedürfnissen der Organisation ab.
+und wie das System erworben wurde. Sp UeaguEcee hip ld berücksichtigen, wie die Benutzer die
+wie Probleme und Probleme mit dem System gelöst werden können, wie Service Level Agreements und
+Metriken.
+
+- Wenn KI-Systeme für andere Zwecke als die, für die sie entwickelt wurden, oder auf
+oder auf eine Art und Weise genutzt werden, die nicht vorgesehen war, sollte die Wahrscheinlichkeit einer solchen Nutzung berücksichtigt werden.
+
+- Die spezifische Informationssicherheit in Bezug auf die von der Organisation eingesetzten und entwickelten KI-Systeme
+Zu den spezifischen Bedrohungen der Informationssicherheit gehören unter anderem
+
+Datenpiraterie und Modellinversionsangriffe.
+
+Andere Informationen 'über O"
+Die Organisation sollte die betriebliche Leistung berücksichtigen, die sich auf interessierte Parteien auswirken kann und
+dies bei der Entwicklung und Festlegung von Leistungskriterien berücksichtigen.
+
+Die Leistungskriterien für KI-Systeme im Betrieb sollten durch die jeweilige Aufgabe bestimmt werden,
+wie z.B. Klassifizierung, Regression, Ranking, Clustering oder Dimensionalitätsreduktion.
+
+Zu den Leistungskriterien können statistische Aspekte wie Fehlerraten und Verarbeitungsdauer gehören,
+Für jedes Kriterium sollte die Organisation alle relevanten Metriken sowie die Abhängigkeiten zwischen
+zwischen Metriken. Für jede Metrik sollte die Organisation akzeptable Werte in Betracht ziehen, die z.B. auf
+Empfehlungen von Fachleuten und der Analyse der Erwartungen der interessierten Parteien im Vergleich zu
+in Bezug auf bestehende Nicht-Al-Praktiken.
+
+Eine Organisation kann zum Beispiel entscheiden, dass der F, Score eine angemessene Leistungskennzahl ist.
+Metrik ist, basierend auf der Bewertung der Auswirkungen von falsch-positiven und falsch-negativen Ergebnissen, wie beschrieben in
+
+34 ISO/IEC 2023 - Alle Rechte vorbehalten
+
+[PAGE: 43]
+[PAGE_METHOD: ocr]
+
+BS ISO/IEC 42001:2023
+ISO/IEC 42001:2023(E)
+
+ISO/IEC TS 4213. Die Organisation kann dann einen F-Wert festlegen, den das KI-System erfüllen soll.
+erfüllen soll. Es sollte geprüft werden, ob diese Probleme durch bestehende Maßnahmen gelöst werden können. Wenn das nicht der Fall ist,
+sollten Änderungen an bestehenden Maßnahmen in Betracht gezogen oder zusätzliche Maßnahmen definiert werden, um diese Probleme zu erkennen
+und diese Probleme zu behandeln.
+
+Die Organisation sollte die Leistung von Nicht-Al-Systemen oder -Prozessen im Betrieb berücksichtigen und diese als
+sie als potenziell relevanten Kontext bei der Festlegung von Leistungskriterien verwenden.
+
+Die Organisation sollte außerdem sicherstellen, dass die Mittel und Prozesse, die zur Bewertung des KI
+Systems, gegebenenfalls einschließlich der Auswahl und Verwaltung der Bewertungsdaten, die
+Vollständigkeit und Zuverlässigkeit bei der Bewertung der Leistung des Systems im Hinblick auf die festgelegten Kriterien verbessern.
+
+Die Entwicklung von Methoden zur Leistungsbewertung kann auf Kriterien, Metriken und Werten beruhen.
+Diese sollten die Menge der Daten und die Art der bei der Bewertung verwendeten Prozesse sowie die
+Rollen und Fachkenntnisse des Personals, das die Bewertung durchführt. 4
+
+Die Methoden zur Leistungsbewertung sollten die Attribute und Merkmale des Betriebs
+so genau wie möglich widerspiegeln, um sicherzustellen, dass die Bewertungsergebnisse nützlich und relevant sind. Sorie Aspekte
+der Leistungsbeurteilung können die kontrollierte Einführung von fehlerhaften oder spärlichen Daten oder
+Prozesse, um die Auswirkungen auf die Leistung zu bewerten. ne /
+
+Das Qualitätsmodell in ISO/IEC 25059 kann verwendet werden, um die Leistung ster, A,
+& C
+B.6.2.7 Technische Dokumentation des Al-Systems SY rt 2
+
+Kontrolle eu 'awe
+
+y
+Die Organisation sollte festlegen, welche Al ee - ch Seto für jede
+relevante Kategorie von interessierten Parteien, wie z.B. Benutzer. Bp semenbehörden, und ihnen die
+und ihnen die technische Dokumentation in der übersichtlicheren U3
+
+Anleitung zur Implementierung Cy
+Die technische Dokumentation des KI-Systems kann folgende Elemente enthalten:
+
+- eine allgemeine Beschreibung des KI-Systems einschließlich des beabsichtigten Zwecks;
+
+- Gebrauchsanweisungen; oy dre &
+
+- technische Annahmen zu Fleisch und Betrieb (Laufzeitumgebung, zugehörige Software
+und Hardwarekanäle, Annahmen zu den Daten, usw.);
+
+- Technische Einschränkungen: eea-Tabelle Fehlerraten, Genauigkeit, Zuverlässigkeit, Robustheit);
+- Überwachungsmöglichkeiten und Funktionen, die es Benutzern oder Betreibern ermöglichen, das System zu beeinflussen
+Betrieb: | (
+
+Die Dokumentation ele its) in Bezug auf alle Phasen des Lebenszyklus eines KI-Systems (wie in ISO/IEC 22989 definiert) kann
+umfassen, sind aber nicht beschränkt auf:
+
+- Design und Spezifikation der Systemarchitektur;
+
+- Designentscheidungen und Qualitätsmaßnahmen, die während des Systementwicklungsprozesses getroffen wurden;
+
+- Informationen über die während der Systementwicklung verwendeten Daten;
+
+- Annahmen und Qualitätsmaßnahmen zur Datenqualität (z.B. angenommene statistische Verteilungen);
+
+- Managementaktivitäten (z.B. Risikomanagement), die während der Entwicklung oder des Betriebs des KI
+Systems;
+
+- Aufzeichnungen zur Verifizierung und Validierung;
+
+€ (ISO/IEC 2023 - Alle Rechte vorbehalten 35.
+
+[PAGE: 44]
+[PAGE_METHOD: ocr]
+
+BS ISO/IEC 42001:2023
+ISO/IEC 42001:2023(E)
+
+- Änderungen, die am KI-System vorgenommen werden, wenn es in Betrieb ist;
+- Dokumentation der Folgenabschätzung wie in B.5 beschrieben.
+
+Die Organisation sollte technische Informationen über den verantwortlichen Betrieb des KI-Systems dokumentieren.
+Systems. Dies kann Folgendes umfassen, ist aber nicht darauf beschränkt:
+
+- die Dokumentation eines Plans für den Umgang mit Ausfällen. Dazu kann zum Beispiel die Notwendigkeit gehören, einen
+Rollback-Plan für das KI-System, das Abschalten von Funktionen des KI-Systems, einen Aktualisierungsprozess oder einen Plan zur
+einen Aktualisierungsprozess oder einen Plan für die Benachrichtigung von Kunden, Benutzern usw. über Änderungen am KI-System, aktualisierte Informationen über Systemausfälle
+und wie diese abgemildert werden können;
+
+- die Dokumentation von Prozessen zur Überwachung des Zustands des KI-Systems (z.B. das KI-System arbeitet wie vorgesehen und innerhalb seiner normalen
+auch als Beobachtbarkeit bezeichnet) und Prozesse zur Behandlung von KI-Systemausfällen
+für die Behebung von KI-Systemausfällen;
+
+- die Dokumentation von Standardbetriebsverfahren für das KI-System, einschließlich der Ereignisse, die überwacht werden sollen,
+überwacht werden sollen und wie die Ereignisprotokolle priorisiert und überprüft werden. Es kann auch beinhalten, wie man mit ".
+Ausfälle und die Vorbeugung von Ausfällen;
+
+- Dokumentation der Rollen des Personals, das für den Betrieb des KI-Systems verantwortlich ist, sowie derjenigen
+Verantwortliche für die Rechenschaftspflicht bei der Nutzung des Systems, insbesondere in Bezug auf KI
+Systemausfällen oder der Verwaltung von Aktualisierungen des KI-Systems;
+
+= Dokumentieren von Systemaktualisierungen wie Änderungen im Systembetrieb, Fox Pact Nutzungen,
+oder andere Änderungen der Systemfunktionalität. nein
+
+Die Organisation sollte über Verfahren verfügen, die folgende Punkte berücksichtigen
+Kommunikation mit den Benutzern und interne Auswertungen über das DY,
+
+Die Dokumentation sollte auf dem neuesten Stand und korrekt sein. Die Dokumente müssen von den zuständigen Stellen genehmigt werden.
+
+Management innerhalb der Organisation genehmigt werden. le:
+
+Wenn sie als Teil des Benutzer-CociMentatinn ea ntrolf bereitgestellt wird, sollten die in Tabelle A.1
+berücksichtigt werden. xy &
+
+B.6.2.8 Al Systemaufzeichnung des Ereignisses "3. ~Y
+
+Kontrolle . "y
+
++ "
+Die Organisation sollte bestimmen, in welchen Phasen des Lebenszyklus des AL-Systems die Aufzeichnung von Ereignisprotokollen
+Ereignisprotokollen ermöglicht werden soll, aber zu e\mi
+
+Qe das AL-System in Gebrauch ist,
+Leitfaden zur Implementierung x
+oo
+
+Die Organisation $' ld-evisure 16g ing für KI-Systeme, die sie einsetzt, um automatisch Ereignisprotokolle zu sammeln und aufzuzeichnen
+Ereignisprotokolle zu sammeln und aufzuzeichnen, die sich auf Ereignisse beziehen, die während des Betriebs auftreten. Diese Protokollierung kann Folgendes umfassen, ist aber nicht
+aber nicht beschränkt auf:
+
+- die Rückverfolgbarkeit der KI-Funktionen, um sicherzustellen, dass das KI-System wie vorgesehen funktioniert;
+
+- Erkennung der Leistung des KI-Systems außerhalb der vorgesehenen Betriebsbedingungen des KI-Systems
+die zu unerwünschten Auswirkungen auf die Produktionsdaten oder auf relevante Interessengruppen führen können
+durch die Überwachung des Betriebs des KI-Systems,
+
+KI-System-Ereignisprotokolle können Informationen enthalten, wie z.B. die Uhrzeit und das Datum jedes Einsatzes des KI-Systems,
+die Produktionsdaten, mit denen das KI-System arbeitet, die Ausgaben, die aus dem Bereich des
+vorgesehenen Betrieb des KI-Systems fallen, usw.
+
+Ereignisprotokolle sollten so lange aufbewahrt werden, wie es für die beabsichtigte Nutzung des KI-Systems erforderlich ist und im Rahmen der
+Datenaufbewahrungsrichtlinien der Organisation. Es können gesetzliche Anforderungen an die Datenaufbewahrung gelten.
+
+36 ISO/IEC 2023 - Alle Rechte vorbehalten
+
+[PAGE: 45]
+[PAGE_METHOD: ocr]
+
+BS ISO/IEC 42001:2023
+ISO/IEC 42001:2023(E)
+
+Andere Informationen
+
+Für einige KI-Systeme, wie z.B. biometrische Identifizierungssysteme, können je nach Rechtsprechung zusätzliche Protokollierungsanforderungen gelten
+abhängig von der Gerichtsbarkeit. Organisationen sollten sich dieser Anforderungen bewusst sein.
+
+B.7 Daten für KI-Systeme
+
+B.7.1 Zielsetzung
+
+Sicherstellen, dass die Organisation die Rolle und die Auswirkungen von Daten in KI-Systemen bei der Anwendung
+und Entwicklung, Bereitstellung oder Nutzung von KI-Systemen während ihres gesamten Lebenszyklus.
+
+8.7.2 Daten für die Entwicklung und Verbesserung von KI-Systemen
+Kontrolle
+
+Die Organisation sollte Datenverwaltungsprozesse für die Entwicklung von KI-Systemen definieren, dokumentieren und umsetzen.
+Entwicklung von KI-Systemen.
+
+Anleitung zur Implementierung
+
+Die Datenverwaltung kann verschiedene Themen umfassen, wie z.B., aber nicht nur;
+
+- Auswirkungen auf den Datenschutz und die Sicherheit aufgrund der Verwendung von Daten, von denen einige sensibler Natur sein können;
+- Sicherheitsbedrohungen, die sich aus der datenabhängigen Entwicklung von KI-Systemen ergeben können;
+
+- Aspekte der Transparenz und Erklärbarkeit, einschließlich der Herkunft der Daten und der Fähigkeit, eine
+Datenherkunft und die Fähigkeit, zu erklären, wie die Daten für die Bestimmung des Outputs des AL-Systems verwendet werden, wenn das System
+Transparenz und Erklärbarkeit;
+
+- Repräsentativität der Trainingsdaten in Bezug auf den betrieblichen Anwendungsbereich;
+- Genauigkeit und Integrität der Daten.
+
+HINWEIS Detaillierte Informationen über den Lebenszyklus von Alé-Systemen und die Konzepte der Datenverwaltung finden Sie in
+ISO/IEC 22989,
+
+B.7.3 Beschaffung von Daten
+Steuerung
+
+Die Organisation sollte Details zur Erfassung und Auswahl der in KI-Systemen verwendeten Daten festlegen und dokumentieren.
+Daten, die in KI-Systemen verwendet werden,
+
+Anleitung zur Implementierung.
+
+Die Organisation kann verschiedene Kategorien von Daten aus unterschiedlichen Quellen benötigen, je nach Umfang
+und der Verwendung ihrer KI-Systeme. Details zur Datenerfassung können sein:
+
+- Kategorien von Daten, die für das KI-System benötigt werden;
+
+- die Menge der benötigten Daten:
+
+- Datenquellen (z.B. interne, gekaufte, gemeinsam genutzte, offene Daten, synthetische);
+
+- Merkmale der Datenquelle (z.B. statisch, gestreamt, gesammelt, maschinell erzeugt);
+
+- Demografische Daten und Merkmale der Datensubjekte (z.B. bekannte oder potenzielle Verzerrungen oder andere systematische
+Fehler);
+
+- frühere Behandlung der Daten (z.B. frühere Verwendungen, Übereinstimmung mit Datenschutz- und Sicherheitsanforderungen):
+
+€ (ISO/IEC 2023 - Alle Rechte vorbehalten 37
+
+[PAGE: 46]
+[PAGE_METHOD: ocr]
+
+BS [S0/IEC 42001:2023
+ISO/IEC 42001:2023(E)
+
+- Datenrechte (z.B. Pll, Copyright);
+
+- zugehörige Metadaten (z.B. Details zur Datenkennzeichnung und -anreicherung);
+- Herkunft der Daten.
+
+Andere Informationen
+
+Die Datenkategorien und eine Struktur für die Datennutzung in ISO/TEC 19944-1 können verwendet werden, um Details zu dokumentieren
+über den Erwerb und die Verwendung von Daten.
+
+B.7.4 Qualität der Daten für KI-Systeme
+Kontrolle
+
+Die Organisation sollte Anforderungen an die Datenqualität definieren und dokumentieren und sicherstellen, dass die für die Entwicklung und den Betrieb des KI-Systems verwendeten Daten
+die für die Entwicklung und den Betrieb des KI-Systems verwendet werden, diese Anforderungen erfüllen.
+
+Anleitung zur Implementierung
+
+Die Qualität der Daten, die für die Entwicklung und den Betrieb von KI-Systemen verwendet werden, hat möglicherweise erhebliche Auswirkungen auf
+die Gültigkeit der Ergebnisse des Systems aus. ISO/IEC 25024 definiert Datenqualität als den Grad, in dem die
+Eigenschaften der Daten den angegebenen und impliziten Anforderungen entsprechen, wenn sie unter bestimmten Bedingungen verwendet werden. Für
+KI-Systeme, die überwachtes oder halbüberwachtes maschinelles Lernen verwenden, ist es wichtig, dass die Qualität
+die Qualität der Trainings-, Validierungs-, Test- und Produktionsdaten so weit wie möglich definiert, gemessen und bewertet* wird.
+Die Organisation sollte sicherstellen, dass die Daten für den beabsichtigten Zweck geeignet sind. Die
+Organisation sollte die Auswirkungen von Verzerrungen auf die Systemleistung und die Fairness des Systems berücksichtigen und
+Modell und die Daten, die zur Verbesserung der Leistung und Fairness verwendet werden, so anpassen, dass sie
+für den Anwendungsfall akzeptabel sind.
+
+Andere Informationen
+
+Weitere Informationen zur Datenqualität finden Sie in derdSO/IEC 5259 Serie2) zur Datenqualität
+für Analytik und ML. Zusätzliche Informationen über verschiedene Formen von Verzerrungen in Daten, die in KI
+Systemen verwendet werden, finden Sie in ISO/IEC TR 24027.
+
+B.7.5 Datenherkunft
+Kontrolle
+
+Die Organisation sollte einen Prozess zur Aufzeichnung der Herkunft der in ihren KI-Systemen verwendeten Daten definieren und dokumentieren.
+KI-Systemen verwendeten Daten über den Lebenszyklus der Daten und des KI-Systems.
+
+Anleitung zur Implementierung
+
+Gemäß ISO 8000-24 kann die Aufzeichnung der Datenherkunft Informationen über die Erstellung,
+Aktualisierung, Transkription, Abstraktion, Validierung und Übertragung der Kontrolle von Daten enthalten. Zusätzlich,
+die gemeinsame Nutzung von Daten (ohne Übertragung der Kontrolle) und Datentransformationen unter die Datenherkunft fallen.
+Provenienz betrachtet werden. Abhängig von Faktoren wie der Quelle der Daten, ihrem Inhalt und dem Kontext ihrer Verwendung,
+sollten Organisationen überlegen, ob Maßnahmen zur Überprüfung der Herkunft der Daten erforderlich sind.
+
+B.7.6 Datenaufbereitung
+Kontrolle
+
+Die Organisation soll ihre Kriterien für die Auswahl von Datenaufbereitungen und die zu verwendenden Datenaufbereitungsmethoden definieren und dokumentieren.
+Aufbereitungsmethoden.
+
+Anleitung zur Implementierung
+Daten, die in einem KI-System verwendet werden, müssen in der Regel aufbereitet werden, um sie für eine bestimmte KI-Aufgabe nutzbar zu machen. Für
+
+zum Beispiel sind Algorithmen für maschinelles Lernen manchmal intolerant gegenüber fehlenden oder falschen Einträgen, nicht
+
+38 ISO/IEC 2023 - Alle Rechte vorbehalten
+
+[PAGE: 47]
+[PAGE_METHOD: ocr]
+
+BS ISO/IEC 42001:2023
+ISO/IEC 42001:2023(E)
+
+Normalverteilung und stark variierende Skalen. Aufbereitungsmethoden und Transformationen können verwendet werden, um
+die Qualität der Daten zu verbessern. Werden die Daten nicht ordnungsgemäß aufbereitet, kann dies potenziell zu KI-Systemen führen.
+Zu den gängigen Aufbereitungsmethoden und Transformationen für Daten, die in KI-Systemen verwendet werden, gehören:
+
+- die statistische Untersuchung der Daten (z.B. Verteilung, Mittelwert, Median, Standardabweichung, Bereich,
+Schichtung, Stichproben) und statistische Metadaten (z.B. Data Documentation Initiative (DDI)
+Spezifikation|2il);
+
+- Bereinigung (d.h. Korrektur von Einträgen, Umgang mit fehlenden Einträgen);
+
+- Imputation (d.h. Methoden zum Auffüllen fehlender Einträge);
+
+- Normalisierung;
+
+- Skalierung;
+
+- Beschriftung der Zielvariablen;
+
+- Kodierung (z.B. Umwandlung kategorischer Variablen in Zahlen) ; '
+
+Für eine bestimmte KI-Aufgabe sollte die Organisation ihre Kriterien für die Auswahl bestimmter Datenaufbereitungs
+Methoden und Transformationen sowie die spezifischen Methoden und Transformationen, die in der KI-Aufgabe verwendet werden.
+
+HINWEIS Zusätzliche Informationen über die Datenaufbereitung speziell für maschinelles Lernen finden Sie in der ISO/IEC 5259
+Serie®! und ISO/TEC 23053.
+
+B.8 Informationen für interessierte Parteien
+
+B.8.1 Zielsetzung
+
+Sicherstellen, dass die relevanten interessierten Parteien über die notwendigen Informationen verfügen, um die
+Risiken und deren Auswirkungen (sowohl positiv als auch negativ) zu verstehen und zu bewerten.
+
+B.8.2 Systemdokumentation und Informationen für Benutzer
+
+Kontrolle
+
+Die Organisation sollte die notwendigen Informationen für die Benutzer des Systems entwickeln und bereitstellen.
+
+Anleitung zur Implementierung,
+
+Die Informationen über das KI-System können sowohl technische Details und Anweisungen als auch allgemeine
+Hinweise für die Benutzer*innen, dass sie mit einem KI-System interagieren, je nach Kontext. Dies kann
+Dies kann auch das System selbst sowie mögliche Ergebnisse des Systems umfassen (z.B. die Benachrichtigung der Benutzer, dass ein
+Bild erstellt wurde)-
+
+Auch wenn KI-Systeme komplex sind, ist es wichtig, dass die Benutzer verstehen können, wann sie mit einem
+wenn sie mit einem4 ,KI-System interagieren, wie das System funktioniert. Die Benutzer müssen auch den Zweck des Systems
+Zweck und die beabsichtigten Verwendungszwecke, sein Potenzial, Schaden anzurichten oder dem Benutzer zu nützen. Einige Systemdokumentationen
+kann sich zwangsläufig an eher technische Benutzer richten (z.B. Systemadministratoren), und die Organisation
+sollte die Bedürfnisse der verschiedenen interessierten Parteien verstehen und wissen, was Verständlichkeit für sie bedeuten kann.
+ihnen bedeuten kann. Die Informationen sollten auch zugänglich sein, sowohl im Hinblick auf die Benutzerfreundlichkeit beim Auffinden der Informationen als auch für
+Benutzer, die zusätzliche Zugänglichkeitsfunktionen benötigen können.
+
+Zu den Informationen, die den Nutzern zur Verfügung gestellt werden können, gehören unter anderem:
+- den Zweck des Systems;
+- dass der Benutzer mit einem KI-System interagiert:
+
+- wie man mit dem System interagiert:
+
+€ (ISO/IEC 2023 - Alle Rechte vorbehalten 39
+
+[PAGE: 48]
+[PAGE_METHOD: ocr]
+
+BS ISO/IEC 42001:2023
+ISO/IEC 42001:2023(E)
+
+- wie und wann Sie das System außer Kraft setzen;
+
+- die technischen Anforderungen für den Betrieb des Systems, einschließlich der benötigten Rechenressourcen, und
+die Grenzen des Systems sowie seine erwartete Lebensdauer;
+
+- Bedarf an menschlicher Aufsicht;
+- Informationen über Genauigkeit und Leistung;
+
+- relevante Informationen aus der Folgenabschätzung, einschließlich potenzieller Vorteile und Schäden,
+insbesondere wenn sie in bestimmten Kontexten oder für bestimmte demografische Gruppen gelten (siehe 8.5.2 und
+B.S);
+
+- Revisionen der Behauptungen über die Vorteile des Systems;
+
+- Aktualisierungen und Änderungen in der Funktionsweise des Systems sowie alle notwendigen Wartungsmaßnahmen,
+einschließlich deren Häufigkeit;
+
+- Kontaktinformationen;
+
+- Lehrmaterial für die Nutzung des Systems. Ky
+
+dokumentiert werden. Zu den relevanten Kriterien gehören unter anderem der vernünftigerweise
+vorhersehbarer Missbrauch des KI-Systems, das Fachwissen des Benutzers und die Spezifikation des Systems.
+Informationen können den Benutzern auf verschiedene Weise zur Verfügung gestellt werden, z.B. in Form von Anleitungen für die Verwendung,
+Warnungen und andere Benachrichtigungen, die in das System selbst eingebaut sind, Informationen! auf einer Website usw. Je nachdem
+Je nachdem, welche Methoden das Unternehmen einsetzt, um den Benutzern die Informationen zur Verfügung zu stellen, die sie haben.
+
+dass die Benutzer Zugang zu diesen Informationen haben und dass die Informationen auf dem neuesten Stand und korrekt sind,
+
+a
+Kriterien, die die Organisation verwendet, um zu bestimmen, ob und welche Informationen sie weitergeben sollte.
+sie
+
+B.8.3 Externe Berichterstattung für
+
+Kontrolle ?, O)
+
+Die Organisation sollte Ri interastethpirties die Möglichkeit bieten, nachteilige Auswirkungen der
+
+Systems zu melden. 'os
+
+ey "n
+
+Anleitung zur Implementierung . ! + "
+
+Während der Systembetrieb für gemeldete Probleme und Ausfälle verantwortlich ist, sollte die Organisation
+sollte die Organisation auch die Möglichkeit bieten, dass externe Parteien nachteilige Auswirkungen (z.B.
+Ungerechtigkeit). a av,
+
+cy
+B.8.4 Kommunikation bei Zwischenfällen
+ra a
+Kontrolle J AY
+Die Organisation sollte einen Plan für die Kommunikation von Vorfällen an die Benutzer des Systems festlegen und dokumentieren.
+Systems,
+
+Anleitung zur Implementierung
+
+Vorfälle im Zusammenhang mit dem KI-System können sich auf das KI-System selbst oder auf die Informationssicherheit oder den Datenschutz beziehen (z.B. Datenschutzverletzungen).
+Sicherheit oder den Datenschutz (z.B. eine Datenverletzung). Die Organisation sollte sich über ihre Verpflichtungen im Klaren sein
+Benutzer und andere interessierte Parteien über Vorfälle zu informieren, je nach dem Kontext, in dem das
+System arbeitet. So kann beispielsweise ein Vorfall mit einer KI-Komponente, die Teil eines Produkts ist, das die
+Sicherheit betrifft, andere Anforderungen an die Benachrichtigung stellen als andere Arten von Systemen. Gesetzliche Anforderungen
+(z. B. Verträge) und behördliche Maßnahmen können gelten, die Anforderungen für:
+
+- Arten von Vorfällen, die gemeldet werden müssen;
+
+40 ISO/IEC 2023 - Alle Rechte vorbehalten
+
+Oo"
+
+*
+
+[PAGE: 49]
+[PAGE_METHOD: ocr]
+
+BS ISO/IEC 42001:2023
+ISO/IEC 42001:2023(E)
+
+- der Zeitplan für die Benachrichtigung;
+- ob und welche Behörden benachrichtigt werden müssen;
+- die zu übermittelnden Einzelheiten.
+
+Die Organisation kann die Reaktion auf einen Vorfall und die Berichterstattung über KI in ihre umfassenderen
+Vorfallsmanagement integrieren, sollte sich aber der besonderen Anforderungen bewusst sein, die für
+für KI-Systeme oder einzelne Komponenten von KI-Systemen (z.B. kann eine Verletzung der PIl-Daten in den Schulungsdaten für das
+System kann andere Anforderungen an die Berichterstattung in Bezug auf den Datenschutz haben).
+
+Andere Informationen
+
+ISO/IEC 27001 und ISO/IEC 27701 enthalten zusätzliche Details zum Incident Management für Sicherheit und
+Datenschutz,
+
+8.8.5 Informationen für interessierte Parteien
+Kontrolle
+
+Die Organisation sollte ihre Verpflichtungen zur Weitergabe von Informationen über das KI-System an interessierte Parteien festlegen und dokumentieren.
+System an interessierte Parteien.
+
+Anleitung zur Implementierung
+
+In einigen Fällen kann eine Gerichtsbarkeit verlangen, dass Informationen über das System an Behörden weitergegeben werden.
+wie z.B. Regulierungsbehörden. Die Informationen können an interessierte Parteien wie Kunden oder Regulierungsbehörden
+Regulierungsbehörden innerhalb eines angemessenen Zeitrahmens gemeldet werden. Die Informationen, die weitergegeben werden, können z.B. Folgendes umfassen:
+
+- technische Systemdokumentation, einschließlich, aber nicht beschränkt auf Datensätze für Trai
+Tests sowie Begründungen für algorithmische Entscheidungen und Verifizierung und Validierung
+
+Verifizierung, Validierung und
+nm Aufzeichnungen;
+
+- Risiken im Zusammenhang mit dem System;
+Ergebnisse von Folgenabschätzungen;
+- Protokolle und andere Systemaufzeichnungen.
+
+Die Organisation sollte ihre Verpflichtungen in dieser Hinsicht verstehen und sicherstellen, dass die entsprechenden
+Informationen an die zuständigen Behörden weitergegeben werden. Es wird außerdem vorausgesetzt, dass die Organisation
+dass die Organisation sich der rechtlichen Anforderungen in Bezug auf die Weitergabe von Informationen an die Strafverfolgungsbehörden bewusst ist.
+
+B.9 Verwendung von KI-Systemen
+
+B.9.1 Zielsetzung
+
+Sicherstellen, dass die Organisation KI-Systeme verantwortungsvoll und gemäß den Unternehmensrichtlinien einsetzt.
+
+£.9.2 Prozesse für die verantwortungsvolle Nutzung von KI-Systemen
+
+Kontrolle
+
+Die Organisation sollte die Prozesse für den verantwortungsvollen Einsatz von KI-Systemen definieren und dokumentieren.
+Anleitung zur Implementierung
+
+Je nach Kontext kann eine Organisation viele Überlegungen anstellen, um zu entscheiden, ob sie
+ein bestimmtes KI-System zu verwenden. Unabhängig davon, ob das KI-System von der Organisation selbst entwickelt wurde oder von einem Dritten bezogen wurde
+von einem Dritten bezogen wird, sollte sich die Organisation darüber im Klaren sein, was diese Überlegungen sind und
+Richtlinien entwickeln, um sie zu berücksichtigen. Einige Beispiele sind:
+
+- erforderliche Genehmigungen;
+
+€ (ISO/IEC 2023 - Alle Rechte vorbehalten 41
+
+[PAGE: 50]
+[PAGE_METHOD: ocr]
+
+BS ISO/IEC 42001:2023
+ISO/IEC 42001:2023(E)
+
+- Kosten (einschließlich der Kosten für laufende Überwachung und Wartung);
+- genehmigte Beschaffungsanforderungen;
+- für die Organisation geltende gesetzliche Anforderungen.
+
+Wenn die Organisation Richtlinien für die Nutzung anderer Systeme, Vermögenswerte usw. akzeptiert hat, können diese Richtlinien
+können diese Richtlinien auf Wunsch übernommen werden.
+
+B.9.3 Ziele für die verantwortungsvolle Nutzung des KI-Systems
+Kontrolle
+
+Die Organisation sollte Ziele für den verantwortungsvollen Einsatz von KI-Systemen festlegen und dokumentieren.
+
+Anleitung zur Umsetzung
+
+Die Organisation, die in verschiedenen Kontexten tätig ist, kann unterschiedliche Erwartungen und Ziele haben, was
+was die verantwortungsvolle Entwicklung von KI-Systemen ausmacht. Je nach ihrem Kontext sollte "oa organ BS
+ihre Ziele in Bezug auf eine verantwortungsvolle Nutzung festlegen. Einige Ziele sind: eo}
+
+- Fairness; wv
+
+ean C7) ' 4,
+- Rechenschaftspflicht; wir (fa)
+- Transparenz; > ~O
+
+- Erklärbarkeit; OC Nw
+- Zuverlässigkeit; SY ) x"
+- Sicherheit; RQ
+- Robustheit und Redundanz;
+
+, | ZO
+- Datenschutz und Sicherheit; xy
+- Zugänglichkeit. Ny AY
+
+Einmal definiert, zeigt die Organisation Orne reais, um ihre Ziele zu erreichen: innerhalb der
+Organisation. Dazu kann gehören =v eine Lösung eines Drittanbieters die Ziele der Organisation erfüllt
+oder wenn eine intern entwickelte Lösung für den beabsichtigten Zweck geeignet ist. Die Organisation sollte
+bestimmen, in welchen Phasen des Prozesses sinnvolle Ziele für die menschliche Kontrolle berücksichtigt werden sollen.
+integriert werden. Dies kann beinhalten!
+
+- die Einbeziehung menschlicher Prüfer zur Kontrolle der Ergebnisse des KI-Systems, einschließlich der Befugnis, die
+Entscheidungen des KI-Systems außer Kraft zu setzen;
+
+- Sicherstellen, dass Ohren vSight einbezogen wird, wenn dies für eine akzeptable Nutzung des KI-Systems gemäß
+gemäß den Anweisungen oder der sonstigen Dokumentation im Zusammenhang mit dem geplanten Einsatz des KI-Systems;
+- Überwachung der Leistung des KI-Systems, einschließlich der Genauigkeit der Ergebnisse des KI-Systems;
+
+- die Meldung von Problemen im Zusammenhang mit den Ergebnissen des KI-Systems und deren Auswirkungen an die relevanten interessierten Parteien
+Parteien;
+
+- Meldung von Bedenken in Bezug auf Veränderungen der Leistung oder der Fähigkeit des KI-Systems, korrekte
+Produktionsdaten auszugeben;
+
+- Abwägung, ob eine automatisierte Entscheidungsfindung für einen verantwortungsvollen Umgang mit der
+Nutzung eines KI-Systems und die beabsichtigte Nutzung des KI-Systems.
+
+Der Bedarf an menschlicher Aufsicht kann durch die KI-Folgenabschätzungen ermittelt werden (siehe 6,5). Die
+Personal, das an der menschlichen Aufsicht über das KI-System beteiligt ist, sollte darüber informiert und geschult werden.
+
+42 ISO/IEC 2023 - Alle Rechte vorbehalten
+
+[PAGE: 51]
+[PAGE_METHOD: ocr]
+
+BS ISO/IEC 42001:2023
+ISO/IEC 42001:2023(E)
+
+und verstehen die Anweisungen und sonstigen Unterlagen zum KI-System und die Aufgaben, die sie ausführen
+um die Ziele der menschlichen Aufsicht zu erfüllen. Bei der Meldung von Leistungsproblemen kann die menschliche Aufsicht
+die automatische Überwachung ergänzen.
+
+Andere Informationen
+
+Anhang € enthält Beispiele für organisatorische Ziele für das Risikomanagement, die bei der
+die Ziele für die Nutzung des KI-Systems zu bestimmen.
+
+8.9.4 Beabsichtigte Nutzung des KI-Systems
+Kontrolle
+
+Die Organisation sollte sicherstellen, dass das KI-System entsprechend der beabsichtigten Verwendung des KI-Systems und der dazugehörigen Dokumentation eingesetzt wird.
+Systems und der dazugehörigen Dokumentation verwendet wird.
+
+Anleitung zur Implementierung
+
+Das KI-System sollte gemäß den Anweisungen und der sonstigen Dokumentation eingesetzt werden.
+die zum KI-System gehören (siehe 6.8.2). Der Einsatz kann spezifische Ressourcen zur Unterstützung des Einsatzes erfordern.
+Einsatz zu unterstützen, einschließlich der Notwendigkeit, die erforderliche menschliche Aufsicht zu gewährleisten (siehe B.9.3). Es kann
+Es kann notwendig sein, dass für eine akzeptable Nutzung des KI-Systems die Daten, auf die sich das KI-System stützt, mit den
+der mit dem KI-System verbundenen Dokumentation übereinstimmen, um sicherzustellen, dass die Leistung des KI-Systems korrekt ist,
+
+Der Betrieb des KI-Systems sollte überwacht werden (siehe B.6.2.6), wobei (der Zkorrekte Einsatz des
+des KI-Systems gemäß den zugehörigen Anweisungen Bedenken hinsichtlich der Auswirkungen auf relevante
+interessierte Parteien oder die rechtlichen Anforderungen der Organisation,(sollte die Organisation ihre
+Bedenken an die zuständigen Mitarbeiter innerhalb der Organisation a5 sowie an alle Drittanbieter des
+KI-Systems.
+
+Die Organisation sollte Ereignisprotokolle oder andere Unterlagen über die Einrichtung und den
+Betrieb des KI-Systems aufbewahren, um nachzuweisen*, dass das KI-System wie vorgesehen verwendet wird
+Sie können damit nachweisen, dass das KI-System wie vorgesehen verwendet wird, oder die Kommunikation über die beabsichtigte Verwendung des KI-Systems unterstützen. Der Zeitraum
+Zeitraum, in dem Ereignisprotokolle und andere Dokumentationen aufbewahrt werden, hängt von der beabsichtigten Nutzung des
+KI-Systems, den Datenaufbewahrungsrichtlinien des Unternehmens und den einschlägigen gesetzlichen Bestimmungen zur Datenaufbewahrung ab.
+
+B.10 Beziehungen zu Dritten und Kunden
+B.10.1 Zielsetzung
+
+Sicherstellen, dass die Organisation ihre Verantwortung wahrnimmt und rechenschaftspflichtig bleibt und dass die Risiken
+angemessen verteilt werden, wenn Dritte in irgendeiner Phase des Lebenszyklus des KI-Systems beteiligt sind.
+
+B.10.2 Zuweisung von Verantwortlichkeiten
+Kontrolle
+
+Die Organisation sollte sicherstellen, dass die Verantwortlichkeiten innerhalb des Lebenszyklus ihres KI-Systems
+zwischen der Organisation, ihren Partnern, Lieferanten, Kunden und Dritten.
+
+Anleitung zur Implementierung
+
+In einem KI-System-Lebenszyklus können die Verantwortlichkeiten zwischen den Parteien aufgeteilt werden, die Daten bereitstellen, Parteien, die
+Algorithmen und Modelle bereitstellen, Parteien, die das KI-System entwickeln oder nutzen und gegenüber einigen oder allen interessierten Parteien rechenschaftspflichtig sind.
+gegenüber einigen oder allen interessierten Parteien. Die Organisation sollte alle am Lebenszyklus des KI-Systems beteiligten Parteien und ihre Rollen dokumentieren
+Lebenszyklus des KI-Systems beteiligt sind, und ihre Rollen und Verantwortlichkeiten festlegen.
+
+Wenn die Organisation ein KI-System an einen Dritten liefert, sollte die Organisation sicherstellen, dass sie
+einen verantwortungsvollen Ansatz bei der Entwicklung des KI-Systems verfolgt. Siehe die Kontrollen und Anleitungen in B.6. Die
+Organisation sollte in der Lage sein, die erforderliche Dokumentation (siehe B.6.2.7 und 6.8.2) für das KI-System vorzulegen.
+
+€ (ISO/IEC 2023 - Alle Rechte vorbehalten 43
+
+[PAGE: 52]
+[PAGE_METHOD: ocr]
+
+BS ISO/IEC 42001:2023
+ISO/IEC 42001:2023(E)
+
+System an relevante interessierte Parteien und an die dritte Partei, an die die Organisation das KI-System liefert.
+System liefert.
+
+Wenn die verarbeiteten Daten Pll enthalten, sind die Verantwortlichkeiten in der Regel zwischen PII-Verarbeitern und
+Verantwortliche. [Die SQO/IEC 29100 enthält weitere Informationen über die für die Verarbeitung von PI Verantwortlichen und die für die Verarbeitung von PI Verantwortlichen.
+Wenn die Privatsphäre von PI geschützt werden soll, sollten Kontrollen wie die in [S0/IEC 27701] beschriebenen
+in Betracht gezogen werden. Basierend auf den Datenverarbeitungsaktivitäten der Organisation und des KI-Systems om Pll und
+der Rolle der Organisation bei der Anwendung und Entwicklung des KI-Systems über dessen Lebenszyklus hinweg, kann die
+Organisation die Rolle eines PI-Controllers (oder eines gemeinsamen PU-Controllers), eines Pll-Prozessors oder eines Beth übernehmen,
+
+B.10.3 Lieferanten
+Steuerung
+
+Die Organisation soll einen Prozess einrichten, der sicherstellt, dass die Nutzung von Dienstleistungen, Produkten oder Materialien
+von Zulieferern mit dem Ansatz der Organisation für eine verantwortungsvolle Entwicklung und Wa ¥
+von KI-Systemen übereinstimmt. 4
+
+Anleitung zur Umsetzung 'ey
+
+Organisationen, die ein KI-System entwickeln oder nutzen, können Lieferanten auf verschiedene Weise nutzen, von der Beschaffung
+Datensätzen, maschinellen Lernalgorithmen oder -modellen oder anderen Komponenten einer Fem suc Hg re
+Bibliotheken bis hin zu einem kompletten KI-System selbst, das allein oder als Teil eines anderen Produkts verwendet werden kann (Fahrzeug),
+
+Unternehmen sollten die verschiedenen Arten von Lieferanten, ihre Produkte und das unterschiedliche Maß an
+Risiko, das dies für das System und die Organisation als Ganzes darstellen kann, bei der Auswahl der Lieferanten berücksichtigen,
+die Anforderungen an diese Lieferanten und den Grad der erforderlichen Bewertung der
+für die Lieferanten.
+
+Unternehmen sollten dokumentieren, wie das KI-System und das KI-Angebot in die KI
+Systeme integriert sind, die von der Organisation entwickelt oder verwendet werden.
+
+Wenn die Organisation der Ansicht ist, dass die KI-Systeme oder KI-Komponenten eines Lieferanten
+nicht wie beabsichtigt funktionieren oder Auswirkungen haben können: Einzelpersonen, Gruppen von Einzelpersonen oder beides, und
+Gesellschaften, die nicht mit dem von der Organisation verfolgten verantwortungsvollen Ansatz übereinstimmen,
+sollte die Organisation die i et eg am Maßnahmen verlangen. Die Organisation kann beschließen
+
+mit dem Lieferanten zusammenzuarbeiten, um dieses Ziel zu erreichen.
+
+Die Organisation sollte sicherstellen, dass. Roney KI-System eine angemessene und ausreichende
+Dokumentation in Bezug auf das KI-Getreide (siehe B R627 und B8.2).
+
+6.10.4 Kunden &Y
+Y
+Kontrolle e
+
+Die Organisation achtet auf einen verantwortungsvollen Umgang mit der Entwicklung und Nutzung von KI-Systemen
+berücksichtigt deren Wünsche und Bedürfnisse.
+
+Anleitung zur Implementierung
+
+Die Organisation sollte die Erwartungen und Bedürfnisse der Kunden verstehen, wenn sie ein Produkt
+oder eine Dienstleistung im Zusammenhang mit einem KI-System liefert (d.h. wenn sie selbst ein Lieferant ist). Diese können in Form von
+Anforderungen an das Produkt oder die Dienstleistung selbst während einer Design- oder Entwicklungsphase oder in Form von
+vertraglichen Anforderungen oder allgemeinen Nutzungsvereinbarungen. Ein Unternehmen kann viele verschiedene
+Arten von Kundenbeziehungen haben, die alle unterschiedliche Bedürfnisse und Erwartungen haben können.
+
+Das Unternehmen sollte vor allem die komplexe Natur von Lieferanten und Kunden verstehen
+
+und verstehen, wo die Verantwortung beim Anbieter des KI-Systems liegt und wo beim
+und wo die Verantwortung beim Kunden liegt, ohne dabei die Bedürfnisse und Erwartungen zu vernachlässigen.
+
+44 ISO/IEC 2023 - Alle Rechte vorbehalten
+
+[PAGE: 53]
+[PAGE_METHOD: ocr]
+
+BS ISO/IEC 42001:2023
+ISO/IEC 42001:2023(E)
+
+Die Organisation kann zum Beispiel Risiken im Zusammenhang mit der Nutzung ihrer KI-Produkte und -Dienstleistungen durch den Kunden identifizieren.
+und kann entscheiden, die identifizierten Risiken zu behandeln, indem sie ihren Kunden entsprechend informiert,
+so dass der Kunde dann die entsprechenden Risiken behandeln kann.
+
+Ein Beispiel für angemessene Informationen: Wenn ein KI-System für einen bestimmten Anwendungsbereich gültig ist, sollten die
+Wenn ein KI-System für einen bestimmten Anwendungsbereich gilt, sollten dem Kunden die Grenzen dieses Bereichs mitgeteilt werden. Siehe B.6.2.7 und B.8.2.
+
+© ISO/IEC 2023 - Alle Rechte vorbehalten 45
+
+[PAGE: 54]
+[PAGE_METHOD: ocr]
+
+BS ISO/IEC 42001:2023
+ISO/IEC 42001:2023(E)
+
+Anhang C
+(informativ)
+
+Mögliche KI-bezogene Organisationsziele und Risikoquellen
+
+C.1 Allgemeines
+
+In diesem Anhang werden potenzielle organisatorische Ziele, Risikoquellen und Beschreibungen aufgeführt, die
+die von der Organisation beim Risikomanagement berücksichtigt werden können. Dieser Anhang erhebt keinen Anspruch auf Vollständigkeit oder
+für jede Organisation gelten. Die Organisation sollte selbst bestimmen, welche Ziele und Risikoquellen
+die relevant sind. ISO/IEC 23894 enthält detailliertere Informationen zu diesen Zielen und Risikoquellen
+Quellen und ihre Beziehung zum Risikomanagement. Die Bewertung von KI-Systemen, anfänglich, regelmäßig.
+und bei Bedarf den Nachweis, dass ein KI-System im Hinblick auf die Unternehmensziele bewertet wird.
+Ziele.
+
+C2-Ziele
+
+C.2.1 Rechenschaftspflicht
+
+Der Einsatz von KI kann den bestehenden Rahmen für die Rechenschaftspflicht verändern. Wo früher Personen für ihre Handlungen
+für ihre Handlungen zur Rechenschaft gezogen werden, können ihre Handlungen nun durch den Einsatz von KI unterstützt werden6.
+
+C.2.2 KI-Fachwissen
+
+Eine Auswahl engagierter Spezialisten mit interdisziplinären Fähigkeiten und Fachwissen bei der Bewertung,
+Entwicklung und Einsatz von KI-Systemen benötigt werden.
+
+C.2.3. Verfügbarkeit und Qualität von Trainings- und Testdaten
+
+KI-Systeme, die auf ML basieren, benötigen Trainings-, Validierungs- und Testdaten, um die Systeme zu trainieren und zu verifizieren.
+das beabsichtigte Verhalten zu trainieren und zu überprüfen.
+
+G24 Umweltauswirkungen
+Der Einsatz von KI kann positive und negative Auswirkungen auf die Umwelt haben.
+C.2.5 Fairness
+
+Die unangemessene Anwendung von KI-Systemen zur automatisierten Entscheidungsfindung kann für bestimmte
+Personen oder Gruppen von Personen.
+
+C.2.6 Wartbarkeit
+
+Die Wartbarkeit bezieht sich auf die Fähigkeit der Organisation, Änderungen am KI-System vorzunehmen, um
+um Mängel zu beheben oder sich an neue Anforderungen anzupassen.
+
+C.2.7 Datenschutz
+
+Der Missbrauch oder die Offenlegung von persönlichen und sensiblen Daten (z.B. Gesundheitsdaten) kann schädliche Auswirkungen
+auf die betroffenen Personen haben.
+
+46 ISO/IEC 2023 - Alle Rechte vorbehalten
+
+[PAGE: 55]
+[PAGE_METHOD: ocr]
+
+BS ISO/IEC 42001:2023
+ISO/IEC 42001:2023(E)
+
+C2.8 Robustheit
+
+In KI zeigen die Robustheitseigenschaften die Fähigkeit (oder Unfähigkeit) des Systems, bei neuen Daten eine vergleichbare
+mit neuen Daten eine vergleichbare Leistung zu erzielen wie mit den Daten, auf denen es trainiert wurde, oder mit den Daten typischer Operationen.
+
+2.9 Sicherheit
+
+Sicherheit bezieht sich auf die Erwartung, dass ein System unter definierten Bedingungen nicht zu einem Zustand führt, in dem
+zu einem Zustand führt, in dem das Leben von Menschen, die Gesundheit, Eigentum oder die Umwelt gefährdet ist.
+
+€2.10 Sicherheit
+
+Im Zusammenhang mit KI und insbesondere mit KI-Systemen, die auf ML-Ansätzen basieren, müssen neue Sicherheitsfragen
+Sicherheitsthemen berücksichtigt werden, die über die klassische Informations- und Systemsicherheit hinausgehen.
+
+C2.11 Transparenz und Erklärbarkeit
+Transparenz bezieht sich sowohl auf die Eigenschaften einer Organisation, die KI-Systeme betreibt, als auch auf die
+
+Die Erklärbarkeit bezieht sich auf Erklärungen wichtiger Faktoren, die die Ergebnisse des KI-Systems beeinflussen.
+Systems beeinflussen, die interessierten Parteien in einer für den Menschen verständlichen Form zur Verfügung gestellt werden.
+
+C3 Risikoquellen
+
+€3.1 Komplexität der Umgebung
+
+Wenn KI-Systeme in komplexen Umgebungen arbeiten, in denen die Bandbreite der Situationen groß ist, kann es zu
+Unsicherheit über die Leistung und damit eine Risikoquelle sein (z.B. die komplexe Umgebung des autonomen
+Fahrens).
+
+C3.2 Mangelnde Transparenz und Erklärbarkeit
+
+Die Unfähigkeit, den betroffenen Parteien angemessene Informationen zur Verfügung zu stellen, kann eine Risikoquelle sein (z.B. in Bezug auf
+in Bezug auf die Vertrauenswürdigkeit und Verantwortlichkeit der Organisation).
+
+C3.3 Grad der Automatisierung
+
+Der Grad der Automatisierung kann sich auf verschiedene Bereiche auswirken, wie z.B. Sicherheit, Fairness oder
+Sicherheit.
+
+C3.4 Risikoquellen, die durch maschinelles Lernen ermittelt werden
+
+Die Qualität der für das maschinelle Lernen verwendeten Daten und der Prozess der Datenerfassung kann ein Risiko darstellen, denn sie können
+Ziele wie Sicherheit und Robustheit beeinträchtigen können (z.B. aufgrund von Problemen mit der Datenqualität oder Datenvergiftung).
+
+C3.5 Probleme mit der Systemhardware
+
+Zu den Risikoquellen im Zusammenhang mit der Hardware gehören Hardwarefehler aufgrund defekter Komponenten oder
+Übertragung von trainierten ML-Modellen zwischen verschiedenen Systemen.
+
+C3.6 Probleme im Lebenszyklus des Systems
+
+Risikoquellen können während des gesamten Lebenszyklus von KI-Systemen auftreten (z.B. Konstruktionsfehler, unzureichende
+Einsatz, mangelnde Wartung, Probleme bei der Stilllegung).
+
+€ (ISO/IEC 2023 - Alle Rechte vorbehalten 47
+
+[PAGE: 56]
+[PAGE_METHOD: ocr]
+
+BS ISO/IEC 42001:2023
+ISO/IEC 42001:2023(E)
+
+C.3.7 Technologische Bereitschaft
+
+Risikoquellen können mit weniger ausgereifter Technologie aufgrund unbekannter Faktoren zusammenhängen (z.B. Systemgrenzen
+und Randbedingungen, Leistungsdrift), aber auch mit der reiferen Technologie aufgrund von
+
+Selbstgefälligkeit der Technologie.
+
+48
+
+ISO/IEC 2023 - Alle Rechte vorbehalten
+
+[PAGE: 57]
+[PAGE_METHOD: ocr]
+
+BS ISO/IEC 42001:2023
+ISO/IEC 42001:2023(E)
+
+Anhang D
+(informativ)
+
+Domänen- oder sektorübergreifende Verwendung des KI-Managementsystems
+
+D.1 Allgemeines
+
+Dieses Managementsystem gilt für jede Organisation, die Produkte oder Dienstleistungen entwickelt, anbietet oder nutzt, die ein
+oder Dienstleistungen, die ein KI-System verwenden. Daher ist es potenziell auf eine große Vielfalt von Produkten
+und Dienstleistungen in verschiedenen Sektoren, für die Verpflichtungen, gute Praktiken, Erwartungen$- oder
+vertraglichen Verpflichtungen gegenüber interessierten Parteien unterliegen. Beispiele für Sektoren sind:
+
+- Gesundheit;
+
+- Verteidigung;
+
+- Transport;
+
+- Finanzen;
+
+- Beschäftigung;
+- Energie.
+
+Verschiedene organisatorische Ziele (siehe Anhang C für mögliche Zielsetzungen) können für die
+verantwortungsvolle Entwicklung und Nutzung eines KI-Systems. Dieses Dokument enthält Anforderungen und Anleitungen
+aus einer Al-Technologie-spezifischen Sicht. Für einige der möglichen Ziele gibt es generische oder sektorspezifische
+Managementsystem-Standards vorhanden. Diese Managementsystem-Standards betrachten das Ziel
+in der Regel von einem technologieneutralen Standpunkt aus (et View, while the Al management system provides Al
+technologie-spezifische Überlegungen.
+
+KI-Systeme bestehen nicht nur aus Bauteilen, die KI-Technologie verwenden, sondern können eine Vielzahl von Technologien
+und Komponenten verwenden. Der verantwortungsvolle Einsatz eines KI-Systems in der Entwicklungshilfe erfordert daher die Berücksichtigung
+nicht nur KI-spezifische Erwägungen zu berücksichtigen, sondern auch das System als Ganzes mit allen Technologien
+und Komponenten, die verwendet werden. Selbst für den Al-technologie-spezifischen Teil sollten neben Al-
+spezifischen Überlegungen auch andere Aspekte berücksichtigt werden. Da KI eine Technologie zur Informationsverarbeitung ist, ist zum Beispiel
+Technologie ist, gilt die Informationssicherheit allgemein für sie. Ziele wie Sicherheit, Schutz, Privatsphäre
+und Umweltauswirkungen sollten ganzheitlich und nicht getrennt für KI und die anderen Komponenten des Systems behandelt werden.
+Komponenten des Systems. Integration des KI-Managementsystems mit generischen oder sektorspezifischen
+
+Managementsystem-Standards für relevante Themen ist daher für eine verantwortungsvolle Entwicklung
+und den Einsatz eines KI-Systems.
+
+D.2 Integration des KI-Managementsystems mit anderen Managementsystem
+Standards
+
+Bei der Bereitstellung oder Nutzung von KI-Systemen kann die Organisation Ziele oder Verpflichtungen haben, die sich auf
+die sich auf Aspekte beziehen, die in anderen Managementsystem-Normen behandelt werden. Dazu können zum Beispiel gehören,
+
+Sicherheit, Datenschutz, Qualität bzw. Themen, die in ISO/IEC 27001, ISO/IEC 27701 und 1SO 9001 behandelt werden.
+
+Bei der Bereitstellung, Verwendung oder Entwicklung von KI-Systemen können potenziell relevante generische Managementsystem
+Standards, aber nicht darauf beschränkt, sind:
+
+- ISO/IEC 27001: In den meisten Kontexten ist Sicherheit der Schlüssel zum Erreichen der Ziele der Organisation
+
+mit dem KI-System. Die Art und Weise, wie eine Organisation ihre Sicherheitsziele verfolgt, hängt von ihrem Kontext
+und ihren eigenen Richtlinien ab. [Eine Fanorganisation erkennt die Notwendigkeit, ein KI-Managementsystem zu implementieren.
+
+€ (ISO/IEC 2023 - Alle Rechte vorbehalten 49
+
+[PAGE: 58]
+[PAGE_METHOD: ocr]
+
+BS ISO/IEC 42001:2023
+ISO/IEC 42001:2023(E)
+
+und die Sicherheitsziele in einer ähnlich gründlichen und systematischen Weise anzugehen, kann es ein
+ein Informationssicherheits-Managementsystem gemäß ISO/IEC 27001 implementieren, da sowohl
+ISO/IEC 27001 und die KI-Managementsysteme die High-Level-Struktur verwenden, ist ihre integrierte Nutzung
+erleichtert und ist von großem Nutzen für die Organisation. In diesem Fall ist der Weg zur Implementierung von Kontrollen
+die sich (teilweise) auf die Informationssicherheit in diesem Dokument beziehen (siehe 6.6.1.2), in die
+die Umsetzung der ISO/IEC 27001 durch die Organisation,
+
+- ISO/LEC 27701: In vielen Zusammenhängen und Anwendungsbereichen werden Plls von KI-Systemen verarbeitet. Die
+Organisation kann dann die geltenden Verpflichtungen zum Datenschutz und ihre eigenen Richtlinien und Ziele einhalten.
+und Ziele einhalten. Ähnlich wie bei IS0/1EC 27001 kann die Organisation von der Integration von
+ISO/IEC 27701 in das KI-Managementsystem profitieren. Datenschutzbezogene Ziele und Kontrollen des KI
+Managementsystems (siehe B.2.3 und B.5.4) können in die Implementierung der Organisation integriert werden.
+von ISO/IEC 27701 integriert werden.
+
+- 180 9001: Für viele Organisationen ist die Konformität mit ISO 9001 ein wichtiges Zeichen dafür, dass sie kundenorientiert sind
+kundenorientiert sind und sich ernsthaft um die interne Effektivität kümmern. Eine unabhängige Konformität a, ¥
+nach1$0 9001 erleichtert den Geschäftsverkehr zwischen Organisationen und stärkt das Vertrauen der Kunden in Produkte und
+Dienstleistungen. Das Vertrauen der Kunden in eine Organisation oder ein KI-System kann stark gestärkt werden
+wenn ein KI-Managementsystem gemeinsam mit ISO 9001 eingeführt wird, wenn pte pes 4
+beteiligt ist. Das KI-Managementsystem kann ergänzend zu den Anforderungen der Chia (Risiko
+
+in
+
+Management, Software-Entwicklung, Kohärenz der Lieferkette usw.) ergänzen, indem es hilft, das Problem zu lösen.
+/
+
+seine Ziele zu erreichen.
+Neben den oben genannten allgemeinen Managementsystemstandards kann mani System
+auch zusammen mit einem Managementsystem für einen bestimmten Sektor verwendet werden, p! 180 22000 und
+
+am
+ein KI-Managementsystem sind für ein KI-System relevant, das sich mit der Herstellung, Vorbereitung
+und Logistik. Ein weiteres Beispiel ist [SO 13485, Das Implementierungssystem kann
+Anforderungen in Bezug auf Software für medizinische Geräte i 348!
+Internationalen Normen aus dem medizinischen Bereich wie TEC 4. RQ
+
+50 ISO/IEC 2023 - Alle Rechte vorbehalten
+
+[PAGE: 59]
+[PAGE_METHOD: ocr]
+
+()
+2]
+B]
+
+(4
+[5]
+
+[6]
+[7]
+[8]
+
+(]
+[20]
+
+[17]
+
+(38)
+[9]
+(20}
+(21)
+(22)
+
+[23]
+
+BS ISO/IEC 42001:2023
+ISO/IEC 42001:2023(E)
+
+Literaturverzeichnis
+
+180 $000-2, Datenqualität - Teil 2; Vokabular
+180 9001, Qualitätsmanagementsysteme - Anforderungen
+
+ISO 9241-210, Ergonomie der Interaktion zwischen Mensch und System - Teil 210: Menschenzentriertes Design für
+interaktive Systeme
+
+ISO 13485, Medizinprodukte - Qualitätsmanagementsysteme - Anforderungen für regulatorische Zwecke
+Zwecke
+
+180 22000, Managementsysteme für die Lebensmittelsicherheit - Anforderungen an jede Organisation in der Nahrungskette
+Kette ny"
+IEC 62304, Software für medizinische Geräte - Software-Lebenszyklusprozesse ~~"
+S0/IEC Guide 51, Sicherheitsaspekte - Leitlinien für ihre Aufnahme in Normen '@)
+
+ISO/IEC TS 4213, Informationstechnologie - Künstliche ialiga> eet der maschinellen
+lernenden Klassifikationsleistung
+
+SO/1EC 5259 (alle Teile), Datenqualität für Analytik und maschinelles Lernen
+
+S0/1EC 5338, Informationstechnik - Künstliche Intelligenz
+
+SO/TEC 17065, Konformitätsbewertung - Sicherheit für aa Produkte, Prozesse
+und Dienstleistungen y
+
+tem Lebenszyklusprozess
+
+SO/TEC 19944-1, Cloud Computing und 'cy-Plattformen - Datenfluss, Datenkategorien und Datennutzung
+Verwendung - Teil 1: Grundlagen
+
+SO/TEC 23053, ann Tod S I) Systeme mit maschinellem Lernen (ML)
+SO/TEC 23894, Ee om - Künstliche Intelligenz - Leitfaden zum Risikomanagement
+SO/TEC TR 24027, Infor iter - Künstliche Intelligenz (KI) - Verzerrungen in KI-Systemen und
+
+KI-gestützte Entscheidungsfindung
+
+SO/IEC TR 24029-1Künstliche Intelligenz (KI) - Bewertung der Robustheit von neuronalen Netzen
+- Teil 1: Überblick
+
+$0/1EC mer! Inform jontechnologie - Künstliche Intelligenz - Überblick über ethische und
+gesellschaftlicher Art.
+
+s0/ homens < und Software-Engineering - Systeme und Software - Qualitätsanforderungen
+und Evaluati RE) - Messung der Datenqualität
+
+SO/IEC 25059, Softwaretechnik - Anforderungen an die System- und Softwarequalität und
+Evaluation (SQuaRE) - Qualitätsmodell für KI-Systeme
+
+SO/IEC 27000:2018, Informationstechnik - Sicherheitstechniken - Informationssicherheits
+management systems - Übersicht und Vokabular
+
+ISO/IEC 27701, Sicherheitstechniken - Erweiterung von ISO/IEC 27001 und ISO/IEC 27002 für Datenschutz
+Informationsmanagement - Anforderungen und Richtlinien
+
+SO/EC 27001, Informationssicherheit, Cybersicherheit und Schutz der Privatsphäre - Managementsysteme für Informationssicherheit
+management systems - Anforderungen
+
+ISO/IEC 29100, Informationstechnologie - Sicherheitstechniken - Datenschutzrahmen
+
+€ (ISO/IEC 2023 - Alle Rechte vorbehalten 51
+
+[PAGE: 60]
+[PAGE_METHOD: ocr]
+
+BS ISO/IEC 42001:2023
+
+ISO/IEC 42001:2023(E)
+
+[24] 180 31000:2018, Risikomanagement - Leitlinien
+
+[25] 180 37002, Whistleblowing-Management-Systeme - Leitlinien
+
+[26] ISO/IEC 38500:2015, Informationstechnologie - Steuerung der IT in der Organisation
+
+[27] ISO/IEC 38507, Informationstechnik - IT-Governance - Auswirkungen des Einsatzes künstlicher Intelligenz in Unternehmen auf die Governance
+von künstlicher Intelligenz durch Organisationen
+
+[28] Lifecyele D.D.1. 3.3, 2020-04-15. Allianz der Datendokumentationsinitiative (DDI). [eingesehen am 2022-
+02-19]. Verfügbar unter: https://ddialliance.org/Specification/DDI-Lifecycle/3.3/
+
+(29) Risikorahmen N 1.8.1.-A.1. 1.0, 2023-1 01-26. National Institute of Technology (NIST) [eingesehen am
+2023-04-17] i-risk- =
+
+oy ©
+52
+
+ISO/IEC 2023 - Alle Rechte vorbehalten
+
+[PAGE: 61]
+[PAGE_METHOD: ocr]

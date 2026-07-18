@@ -1,0 +1,15 @@
+onlyBuiltDependencies:
+  - '@prisma/engines'
+  - esbuild
+  - prisma
+ignoredBuiltDependencies:
+  - core-js
+  - sharp
+  - unrs-resolver
+allowBuilds:
+  '@prisma/engines': true
+  core-js: false
+  esbuild: true
+  prisma: true
+  sharp: false
+  unrs-resolver: false

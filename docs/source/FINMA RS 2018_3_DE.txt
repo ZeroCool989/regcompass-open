@@ -1,0 +1,273 @@
+Rundschreiben 2018/3
+Outsourcing
+Auslagerungen Banken, Versicherungsunternehmen und ausgewählten Finanzinstituten nach FINIG
+Referenz: FINMA-RS 18/3 „Outsourcing ”
+Erlass: 21. September 2017
+Inkraftsetzung: 1. April 2018
+Letzte Änderung: 4. November 2020 [Änderungen sind mit * gekennzeichnet und
+am Schluss des Dokuments aufgeführt]
+Konkordanz: vormals FINMA-RS 08/7 „Outsourcing Banken” vom
+20. November 2008
+Rechtliche Grundlagen: FINMAG Art. 7 Abs. 1 Bst. b
+BankG Art. 3 Abs. 2 Bst. a
+FINIG Art. 7-9, 14, 27, 33, 35
+FINIV Art. 9 Abs. 1 Bst. a und d, 15–17, 48, 56–57
+KAG Art. 14 Abs. 1 let. c, 16, 36, 51
+KKV Art. 12b–12d, 14 Abs. 1 , 65
+VAG Art. 4 Abs. 2 Bst. j, 5 Abs. 2, 14 Abs. 3, 47 Abs. 2
+Adressaten
+BankG
+VAG
+FINIG
+FinfraG
+KAG
+GwG
+Andere
+Banken
+Finanzgruppen und -kongl.
+Andere Intermediäre
+Versicherer
+Vers.-Gruppen und -Kongl.
+Vermittler
+Vermögensverwalter
+Trustees
+Verwalter von Koll.vermögen
+Fondsleitungen
+Kontoführende Wertpapierhäuser
+Nicht kontoführ. Wertpapierhäuser
+Handelsplätze
+Zentrale Gegenparteien
+Zentralverwahrer
+Transaktionsregister
+Zahlungssysteme
+Teilnehmer
+SICAV
+KmG für KKA
+SICAF
+Depotbanken
+Vertreter ausl. KKA
+Andere Intermediäre
+SRO
+SRO-Beaufsichtigte
+Prüfgesellschaften
+Ratingagenturen
+X X X X X X X
+Inhaltsverzeichnis
+2/8
+I. Zweck
+II. Begriffe
+III. Geltungsbereich
+IV. Zulässigkeit
+A. Gemeinsame Bestimmungen
+B. Versicherungsunternehmen
+C. Verwalter von Kollektivvermögen, Fondsleitungen und
+SICAV
+V. Anforderungen an auslagernde Unternehmen
+A. Inventarisierung der ausgelagerten Funktionen
+B. Auswahl, Instruktion und Kontrolle des Dienstleisters
+C. Konzern- / gruppeninterne Auslagerungen
+D. Verantwortung
+E. Sicherheit
+F. Prüfung und Aufsicht
+G. Auslagerungen ins Ausland
+H. Vertrag
+VI. Auflagen und Ausnahmen
+VII. Übergangsbestimmungen
+Rz
+Rz
+Rz
+Rz
+Rz
+Rz
+Rz
+Rz
+Rz
+Rz
+Rz
+Rz
+Rz
+Rz
+Rz
+Rz
+Rz
+Rz
+1
+2–4
+5–6.3
+7–13.3
+7–9
+10–13
+13.1-13.3
+14–35
+14–15.1
+16–21
+22
+23
+24–25
+26–29
+30–31
+32–35
+36-36.3
+37–39
+3/8
+I. Zweck
+Das vorliegende Rundschreiben legt die aufsichtsrechtlichen Anforderungen an Outsourcing-Lösungen von Banken, Versicherungsunternehmen und Finanzinstituten gemäss Rz
+5, 6.1 und 6.2 dar. Für diese enthält es Anforderungen an eine angemessene Organisation und bezweckt deren Risikobegrenzung.
+II. Begriffe
+Als Unternehmen gelten Institute im Geltungsbereich dieses Rundschreibens gemäss
+Ziff. III.
+Ein Outsourcing (Auslagerung) im Sinne des Rundschreibens liegt vor, wenn ein Unternehmen einen Dienstleister beauftragt, selbständig und dauernd eine für die Geschäftstätigkeit des Unternehmens wesentliche Funktion ganz oder teilweise zu erfüllen.
+Wesentlich sind jene Funktionen, von denen die Einhaltung der Ziele und Vorschriften
+der Finanzmarktaufsichtsgesetzgebung signifikant abhängt.
+III. Geltungsbereich
+Dieses Rundschreiben gilt für:
+• Banken und Wertpapierhäuser mit Sitz in der Schweiz sowie schweizerische Zweigniederlassungen ausländischer Banken und Wertpapierhäuser;
+• Versicherungsunternehmen mit Sitz in der Schweiz und Zweigniederlassungen von
+ausländischen Versicherungsunternehmen, welche die Bewilligung zum Geschäftsbetrieb nach Art. 3 und 6 VAG (Erstbewilligung) oder die Bewilligung für einzelne Elemente des Geschäftsplans nach Art. 4 i.V.m. Art. 5 VAG (Änderungsbewilligung) bedürfen;
+• Verwalter von Kollektivvermögen mit Sitz in der Schweiz sowie schweizerische
+Zweigniederlassungen eines ausländischen Verwalters von Kollektivvermögen und
+Fondsleitungen mit Sitz und Hauptverwaltung in der Schweiz;
+• selbstverwaltete SICAV.
+Die Anforderungen sind unter Berücksichtigung der Grösse, der Komplexität, der Struktur
+und des Risikoprofils des Instituts umzusetzen.
+IV. Zulässigkeit
+A. Gemeinsame Bestimmungen
+Vorbehältlich der nachfolgenden Ausnahmen (Rz 8–13.3) ist die Auslagerung aller wesentlichen Funktionen zulässig.
+Nicht auslagerbar sind die Oberleitung, Aufsicht und Kontrolle durch das Oberleitungsorgan, zentrale Führungsaufgaben der Geschäftsleitung sowie Funktionen, die das Fällen
+*
+*
+*
+6.1*
+6.2*
+6.3*
+4/8
+von strategischen Entscheiden umfassen. Dies gilt ebenso für Entscheide über die Aufnahme und den Abbruch von Geschäftsbeziehungen.
+Die Unternehmen der Aufsichtskategorien 1 bis 3 verfügen über eine eigenständige Risikokontrolle und Compliance-Funktion als unabhängige Kontrollinstanzen. Bei Unternehmen der Aufsichtskategorien 4 und 5 genügt es, wenn eine für diese Funktionen verantwortliche Person in der Geschäftsleitung bestimmt ist. Operative Risikomanagement- und
+Compliance-Aufgaben sind bei allen Aufsichtskategorien auslagerbar.
+B. Versicherungsunternehmen
+Das Outsourcing von wesentlichen Funktionen und die beschränkt zulässige Auslagerung von Kontrollfunktionen sind nach Art. 4 Abs. 2 Bst. j i.V.m. Art. 5 Abs. 2 VAG geschäftsplanrelevant und damit genehmigungspflichtig.
+Für Versicherungscaptives ist die Auslagerung von Führungs- und Kontrollfunktionen in
+einem weiteren Umfang zulässig als bei den übrigen Versicherungsunternehmen. Zulässig sind:
+• Das Outsourcing des Managements von Direkt- und Rückversicherungscaptives mit
+Sitz in der Schweiz (inkl. zentraler Führungsaufgaben der Geschäftsleitung) auf entsprechend spezialisierte Captive-Management-Gesellschaften;
+• Das Outsourcing des Managements von Zweigniederlassungen ausländischer Direktversicherungscaptives innerhalb des Konzerns oder auf entsprechend spezialisierte
+Captive-Management-Gesellschaften. Die aufsichtsrechtliche Funktion des Generalbevollmächtigten (Art. 17 und 18 AVO) darf dadurch nicht eingeschränkt werden.
+C. Verwalter von Kollektivvermögen, Fondsleitungen und SICAV
+Neben den nicht auslagerbaren Aufgaben nach Rz 8 müssen insbesondere auch folgende Aufgaben vom Finanzinstitut selber ausgeübt werden:
+• Verwalter von Kollektivvermögen: Das Portfolio- und Risikomanagement mindestens
+einer kollektiven Kapitalanlage bzw. des Vermögens mindestens einer Vorsorgeeinrichtung (Art. 26 Abs. 1 FINIG).
+• Fondsleitungen: Die Leitung des Anlagefonds und die dazugehörigen Aufgaben wie
+die Bewertung der Anlagen oder den Entscheid über Ausgabe von Anteilen (Art. 35
+Abs. 1 FINIG). Ausserdem darf die Hauptverwaltung in der Schweiz durch Auslagerungen nicht beeinträchtigt werden. Dies gilt für die selbstverwaltete SICAV analog.
+V. Anforderungen an auslagernde Unternehmen
+A. Inventarisierung der ausgelagerten Funktionen
+Über die ausgelagerten Funktionen ist ein aktuell zu haltendes Inventar zu führen. Dieses
+enthält eine Umschreibung der ausgelagerten Funktion, nennt Erbringer (inkl. Unterakkordanten) und Empfänger sowie die unternehmensintern verantwortliche Stelle (vgl.
+Rz 20).
+13.1*
+13.2*
+13.3*
+5/8
+Die Versicherungsunternehmen führen dieses Inventar im Rahmen des Geschäftsplanformulars J.
+Finanzinstitute nach Rz 6.1 und 6.2 sowie Wertpapierhäuser führen dieses Inventar im
+Rahmen ihrer Organisationsgrundlagen (Art. 17 Abs. 3 FINIV).
+B. Auswahl, Instruktion und Kontrolle des Dienstleisters
+Entsprechend den mit der Auslagerung verfolgten Zielen sind die Anforderungen an die
+Leistungserbringung vor Vertragsschluss festzulegen und zu dokumentieren. Dies beinhaltet eine Risikoanalyse, welche die wesentlichen ökonomischen und operativen Überlegungen und die damit verbundenen Risiken und Chancen einschliesst.
+Die Auswahl des Dienstleisters hat unter Berücksichtigung und Prüfung seiner professionellen Fähigkeiten sowie finanziellen und personellen Ressourcen zu erfolgen. Werden
+mehrere Funktionen an den gleichen Dienstleister ausgelagert, so ist dem Konzentrationsrisiko Rechnung zu tragen.
+Ferner sind beim Entscheid über das Outsourcing und bei der Auswahl des Dienstleisters
+die Möglichkeiten und Folgen eines Wechsels zu berücksichtigen. Der Dienstleister hat
+Gewähr für eine dauerhafte Leistungserbringung zu bieten.
+Die geordnete Rückführung der ausgelagerten Funktion oder die Übertragung auf einen
+anderen Dienstleister muss sichergestellt sein.
+Die Zuständigkeiten des Unternehmens und des Dienstleisters sind vertraglich festzulegen und abzugrenzen, insbesondere bezüglich Schnittstellen und Verantwortlichkeiten.
+Die ausgelagerte Funktion ist in das interne Kontrollsystem des Unternehmens zu integrieren. Die mit der Auslagerung verbundenen wesentlichen Risiken sind systematisch zu
+identifizieren, zu überwachen, zu quantifizieren und zu steuern. Unternehmensintern ist
+eine verantwortliche Stelle zu definieren, die für die Überwachung und Kontrolle des
+Dienstleisters zuständig ist. Dessen Leistungen sind fortlaufend zu überwachen und zu
+beurteilen, so dass allfällig nötige Massnahmen zeitnah ergriffen werden können.
+Das Unternehmen hat sich die dazu nötigen Weisungs- und Kontrollrechte vom Dienstleister vertraglich einräumen zu lassen.
+C. Konzern- / gruppeninterne Auslagerungen
+Bei den Anforderungen gemäss den Rz 16–21 sowie 32–35 kann die Verbundenheit im
+Konzern/in der Gruppe berücksichtigt werden, sofern die mit der Auslagerung typischerweise vorhandenen Risiken nachweislich nicht bestehen oder gewisse Anforderungen
+nicht relevant oder anders geregelt sind.
+D. Verantwortung
+Das Unternehmen trägt gegenüber der FINMA weiterhin die selbe Verantwortung, wie
+wenn es die ausgelagerte Funktion selber erbringen würde. Es hat die ordnungsgemässe
+Geschäftsführung jederzeit zu gewährleisten.
+15.1*
+*
+18.1*
+6/8
+E. Sicherheit
+Bei sicherheitsrelevanten Auslagerungen (namentlich im Bereich IT) legen das Unternehmen und der Dienstleister vertraglich Sicherheitsanforderungen fest. Deren Einhaltungen
+sind vom Unternehmen zu überwachen.
+Das Unternehmen und der Dienstleister erarbeiten ein Sicherheitsdispositiv, das die Weiterführung der ausgelagerten Funktion in Notfällen erlaubt. Bei Errichtung und Anwendung des Sicherheitsdispositivs gilt für das Unternehmen derselbe Sorgfaltsmassstab,
+wie wenn es die ausgelagerte Funktion selber erbringen würde.
+F. Prüfung und Aufsicht
+Das Unternehmen und dessen Prüfgesellschaft sowie die FINMA müssen in der Lage
+sein, die Einhaltung der aufsichtsrechtlichen Bestimmungen beim Dienstleister zu prüfen.
+Zu ihren Gunsten ist vertraglich ein jederzeitiges, vollumfängliches und ungehindertes
+Einsichts- und Prüfrecht in Bezug auf die ausgelagerte Funktion einzuräumen.
+Prüftätigkeiten können an die Revisionsstelle des Dienstleisters delegiert werden, sofern
+diese über die notwendigen fachlichen Kompetenzen verfügt. Erfolgt eine solche Delegation, kann die Prüfgesellschaft des Unternehmens auf die Prüfungsergebnisse der Revisionsstelle des Dienstleisters abstellen.
+Die Auslagerung einer Funktion darf die Aufsicht durch die FINMA nicht erschweren, insbesondere bei einer Auslagerung ins Ausland.
+Untersteht der Dienstleister nicht der Aufsicht der FINMA, hat er sich gegenüber dem Unternehmen vertraglich zu verpflichten, der FINMA sämtliche Auskünfte und Unterlagen
+bezogen auf den ausgelagerten Geschäftsbereich zur Verfügung zu stellen, die sie für
+die Aufsichtstätigkeit benötigt. Falls Prüftätigkeiten an die Revisionsstelle des Dienstleisters delegiert werden, ist ihr Bericht der FINMA, der internen Revisionsstelle und der
+Prüfgesellschaft des auslagernden Unternehmens auf Anfrage zur Verfügung zu stellen.
+G. Auslagerungen ins Ausland
+Auslagerungen ins Ausland sind zulässig, sofern das Unternehmen ausdrücklich zusichern kann, dass es selber, seine Prüfgesellschaft sowie die FINMA ihre Einsichts- und
+Prüfrechte wahrnehmen und durchsetzen können.
+Die Sanierbarkeit bzw. Abwickelbarkeit des Unternehmens in der Schweiz muss gewährleistet sein. Der Zugriff auf die dafür notwendigen Informationen muss jederzeit in der
+Schweiz möglich sein.
+H. Vertrag
+Die Auslagerung muss auf einem schriftlichen Vertrag beruhen oder auf einem Vertrag in
+anderer Form, die den Nachweis durch Text ermöglicht. Neben der Bezeichnung der Parteien und einer Beschreibung der Funktion enthält dieser im Minimum folgenden Inhalt
+(Rz 33–34):
+*
+7/8
+Das Unternehmen stellt sicher, dass es frühzeitig über den Beizug oder Wechsel von Unterakkordanten, die wesentliche Funktionen erbringen, informiert wird, und die Möglichkeit hat, das Outsourcing gemäss Rz 18.1 geordnet zu beenden. Werden solche Unterakkordanten beigezogen, sind ihnen die Pflichten und Zusicherungen des Dienstleisters, die
+zur Erfüllung dieses Rundschreibens erforderlich sind, zu überbinden.
+Es sind vertragliche Vorkehrungen zur Umsetzung der Anforderungen gemäss diesem
+Rundschreiben und insbesondere den Rz 21, 24, 26, 29, 30 und 31 zu treffen.
+Das Unternehmen hat die internen Bewilligungsverfahren für Outsourcing-Projekte sowie
+die Zuständigkeiten für die entsprechenden Vertragsabschlüsse festzulegen.
+VI. Auflagen und Ausnahmen
+Die FINMA kann einem Unternehmen in begründeten Fällen Auflagen machen oder dieses von der Einhaltung des Rundschreibens ganz oder teilweise befreien.
+Die Institute gemäss Art. 47a bis 47e ERV sowie Institute gemäss Art. 1b BankG beurteilen und entscheiden über die Relevanz und Umsetzung der Vorgaben von Rz 17–18.1 im
+Rahmen der Risikoanalyse gemäss Rz 16.
+Die Institute gemäss Art. 47a bis 47e ERV sowie Institute gemäss Art. 1b BankG sind in
+Bezug auf die Rückführung der ausgelagerten Funktion von der Anforderung gemäss
+Rz 18.1 befreit.
+Die Umsetzung von Rz 20 kann bei Instituten gemäss Art. 47a bis 47e ERV und Instituten gemäss Art. 1b BankG durch eine regelmässige Berichterstattung einer unabhängigen Revisionsstelle unter Berücksichtigung von Rz 27 erfolgen. Diese Berichterstattung
+muss eine Beurteilung über die mit der Auslagerung verbundenen wesentlichen Risiken
+und Kontrollaktivitäten des Dienstleisters ermöglichen.
+VII. Übergangsbestimmungen
+Das Rundschreiben findet unmittelbar Anwendung auf Outsourcingverhältnisse von Banken und Wertpapierhäuser, die nach dessen Inkrafttreten abgeschlossen oder geändert
+werden. Outsourcingverhältnisse von Banken und Effektenhändlern, die bei Inkrafttreten
+des Rundschreibens bereits bestehen, sind innerhalb einer Übergangsfrist von fünf Jahren ab Inkrafttreten so anzupassen, dass die Anforderungen des Rundschreibens eingehalten sind.
+Für Versicherungsunternehmen gilt das Rundschreiben für Erstbewilligungen ab dessen
+Inkrafttreten. Für Änderungsgenehmigungen gilt das Rundschreiben ab dem Zeitpunkt, in
+dem eine Geschäftsplanänderung der FINMA zur Genehmigung unterbreitet bzw. mitgeteilt wird.
+Für Finanzinstitute nach Rz 6.1 und 6.2 gilt das Rundschreiben für Erstbewilligungen ab
+dessen Inkrafttreten. Für Änderungsbewilligungen gilt das Rundschreiben ab dem Zeitpunkt, in dem die Änderung der FINMA zur Bewilligung unterbreitet bzw. gemeldet wird,
+spätestens aber ein Jahr nach dessen Inkrafttreten.
+*
+36.1*
+36.2*
+36.3*
+*
+*
+Verzeichnis der
+Änderungen
+8/8
+Das Rundschreiben wird wie folgt geändert:
+Diese Änderungen wurden am 31.10.2019 beschlossen und treten am 1.1.2020 in Kraft.
+Neu eingefügte Rz 6.1, 18.1, 36.1, 36.2, 36.3
+Geänderte Rz 18, 33
+Diese Änderungen wurden am 4.11.2020 beschlossen und treten am 1.1.2021 in Kraft.
+Neu eingefügte Rz 6.1, 6.2, 13.1, 13.2, 13.3, 15.1, 39
+Geänderte Rz 1, 2, 5, die Rz 6.1 wird zur Rz 6.3, 32, 37
+Anderes neuer Titel vor Rz 13.1
