@@ -21,58 +21,21 @@ type ProviderRow = {
 
 type Settings = { preferredProvider: Provider | null; providers: ProviderRow[] };
 
-type ClaudeOAuth = {
-  status: 'unconfigured' | 'ready';
-  setupMessage: string | null;
-  connection: {
-    connected: boolean;
-    connectedAt: string | null;
-    expiresAt: string | null;
-    scope: string | null;
-    lastError: string | null;
-  };
-  runtimeActive: boolean;
-};
-
 export function AiProviderSettings() {
   const [settings, setSettings] = useState<Settings | null>(null);
-  const [claude, setClaude] = useState<ClaudeOAuth | null>(null);
   const [busy, setBusy] = useState<string | null>(null);
   const [message, setMessage] = useState<string | null>(null);
   const [apiKeys, setApiKeys] = useState<Record<string, string>>({});
   const [models, setModels] = useState<Record<string, string>>({});
 
   async function load() {
-    const [res, oauthRes] = await Promise.all([
-      fetch('/api/aegis/providers'),
-      fetch('/api/aegis/providers/claude-oauth'),
-    ]);
+    const res = await fetch('/api/aegis/providers');
     if (res.ok) setSettings(await res.json());
-    if (oauthRes.ok) setClaude(await oauthRes.json());
   }
 
   useEffect(() => {
     void load();
-    // Callback feedback (?claude=connected|error) from the OAuth redirect.
-    const params = new URLSearchParams(window.location.search);
-    const outcome = params.get('claude');
-    if (outcome === 'connected') setMessage('Claude-Abo verbunden.');
-    else if (outcome === 'error') {
-      setMessage('Die Verbindung mit Claude hat nicht geklappt. Bitte erneut versuchen.');
-    }
-    if (outcome) window.history.replaceState(null, '', window.location.pathname);
   }, []);
-
-  async function disconnectClaude() {
-    setBusy('claude-oauth');
-    setMessage(null);
-    try {
-      await fetch('/api/aegis/providers/claude-oauth', { method: 'DELETE' });
-      await load();
-    } finally {
-      setBusy(null);
-    }
-  }
 
   async function save(provider: Provider) {
     setBusy(provider);
@@ -136,61 +99,6 @@ export function AiProviderSettings() {
   return (
     <div className="space-y-5">
       {message ? <div className="rounded-md border border-border-brand px-3 py-2 text-sm text-text-secondary">{message}</div> : null}
-      <section className="rounded-lg border border-border-brand p-4 space-y-2 text-sm">
-        <div className="flex items-start justify-between gap-3">
-          <div>
-            <h2 className="font-semibold text-foreground">Claude-Abo verbinden</h2>
-            <p className="text-xs text-text-secondary mt-1">
-              &bdquo;Mit Claude anmelden&ldquo;: AEGIS läuft dann über Ihr eigenes Claude-Konto
-              (Abrechnung über Ihre Anthropic Extra-Usage-Credits) — ganz ohne API-Schlüssel.
-            </p>
-          </div>
-          {claude?.connection.connected ? (
-            <span className="text-xs text-emerald-400 whitespace-nowrap">✓ verbunden</span>
-          ) : null}
-        </div>
-        {claude === null ? (
-          <p className="text-xs text-text-secondary">Lädt…</p>
-        ) : claude.status === 'unconfigured' ? (
-          <>
-            <button
-              type="button"
-              disabled
-              className="rounded-md border border-border-brand px-3 py-1.5 text-xs opacity-40 cursor-not-allowed"
-            >
-              Mit Claude anmelden
-            </button>
-            <p className="text-xs text-amber-300/90">{claude.setupMessage}</p>
-          </>
-        ) : claude.connection.connected ? (
-          <>
-            <p className="text-xs text-text-secondary">
-              Verbunden seit {new Date(claude.connection.connectedAt ?? '').toLocaleDateString('de-DE')}.
-              {claude.runtimeActive
-                ? ' Aktiv für AEGIS-Anfragen.'
-                : ' Noch nicht für AEGIS-Anfragen aktiv — die Freischaltung folgt, sobald Anthropic die Vertragsdetails bereitstellt. Ihr API-Schlüssel (falls hinterlegt) wird weiterhin verwendet.'}
-            </p>
-            {claude.connection.lastError ? (
-              <p className="text-xs text-amber-300">{claude.connection.lastError}</p>
-            ) : null}
-            <button
-              type="button"
-              disabled={busy === 'claude-oauth'}
-              onClick={() => void disconnectClaude()}
-              className="rounded-md border border-red-400/40 px-3 py-1.5 text-xs text-red-300 disabled:opacity-40"
-            >
-              Trennen
-            </button>
-          </>
-        ) : (
-          <a
-            href="/api/aegis/providers/claude-oauth/start"
-            className="inline-block rounded-md border border-brand-primary/50 bg-brand-primary/10 px-3 py-1.5 text-xs font-semibold text-brand-primary"
-          >
-            Mit Claude anmelden
-          </a>
-        )}
-      </section>
       <div className="rounded-lg border border-border-brand p-4 text-sm text-text-secondary">
         <p className="font-semibold text-foreground mb-1">System-Provider</p>
         <p>Ohne Auswahl nutzt AEGIS den serverseitigen Anthropic-Key. Nutzer-Keys werden nie an den Browser zurückgegeben.</p>

@@ -215,13 +215,10 @@ export async function resolveAnthropicCredential(userId: string | null): Promise
   modelHint: string | null;
   source: 'user' | 'system';
 } | null> {
-  // D10 ACTIVATION SEAM — "Sign in with Claude": once Anthropic approves
-  // RegCompass and documents the subscription-billing API contract, the
-  // resolution order becomes: Claude-OAuth token (lib/aegis/claude-oauth.ts,
-  // ensureFreshConnection) → BYOK API key → system key. Until then stored
-  // OAuth connections are deliberately NOT used for AEGIS calls — see
-  // docs/aegis/SIGN_IN_WITH_CLAUDE.md ("Why AEGIS calls do not use the OAuth
-  // token yet"). Do not wire a guessed header contract here.
+  // Credential resolution for the stored-key (BYOK) path. Connected
+  // subscriptions are handled separately by the local OAuth module
+  // (lib/aegis/oauth), whose token takes precedence over a stored key when the
+  // active brain matches; see the registry wiring.
   if (!userId) return null;
   const user = await db.user.findUnique({ where: { id: userId }, select: { preferredAiProvider: true } });
   if (user?.preferredAiProvider && user.preferredAiProvider !== 'ANTHROPIC') {
