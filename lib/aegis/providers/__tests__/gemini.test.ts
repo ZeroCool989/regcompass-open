@@ -1,3 +1,4 @@
+import type { ModelId } from '../../types';
 import { afterEach, describe, expect, it, vi } from 'vitest';
 import { GeminiProvider } from '../gemini';
 
@@ -19,7 +20,7 @@ describe('GeminiProvider — translation', () => {
     vi.stubGlobal('fetch', fetchMock);
 
     const msg = await provider().createMessage({
-      model: 'gemini-2.5-pro',
+      model: 'gemini-2.5-pro' as ModelId,
       systemBlocks: [{ text: 'You are AEGIS.', cached: false }],
       tools: [],
       messages: [{ role: 'user', content: 'Was ist DORA?' }],
@@ -43,7 +44,7 @@ describe('GeminiProvider — translation', () => {
         jsonResponse({ candidates: [{ content: { parts: [{ functionCall: { name: 'get_requirements', args: { id: 'R-DORA-024' } } }] }, finishReason: 'STOP' }], usageMetadata: {} }),
       ),
     );
-    const msg = await provider().createMessage({ model: 'gemini-2.5-pro', systemBlocks: [], tools: [{ name: 'get_requirements', description: 'd', input_schema: { type: 'object' } }], messages: [{ role: 'user', content: 'x' }], maxTokens: 100 });
+    const msg = await provider().createMessage({ model: 'gemini-2.5-pro' as ModelId, systemBlocks: [], tools: [{ name: 'get_requirements', description: 'd', input_schema: { type: 'object' } }], messages: [{ role: 'user', content: 'x' }], maxTokens: 100 });
     expect(msg.stop_reason).toBe('tool_use');
     const toolUse = msg.content.find((c) => (c as { type: string }).type === 'tool_use') as { name: string; input: unknown };
     expect(toolUse.name).toBe('get_requirements');
@@ -55,7 +56,7 @@ describe('GeminiProvider — translation', () => {
     vi.stubGlobal('fetch', fetchMock);
 
     await provider().createMessage({
-      model: 'gemini-2.5-pro',
+      model: 'gemini-2.5-pro' as ModelId,
       systemBlocks: [],
       tools: [],
       messages: [

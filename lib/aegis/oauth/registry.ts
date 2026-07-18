@@ -72,7 +72,7 @@ const ENV_PREFIX: Record<OAuthProviderId, string> = {
   google: 'GOOGLE_OAUTH',
 };
 
-function pick(env: NodeJS.ProcessEnv, key: string): string | undefined {
+function pick(env: Record<string, string | undefined>, key: string): string | undefined {
   const v = env[key];
   return v && v.trim() ? v.trim() : undefined;
 }
@@ -82,7 +82,10 @@ function pick(env: NodeJS.ProcessEnv, key: string): string | undefined {
  * registered yet (no client_id, or no token endpoint available). Endpoints not
  * carrying a public default MUST be supplied via env.
  */
-export function oauthConfig(id: OAuthProviderId, env: NodeJS.ProcessEnv = process.env): OAuthConfig | null {
+export function oauthConfig(
+  id: OAuthProviderId,
+  env: Record<string, string | undefined> = process.env,
+): OAuthConfig | null {
   const p = ENV_PREFIX[id];
   const d = DEFAULTS[id];
   const clientId = pick(env, `${p}_CLIENT_ID`);

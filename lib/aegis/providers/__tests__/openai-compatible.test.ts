@@ -1,3 +1,4 @@
+import type { ModelId } from '../../types';
 import { afterEach, describe, expect, it, vi } from 'vitest';
 import { OpenAiCompatibleProvider } from '../openai-compatible';
 
@@ -44,7 +45,7 @@ describe('OpenAiCompatibleProvider — request translation', () => {
     vi.stubGlobal('fetch', fetchMock);
 
     const msg = await provider().createMessage({
-      model: 'gpt-x',
+      model: 'gpt-x' as ModelId,
       systemBlocks: [{ text: 'You are AEGIS.', cached: true }],
       tools: [],
       messages: [{ role: 'user', content: 'Was ist DORA?' }],
@@ -69,7 +70,7 @@ describe('OpenAiCompatibleProvider — request translation', () => {
     vi.stubGlobal('fetch', fetchMock);
 
     await provider().createMessage({
-      model: 'gpt-x',
+      model: 'gpt-x' as ModelId,
       systemBlocks: [],
       tools: [{ name: 'search_kb', description: 'd', input_schema: { type: 'object' } }],
       messages: [
@@ -98,7 +99,7 @@ describe('OpenAiCompatibleProvider — request translation', () => {
         }),
       ),
     );
-    const msg = await provider().createMessage({ model: 'gpt-x', systemBlocks: [], tools: [], messages: [{ role: 'user', content: 'x' }], maxTokens: 100 });
+    const msg = await provider().createMessage({ model: 'gpt-x' as ModelId, systemBlocks: [], tools: [], messages: [{ role: 'user', content: 'x' }], maxTokens: 100 });
     expect(msg.stop_reason).toBe('tool_use');
     const toolUse = msg.content.find((c) => (c as { type: string }).type === 'tool_use') as { name: string; input: unknown };
     expect(toolUse.name).toBe('get_requirements');
@@ -121,7 +122,7 @@ describe('OpenAiCompatibleProvider — streaming', () => {
       ),
     );
 
-    const stream = await provider().streamMessage({ model: 'gpt-x', systemBlocks: [], tools: [], messages: [{ role: 'user', content: 'x' }], maxTokens: 100 });
+    const stream = await provider().streamMessage({ model: 'gpt-x' as ModelId, systemBlocks: [], tools: [], messages: [{ role: 'user', content: 'x' }], maxTokens: 100 });
     const types: string[] = [];
     for await (const ev of stream) {
       types.push(ev.type);
@@ -147,7 +148,7 @@ describe('OpenAiCompatibleProvider — structured', () => {
     vi.stubGlobal('fetch', fetchMock);
 
     const { value } = await provider().structured<{ mode: string; score: number }>({
-      model: 'gpt-x',
+      model: 'gpt-x' as ModelId,
       system: 'sys',
       prompt: 'classify',
       schema: { type: 'object' },
