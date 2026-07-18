@@ -1,8 +1,10 @@
+import { AegisError } from '../types';
 import type { ModelProvider } from './types';
 import type { OAuthProviderId } from '../oauth/registry';
 import { AnthropicProvider } from './anthropic';
 import { OpenAiCompatibleProvider } from './openai-compatible';
 import { GeminiProvider } from './gemini';
+import { CliBridgeProvider, cliBridgeConfigFromEnv } from './cli-bridge';
 
 /**
  * Provider selection.
@@ -29,6 +31,16 @@ function overrideProvider(): ModelProvider | null {
   const brain = env('AEGIS_BRAIN')?.toLowerCase();
   if (!brain || brain === 'anthropic') return null;
 
+  if (brain === 'cli') {
+    const cfg = cliBridgeConfigFromEnv();
+    if (!cfg) {
+      throw new AegisError(
+        'invalid_input',
+        'AEGIS_BRAIN=cli benötigt AEGIS_CLI_COMMAND=claude|codex|gemini.',
+      );
+    }
+    return new CliBridgeProvider(cfg);
+  }
   if (brain === 'gemini') {
     return new GeminiProvider({
       id: 'gemini',

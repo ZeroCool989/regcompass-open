@@ -38,6 +38,22 @@ describe('resolveProvider — global AEGIS_BRAIN override', () => {
   });
 });
 
+describe('resolveProvider — CLI bridge brain', () => {
+  it('selects the CLI bridge when AEGIS_BRAIN=cli with a command', () => {
+    process.env.AEGIS_BRAIN = 'cli';
+    process.env.AEGIS_CLI_COMMAND = 'claude';
+    const p = resolveProvider('claude-sonnet-4-6');
+    expect(p.id).toBe('cli:claude');
+    expect(p.capabilities.toolChoice).toBe(false);
+  });
+
+  it('errors clearly when AEGIS_BRAIN=cli but no command is set', () => {
+    process.env.AEGIS_BRAIN = 'cli';
+    delete process.env.AEGIS_CLI_COMMAND;
+    expect(() => resolveProvider('claude-sonnet-4-6')).toThrow(/AEGIS_CLI_COMMAND/);
+  });
+});
+
 describe('activeOAuthProviderId — which subscription backs the active brain', () => {
   it('maps model families to subscription providers', () => {
     delete process.env.AEGIS_BRAIN;
