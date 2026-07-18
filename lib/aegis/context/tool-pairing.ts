@@ -1,7 +1,7 @@
-import type Anthropic from '@anthropic-ai/sdk';
+import type { ProviderMessageParam } from '../providers/types';
 
 /**
- * Helpers that keep a message array compliant with Anthropic's tool-pairing
+ * Helpers that keep a message array compliant with the canonical tool-pairing
  * invariant: every assistant `tool_use` block must be immediately followed by a
  * user message carrying a `tool_result` for each of those ids, and every
  * `tool_result` must have a matching `tool_use` in the immediately preceding
@@ -16,7 +16,7 @@ import type Anthropic from '@anthropic-ai/sdk';
  */
 
 /** True if this is an assistant turn carrying ≥1 `tool_use` block. */
-export function hasToolUse(m: Anthropic.MessageParam): boolean {
+export function hasToolUse(m: ProviderMessageParam): boolean {
   return (
     m.role === 'assistant' &&
     Array.isArray(m.content) &&
@@ -25,7 +25,7 @@ export function hasToolUse(m: Anthropic.MessageParam): boolean {
 }
 
 /** The `tool_use` ids in a message (empty unless it's a tool-call turn). */
-function toolUseIds(m: Anthropic.MessageParam): Set<string> {
+function toolUseIds(m: ProviderMessageParam): Set<string> {
   const ids = new Set<string>();
   if (!Array.isArray(m.content)) return ids;
   for (const b of m.content) if (b.type === 'tool_use') ids.add(b.id);
@@ -33,7 +33,7 @@ function toolUseIds(m: Anthropic.MessageParam): Set<string> {
 }
 
 /** The `tool_result` tool_use_ids in a message (empty unless it carries results). */
-function toolResultIds(m: Anthropic.MessageParam): Set<string> {
+function toolResultIds(m: ProviderMessageParam): Set<string> {
   const ids = new Set<string>();
   if (!Array.isArray(m.content)) return ids;
   for (const b of m.content) if (b.type === 'tool_result') ids.add(b.tool_use_id);
@@ -45,7 +45,7 @@ function toolResultIds(m: Anthropic.MessageParam): Set<string> {
  * forward while the last kept message is a `tool_use` turn, so the head never
  * ENDS on a dangling `tool_use` (its `tool_result` message gets pulled in too).
  */
-export function safeHeadEnd(messages: Anthropic.MessageParam[], anchor: number): number {
+export function safeHeadEnd(messages: ProviderMessageParam[], anchor: number): number {
   let end = anchor;
   while (end > 0 && end < messages.length && hasToolUse(messages[end - 1])) {
     end += 1;
@@ -59,7 +59,7 @@ export function safeHeadEnd(messages: Anthropic.MessageParam[], anchor: number):
  * (whose `tool_use` is in the compressed middle), pulling the owning assistant
  * turn into the tail.
  */
-export function safeTailStart(messages: Anthropic.MessageParam[], start: number): number {
+export function safeTailStart(messages: ProviderMessageParam[], start: number): number {
   let s = start;
   while (s > 0 && s < messages.length && toolResultIds(messages[s]).size > 0) {
     s -= 1;
@@ -77,9 +77,9 @@ export function safeTailStart(messages: Anthropic.MessageParam[], start: number)
  * through untouched. Idempotent.
  */
 export function repairToolPairing(
-  messages: Anthropic.MessageParam[],
-): Anthropic.MessageParam[] {
-  const out: Anthropic.MessageParam[] = [];
+  messages: ProviderMessageParam[],
+): ProviderMessageParam[] {
+  const out: ProviderMessageParam[] = [];
   for (let i = 0; i < messages.length; i++) {
     const m = messages[i];
     if (!Array.isArray(m.content)) {
