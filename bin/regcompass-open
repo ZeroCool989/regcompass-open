@@ -1,0 +1,88 @@
+#!/usr/bin/env node
+// SPDX-License-Identifier: Apache-2.0
+//
+// RegCompass Open launcher. Resolves the app directory (the package this script
+// ships in), makes sure it's set up, builds if needed, and runs the local
+// server — then opens the browser.
+//
+//   regcompass-open          build if needed, start on http://localhost:3000, open browser
+//   regcompass-open dev      run the dev server (hot reload)
+//   regcompass-open setup     (re)create the local database + user
+//   regcompass-open --help
+
+'use strict';
+
+const { spawnSync, spawn } = require('node:child_process');
+const fs = require('node:fs');
+const path = require('node:path');
+
+const APP_DIR = path.resolve(__dirname, '..');
+const PORT = process.env.PORT || '3000';
+const URL = `http://localhost:${PORT}`;
+
+function run(cmd, args, opts = {}) {
+  const r = spawnSync(cmd, args, { cwd: APP_DIR, stdio: 'inherit', ...opts });
+  if (r.status !== 0) {
+    console.error(`\n✗ \`${cmd} ${args.join(' ')}\` failed.`);
+    process.exit(r.status || 1);
+  }
+}
+
+function has(file) {
+  return fs.existsSync(path.join(APP_DIR, file));
+}
+
+function ensureSetup() {
+  if (!has('.env')) {
+    console.error('✗ No .env found. Run the installer, or: regcompass-open setup');
+    process.exit(1);
+  }
+  if (!has('local.db')) {
+    console.log('› First run — creating the local database…');
+    run('pnpm', ['exec', 'prisma', 'db', 'push']);
+    run('pnpm', ['exec', 'tsx', '--env-file=.env', 'scripts/setup-local.ts']);
+  }
+}
+
+function openBrowser(url) {
+  const cmd =
+    process.platform === 'darwin' ? 'open' :
+    process.platform === 'win32' ? 'cmd' :
+    'xdg-open';
+  const args = process.platform === 'win32' ? ['/c', 'start', '', url] : [url];
+  try { spawn(cmd, args, { stdio: 'ignore', detached: true }).unref(); } catch { /* non-fatal */ }
+}
+
+const arg = process.argv[2];
+
+if (arg === '--help' || arg === '-h') {
+  console.log('regcompass-open           start the app on ' + URL + ' and open the browser');
+  console.log('regcompass-open dev       run the dev server (hot reload)');
+  console.log('regcompass-open setup     (re)create the local database + user');
+  process.exit(0);
+}
+
+if (arg === 'setup') {
+  run('pnpm', ['exec', 'prisma', 'db', 'push']);
+  run('pnpm', ['exec', 'tsx', '--env-file=.env', 'scripts/setup-local.ts']);
+  console.log('✓ Local database + user ready.');
+  process.exit(0);
+}
+
+if (arg === 'dev') {
+  ensureSetup();
+  console.log('› Starting dev server on ' + URL + ' …');
+  setTimeout(() => openBrowser(URL), 4000);
+  run('pnpm', ['exec', 'next', 'dev']);
+  process.exit(0);
+}
+
+// Default: production start (build first if there's no build output).
+ensureSetup();
+if (!has('.next/BUILD_ID')) {
+  console.log('› Building the app (first run only)…');
+  run('pnpm', ['run', 'build']);
+}
+console.log('› Starting RegCompass Open on ' + URL + ' …');
+setTimeout(() => openBrowser(URL), 3000);
+run('pnpm', ['exec', 'next', 'start', '-p', PORT]);

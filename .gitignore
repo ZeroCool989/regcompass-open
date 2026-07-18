@@ -56,7 +56,7 @@ reference/
 # are the documented KB migration/manifest tooling). Nested scripts/ dirs
 # (e.g. the voice-gateway probe) stay local as before.
 /scripts/*
-!/scripts/seed-users.ts
+!/scripts/setup-local.ts
 !/scripts/validate-kb.ts
 !/scripts/check-doc-links.ts
 !/scripts/kb-migrate-governance.ts

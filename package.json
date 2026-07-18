@@ -17,7 +17,8 @@
     "check:docs": "tsx scripts/check-doc-links.ts",
     "kb:manifest": "tsx scripts/generate-kb-manifest.ts",
     "postinstall": "prisma generate",
-    "setup": "prisma db push && tsx --env-file=.env scripts/setup-local.ts"
+    "setup": "prisma db push && tsx --env-file=.env scripts/setup-local.ts",
+    "serve": "node bin/regcompass-open"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.91.0",
@@ -63,6 +64,9 @@
     "vitest": "^4.1.5"
   },
   "engines": {
-    "node": "22.x"
+    "node": ">=20"
+  },
+  "bin": {
+    "regcompass-open": "bin/regcompass-open"
   }
 }
