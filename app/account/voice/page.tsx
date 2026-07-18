@@ -4,6 +4,8 @@ import { redirect } from 'next/navigation';
 import { VoiceSettings } from '@/components/VoiceSettings';
 import { getUserFromCookies } from '@/lib/auth';
 
+export const dynamic = 'force-dynamic';
+
 export const metadata: Metadata = { title: 'Aegis-Stimme — RegCompass' };
 
 export default async function VoicePage() {

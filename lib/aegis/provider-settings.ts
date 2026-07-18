@@ -1,6 +1,5 @@
 import { createCipheriv, createDecipheriv, createHash, createHmac, randomBytes } from 'node:crypto';
 import { db } from '@/lib/db';
-import type { AiProvider } from '@/app/generated/prisma/client';
 import { MODEL_IDS } from './types';
 
 export type AegisAiProvider = 'ANTHROPIC' | 'OPENAI' | 'GOOGLE';
@@ -193,20 +192,20 @@ export async function upsertProviderCredential(params: {
     lastValidationError: null,
   };
   await db.userAiCredential.upsert({
-    where: { userId_provider: { userId: params.userId, provider: params.provider as AiProvider } },
-    create: { userId: params.userId, provider: params.provider as AiProvider, ...data },
+    where: { userId_provider: { userId: params.userId, provider: params.provider as AegisAiProvider } },
+    create: { userId: params.userId, provider: params.provider as AegisAiProvider, ...data },
     update: data,
   });
 }
 
 export async function setPreferredProvider(userId: string, provider: AegisAiProvider | null): Promise<void> {
-  await db.user.update({ where: { id: userId }, data: { preferredAiProvider: provider as AiProvider | null } });
+  await db.user.update({ where: { id: userId }, data: { preferredAiProvider: provider as AegisAiProvider | null } });
 }
 
 export async function deleteProviderCredential(userId: string, provider: AegisAiProvider): Promise<void> {
-  await db.userAiCredential.deleteMany({ where: { userId, provider: provider as AiProvider } });
+  await db.userAiCredential.deleteMany({ where: { userId, provider: provider as AegisAiProvider } });
   await db.user.updateMany({
-    where: { id: userId, preferredAiProvider: provider as AiProvider },
+    where: { id: userId, preferredAiProvider: provider as AegisAiProvider },
     data: { preferredAiProvider: null },
   });
 }

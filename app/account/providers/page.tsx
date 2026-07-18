@@ -4,6 +4,8 @@ import { redirect } from 'next/navigation';
 import { AiProviderSettings } from '@/components/AiProviderSettings';
 import { getUserFromCookies } from '@/lib/auth';
 
+export const dynamic = 'force-dynamic';
+
 export const metadata: Metadata = { title: 'Aegis AI-Provider — RegCompass' };
 
 export default async function AiProvidersPage() {

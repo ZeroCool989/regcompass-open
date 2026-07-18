@@ -4,6 +4,8 @@ import { redirect } from 'next/navigation';
 import { SoulManager } from '@/components/SoulManager';
 import { getUserFromCookies } from '@/lib/auth';
 
+export const dynamic = 'force-dynamic';
+
 export const metadata: Metadata = {
   title: 'Personalisierung — RegCompass',
 };

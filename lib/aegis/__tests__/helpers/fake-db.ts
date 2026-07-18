@@ -142,6 +142,18 @@ function createFakeDb() {
       usageRows.length = 0;
     },
 
+    // The local single-user build resolves every request to a constant local
+    // user (auth.ensureLocalUser upserts it). The routes only need the row to
+    // exist, so a static object suffices for these tests.
+    user: {
+      async upsert(): Promise<Record<string, unknown>> {
+        return { id: 'local', email: 'local@regcompass.open', role: 'ADMIN', status: 'APPROVED' };
+      },
+      async findUnique(): Promise<Record<string, unknown> | null> {
+        return { id: 'local', email: 'local@regcompass.open', role: 'ADMIN', status: 'APPROVED' };
+      },
+    },
+
     aegisDocument: {
       async create({ data }: { data: Partial<DocRow> & { id: string } }): Promise<DocRow> {
         const row = {
@@ -202,6 +214,17 @@ function createFakeDb() {
         if (!row) throw Object.assign(new Error('Record not found'), { code: 'P2025' });
         Object.assign(row, data);
         return row;
+      },
+      async updateMany({
+        where,
+        data,
+      }: {
+        where: Record<string, unknown>;
+        data: Partial<ConversationRow>;
+      }): Promise<{ count: number }> {
+        const matched = conversationRows.filter((r) => rowMatches(r, where));
+        for (const row of matched) Object.assign(row, data);
+        return { count: matched.length };
       },
       async deleteMany({ where }: { where: Record<string, unknown> }): Promise<{ count: number }> {
         const doomed = conversationRows.filter((r) => rowMatches(r, where));

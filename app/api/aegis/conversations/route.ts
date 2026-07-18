@@ -34,11 +34,13 @@ export async function GET(req: NextRequest) {
 /** Erase every conversation owned by the caller (user, else session). */
 export async function DELETE(req: NextRequest) {
   const user = await getUserFromRequest(req);
+  const sessionId = readSessionId(req);
   if (user) {
+    // Adopt this session's anonymous conversations before user-scoped erasure.
+    if (sessionId) await claimSessionConversations(sessionId, user.id);
     const deleted = await deleteAllConversationsForUser(user.id);
     return NextResponse.json({ deleted, message: ERASE_MESSAGE });
   }
-  const sessionId = readSessionId(req);
   if (!sessionId) {
     return NextResponse.json({ deleted: 0, message: 'Keine Sitzung — nichts zu löschen.' });
   }

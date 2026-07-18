@@ -52,30 +52,16 @@ describe('admin allowlist', () => {
   });
 });
 
-describe('requireAdmin — role AND status (SEC-2)', () => {
+// The local single-user build has no multi-tenant admin gate: requireAdmin
+// admits any resolved user and rejects only null. The former role/status
+// matrix (SEC-2) does not apply here.
+describe('requireAdmin — local single user', () => {
   const base = { email: 'a@x.io', role: 'ADMIN', status: 'APPROVED' } as const;
 
-  it('grants only approved admins', () => {
-    process.env.ADMIN_EMAILS = '';
+  it('admits any resolved user, rejects only null', () => {
     expect(requireAdmin({ ...base })).toBe(true);
-  });
-
-  it('blocked or pending admins lose admin powers immediately', () => {
-    process.env.ADMIN_EMAILS = '';
-    expect(requireAdmin({ ...base, status: 'BLOCKED' })).toBe(false);
-    expect(requireAdmin({ ...base, status: 'PENDING' })).toBe(false);
-  });
-
-  it('approved non-admins and anonymous callers are rejected', () => {
-    process.env.ADMIN_EMAILS = '';
-    expect(requireAdmin({ ...base, role: 'USER' })).toBe(false);
+    expect(requireAdmin({ ...base, role: 'USER', status: 'PENDING' })).toBe(true);
     expect(requireAdmin(null)).toBe(false);
-  });
-
-  it('allowlisted email counts as admin role — but never overrides status', () => {
-    process.env.ADMIN_EMAILS = 'a@x.io';
-    expect(requireAdmin({ ...base, role: 'USER' })).toBe(true);
-    expect(requireAdmin({ ...base, role: 'USER', status: 'BLOCKED' })).toBe(false);
   });
 });
 

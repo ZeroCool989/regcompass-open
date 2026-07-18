@@ -4,7 +4,6 @@ import {
   scryptSync,
   timingSafeEqual,
 } from 'node:crypto';
-import { cookies } from 'next/headers';
 import type { NextRequest } from 'next/server';
 import { db } from '@/lib/db';
 import type { User } from '@/app/generated/prisma/client';
@@ -241,45 +240,72 @@ export function authCookieOptions() {
   };
 }
 
-// ─────────────────────────── User lookup / status ───────────────────────────
+// ─────────────────────────── Local single-user identity ───────────────────────────
+// This build runs as one local user on one machine, so there is no login: every
+// request resolves to the same approved local admin. The row is upserted on
+// first resolution so foreign keys (conversations, credentials, …) always have a
+// valid target.
 
-export function isApproved(user: Pick<User, 'status'> | null): boolean {
-  return !!user && user.status === 'APPROVED';
+export const LOCAL_USER_ID = 'local';
+
+const LOCAL_USER: User = {
+  id: LOCAL_USER_ID,
+  email: 'local@regcompass.open',
+  username: 'Local',
+  passwordHash: '',
+  status: 'APPROVED',
+  role: 'ADMIN',
+  createdAt: new Date(0),
+  approvedAt: new Date(0),
+  emailVerifiedAt: new Date(0),
+  voiceId: null,
+  voicePrefs: null,
+  preferredAiProvider: null,
+};
+
+/** Ensure the local user row exists (idempotent) and return the live row. */
+export async function ensureLocalUser(): Promise<User> {
+  return db.user.upsert({
+    where: { id: LOCAL_USER_ID },
+    update: {},
+    create: {
+      id: LOCAL_USER_ID,
+      email: LOCAL_USER.email,
+      username: LOCAL_USER.username,
+      passwordHash: '',
+      status: 'APPROVED',
+      role: 'ADMIN',
+    },
+  });
 }
 
-/**
- * The one admin gate for API routes and pages: admin role AND approved
- * status. Blocking or un-approving an admin must revoke their admin powers
- * immediately (SEC-2) — role alone is NOT sufficient. `isAdminEmail` is
- * consulted as role source of truth for the seeded admin allowlist, but the
- * live DB status always gates.
- */
+export function isApproved(_user: Pick<User, 'status'> | null): boolean {
+  // The local user is always approved.
+  return true;
+}
+
+/** Admin gate — always satisfied for the local single user. */
 export function requireAdmin<T extends Pick<User, 'email' | 'role' | 'status'>>(
   user: T | null,
 ): user is T {
-  if (!user) return false;
-  if (!isApproved(user)) return false;
-  return user.role === 'ADMIN' || isAdminEmail(user.email);
+  return user != null;
 }
 
-/** Load the user behind a (verified) auth-cookie value, or null. */
+/** Resolve the local user (seeding the row on first access). */
 export async function userFromCookieValue(
-  value: string | null | undefined,
+  _value: string | null | undefined,
 ): Promise<User | null> {
-  const id = verifyAuthValue(value);
-  if (!id) return null;
-  return db.user.findUnique({ where: { id } });
+  return ensureLocalUser();
 }
 
-/** Current user from a route-handler request (NextRequest), or null. */
-export async function getUserFromRequest(req: NextRequest): Promise<User | null> {
-  return userFromCookieValue(req.cookies.get(AUTH_COOKIE)?.value);
+/** Current user from a route-handler request — always the local user. */
+export async function getUserFromRequest(_req: NextRequest): Promise<User | null> {
+  return ensureLocalUser();
 }
 
-/** Current user in a Server Component / page (reads next/headers cookies), or null. */
+/** Current user in a Server Component / page — always the local user. */
 export async function getUserFromCookies(): Promise<User | null> {
-  const store = await cookies();
-  return userFromCookieValue(store.get(AUTH_COOKIE)?.value);
+  return ensureLocalUser();
 }
 
 // ─────────────────────────── Admin bootstrap ───────────────────────────

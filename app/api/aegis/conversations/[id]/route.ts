@@ -45,9 +45,13 @@ export async function DELETE(
 ) {
   const { id } = await params;
   const user = await getUserFromRequest(req);
+  const sessionId = readSessionId(req);
+  // Adopt this session's anonymous conversations before deleting by user, so
+  // user-scoped deletion matches rows created in the current session.
+  if (user && sessionId) await claimSessionConversations(sessionId, user.id);
   const deleted = user
     ? await deleteConversationForUser(id, user.id)
-    : await deleteConversation(id, readSessionId(req));
+    : await deleteConversation(id, sessionId);
   if (!deleted) return notFound();
   return NextResponse.json({
     deleted: true,
