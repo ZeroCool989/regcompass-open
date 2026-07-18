@@ -243,7 +243,9 @@ export class AnthropicProvider implements ModelProvider {
       stream: true,
       ...(params.toolChoice ? { tool_choice: params.toolChoice } : {}),
     };
-    const open = (): ProviderMessageStream => client.messages.stream(request);
+    // Concrete SDK stream so `.emitted('connect')` is available here; the return
+    // type widens to the neutral ProviderMessageStream for callers.
+    const open = () => client.messages.stream(request);
 
     let stream = open();
     try {

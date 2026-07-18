@@ -1,0 +1,39 @@
+import { afterEach, describe, expect, it } from 'vitest';
+import { resolveProvider } from '../catalog';
+
+const SAVED = { ...process.env };
+afterEach(() => {
+  process.env = { ...SAVED };
+});
+
+describe('resolveProvider — selection by model family', () => {
+  it('routes claude ids to the Anthropic backend (default, unchanged)', () => {
+    delete process.env.AEGIS_BRAIN;
+    expect(resolveProvider('claude-sonnet-4-6').id).toBe('anthropic');
+    expect(resolveProvider(undefined).id).toBe('anthropic');
+  });
+
+  it('routes gpt ids to the OpenAI backend and gemini ids to Gemini', () => {
+    delete process.env.AEGIS_BRAIN;
+    expect(resolveProvider('gpt-4.1').id).toBe('openai');
+    expect(resolveProvider('gemini-2.5-pro').id).toBe('gemini');
+  });
+});
+
+describe('resolveProvider — global AEGIS_BRAIN override', () => {
+  it('points every call at a self-hosted OpenAI-compatible endpoint', () => {
+    process.env.AEGIS_BRAIN = 'custom';
+    process.env.OPENAI_COMPAT_BASE_URL = 'https://hermes.example.com/v1';
+    process.env.OPENAI_COMPAT_MODEL = 'hermes-1';
+    // Even when the router picks a claude id, the override wins.
+    const p = resolveProvider('claude-sonnet-4-6');
+    expect(p.id).toBe('custom');
+  });
+
+  it('supports an Ollama override with local defaults', () => {
+    process.env.AEGIS_BRAIN = 'ollama';
+    const p = resolveProvider('claude-sonnet-4-6');
+    expect(p.id).toBe('ollama');
+    expect(p.capabilities.promptCache).toBe(false);
+  });
+});

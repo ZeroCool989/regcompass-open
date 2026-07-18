@@ -36,12 +36,12 @@ export {
 
 /** Non-streaming message create (main loop + helpers route through here). */
 export function callClaude(params: ClaudeCallParams): Promise<ProviderMessage> {
-  return getProvider().createMessage(params);
+  return getProvider(params.model).createMessage(params);
 }
 
 /** Streaming message create (SSE path). */
 export function streamClaude(params: ClaudeCallParams): Promise<ClaudeMessageStream> {
-  return getProvider().streamMessage(params);
+  return getProvider(params.model).streamMessage(params);
 }
 
 /** Single-shot text helper (intent classification, compaction). */
@@ -50,7 +50,7 @@ export function callHaiku(params: {
   prompt: string;
   maxTokens: number;
 }): Promise<{ text: string; usage: ClaudeUsage }> {
-  return getProvider().completeText(params);
+  return getProvider(params.model).completeText(params);
 }
 
 /** Single-shot schema-constrained structured output (compaction digest). */
@@ -61,5 +61,5 @@ export function callStructured<T>(params: {
   schema: Record<string, unknown>;
   maxTokens: number;
 }): Promise<{ value: T; usage: ClaudeUsage }> {
-  return getProvider().structured<T>(params);
+  return getProvider(params.model).structured<T>(params);
 }

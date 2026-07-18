@@ -27,7 +27,23 @@ export type ProviderTextBlock = Anthropic.TextBlock;
 export type ProviderTool = Anthropic.Tool;
 export type ProviderToolChoice = Anthropic.MessageCreateParams['tool_choice'];
 export type ProviderStopReason = Anthropic.Message['stop_reason'];
-export type ProviderMessageStream = ReturnType<Anthropic['messages']['stream']>;
+
+/**
+ * Canonical streaming event. The agent loop reads only `content_block_start`
+ * (for tool_use) and `content_block_delta` (text_delta); every backend emits
+ * events of this shape so the loop stays backend-agnostic.
+ */
+export type ProviderStreamEvent = Anthropic.MessageStreamEvent;
+
+/**
+ * Minimal streaming container the loop consumes: async-iterable over canonical
+ * events, plus a `finalMessage()` resolving the assembled message. The reference
+ * backend's SDK stream satisfies this structurally; other backends build a small
+ * object that does the same.
+ */
+export interface ProviderMessageStream extends AsyncIterable<ProviderStreamEvent> {
+  finalMessage(): Promise<ProviderMessage>;
+}
 
 /** What a backend can and cannot do. Missing capabilities degrade to no-ops, never errors. */
 export type ProviderCapabilities = {
