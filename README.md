@@ -21,18 +21,47 @@ RegCompass Open ships with a curated regulatory knowledge base and can also poin
 
 ## Quickstart
 
-> A one-command installer is on the way. For now, run it from source:
+**Requirements:** [Node.js](https://nodejs.org) 20 or newer. The installer handles everything else.
+
+**One command** (macOS / Linux):
 
 ```bash
-git clone https://github.com/ZeroCool989/regcompass-open.git
-cd regcompass-open
-pnpm install
-cp .env.example .env        # add a model key, or configure a provider in the app
-pnpm prisma db push         # creates the local database
-pnpm dev                    # open http://localhost:3000
+curl -fsSL https://raw.githubusercontent.com/ZeroCool989/regcompass-open/main/install.sh | bash
 ```
 
-All data — conversations, uploaded documents, generated deliverables — is stored locally in a single SQLite database file.
+**Windows** (PowerShell):
+
+```powershell
+irm https://raw.githubusercontent.com/ZeroCool989/regcompass-open/main/install.ps1 | iex
+```
+
+The installer fetches the source, installs dependencies, creates a local database, and generates the app secrets. Then start it:
+
+```bash
+regcompass-open          # builds on first run, then opens http://localhost:3000
+```
+
+Prefer to do it by hand? Clone the repo, run `pnpm install`, `pnpm setup`, and `pnpm start`.
+
+## Getting started: choose your brain
+
+Out of the box you can browse the knowledge base immediately. To run an assessment, open **http://localhost:3000 → Konto → AI-Provider** and connect a model:
+
+- **API key** — paste a Claude, OpenAI, or Gemini key.
+- **Model subscription** — sign in with your own Claude, ChatGPT/Codex, or Gemini subscription (a one-time OAuth-client setup is described in [docs/OAUTH_SETUP.md](docs/OAUTH_SETUP.md)).
+- **Local model** — point it at a local Ollama (`http://localhost:11434/v1`) or any OpenAI-compatible runtime.
+- **Self-hosted endpoint** — any OpenAI-compatible URL, including your own hosted model.
+- **CLI you already use** — drive AEGIS through an installed `claude`, `codex`, or `gemini` CLI.
+
+Every option can also be set in `.env` (see `.env.example` for `AEGIS_BRAIN` and the per-provider variables).
+
+## Your data stays local
+
+Everything — conversations, uploaded documents, generated deliverables, and any credentials you add — is stored on your machine: a single SQLite database file plus, for subscription logins, a `~/.regcompass-open/auth.json` token file with owner-only permissions. Nothing is sent to a shared server. The knowledge base location is configurable via `KB_DIR` (see [docs/KNOWLEDGE_BASE.md](docs/KNOWLEDGE_BASE.md)).
+
+## Troubleshooting
+
+- **`NODE_MODULE_VERSION` / native module error after changing Node versions:** the local database driver is a native module compiled for the Node version you installed with. If you switch Node versions, run `pnpm rebuild better-sqlite3` in the install directory.
 
 ## License
 
