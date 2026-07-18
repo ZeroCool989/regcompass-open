@@ -1,4 +1,5 @@
 import { db } from '@/lib/db';
+import { decodeStrList } from '@/lib/db-json';
 
 /**
  * Read-only retrieval of regulatory-radar news items for the optional
@@ -147,5 +148,8 @@ export async function getRegulatoryOutlook(opts: OutlookSelect): Promise<Outlook
     orderBy: [{ publishedAt: 'desc' }, { createdAt: 'desc' }],
     take: 100,
   });
-  return selectOutlook(rows as NewsRow[], opts);
+  return selectOutlook(
+    rows.map((r) => ({ ...r, tags: decodeStrList(r.tags) })) as NewsRow[],
+    opts,
+  );
 }

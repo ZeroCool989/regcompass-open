@@ -13,18 +13,20 @@
     "db:studio": "prisma studio",
     "db:push": "prisma db push",
     "db:generate": "prisma generate",
-    "seed:users": "tsx --env-file=.env scripts/seed-users.ts",
     "validate:kb": "tsx scripts/validate-kb.ts",
     "check:docs": "tsx scripts/check-doc-links.ts",
     "kb:manifest": "tsx scripts/generate-kb-manifest.ts",
-    "postinstall": "prisma generate"
+    "postinstall": "prisma generate",
+    "setup": "prisma db push && tsx --env-file=.env scripts/setup-local.ts"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.91.0",
+    "@prisma/adapter-better-sqlite3": "^7.8.0",
     "@prisma/adapter-pg": "^7.8.0",
     "@prisma/client": "^7.8.0",
     "@react-three/drei": "^10.7.7",
     "@react-three/fiber": "^9.6.0",
+    "better-sqlite3": "^12.11.1",
     "deepl-node": "^1.27.0",
     "docx": "^9.7.1",
     "exceljs": "^4.4.0",

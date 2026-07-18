@@ -1,5 +1,6 @@
 import { z } from 'zod';
 import { db } from '@/lib/db';
+import { encodeStrList } from '@/lib/db-json';
 
 /**
  * Shape of one persisted AEGIS usage row. Validated with Zod before it touches
@@ -85,7 +86,9 @@ export async function logUsage(record: AegisUsageRecord): Promise<void> {
     return;
   }
   try {
-    await db.aegisUsageLog.create({ data: parsed.data });
+    await db.aegisUsageLog.create({
+      data: { ...parsed.data, guardrailsTriggered: encodeStrList(parsed.data.guardrailsTriggered) },
+    });
   } catch (err) {
     reportUsageLogFailure(
       'aegis_usage_log_failed',

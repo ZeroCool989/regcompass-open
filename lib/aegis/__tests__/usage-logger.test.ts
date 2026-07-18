@@ -50,7 +50,8 @@ describe('logUsage', () => {
     createMock.mockResolvedValueOnce({ id: 'cuid-1', ...SAMPLE });
     await logUsage(SAMPLE);
     expect(createMock).toHaveBeenCalledTimes(1);
-    expect(createMock).toHaveBeenCalledWith({ data: SAMPLE });
+    // guardrailsTriggered is stored as a JSON-encoded string (SQLite has no scalar lists).
+    expect(createMock).toHaveBeenCalledWith({ data: { ...SAMPLE, guardrailsTriggered: '[]' } });
   });
 
   it('swallows DB errors, never throws, and reports them observably', async () => {

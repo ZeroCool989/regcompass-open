@@ -1,4 +1,5 @@
 import { db } from '@/lib/db';
+import { decodeStrList } from '@/lib/db-json';
 import { getUserFromCookies, requireAdmin } from '@/lib/auth';
 import { RegulatoryNewsFeed, type NewsDto } from '@/components/RegulatoryNewsFeed';
 import { KbSuggestionReview, type SuggestionDto } from '@/components/KbSuggestionReview';
@@ -20,8 +21,8 @@ export default async function RegulatoryNewsPage() {
       sourceName: n.sourceName,
       sourceUrl: n.sourceUrl,
       publishedAt: n.publishedAt ? n.publishedAt.toISOString() : null,
-      jurisdiction: n.jurisdiction,
-      tags: n.tags,
+      jurisdiction: n.jurisdiction as NewsDto['jurisdiction'],
+      tags: decodeStrList(n.tags),
     }));
   } catch {
     newsDto = []; // table not migrated yet / DB hiccup — render an empty feed, never crash
@@ -62,10 +63,10 @@ export default async function RegulatoryNewsPage() {
           relevanceForFinancialSector: s.relevanceForFinancialSector,
           bindingLevel: s.bindingLevel,
           rationale: s.rationale,
-          status: s.status,
+          status: s.status as SuggestionDto['status'],
           reviewedBy: s.reviewedBy,
           document: doc
-            ? { id: doc.id, status: doc.status, error: doc.error, documentUrl: doc.documentUrl, sourceUrl: doc.sourceUrl, originalLanguage: doc.originalLanguage }
+            ? ({ id: doc.id, status: doc.status, error: doc.error, documentUrl: doc.documentUrl, sourceUrl: doc.sourceUrl, originalLanguage: doc.originalLanguage } as NonNullable<SuggestionDto['document']>)
             : null,
         };
       });

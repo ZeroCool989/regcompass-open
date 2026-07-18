@@ -1,5 +1,6 @@
 import { NextResponse, type NextRequest } from 'next/server';
 import { db } from '@/lib/db';
+import { decodeStrList } from '@/lib/db-json';
 import { JURISDICTIONS } from '@/lib/regulatory/types';
 
 /**
@@ -11,21 +12,21 @@ export async function GET(req: NextRequest) {
   const jurisdiction = searchParams.get('jurisdiction');
   const tag = searchParams.get('tag');
 
-  const where: {
-    jurisdiction?: (typeof JURISDICTIONS)[number];
-    tags?: { has: string };
-  } = {};
+  const where: { jurisdiction?: (typeof JURISDICTIONS)[number] } = {};
   if (jurisdiction && (JURISDICTIONS as readonly string[]).includes(jurisdiction)) {
     where.jurisdiction = jurisdiction as (typeof JURISDICTIONS)[number];
   }
-  if (tag) where.tags = { has: tag };
 
   try {
-    const items = await db.regulatoryNewsItem.findMany({
+    const rows = await db.regulatoryNewsItem.findMany({
       where,
       orderBy: [{ publishedAt: 'desc' }, { createdAt: 'desc' }],
       take: 100,
     });
+    // tags is a JSON-encoded string column; decode and (optionally) filter in app.
+    const items = rows
+      .map((r) => ({ ...r, tags: decodeStrList(r.tags) }))
+      .filter((r) => !tag || r.tags.includes(tag));
     return NextResponse.json({ items });
   } catch (err) {
     console.error(

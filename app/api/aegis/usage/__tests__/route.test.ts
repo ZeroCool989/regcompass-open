@@ -37,7 +37,7 @@ describe('GET /api/aegis/usage', () => {
     getUserFromRequest.mockReset();
     getUserFromRequest.mockResolvedValue({ role: 'ADMIN', status: 'APPROVED' });
 
-    // Promise.all order: agg(all) → agg(comparable) → count → groupBy×5 → $queryRaw×2 → findMany
+    // Promise.all order: agg(all) → agg(comparable) → count → groupBy×5 → findMany(window) → findMany(recent)
     aggregate
       .mockResolvedValueOnce({
         _count: { _all: 10 },
@@ -61,15 +61,23 @@ describe('GET /api/aegis/usage', () => {
         { servedModel: 'claude-sonnet-4-6', _count: { _all: 7 }, _sum: { costCents: 700 } },
         { servedModel: null, _count: { _all: 3 }, _sum: { costCents: 300 } },
       ]); // byServedModel
-    queryRaw
-      .mockResolvedValueOnce([
-        { token: 'compress', count: 3 },
-        { token: 'kill:cost_limit', count: 1 },
-      ]) // byGuardrail (unnest)
-      .mockResolvedValueOnce([
-        { day: new Date('2026-06-01T00:00:00Z'), requests: 10, cost: 1000, comparable_cost: 700, avg_latency: 1200 },
-      ]); // byDay
-    findMany.mockResolvedValue([]);
+    // Window rows drive the JS-side per-day and guardrail-occurrence aggregation.
+    // 7 non-legacy (700) + 3 legacy (300) = 1000, all on one day; guardrail
+    // tokens: compress ×3, kill:cost_limit ×1. guardrailsTriggered is a JSON string.
+    const day = new Date('2026-06-01T12:00:00Z');
+    const windowRows = [
+      { createdAt: day, costCents: 100, pricingVersion: 'v2', latencyMs: 1200, guardrailsTriggered: '["compress"]' },
+      { createdAt: day, costCents: 100, pricingVersion: 'v2', latencyMs: 1200, guardrailsTriggered: '["compress"]' },
+      { createdAt: day, costCents: 100, pricingVersion: 'v2', latencyMs: 1200, guardrailsTriggered: '["compress"]' },
+      { createdAt: day, costCents: 100, pricingVersion: 'v2', latencyMs: 1200, guardrailsTriggered: '["kill:cost_limit"]' },
+      { createdAt: day, costCents: 100, pricingVersion: 'v2', latencyMs: 1200, guardrailsTriggered: '[]' },
+      { createdAt: day, costCents: 100, pricingVersion: 'v2', latencyMs: 1200, guardrailsTriggered: '[]' },
+      { createdAt: day, costCents: 100, pricingVersion: 'v2', latencyMs: 1200, guardrailsTriggered: '[]' },
+      { createdAt: day, costCents: 100, pricingVersion: 'legacy', latencyMs: 1200, guardrailsTriggered: '[]' },
+      { createdAt: day, costCents: 100, pricingVersion: 'legacy', latencyMs: 1200, guardrailsTriggered: '[]' },
+      { createdAt: day, costCents: 100, pricingVersion: 'legacy', latencyMs: 1200, guardrailsTriggered: '[]' },
+    ];
+    findMany.mockResolvedValueOnce(windowRows).mockResolvedValueOnce([]);
   });
 
   it('excludes legacy-priced rows from the console-comparable total', async () => {

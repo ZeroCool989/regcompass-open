@@ -1,4 +1,5 @@
 import { db } from '@/lib/db';
+import { encodeStrList, decodeStrList } from '@/lib/db-json';
 import type { ToolAuditEntry } from './types';
 import type { SeedSourceMessage } from './memory-seed';
 import type { ConversationDigest } from './digest';
@@ -335,7 +336,7 @@ async function messagesOf(conversationId: string): Promise<MemoryMessage[]> {
     seq: r.seq,
     role: r.role as MemoryMessage['role'],
     content: r.content,
-    citedIds: r.citedIds,
+    citedIds: decodeStrList(r.citedIds),
     status: r.status as MemoryMessage['status'],
     exitReason: r.exitReason,
     model: r.model,
@@ -404,7 +405,7 @@ export async function appendMessage(
           seq,
           role: msg.role,
           content: msg.content,
-          citedIds: msg.citedIds ?? [],
+          citedIds: encodeStrList(msg.citedIds),
           status: msg.status ?? 'complete',
           exitReason: msg.exitReason,
           model: msg.model,

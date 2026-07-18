@@ -1,4 +1,5 @@
 import { db } from '@/lib/db';
+import { encodeStrList } from '@/lib/db-json';
 import { newsDedupeKey, suggestionDedupeKey } from './dedupe';
 import { OFFICIAL_SOURCES } from './sources';
 import { defaultResearchProvider, type RegulatoryResearchProvider } from './research';
@@ -38,7 +39,7 @@ export async function saveNewsItems(items: NewsItem[]): Promise<number> {
           sourceUrl: i.sourceUrl,
           publishedAt: i.publishedAt ? new Date(i.publishedAt) : null,
           jurisdiction: i.jurisdiction,
-          tags: i.tags,
+          tags: encodeStrList(i.tags),
           dedupeKey: newsDedupeKey(i),
         },
       });

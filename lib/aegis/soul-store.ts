@@ -91,7 +91,7 @@ export async function soulSnapshot(userId: string, username?: string | null) {
     section: e.section,
     content: e.content,
     signalCount: e.signalCount,
-    status: e.status,
+    status: e.status as GovEntry['status'],
     usedCount: e.usedCount,
     lastConfirmedAt: e.lastConfirmedAt.toISOString(),
   }));
@@ -107,7 +107,7 @@ export async function soulSnapshot(userId: string, username?: string | null) {
     section: e.section,
     content: e.content,
     signalCount: e.signalCount,
-    status: e.status,
+    status: e.status as GovEntry['status'],
     usedCount: e.usedCount,
     lastConfirmedAt: e.lastConfirmedAt.toISOString(),
     stage: deriveStage({ status: e.status, lastConfirmedAt: e.lastConfirmedAt } as GovEntry),

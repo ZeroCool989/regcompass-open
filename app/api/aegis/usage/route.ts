@@ -1,6 +1,7 @@
 import { NextResponse, type NextRequest } from 'next/server';
 import { getUserFromRequest } from '@/lib/auth';
 import { db } from '@/lib/db';
+import { decodeStrList } from '@/lib/db-json';
 
 /** Resolve the caller and require an APPROVED ADMIN; else null. */
 async function requireAdmin(req: NextRequest) {
@@ -95,17 +96,6 @@ type UsageResponse = {
   recentCalls: RecentCall[];
 };
 
-// Postgres returns numerics as strings via raw queries; coerce defensively.
-function num(v: unknown): number {
-  if (typeof v === 'number') return v;
-  if (typeof v === 'string') {
-    const n = Number(v);
-    return Number.isFinite(n) ? n : 0;
-  }
-  if (typeof v === 'bigint') return Number(v);
-  return 0;
-}
-
 function parseDays(req: NextRequest): number {
   const raw = req.nextUrl.searchParams.get('days');
   const n = raw ? Number(raw) : 7;
@@ -133,8 +123,7 @@ export async function GET(req: NextRequest): Promise<NextResponse<UsageResponse 
       byModeVerifyRaw,
       byExitReasonRaw,
       byServedModelRaw,
-      byGuardrailRaw,
-      byDayRaw,
+      windowRows,
       recent,
     ] = await Promise.all([
       db.aegisUsageLog.aggregate({
@@ -184,35 +173,19 @@ export async function GET(req: NextRequest): Promise<NextResponse<UsageResponse 
         _count: { _all: true },
         _sum: { costCents: true },
       }),
-      // Guardrail occurrences: unnest the array column (Prisma can't groupBy an array).
-      db.$queryRaw<Array<{ token: string; count: bigint | number }>>`
-        SELECT unnest("guardrailsTriggered") AS token, COUNT(*)::int AS count
-        FROM "AegisUsageLog"
-        WHERE "createdAt" >= ${since}
-        GROUP BY token
-        ORDER BY count DESC
-      `,
-      // Per-day buckets, with a per-day console-comparable total via FILTER.
-      db.$queryRaw<
-        Array<{
-          day: Date;
-          requests: bigint | number;
-          cost: number | null;
-          comparable_cost: number | null;
-          avg_latency: number | null;
-        }>
-      >`
-        SELECT
-          DATE_TRUNC('day', "createdAt")                                   AS day,
-          COUNT(*)::int                                                    AS requests,
-          SUM("costCents")                                                 AS cost,
-          SUM("costCents") FILTER (WHERE "pricingVersion" <> 'legacy')     AS comparable_cost,
-          AVG("latencyMs")                                                 AS avg_latency
-        FROM "AegisUsageLog"
-        WHERE "createdAt" >= ${since}
-        GROUP BY day
-        ORDER BY day ASC
-      `,
+      // Rows for the guardrail-occurrence and per-day aggregations, computed in
+      // JS (the guardrail column is a JSON string and per-day bucketing stays
+      // engine-agnostic).
+      db.aegisUsageLog.findMany({
+        where: { createdAt: { gte: since } },
+        select: {
+          createdAt: true,
+          costCents: true,
+          pricingVersion: true,
+          latencyMs: true,
+          guardrailsTriggered: true,
+        },
+      }),
       db.aegisUsageLog.findMany({
         where: { createdAt: { gte: since } },
         orderBy: { createdAt: 'desc' },
@@ -251,13 +224,28 @@ export async function GET(req: NextRequest): Promise<NextResponse<UsageResponse 
       verifyPassRate: totalRequests > 0 ? verifyAgg / totalRequests : 0,
     };
 
-    const byDay: ByDay[] = byDayRaw.map((row) => ({
-      date: row.day.toISOString().slice(0, 10),
-      requests: num(row.requests),
-      costCents: num(row.cost),
-      comparableCostCents: num(row.comparable_cost),
-      avgLatencyMs: Math.round(num(row.avg_latency)),
-    }));
+    const dayBuckets = new Map<
+      string,
+      { requests: number; cost: number; comparable: number; latencySum: number }
+    >();
+    for (const row of windowRows) {
+      const date = row.createdAt.toISOString().slice(0, 10);
+      const b = dayBuckets.get(date) ?? { requests: 0, cost: 0, comparable: 0, latencySum: 0 };
+      b.requests += 1;
+      b.cost += row.costCents ?? 0;
+      if (row.pricingVersion !== 'legacy') b.comparable += row.costCents ?? 0;
+      b.latencySum += row.latencyMs ?? 0;
+      dayBuckets.set(date, b);
+    }
+    const byDay: ByDay[] = [...dayBuckets.entries()]
+      .sort(([a], [b]) => a.localeCompare(b))
+      .map(([date, b]) => ({
+        date,
+        requests: b.requests,
+        costCents: b.cost,
+        comparableCostCents: b.comparable,
+        avgLatencyMs: b.requests > 0 ? Math.round(b.latencySum / b.requests) : 0,
+      }));
 
     const byModel: ByModel[] = byModelRaw.map((row) => ({
       model: row.model,
@@ -296,10 +284,15 @@ export async function GET(req: NextRequest): Promise<NextResponse<UsageResponse 
       }))
       .sort((a, b) => b.requests - a.requests);
 
-    const byGuardrail: ByGuardrail[] = byGuardrailRaw.map((row) => ({
-      token: row.token,
-      count: num(row.count),
-    }));
+    const guardrailCounts = new Map<string, number>();
+    for (const row of windowRows) {
+      for (const token of decodeStrList(row.guardrailsTriggered)) {
+        guardrailCounts.set(token, (guardrailCounts.get(token) ?? 0) + 1);
+      }
+    }
+    const byGuardrail: ByGuardrail[] = [...guardrailCounts.entries()]
+      .map(([token, count]) => ({ token, count }))
+      .sort((a, b) => b.count - a.count);
 
     const recentCalls: RecentCall[] = recent.map((r) => ({
       id: r.id,
