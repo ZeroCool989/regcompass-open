@@ -72,16 +72,14 @@ const MODES: Array<{
     short: 'GAP',
     desc: 'Policy-Vergleich gegen Regulationen',
   },
-  {
-    id: 'CONTROL_ADVISE',
-    label: 'Control Advise',
-    short: 'CTRL',
-    desc: 'Kontrollmassnahmen empfehlen',
-  },
 ];
 
+// Onboarding cards — one per capability. Control recommendations are a
+// capability of the conversational mode (its card starts a CONVERSATIONAL
+// chat), not a separate mode.
 const MODE_CARDS: Array<{
-  id: AegisMode;
+  key: string;
+  mode: AegisMode;
   icon: string;
   title: string;
   desc: string;
@@ -89,21 +87,24 @@ const MODE_CARDS: Array<{
   hint?: string;
 }> = [
   {
-    id: 'CONVERSATIONAL',
+    key: 'conversational',
+    mode: 'CONVERSATIONAL',
     icon: '\u{1F4AC}',
     title: 'Conversational',
     desc: 'Stellen Sie freie Compliance-Fragen. AEGIS antwortet mit Quellen aus der Wissensbasis.',
     example: 'Was fordert FINMA 08/2024 zur KI-Governance?',
   },
   {
-    id: 'ASSESS',
+    key: 'assess',
+    mode: 'ASSESS',
     icon: '\u{1F50D}',
     title: 'Assess',
     desc: 'Beschreiben Sie Ihr KI-System — AEGIS sagt Ihnen, welche Regulationen gelten und wie hoch das Risiko ist.',
     example: 'Welche Regulationen gelten für KI-Kreditentscheidungen einer Schweizer Bank?',
   },
   {
-    id: 'GAP_ANALYZE',
+    key: 'gap',
+    mode: 'GAP_ANALYZE',
     icon: '\u{1F4CB}',
     title: 'Gap Analyze',
     desc: 'Laden Sie Ihre Policy oder ein Assessment-Template hoch — AEGIS zeigt, was fehlt und was erfüllt ist.',
@@ -111,7 +112,8 @@ const MODE_CARDS: Array<{
     hint: 'Policy hochladen',
   },
   {
-    id: 'CONTROL_ADVISE',
+    key: 'control',
+    mode: 'CONVERSATIONAL',
     icon: '\u{1F6E1}️',
     title: 'Control Advise',
     desc: 'AEGIS empfiehlt konkrete Massnahmen mit Verantwortlichkeiten, Fristen und Prioritäten für Ihre Gaps.',
@@ -825,14 +827,12 @@ const MODE_TAG_CLS: Record<AegisMode, string> = {
   ASSESS: 'bg-orange-500/15 text-orange-400 border-orange-500/30',
   CONVERSATIONAL: 'bg-sky-500/15 text-sky-400 border-sky-500/30',
   GAP_ANALYZE: 'bg-emerald-500/15 text-emerald-400 border-emerald-500/30',
-  CONTROL_ADVISE: 'bg-purple-500/15 text-purple-400 border-purple-500/30',
 };
 
 const MODE_SHORT: Record<AegisMode, string> = {
   ASSESS: 'ASSESS',
   CONVERSATIONAL: 'CONV',
   GAP_ANALYZE: 'GAP',
-  CONTROL_ADVISE: 'CTRL',
 };
 
 function SectionDivider({ label }: { label: string }) {
@@ -883,19 +883,19 @@ function EmptyState({
         <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
           {MODE_CARDS.map((m) => (
             <div
-              key={m.id}
+              key={m.key}
               className="rounded-xl border border-border-brand bg-surface/50 hover:border-brand-primary/60 transition-colors overflow-hidden"
             >
               <button
                 type="button"
-                onClick={() => onModeSelect(m.id)}
+                onClick={() => onModeSelect(m.mode)}
                 className="w-full text-left p-5 pb-3"
               >
                 <div className="flex items-center gap-2.5 mb-2">
                   <span className="text-xl">{m.icon}</span>
                   <span className="text-sm font-semibold font-heading">{m.title}</span>
-                  <span className={`ml-auto px-1.5 py-0.5 text-[0.6rem] font-mono rounded border ${MODE_TAG_CLS[m.id]}`}>
-                    {MODE_SHORT[m.id]}
+                  <span className={`ml-auto px-1.5 py-0.5 text-[0.6rem] font-mono rounded border ${MODE_TAG_CLS[m.mode]}`}>
+                    {MODE_SHORT[m.mode]}
                   </span>
                 </div>
                 <p className="text-xs text-text-secondary leading-relaxed">{m.desc}</p>
@@ -903,7 +903,7 @@ function EmptyState({
               <div className="px-5 pb-4">
                 <button
                   type="button"
-                  onClick={() => onPick(m.example, m.id)}
+                  onClick={() => onPick(m.example, m.mode)}
                   className="group w-full text-left px-3 py-2 rounded-lg bg-background/50 border border-border-brand/60 hover:border-brand-primary/50 hover:bg-brand-primary/5 transition-colors"
                 >
                   <span className="text-xs text-text-secondary/70 group-hover:text-brand-primary transition-colors">

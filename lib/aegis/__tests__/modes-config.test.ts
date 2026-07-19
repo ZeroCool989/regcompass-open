@@ -10,7 +10,6 @@ describe('mode output/iteration ceilings — single source of truth (modes.ts)',
   it('defaults: structured modes 16384 tokens, CONVERSATIONAL 8192', () => {
     expect(getModeSpec('ASSESS', 'de').maxTokens).toBe(16384);
     expect(getModeSpec('GAP_ANALYZE', 'de').maxTokens).toBe(16384);
-    expect(getModeSpec('CONTROL_ADVISE', 'de').maxTokens).toBe(16384);
     expect(getModeSpec('CONVERSATIONAL', 'de').maxTokens).toBe(8192);
   });
 
@@ -18,7 +17,6 @@ describe('mode output/iteration ceilings — single source of truth (modes.ts)',
     expect(getModeSpec('CONVERSATIONAL', 'de').maxIterations).toBe(10);
     expect(getModeSpec('ASSESS', 'de').maxIterations).toBe(15);
     expect(getModeSpec('GAP_ANALYZE', 'de').maxIterations).toBe(25);
-    expect(getModeSpec('CONTROL_ADVISE', 'de').maxIterations).toBe(20);
   });
 
   it('env overrides are honoured (AEGIS_MAX_TOKENS_* / AEGIS_MAX_ITERATIONS_*)', async () => {

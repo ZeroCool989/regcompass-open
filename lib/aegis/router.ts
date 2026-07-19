@@ -1,6 +1,7 @@
 import { KB } from '@/lib/kb';
 import {
   AegisMode,
+  AegisModeInput,
   MODEL_IDS,
   type ModelId,
 } from './types';
@@ -34,7 +35,6 @@ const INTENT_SYSTEM = `You are an intent classifier for the RegCompass AEGIS age
 Classify the user message into exactly one mode:
 - ASSESS: user wants to assess an AI system against regulations (mentions a use case, sector, jurisdiction, attributes).
 - GAP_ANALYZE: user supplies a policy document or asks for gap analysis.
-- CONTROL_ADVISE: user asks for concrete control recommendations or implementation steps.
 - CONVERSATIONAL: any other free-form question about regulations.
 
 Also rate complexity from 0.0 to 1.0:
@@ -63,7 +63,7 @@ export async function classifyIntent(
     if (!match) return FALLBACK_INTENT;
 
     const raw = JSON.parse(match[0]) as { mode?: unknown; complexity?: unknown };
-    const mode = AegisMode.parse(raw.mode);
+    const mode = AegisModeInput.parse(raw.mode);
     const complexity = Number(raw.complexity);
     if (!Number.isFinite(complexity) || complexity < 0 || complexity > 1) {
       return FALLBACK_INTENT;
@@ -165,9 +165,6 @@ export function routeToModel(
     case 'GAP_ANALYZE':
       return { model: MODEL_IDS.sonnet, rationale: 'GAP_ANALYZE → Sonnet (default for document mapping)' };
 
-    case 'CONTROL_ADVISE':
-      return { model: MODEL_IDS.opus, rationale: 'CONTROL_ADVISE → Opus (cross-regulation control synthesis)' };
-
     case 'CONVERSATIONAL': {
       const c = complexity.toFixed(2);
       if (complexity > ESCALATION_THRESHOLD) {
@@ -192,8 +189,8 @@ const MODEL_TIER: Record<ModelId, number> = {
  * Applies ONLY when the turn runs on the user's own credential (BYOK,
  * `source: 'user'`) — on the system key the app's routing rules stand
  * unchanged. The mode's routed model is a quality FLOOR: a preference may
- * upgrade (user pays for it), never downgrade — so pinned modes like
- * CONTROL_ADVISE (Opus) always keep their pin. Unknown model ids are ignored
+ * upgrade (user pays for it), never downgrade — the structured modes keep
+ * their Sonnet pin. Unknown model ids are ignored
  * (defense in depth; the settings API already rejects them).
  *
  * The rationale records what happened — it flows into servedModels/audit, so

@@ -3,6 +3,16 @@
 Status: **built, gated off — waiting on Anthropic app approval** (see "Activation runbook").
 Scope contract: `docs/review-2026-07/DECISIONS.md` → D10. Researched 2026-07-17/18.
 
+> **Implementation note (2026-07):** the concrete implementation described below
+> (`lib/aegis/claude-oauth.ts`, `/api/aegis/providers/claude-oauth/*`, DB-table
+> token storage, runtime "deliberately not wired") has been superseded by the
+> generic loopback OAuth module — `lib/aegis/oauth/**`, routes under
+> `/api/aegis/oauth/[provider]/*`, tokens in `~/.regcompass-open/auth.json`,
+> runtime wired via `lib/aegis/client.ts` (`withSubscription`). Setup:
+> `docs/OAUTH_SETUP.md`. The **research verdict and the approval gate below are
+> unchanged**: without Anthropic-issued client credentials the Claude card stays
+> "Setup erforderlich", and no traffic runs over subscription tokens.
+
 ## Research verdict (read this first)
 
 Users connecting their **Claude subscription** to RegCompass ("Mit Claude anmelden",

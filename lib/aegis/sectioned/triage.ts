@@ -1,6 +1,6 @@
 import { intEnv } from '../env';
 import { estimateTokens } from '../memory-seed';
-import { AegisMode, MODEL_IDS } from '../types';
+import { AegisMode, AegisModeInput, MODEL_IDS } from '../types';
 import type { CallModelFn } from '../router';
 import type { ClaudeUsage } from '../context/cost';
 
@@ -105,7 +105,6 @@ const TRIAGE_SYSTEM = `You are an intent classifier for the RegCompass AEGIS age
 Classify the user message into exactly one mode:
 - ASSESS: user wants to assess an AI system against regulations (mentions a use case, sector, jurisdiction, attributes).
 - GAP_ANALYZE: user supplies a policy document or asks for gap analysis.
-- CONTROL_ADVISE: user asks for concrete control recommendations or implementation steps.
 - CONVERSATIONAL: any other free-form question about regulations.
 
 Also rate complexity from 0.0 to 1.0:
@@ -157,7 +156,7 @@ export async function classifyTriage(
       complexity?: unknown;
       deliverableKind?: unknown;
     };
-    const mode = AegisMode.parse(raw.mode);
+    const mode = AegisModeInput.parse(raw.mode);
     const complexity = Number(raw.complexity);
     if (!Number.isFinite(complexity) || complexity < 0 || complexity > 1) {
       return heuristicOnly;

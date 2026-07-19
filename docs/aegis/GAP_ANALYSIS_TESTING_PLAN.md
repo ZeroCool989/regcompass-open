@@ -16,7 +16,6 @@ prompt, tool subset, token budget and iteration cap (`lib/aegis/modes.ts`):
 | CONVERSATIONAL | free-form reg Q&A | — | 2048 | 10 | Haiku ≤0.5, else Sonnet |
 | ASSESS | assess an AI system vs regs | — | 4096 | 15 | Sonnet |
 | GAP_ANALYZE | policy → gap matrix | `analyze_document`, `fill_template` | 4096 | 25 | Sonnet |
-| CONTROL_ADVISE | concrete control recs | — | 4096 | 20 | Opus |
 
 GAP_ANALYZE rule (`prompts/mode_gap.ts`): classify each KB requirement as
 compliant / partial / non-compliant / not-applicable; cite `[R-...]` + policy excerpt;
@@ -54,16 +53,16 @@ find the right gaps and stay quiet on the mature sections. That is exactly what 
 is for, and there is no harness consuming it yet.
 
 `intent-eval.mts` is also skewed: its `SET` is almost entirely CONVERSATIONAL bands — it barely
-exercises GAP_ANALYZE / ASSESS / CONTROL_ADVISE routing.
+exercises GAP_ANALYZE / ASSESS / CONVERSATIONAL routing.
 
 ---
 
 ## 4. Proposed test levels (build later, in this order)
 
 ### L1 — Mode-routing eval (cheap, no policy file needed)
-Extend `intent-eval.mts` `SET` with labelled GAP_ANALYZE / ASSESS / CONTROL_ADVISE prompts
+Extend `intent-eval.mts` `SET` with labelled GAP_ANALYZE / ASSESS / CONVERSATIONAL prompts
 (e.g. "Here is our ICT policy, find the gaps" → GAP_ANALYZE; "recommend controls for X" →
-CONTROL_ADVISE). Assert classified mode == expected. Catches misrouting before spending tokens
+CONVERSATIONAL). Assert classified mode == expected. Catches misrouting before spending tokens
 on a full run.
 
 ### L2 — Gap-analysis quality eval (the real test) — **blocked: needs the seeded policy file**

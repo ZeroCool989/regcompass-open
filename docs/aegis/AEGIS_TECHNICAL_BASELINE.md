@@ -78,9 +78,9 @@ There are **exactly 4 modes** — a closed Zod enum (`types.ts:5-10`). **Voice i
 | **CONVERSATIONAL** | Free-form regulatory Q&A; default + fallback | Router catch-all; also fallback on classify failure | Haiku ≤0.5, **Sonnet** >0.5 (only mode that escalates) | search_kb, get_requirements, get_crosswalk, read_source | 2048 / 10 | **Production-ready** |
 | **ASSESS** | Risk assessment of a described AI system | "assess an AI system… use case/sector/jurisdiction" | Sonnet (static) | same 4 read-only KB tools | 4096 / 15 | **Production-ready** |
 | **GAP_ANALYZE** | Policy doc → gap matrix vs KB | "supplies a policy document or asks for gap analysis" | Sonnet (static) | +**analyze_document, fill_template** (widest set) | 4096 / 25 | **Implemented** (see Part 8) |
-| **CONTROL_ADVISE** | Concrete control recommendations | "asks for control recommendations / implementation steps" | **Opus** (only Opus mode) | same 4 read-only KB tools | 4096 / 20 | **Implemented** |
+| *(retired)* CONTROL_ADVISE | Folded into CONVERSATIONAL (2026-07): the control-recommendation recipe lives in `mode_conversational.ts`; legacy stored modes coerce via `AegisModeInput` | — | — | — | **Merged** |
 
-Prompt rules (grounded): ASSESS is forbidden from declaring "compliant/non-compliant" (`mode_assess.ts`); GAP_ANALYZE must not invent gaps — policy silence ⇒ `partial`, never non-compliance (`mode_gap.ts:13`); CONTROL_ADVISE may not recommend controls outside the KB (`mode_control.ts`). The shared identity prompt (`prompts/identity.ts:33-56`) enforces 5 HARD RULES (tool-grounded only, mandatory `[R-...]` citations, no invented articles/fines, no legal advice, distinguish binding levels) and appends a deterministic KB table-of-contents.
+Prompt rules (grounded): ASSESS is forbidden from declaring "compliant/non-compliant" (`mode_assess.ts`); GAP_ANALYZE must not invent gaps — policy silence ⇒ `partial`, never non-compliance (`mode_gap.ts:13`); control recommendations may not go outside the KB (control recipe in `mode_conversational.ts`). The shared identity prompt (`prompts/identity.ts:33-56`) enforces 5 HARD RULES (tool-grounded only, mandatory `[R-...]` citations, no invented articles/fines, no legal advice, distinguish binding levels) and appends a deterministic KB table-of-contents.
 
 **Voice overlay** (`prompts/voice.ts`, applied at `index.ts:277-292` when `voice:true`): spoken-style prompt, lowers ceilings to maxIter 5 / maxTok 1024, preserves HARD RULES. **Experimental/Partial** (Chrome-only STT, active development).
 
@@ -95,7 +95,7 @@ AEGIS has no formal "skill" abstraction in code; capabilities are realized throu
 | **Regulatory Q&A** | NL question | Cited answer (≤4 paras) | KB, search_kb | **Production-ready** |
 | **Policy Assessment (ASSESS)** | AI-system description | Risk tiering + obligations, cited | KB | **Production-ready** |
 | **Gap Analysis (GAP_ANALYZE)** | Policy text/doc | Gap matrix by regulation | KB + analyze_document | **Partial** (LLM reasoning solid; document-matching tool is keyword-heuristic) |
-| **Control Recommendation (CONTROL_ADVISE)** | Gaps/requirements | Prioritized controls + steps | KB `controls[]` | **Implemented** |
+| **Control Recommendation (CONVERSATIONAL recipe)** | Gaps/requirements | Prioritized controls + steps | KB `controls[]` | **Implemented** |
 | **Citation Verification** | Model output | Pass/fail + retry | verify.ts, allowedIds | **Production-ready** |
 | **Document Analysis** | Uploaded PDF/DOCX/XLSX/TXT | covered/partial/missing findings | document-store, parsers | **Partial** (keyword overlap, not semantic) |
 | **Excel template fill** | Policy + .xlsx template | Filled workbook (download) | excel-writer, exceljs | **Partial** (fills existing template only) |
@@ -124,7 +124,6 @@ classifyIntent (Haiku LLM)  [default; env AEGIS_INTENT_CLASSIFIER]
 routeToModel(mode, complexity)
    ASSESS         → Sonnet
    GAP_ANALYZE    → Sonnet
-   CONTROL_ADVISE → Opus
    CONVERSATIONAL → complexity > 0.5 ? Sonnet : Haiku
         ▼
 getModeSpec(mode, language)  → system blocks + tool subset + ceilings
@@ -221,7 +220,7 @@ One subsystem: the **shipped web stack** — browser STT + browser TTS (Web Spee
 3. **Findings generated** — gap matrix grouped by regulation: requirement `[R-...]`, status (compliant/partial/non-compliant/not-applicable), justifying excerpt, one-sentence mismatch.
 4. **Citations attached** — every `[R-...]` must be in the per-turn `allowedIds` (IDs the tools actually surfaced) **and** resolve in `KB.byId`; enforced deterministically by `verify.ts`.
 5. **Severity** — **not computed by the engine.** No severity scoring exists in code; any severity is model prose. (The external answer-key assigns severities, but AEGIS does not.)
-6. **Remediation** — produced as model prose under GAP_ANALYZE/CONTROL_ADVISE; constrained to KB `controls[]` in CONTROL_ADVISE.
+6. **Remediation** — produced as model prose under GAP_ANALYZE/CONVERSATIONAL (control recipe); constrained to KB `controls[]`.
 
 **Answers to the sharp questions:**
 - **Multiple regulations simultaneously?** **Yes** — search/crosswalk span all 19; matrix is grouped by regulation.

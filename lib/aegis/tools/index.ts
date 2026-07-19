@@ -132,7 +132,7 @@ async function dispatch(
  * but isolating the closure keeps testing simple (each test gets its own).
  *
  * `subset` lets callers expose only the tools relevant to the current mode
- * (e.g. CONTROL_ADVISE doesn't need `analyze_document`).
+ * (e.g. CONVERSATIONAL doesn't need `analyze_document`).
  */
 export function createToolRegistry(
   subset?: ToolName[],

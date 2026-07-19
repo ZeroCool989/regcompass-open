@@ -69,9 +69,11 @@ describe('resolveStrategy', () => {
 
 describe('classifyTriage', () => {
   it('merges Haiku result with heuristics (compliance fixture → SECTIONED)', async () => {
+    // Legacy classifier output CONTROL_ADVISE coerces to CONVERSATIONAL
+    // (mode folded 2026-07) — the rest of the triage merge is unaffected.
     const call = stubCall('{"mode":"CONTROL_ADVISE","complexity":0.9,"deliverableKind":"catalogue"}');
     const r = await classifyTriage(COMPLIANCE_FIXTURE_PROMPT, call);
-    expect(r.mode).toBe('CONTROL_ADVISE');
+    expect(r.mode).toBe('CONVERSATIONAL');
     expect(r.complexity).toBe(0.9);
     expect(r.deliverableKind).toBe('catalogue');
     expect(r.deliverableStrategy).toBe('SECTIONED');

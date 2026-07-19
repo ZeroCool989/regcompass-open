@@ -8,7 +8,7 @@ import { createHeartbeat } from '@/lib/aegis/heartbeat';
 import { getModeSpec } from '@/lib/aegis/modes';
 import { UsageRecorder } from '@/lib/aegis';
 import { KB } from '@/lib/kb';
-import type { AegisMode } from '@/lib/aegis/types';
+import { AegisModeInput } from '@/lib/aegis/types';
 import {
   consumeResume,
   firstUserMessage,
@@ -204,12 +204,15 @@ export async function GET(
           }),
         );
 
-        const mode = fresh.conversation.mode;
+        // Legacy rows may still carry the retired CONTROL_ADVISE mode (or, in
+        // degenerate cases, none at all) — coerce instead of crashing the resume.
+        const parsedMode = AegisModeInput.safeParse(fresh.conversation.mode);
+        const mode = parsedMode.success ? parsedMode.data : 'CONVERSATIONAL';
         const originalAsk = await firstUserMessage(fresh.job.conversationId);
         const executor = executeJobSections(
           fresh,
           {
-            baseSpec: getModeSpec(mode as AegisMode, conversationLanguage),
+            baseSpec: getModeSpec(mode, conversationLanguage),
             language: conversationLanguage,
             userMessage: originalAsk ?? resumeUserMessage(fresh),
             deadlineAt,

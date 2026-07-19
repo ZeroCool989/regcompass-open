@@ -172,16 +172,12 @@ const MODE_INSTRUCTION: Record<string, string> = {
     'findingType "gap": Anforderung/Soll (requirement, mit [R-…]-Citation), ' +
     'Ist-Zustand (currentState), Gap-Beschreibung (description), Severity, ' +
     'status ("partial" oder "missing").',
-  CONTROL_ADVISE:
-    'Die Antwort stammt aus dem CONTROL_ADVISE-Modus. Extrahiere jede ' +
-    'Empfehlung als findingType "recommendation": Empfehlung (description), ' +
-    'Begründung (rationale). Eine Empfehlung ist KEIN festgestellter Mangel — ' +
-    'niemals als "finding" oder "gap" klassifizieren.',
   CONVERSATIONAL:
     'Die Antwort stammt aus einem freien Gespräch. Extrahiere NUR eindeutig ' +
     'ausgesprochene Feststellungen (finding), Lücken (gap) oder Empfehlungen ' +
-    '(recommendation). Erklärungen, Definitionen und Rückfragen ergeben ' +
-    'KEINE Items — dann items: [].',
+    '(recommendation). Eine Empfehlung ist KEIN festgestellter Mangel — ' +
+    'niemals als "finding" oder "gap" klassifizieren. Erklärungen, ' +
+    'Definitionen und Rückfragen ergeben KEINE Items — dann items: [].',
 };
 
 const CLASSIFY_SYSTEM =

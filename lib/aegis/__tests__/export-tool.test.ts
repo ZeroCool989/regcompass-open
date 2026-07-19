@@ -15,7 +15,7 @@ describe('export_assessment tool', () => {
     expect(ALL_TOOL_NAMES).toContain('export_assessment');
     const registry = createToolRegistry();
     expect(registry.schemas.map((s) => s.name)).toContain('export_assessment');
-    for (const mode of ['ASSESS', 'GAP_ANALYZE', 'CONTROL_ADVISE', 'CONVERSATIONAL'] as const) {
+    for (const mode of ['ASSESS', 'GAP_ANALYZE', 'CONVERSATIONAL'] as const) {
       expect(getModeSpec(mode, 'de').defaultTools, mode).toContain('export_assessment');
     }
     expect(EXPORT_ASSESSMENT_SCHEMA.input_schema.required).toEqual(['format']);

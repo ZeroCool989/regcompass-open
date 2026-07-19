@@ -60,7 +60,6 @@ export function setVoiceSink(sink: VoiceSink | null): void {
 export type AegisMode =
   | 'ASSESS'
   | 'GAP_ANALYZE'
-  | 'CONTROL_ADVISE'
   | 'CONVERSATIONAL';
 
 export type ToolCallSummary = {

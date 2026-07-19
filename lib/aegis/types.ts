@@ -8,10 +8,20 @@ import { AEGIS_MESSAGE_MAX_CHARS_DEFAULT } from './limits';
 export const AegisMode = z.enum([
   'ASSESS',
   'GAP_ANALYZE',
-  'CONTROL_ADVISE',
   'CONVERSATIONAL',
 ]);
 export type AegisMode = z.infer<typeof AegisMode>;
+
+/**
+ * Mode as accepted at input boundaries. The retired CONTROL_ADVISE mode was
+ * folded into CONVERSATIONAL (its control-recommendation workflow now lives in
+ * the conversational prompt); conversations and clients that still carry the
+ * old value coerce instead of erroring.
+ */
+export const AegisModeInput = z.preprocess(
+  (v) => (v === 'CONTROL_ADVISE' ? 'CONVERSATIONAL' : v),
+  AegisMode,
+);
 
 // ───────────────────────── Models & Pricing ─────────────────────────
 
@@ -98,7 +108,7 @@ export const AegisHistoryMessage = z.object({
 export type AegisHistoryMessage = z.infer<typeof AegisHistoryMessage>;
 
 export const AegisRequest = z.object({
-  mode: AegisMode,
+  mode: AegisModeInput,
   // Sized for multi-section report prompts (sectioned generation). The client
   // textarea enforces the same default via `maxLength` (see limits.ts) so users
   // never hit this server bound with a visible error.

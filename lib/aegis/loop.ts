@@ -367,7 +367,7 @@ async function runInnerLoop(
 ): Promise<string> {
   const registry = createToolRegistry(spec.defaultTools, state.toolContext);
   // The pre-guard kills at `config.maxIterations`. Use the mode's own ceiling
-  // (CONVERSATIONAL 10 / ASSESS 15 / CONTROL_ADVISE 20 / GAP_ANALYZE 25) instead
+  // (CONVERSATIONAL 10 / ASSESS 15 / GAP_ANALYZE 25) instead
   // of the global default of 10 — otherwise structured modes never get past 10
   // tool iterations and fail complex documents with a non-retryable iteration_limit.
   const guardConfig = { ...DEFAULT_GUARDRAILS, maxIterations: spec.maxIterations };
@@ -806,7 +806,7 @@ export async function* runInnerLoopStreaming(
 ): AsyncGenerator<LoopStreamEvent, string, void> {
   const registry = createToolRegistry(spec.defaultTools, state.toolContext);
   // The pre-guard kills at `config.maxIterations`. Use the mode's own ceiling
-  // (CONVERSATIONAL 10 / ASSESS 15 / CONTROL_ADVISE 20 / GAP_ANALYZE 25) instead
+  // (CONVERSATIONAL 10 / ASSESS 15 / GAP_ANALYZE 25) instead
   // of the global default of 10 — otherwise structured modes never get past 10
   // tool iterations and fail complex documents with a non-retryable iteration_limit.
   const guardConfig = { ...DEFAULT_GUARDRAILS, maxIterations: spec.maxIterations };

@@ -29,7 +29,7 @@ const MODE_LABELS: Record<string, string> = {
   CONVERSATIONAL: 'Conversational',
 };
 
-const ALL_MODES = ['All', 'ASSESS', 'GAP_ANALYZE', 'CONTROL_ADVISE', 'CONVERSATIONAL'] as const;
+const ALL_MODES = ['All', 'ASSESS', 'GAP_ANALYZE', 'CONVERSATIONAL'] as const;
 const ALL_MODELS = ['All', 'haiku', 'sonnet', 'opus'] as const;
 
 function formatDate(iso: string): string {

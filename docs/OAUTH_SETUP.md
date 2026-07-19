@@ -74,8 +74,9 @@ GOOGLE_OAUTH_SCOPES=https://www.googleapis.com/auth/generative-language.retrieve
 
 When a subscription is connected for the brain you are running, AEGIS uses that
 provider's access token (auto-refreshed before expiry) as a `Bearer` credential.
-Credential precedence is: **connected subscription → your API key (BYOK/env) →
-the app's own key**. Disconnecting removes the token from the local store.
+Credential precedence is: **your saved API key (BYOK) → connected subscription →
+an API key from `.env`** — a key you saved in the app deliberately wins over the
+subscription login. Disconnecting removes the token from the local store.
 
 > Provider API contracts for subscription-billed requests can change and may be
 > subject to each provider's developer terms. The connection flow here is

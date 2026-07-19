@@ -60,7 +60,9 @@ export function SubscriptionConnect() {
             <div className="min-w-0">
               <div className="font-medium">{p.label}</div>
               {p.status === 'unconfigured' && (
-                <div className="text-xs text-text-secondary mt-0.5">Setup erforderlich — {p.setupHint}</div>
+                <div className="text-xs text-text-secondary mt-0.5">
+                  Setup erforderlich — {p.setupHint} Anleitung: docs/OAUTH_SETUP.md
+                </div>
               )}
               {p.status === 'connected' && (
                 <div className="text-xs text-text-secondary mt-0.5">

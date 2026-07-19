@@ -475,7 +475,7 @@ function Loaded({
             Mode-Verteilung
           </h3>
           <p className="text-xs text-text-secondary mb-4">
-            ASSESS · GAP_ANALYZE · CONTROL_ADVISE · CONVERSATIONAL
+            ASSESS · GAP_ANALYZE · CONVERSATIONAL
           </p>
           {modesSorted.length === 0 ? (
             <p className="text-sm text-text-secondary">Keine Mode-Daten.</p>

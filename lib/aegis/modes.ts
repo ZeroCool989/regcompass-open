@@ -1,7 +1,6 @@
 import { AEGIS_SYSTEM_PROMPT } from './prompts/identity';
 import { buildPrompt as buildAssessPrompt } from './prompts/mode_assess';
 import { buildPrompt as buildGapPrompt } from './prompts/mode_gap';
-import { buildPrompt as buildControlPrompt } from './prompts/mode_control';
 import { buildPrompt as buildConversationalPrompt } from './prompts/mode_conversational';
 import { intEnv } from './env';
 import type { AegisMode, ToolName } from './types';
@@ -27,7 +26,6 @@ export type ModeSpec = {
 const MODE_TOOLS: Record<AegisMode, ToolName[]> = {
   ASSESS: ['search_kb', 'get_requirements', 'get_crosswalk', 'read_source', 'search_ingested_documents', 'generate_assessment_deck', 'export_assessment'],
   GAP_ANALYZE: ['search_kb', 'get_requirements', 'get_crosswalk', 'analyze_document', 'fill_template', 'read_source', 'search_ingested_documents', 'generate_assessment_deck', 'export_assessment', 'improve_uploaded_deck', 'improve_document'],
-  CONTROL_ADVISE: ['search_kb', 'get_requirements', 'get_crosswalk', 'read_source', 'search_ingested_documents', 'export_assessment'],
   CONVERSATIONAL: ['search_kb', 'get_requirements', 'get_crosswalk', 'read_source', 'search_ingested_documents', 'export_assessment'],
 };
 
@@ -39,7 +37,6 @@ const MODE_TOOLS: Record<AegisMode, ToolName[]> = {
 const MODE_MAX_TOKENS: Record<AegisMode, number> = {
   ASSESS: intEnv('AEGIS_MAX_TOKENS_ASSESS', 16384),
   GAP_ANALYZE: intEnv('AEGIS_MAX_TOKENS_GAP_ANALYZE', 16384),
-  CONTROL_ADVISE: intEnv('AEGIS_MAX_TOKENS_CONTROL_ADVISE', 16384),
   CONVERSATIONAL: intEnv('AEGIS_MAX_TOKENS_CONVERSATIONAL', 8192),
 };
 
@@ -49,7 +46,6 @@ const MODE_MAX_ITERATIONS: Record<AegisMode, number> = {
   CONVERSATIONAL: intEnv('AEGIS_MAX_ITERATIONS_CONVERSATIONAL', 10),
   ASSESS: intEnv('AEGIS_MAX_ITERATIONS_ASSESS', 15),
   GAP_ANALYZE: intEnv('AEGIS_MAX_ITERATIONS_GAP_ANALYZE', 25),
-  CONTROL_ADVISE: intEnv('AEGIS_MAX_ITERATIONS_CONTROL_ADVISE', 20),
 };
 
 /**
@@ -83,8 +79,6 @@ function buildModePrompt(mode: AegisMode, language: 'de' | 'en'): string {
       return buildAssessPrompt({ language });
     case 'GAP_ANALYZE':
       return buildGapPrompt({ language });
-    case 'CONTROL_ADVISE':
-      return buildControlPrompt({ language });
     case 'CONVERSATIONAL':
       return buildConversationalPrompt({ language });
   }

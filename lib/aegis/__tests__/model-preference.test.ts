@@ -11,9 +11,9 @@ describe('applyModelPreference (D8)', () => {
     expect(out.rationale).toContain('user-preferred');
   });
 
-  it('never downgrades below the mode floor: CONTROL_ADVISE keeps its Opus pin', () => {
-    const out = applyModelPreference(routeToModel('CONTROL_ADVISE', 0.5), user(MODEL_IDS.haiku));
-    expect(out.model).toBe(MODEL_IDS.opus);
+  it('never downgrades below the mode floor: ASSESS keeps its Sonnet pin', () => {
+    const out = applyModelPreference(routeToModel('ASSESS', 0.5), user(MODEL_IDS.haiku));
+    expect(out.model).toBe(MODEL_IDS.sonnet);
     expect(out.rationale).toContain('floor wins');
   });
 

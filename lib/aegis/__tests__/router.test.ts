@@ -85,9 +85,9 @@ describe('routeToModel', () => {
     expect(r.model).toBe(MODEL_IDS.sonnet);
   });
 
-  it('CONTROL_ADVISE → Opus', () => {
-    const r = routeToModel('CONTROL_ADVISE', 0.5);
-    expect(r.model).toBe(MODEL_IDS.opus);
+  it('ASSESS → Sonnet regardless of complexity', () => {
+    const r = routeToModel('ASSESS', 0.9);
+    expect(r.model).toBe(MODEL_IDS.sonnet);
   });
 
   it('CONVERSATIONAL low complexity (≤ 0.5) → Haiku', () => {
@@ -112,7 +112,7 @@ describe('routeToModel', () => {
   it('rationale string includes the model choice reasoning', () => {
     expect(routeToModel('CONVERSATIONAL', 0.2).rationale).toMatch(/Haiku/);
     expect(routeToModel('CONVERSATIONAL', 0.8).rationale).toMatch(/Sonnet/);
-    expect(routeToModel('CONTROL_ADVISE', 0.5).rationale).toMatch(/Opus/);
+    expect(routeToModel('GAP_ANALYZE', 0.5).rationale).toMatch(/Sonnet/);
   });
 });
 
