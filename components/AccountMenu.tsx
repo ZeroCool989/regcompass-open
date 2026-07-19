@@ -9,6 +9,8 @@ export type MeUser = {
   username: string | null;
   status: 'PENDING' | 'APPROVED' | 'BLOCKED';
   role: 'USER' | 'ADMIN';
+  /** Local mode: implicit single user — no login-only affordances. */
+  local?: boolean;
 };
 
 const STATUS: Record<MeUser['status'], { label: string; cls: string }> = {
@@ -84,7 +86,7 @@ export function AccountMenu({
     );
   }
 
-  const name = user.username || user.email.split('@')[0];
+  const name = user.local ? 'Lokales Konto' : user.username || user.email.split('@')[0];
   const initial = name.charAt(0).toUpperCase();
   const status = STATUS[user.status];
 
@@ -136,16 +138,18 @@ export function AccountMenu({
             </div>
           </div>
 
-          <div className="px-4 py-2.5 border-b border-border-brand/60 flex items-center gap-2">
-            <span className={`text-[0.7rem] px-2 py-0.5 rounded border ${status.cls}`}>
-              {status.label}
-            </span>
-            {user.role === 'ADMIN' ? (
-              <span className="text-[0.7rem] px-2 py-0.5 rounded border border-brand-primary/40 text-brand-primary bg-brand-primary/10">
-                Admin
+          {user.local ? null : (
+            <div className="px-4 py-2.5 border-b border-border-brand/60 flex items-center gap-2">
+              <span className={`text-[0.7rem] px-2 py-0.5 rounded border ${status.cls}`}>
+                {status.label}
               </span>
-            ) : null}
-          </div>
+              {user.role === 'ADMIN' ? (
+                <span className="text-[0.7rem] px-2 py-0.5 rounded border border-brand-primary/40 text-brand-primary bg-brand-primary/10">
+                  Admin
+                </span>
+              ) : null}
+            </div>
+          )}
 
           <nav className="py-1">
             <Link
@@ -169,7 +173,14 @@ export function AccountMenu({
             >
               Aegis-Stimme
             </Link>
-            {user.role === 'ADMIN' ? (
+            <Link
+              href="/account/providers"
+              role="menuitem"
+              className="block px-4 py-2 text-sm text-text-secondary hover:text-foreground hover:bg-background/60 transition-colors no-underline"
+            >
+              AI-Provider
+            </Link>
+            {!user.local && user.role === 'ADMIN' ? (
               <Link
                 href="/admin/users"
                 role="menuitem"
@@ -178,15 +189,17 @@ export function AccountMenu({
                 Benutzerverwaltung
               </Link>
             ) : null}
-            <button
-              type="button"
-              role="menuitem"
-              onClick={logout}
-              disabled={loggingOut}
-              className="w-full text-left px-4 py-2 text-sm text-red-400 hover:bg-red-500/10 transition-colors disabled:opacity-50"
-            >
-              {loggingOut ? 'Wird abgemeldet…' : 'Abmelden'}
-            </button>
+            {user.local ? null : (
+              <button
+                type="button"
+                role="menuitem"
+                onClick={logout}
+                disabled={loggingOut}
+                className="w-full text-left px-4 py-2 text-sm text-red-400 hover:bg-red-500/10 transition-colors disabled:opacity-50"
+              >
+                {loggingOut ? 'Wird abgemeldet…' : 'Abmelden'}
+              </button>
+            )}
           </nav>
         </div>
       ) : null}

@@ -49,8 +49,7 @@ const listeners = new Set<() => void>();
 
 // Labels that mark the START of a fresh turn. Only a REPEAT of one of these
 // rolls the current turn into history. Other labels can legitimately repeat
-// within one turn (Phase 1 streams sentence-by-sentence, so the per-clip
-// `ttsRequestedAt` / `ttsAudioReadyAt` fire once per sentence); delta math uses
+// within one turn (Phase 1 streams sentence-by-sentence); delta math uses
 // the FIRST occurrence, which is the one that gates time-to-first-audio.
 const TURN_ANCHORS = new Set(['listeningStartedAt', 'sendMessageAt']);
 
@@ -117,10 +116,7 @@ export function resetVoiceTiming(): void {
   publish();
 }
 
-/**
- * Milliseconds between two marks in a turn, or null if either is missing
- * (e.g. the TTS marks are absent when the browser-fallback voice is used).
- */
+/** Milliseconds between two marks in a turn, or null if either is missing. */
 export function markDelta(turn: VoiceTurn, from: string, to: string): number | null {
   const a = turn.marks.find((m) => m.label === from);
   const b = turn.marks.find((m) => m.label === to);

@@ -241,6 +241,43 @@ export function authCookieOptions() {
   };
 }
 
+// ─────────────────────────── Auth mode ───────────────────────────
+// Default 'local': the app runs as one implicit local user — no login, no
+// accounts. AEGIS only needs a configured model brain. Set AUTH_MODE=multi to
+// turn on the full account stack (registration, login, admin approval) for a
+// shared instance.
+
+export type AuthMode = 'local' | 'multi';
+
+export function authMode(): AuthMode {
+  return process.env.AUTH_MODE === 'multi' ? 'multi' : 'local';
+}
+
+export const LOCAL_USER_ID = 'local';
+
+/**
+ * Ensure the implicit local user row exists (idempotent) and return the live
+ * row. Explicit APPROVED/ADMIN — the schema defaults are PENDING/USER for
+ * multi-user registrations.
+ */
+export async function ensureLocalUser(): Promise<User> {
+  return db.user.upsert({
+    where: { id: LOCAL_USER_ID },
+    // No username: keeps the spoken-name directive off (deriveFirstName(null))
+    // instead of AEGIS addressing the user as "Local". Also normalises rows
+    // created by earlier builds that stored the literal name.
+    update: { username: null },
+    create: {
+      id: LOCAL_USER_ID,
+      email: 'local@regcompass.open',
+      username: null,
+      passwordHash: '',
+      status: 'APPROVED',
+      role: 'ADMIN',
+    },
+  });
+}
+
 // ─────────────────────────── User lookup / status ───────────────────────────
 
 export function isApproved(user: Pick<User, 'status'> | null): boolean {
@@ -262,10 +299,14 @@ export function requireAdmin<T extends Pick<User, 'email' | 'role' | 'status'>>(
   return user.role === 'ADMIN' || isAdminEmail(user.email);
 }
 
-/** Load the user behind a (verified) auth-cookie value, or null. */
+/**
+ * Load the user behind a (verified) auth-cookie value, or null. In local mode
+ * every request resolves to the implicit local user regardless of cookies.
+ */
 export async function userFromCookieValue(
   value: string | null | undefined,
 ): Promise<User | null> {
+  if (authMode() === 'local') return ensureLocalUser();
   const id = verifyAuthValue(value);
   if (!id) return null;
   return db.user.findUnique({ where: { id } });

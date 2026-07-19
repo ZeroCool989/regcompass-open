@@ -5,7 +5,6 @@ import { ipHash, rateLimit } from '@/lib/rate-limit';
 import { readSessionId } from '@/lib/session';
 import { getUserFromRequest, isApproved } from '@/lib/auth';
 import { buildUserSoulBlock } from '@/lib/aegis/soul-store';
-import { resolveServiceAuth } from '@/lib/aegis/service-auth';
 import { runAegis, runAegisStreaming, UsageRecorder } from '@/lib/aegis';
 import { deriveFirstName } from '@/lib/aegis/prompts/voice';
 import { AegisError } from '@/lib/aegis/types';
@@ -21,16 +20,6 @@ export const maxDuration = 300;
 const aegisLimiter = rateLimit({
   key: 'aegis',
   limit: 30,
-  windowMs: 60 * 60 * 1000,
-});
-
-// Service (voice-gateway) path gets its OWN limit, keyed per voice session — a
-// live voice conversation is far chattier than text chat, so 30/h would throttle
-// a single ~10-minute demo. Default 120/h; override via AEGIS_SERVICE_RATE_LIMIT.
-const SERVICE_RATE_LIMIT = Math.max(1, Number(process.env.AEGIS_SERVICE_RATE_LIMIT ?? '120'));
-const serviceLimiter = rateLimit({
-  key: 'aegis-service',
-  limit: SERVICE_RATE_LIMIT,
   windowMs: 60 * 60 * 1000,
 });
 
@@ -243,26 +232,12 @@ export async function POST(
 ): Promise<NextResponse<AegisRouteSuccess | AegisRouteError> | Response> {
   const startedAt = Date.now();
 
-  // Service (voice-gateway) auth. Header-only, so resolved before body parse and
-  // before the limiter — it picks the limiter bucket. `none` is the unchanged
-  // public/cookie path.
-  const auth = resolveServiceAuth(req);
-
-  // Rate limit: a valid service call is keyed per voice session against the
-  // higher service limit; everything else (public, cookie, invalid-token) keeps
-  // the 30/h IP bucket — so bad-token probing is still throttled.
-  const limit =
-    auth.kind === 'valid'
-      ? await serviceLimiter.check(auth.sessionId)
-      : await aegisLimiter.check(ipHash(req));
+  const limit = await aegisLimiter.check(ipHash(req));
   if (!limit.ok) {
     return NextResponse.json<AegisRouteError>(
       {
         error: 'rate_limited',
-        message:
-          auth.kind === 'valid'
-            ? `AEGIS-Service-Limit erreicht (${SERVICE_RATE_LIMIT} pro Stunde). Bitte später erneut versuchen.`
-            : 'AEGIS-Limit erreicht (30 Anfragen pro Stunde). Bitte später erneut versuchen.',
+        message: 'AEGIS-Limit erreicht (30 Anfragen pro Stunde). Bitte später erneut versuchen.',
       },
       {
         status: 429,
@@ -271,52 +246,27 @@ export async function POST(
     );
   }
 
-  // A present-but-invalid service token is rejected outright (no silent
-  // downgrade). Emit the FAILED attempt (event only, never the token) so probing
-  // of the service endpoint is observable.
-  if (auth.kind === 'invalid') {
-    console.error(
-      JSON.stringify({
-        event: 'aegis_service_auth_failed',
-        level: 'warn',
-        reason: auth.reason,
-        ip: ipHash(req),
-      }),
-    );
+  // Callers must be a signed-in, APPROVED user — AEGIS spends Claude API
+  // tokens, so it's gated behind approval. The resolved user id owns the
+  // conversation (history follows the account).
+  const user = await getUserFromRequest(req);
+  if (!user || !isApproved(user)) {
     return NextResponse.json<AegisRouteError>(
-      { error: 'unauthorized', message: 'Invalid service credentials.' },
-      { status: 401 },
+      {
+        error: user ? 'not_approved' : 'unauthorized',
+        message: user
+          ? 'Ihr Konto wartet auf Freigabe durch einen Administrator.'
+          : 'Bitte melden Sie sich an, um AEGIS zu nutzen.',
+      },
+      { status: user ? 403 : 401 },
     );
   }
+  const userId: string | null = user.id;
+  const firstName: string | null = deriveFirstName(user.username);
 
-  // Browser callers (no service token) must be a signed-in, APPROVED user —
-  // AEGIS spends Claude API tokens, so it's gated behind approval. The voice
-  // gateway (auth.kind === 'valid') is authenticated by its service token and
-  // is exempt. The resolved user id owns the conversation (history follows the
-  // account); service calls stay session-scoped (userId null).
-  let userId: string | null = null;
-  let firstName: string | null = null;
-  if (auth.kind === 'none') {
-    const user = await getUserFromRequest(req);
-    if (!user || !isApproved(user)) {
-      return NextResponse.json<AegisRouteError>(
-        {
-          error: user ? 'not_approved' : 'unauthorized',
-          message: user
-            ? 'Ihr Konto wartet auf Freigabe durch einen Administrator.'
-            : 'Bitte melden Sie sich an, um AEGIS zu nutzen.',
-        },
-        { status: user ? 403 : 401 },
-      );
-    }
-    userId = user.id;
-    firstName = deriveFirstName(user.username);
-  }
-
-  // Style-only personalization (soul.md). Loaded only for the browser path;
-  // the voice-gateway service path stays impersonal. Null when the user has no
-  // approved entries — then the run is byte-identical to the non-personalized
-  // path. Fail-open: a soul lookup error must never block a chat turn.
+  // Style-only personalization (soul.md). Null when the user has no approved
+  // entries — then the run is byte-identical to the non-personalized path.
+  // Fail-open: a soul lookup error must never block a chat turn.
   let soulBlock: string | null = null;
   if (userId) {
     try {
@@ -337,11 +287,9 @@ export async function POST(
   }
 
   const traceId = randomUUID();
-  // Session scope for memory + document tools. A valid service token supplies a
-  // `voice:`-namespaced id (enforced in resolveServiceAuth); otherwise the
-  // verified browser cookie (set by proxy.ts / the upload route), or null for an
-  // anonymous public caller (stateless turn).
-  const sessionId = auth.kind === 'valid' ? auth.sessionId : readSessionId(req);
+  // Session scope for memory + document tools: the verified browser cookie
+  // (set by proxy.ts / the upload route), or null (stateless turn).
+  const sessionId = readSessionId(req);
 
   // SSE branch — UI default. Caller opts in via `Accept: text/event-stream`.
   // Streams tool-call status updates and token deltas of the final answer.

@@ -1,20 +1,28 @@
 /**
- * One-time local setup. The SQLite schema is created by `pnpm db:push`; this
- * script only reports the account state — accounts themselves are created in
- * the browser: the first registration on a fresh database becomes the approved
- * admin (app/api/auth/register). Idempotent — safe to re-run.
+ * One-time local setup. The SQLite schema is created by `pnpm db:push`.
  *
- * Run (loads .env for DATABASE_URL): pnpm setup
+ * Default (AUTH_MODE unset / 'local'): provision the implicit local user —
+ * no login, the app is ready as soon as a model brain is configured.
+ * AUTH_MODE=multi: accounts are created in the browser instead — the first
+ * registration on a fresh database becomes the approved admin.
+ *
+ * Idempotent — safe to re-run. Run (loads .env for DATABASE_URL): pnpm setup
  */
+import { authMode, ensureLocalUser } from '@/lib/auth';
 import { db } from '@/lib/db';
 
 async function main() {
-  const users = await db.user.count();
+  if (authMode() === 'local') {
+    const user = await ensureLocalUser();
+    console.log(`Local user ready: ${user.email} (${user.id}). No login required.`);
+    return;
+  }
+  const users = await db.user.count({ where: { NOT: { passwordHash: '' } } });
   if (users === 0) {
-    console.log('Database ready. No accounts yet — open /register in the browser;');
+    console.log('Database ready (AUTH_MODE=multi). No accounts yet — open /register;');
     console.log('the first account automatically becomes the approved admin.');
   } else {
-    console.log(`Database ready. ${users} account(s) exist — sign in at /login.`);
+    console.log(`Database ready (AUTH_MODE=multi). ${users} account(s) exist — sign in at /login.`);
   }
 }
 

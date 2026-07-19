@@ -1,6 +1,6 @@
 import { NextResponse, type NextRequest } from 'next/server';
 import { ipHash, rateLimit } from '@/lib/rate-limit';
-import { hashPassword, isAdminEmail, isAllowlisted, allowlistEmails } from '@/lib/auth';
+import { authMode, hashPassword, isAdminEmail, isAllowlisted, allowlistEmails } from '@/lib/auth';
 import { db } from '@/lib/db';
 
 /**
@@ -25,6 +25,12 @@ const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 const USERNAME_RE = /^[\p{L}\p{N}][\p{L}\p{N} ._-]{1,38}[\p{L}\p{N}]$/u;
 
 export async function POST(req: NextRequest) {
+  if (authMode() === 'local') {
+    return NextResponse.json(
+      { error: 'auth_disabled', message: 'Diese Installation läuft ohne Konten — eine Registrierung ist nicht nötig.' },
+      { status: 404 },
+    );
+  }
   if (!(await limiter.check(ipHash(req))).ok) {
     return NextResponse.json(
       { error: 'rate_limited', message: 'Zu viele Versuche. Bitte später erneut.' },

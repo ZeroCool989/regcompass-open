@@ -25,8 +25,9 @@ export default async function VoicePage() {
       </div>
       <p className="text-sm text-text-secondary mb-8 max-w-xl">
         Wählen Sie, mit welcher Stimme AEGIS Ihre Antworten vorliest. Hören Sie
-        eine Stimme mit „Vorhören&quot; probe. Die KI-Stimmen sind deutschsprachig;
-        alternativ kann die Gerätestimme Ihres Browsers verwendet werden.
+        eine Stimme mit „Vorhören&quot; probe. Verwendet werden die deutschen
+        Stimmen Ihres Browsers bzw. Geräts — die Sprachausgabe erfolgt
+        vollständig lokal auf Ihrem Gerät.
       </p>
       <VoiceSettings />
     </div>

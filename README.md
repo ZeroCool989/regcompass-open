@@ -43,11 +43,11 @@ regcompass-open          # builds on first run, then opens http://localhost:3000
 
 Prefer to do it by hand? Clone the repo, run `pnpm install`, `pnpm setup`, and `pnpm start`.
 
-## Accounts and login
+## No login required
 
-On first launch, open **http://localhost:3000/register** and create your account — the first account on a fresh database automatically becomes the approved administrator. Anyone else who can reach the instance can register too; their accounts start as *pending* and are approved (or blocked) by an admin under **Admin → Benutzerverwaltung** (`/admin/users`). Everything runs offline: there is no email verification and no external identity provider.
+By default there are no accounts and nothing to sign up for: the app runs as a single local user, and the only setup is connecting a model brain (next section). Your conversations, documents, and credentials belong to that implicit local identity.
 
-Two optional `.env` switches (see `.env.example`): `AUTH_ALLOWLIST` restricts registration to listed email addresses, and `ADMIN_EMAILS` makes the listed addresses admins automatically when they register.
+**Sharing one instance with a team?** Set `AUTH_MODE="multi"` in `.env` to turn on the full account stack: people register at `/register` (fully offline, no email verification), the first account on a fresh database automatically becomes the approved administrator, and later accounts start as *pending* until an admin approves them under **Benutzerverwaltung** (`/admin/users`). Any data from previous no-login use is handed to that first admin account. Two optional switches: `AUTH_ALLOWLIST` restricts registration to listed email addresses, and `ADMIN_EMAILS` auto-admits listed addresses as admins.
 
 ## Getting started: choose your brain
 

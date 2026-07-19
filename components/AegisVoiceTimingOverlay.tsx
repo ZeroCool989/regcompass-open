@@ -26,8 +26,6 @@ const SEGMENTS: Array<{ label: string; from: string; to: string }> = [
   { label: 'Transkript → Senden', from: 'finalTranscriptAt', to: 'sendMessageAt' },
   { label: 'LLM: erstes Token (TTFT)', from: 'sendMessageAt', to: 'aegisFirstTokenAt' },
   { label: 'LLM: Generierung', from: 'aegisFirstTokenAt', to: 'aegisCompletedAt' },
-  { label: 'TTS: Synthese', from: 'ttsRequestedAt', to: 'ttsAudioReadyAt' },
-  { label: 'Audio → Wiedergabe', from: 'ttsAudioReadyAt', to: 'speakingStartedAt' },
   { label: 'Sprechdauer', from: 'speakingStartedAt', to: 'speakingFinishedAt' },
 ];
 

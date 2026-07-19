@@ -1,20 +1,18 @@
 /**
- * Provider-agnostic Aegis voice catalog (Phase 4 — Voice Identity).
+ * Aegis voice catalog — browser (Web Speech) voices only.
  *
- * A voice preference is a portable token, independent of the TTS provider:
- *   "cartesia:<uuid>"     — a specific Cartesia (sonic-3) German voice
- *   "browser"             — the device's default German Web Speech voice
+ * A voice preference is a portable token:
+ *   "browser"             — the standard German Web Speech voice (Google Deutsch
+ *                           where available, else any de-* voice)
  *   "browser:<voiceURI>"  — a specific OS/browser voice (device-specific, best-effort)
  *   null / ""             — the Aegis default (the recommended voice)
  *
- * The catalog wraps the Cartesia German voice list; adding another provider is
- * a matter of appending entries with a new `provider` — nothing else here is
- * Cartesia-specific. Pure + dependency-light so it runs on client and server.
+ * Speech is synthesized entirely on the device via the browser's built-in
+ * speechSynthesis — no cloud TTS provider is involved. Pure + dependency-light
+ * so it runs on client and server.
  */
 
-import { CARTESIA_GERMAN_VOICES, DEFAULT_CARTESIA_VOICE_ID } from './cartesia-voices';
-
-export type VoiceProvider = 'cartesia' | 'browser';
+export type VoiceProvider = 'browser';
 
 export interface AegisVoice {
   /** Preference token (see module doc). */
@@ -27,36 +25,23 @@ export interface AegisVoice {
   recommended?: boolean;
 }
 
-export const CARTESIA_PREFIX = 'cartesia:';
 export const BROWSER_VOICE_ID = 'browser';
-
-export function cartesiaVoiceId(uuid: string): string {
-  return `${CARTESIA_PREFIX}${uuid}`;
-}
+export const BROWSER_VOICE_PREFIX = 'browser:';
 
 /**
- * The recommended default Aegis voice: Sebastian (Orator) — German, masculine,
- * Cartesia sonic-3. An authoritative, advisory German voice — German-first by
- * design, and a fitting default for a Swiss/EU compliance advisor.
+ * The default Aegis voice: the device's standard German Web Speech voice.
+ * Specific device voices ("browser:<voiceURI>") are offered dynamically in the
+ * settings UI, since the available set differs per OS/browser.
  */
-export const DEFAULT_VOICE_ID = cartesiaVoiceId(DEFAULT_CARTESIA_VOICE_ID);
+export const DEFAULT_VOICE_ID = BROWSER_VOICE_ID;
 
 export const AEGIS_VOICES: AegisVoice[] = [
-  ...CARTESIA_GERMAN_VOICES.map(
-    (v): AegisVoice => ({
-      id: cartesiaVoiceId(v.id),
-      provider: 'cartesia',
-      name: v.name,
-      gender: v.gender,
-      language: 'de',
-      recommended: cartesiaVoiceId(v.id) === DEFAULT_VOICE_ID,
-    }),
-  ),
   {
     id: BROWSER_VOICE_ID,
     provider: 'browser',
-    name: 'Browser-Stimme (Google)',
+    name: 'Browser-Stimme (Standard)',
     language: 'de',
+    recommended: true,
   },
 ];
 
@@ -67,20 +52,25 @@ export const VOICE_SAMPLE_DE =
 /** Accepts catalog ids, the generic/specific browser tokens, and null (= default). */
 export function isValidVoiceId(id: string | null | undefined): boolean {
   if (id == null || id === '') return true;
-  if (id === BROWSER_VOICE_ID || id.startsWith('browser:')) return true;
+  if (id === BROWSER_VOICE_ID || id.startsWith(BROWSER_VOICE_PREFIX)) return true;
   return AEGIS_VOICES.some((v) => v.id === id);
 }
 
-/** Resolve a stored preference to a concrete voice token (null → default). */
+/**
+ * Resolve a stored preference to a concrete voice token (null → default).
+ * Legacy tokens from removed providers (e.g. "cartesia:<uuid>") resolve to the
+ * default browser voice, so old accounts keep working after the cloud-TTS
+ * removal without a data migration.
+ */
 export function resolveVoiceId(pref: string | null | undefined): string {
-  return pref && pref.length > 0 ? pref : DEFAULT_VOICE_ID;
+  if (!pref || pref.length === 0) return DEFAULT_VOICE_ID;
+  return isValidVoiceId(pref) ? pref : DEFAULT_VOICE_ID;
 }
 
 export function voiceById(id: string): AegisVoice | undefined {
   return AEGIS_VOICES.find((v) => v.id === id);
 }
 
-/** Recommended-first, then feminine/masculine grouping is left to the UI. */
 export const RECOMMENDED_VOICE = AEGIS_VOICES.find((v) => v.recommended)!;
 
 // ───────────────────────── Voice experience preferences ─────────────────────────

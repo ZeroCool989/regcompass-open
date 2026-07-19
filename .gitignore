@@ -53,15 +53,13 @@ reference/
 # build/throwaway scripts (e.g. intent-eval) stay local; seed-users and the
 # governance/CI gates are tracked, permanent tools (validate-kb and
 # check-doc-links run in CI; kb-migrate-governance and generate-kb-manifest
-# are the documented KB migration/manifest tooling). Nested scripts/ dirs
-# (e.g. the voice-gateway probe) stay local as before.
+# are the documented KB migration/manifest tooling).
 /scripts/*
 !/scripts/setup-local.ts
 !/scripts/validate-kb.ts
 !/scripts/check-doc-links.ts
 !/scripts/kb-migrate-governance.ts
 !/scripts/generate-kb-manifest.ts
-services/voice-gateway/scripts/
 
 # regulatory source PDFs (local only — re-download from official sources)
 lib/kb/sources/

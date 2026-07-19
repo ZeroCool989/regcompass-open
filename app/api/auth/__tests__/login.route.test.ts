@@ -40,8 +40,10 @@ function loginReq(body: object): NextRequest {
 
 const savedAllow = process.env.AUTH_ALLOWLIST;
 const savedAdmin = process.env.ADMIN_EMAILS;
+const savedMode = process.env.AUTH_MODE;
 
 beforeEach(() => {
+  process.env.AUTH_MODE = 'multi';
   process.env.AUTH_ALLOWLIST = 'user@allow.test, admin@allow.test';
   process.env.ADMIN_EMAILS = 'admin@allow.test';
   findUnique.mockReset();
@@ -52,6 +54,18 @@ afterEach(() => {
   else process.env.AUTH_ALLOWLIST = savedAllow;
   if (savedAdmin === undefined) delete process.env.ADMIN_EMAILS;
   else process.env.ADMIN_EMAILS = savedAdmin;
+  if (savedMode === undefined) delete process.env.AUTH_MODE;
+  else process.env.AUTH_MODE = savedMode;
+});
+
+describe('POST /api/auth/login — local mode', () => {
+  it('is disabled (404) when AUTH_MODE is not multi', async () => {
+    delete process.env.AUTH_MODE;
+    const res = await POST(loginReq({ email: 'user@allow.test', password: PASSWORD }));
+    expect(res.status).toBe(404);
+    expect((await res.json()).error).toBe('auth_disabled');
+    expect(findUnique).not.toHaveBeenCalled();
+  });
 });
 
 describe('POST /api/auth/login — allowlist gate', () => {

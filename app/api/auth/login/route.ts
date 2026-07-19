@@ -4,6 +4,7 @@ import {
   AUTH_COOKIE,
   authCookieOptions,
   authCookieValue,
+  authMode,
   canAuthenticate,
   DUMMY_PASSWORD_HASH,
   isAdminEmail,
@@ -14,6 +15,12 @@ import { db } from '@/lib/db';
 const limiter = rateLimit({ key: 'auth-login', limit: 30, windowMs: 60 * 60 * 1000 });
 
 export async function POST(req: NextRequest) {
+  if (authMode() === 'local') {
+    return NextResponse.json(
+      { error: 'auth_disabled', message: 'Diese Installation läuft ohne Konten — eine Anmeldung ist nicht nötig.' },
+      { status: 404 },
+    );
+  }
   const limit = await limiter.check(ipHash(req));
   if (!limit.ok) {
     return NextResponse.json(

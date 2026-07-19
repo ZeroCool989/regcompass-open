@@ -50,8 +50,16 @@ describe('PUT /api/aegis/voice', () => {
     expect(update.mock.calls[0][0].data).toEqual({ voiceId: DEFAULT_VOICE_ID });
   });
 
+  it('persists a specific device voice token', async () => {
+    getUserFromRequest.mockResolvedValue({ id: 'u1', voiceId: null });
+    update.mockResolvedValue({ voiceId: 'browser:com.apple.voice.Anna', voicePrefs: null });
+    const res = await PUT(putReq({ voiceId: 'browser:com.apple.voice.Anna' }));
+    expect(res.status).toBe(200);
+    expect(update.mock.calls[0][0].data).toEqual({ voiceId: 'browser:com.apple.voice.Anna' });
+  });
+
   it('stores null (= default) for an empty preference', async () => {
-    getUserFromRequest.mockResolvedValue({ id: 'u1', voiceId: 'cartesia:x' });
+    getUserFromRequest.mockResolvedValue({ id: 'u1', voiceId: 'browser:old-voice' });
     update.mockResolvedValue({ voiceId: null, voicePrefs: null });
     const res = await PUT(putReq({ voiceId: null }));
     expect(res.status).toBe(200);
@@ -60,7 +68,7 @@ describe('PUT /api/aegis/voice', () => {
 
   it('rejects an unknown voice (400) and does not write', async () => {
     getUserFromRequest.mockResolvedValue({ id: 'u1', voiceId: null });
-    const res = await PUT(putReq({ voiceId: 'cartesia:not-real' }));
+    const res = await PUT(putReq({ voiceId: 'cartesia:legacy-cloud-voice' }));
     expect(res.status).toBe(400);
     expect(update).not.toHaveBeenCalled();
   });

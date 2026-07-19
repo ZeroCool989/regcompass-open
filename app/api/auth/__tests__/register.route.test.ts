@@ -48,8 +48,10 @@ const VALID = { email: 'new@example.test', username: 'Neue Nutzerin', password: 
 
 const savedAllow = process.env.AUTH_ALLOWLIST;
 const savedAdmin = process.env.ADMIN_EMAILS;
+const savedMode = process.env.AUTH_MODE;
 
 beforeEach(() => {
+  process.env.AUTH_MODE = 'multi';
   delete process.env.AUTH_ALLOWLIST;
   delete process.env.ADMIN_EMAILS;
   findUnique.mockReset();
@@ -69,6 +71,18 @@ afterEach(() => {
   else process.env.AUTH_ALLOWLIST = savedAllow;
   if (savedAdmin === undefined) delete process.env.ADMIN_EMAILS;
   else process.env.ADMIN_EMAILS = savedAdmin;
+  if (savedMode === undefined) delete process.env.AUTH_MODE;
+  else process.env.AUTH_MODE = savedMode;
+});
+
+describe('POST /api/auth/register — local mode', () => {
+  it('is disabled (404) when AUTH_MODE is not multi', async () => {
+    delete process.env.AUTH_MODE;
+    const res = await register(req(VALID));
+    expect(res.status).toBe(404);
+    expect((await res.json()).error).toBe('auth_disabled');
+    expect(tx.user.create).not.toHaveBeenCalled();
+  });
 });
 
 describe('POST /api/auth/register — bootstrap', () => {

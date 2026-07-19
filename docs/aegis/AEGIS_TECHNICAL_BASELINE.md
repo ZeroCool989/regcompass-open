@@ -42,14 +42,14 @@ Outer loop (lib/aegis/loop.ts)  ── verify-retry envelope (max 3 attempts)
         Final text + citedIds + exitReason
         │  persistAssistantTurn → AegisResponse
         ▼
-SSE token stream  ──►  client-store.ts  ──►  voice sink → sentence chunker → TTS (Cartesia/browser)
+SSE token stream  ──►  client-store.ts  ──►  voice sink → sentence chunker → TTS (Browser-Web-Speech)
 ```
 
 ### Major components
 
 | Component | File | Role |
 |---|---|---|
-| API route + auth | `app/api/aegis/route.ts` | Entry, service-auth (voice gateway vs cookie), rate-limit, SSE/JSON branch |
+| API route + auth | `app/api/aegis/route.ts` | Entry, cookie auth, rate-limit, SSE/JSON branch |
 | Orchestrator | `lib/aegis/index.ts` | Validate, sanitize, memory turn, seed assembly, run loop, persist |
 | Router | `lib/aegis/router.ts` | Intent classification, complexity, model selection |
 | Mode spec | `lib/aegis/modes.ts` + `prompts/*` | System blocks, tool subset, token/iteration ceilings |
@@ -99,7 +99,7 @@ AEGIS has no formal "skill" abstraction in code; capabilities are realized throu
 | **Citation Verification** | Model output | Pass/fail + retry | verify.ts, allowedIds | **Production-ready** |
 | **Document Analysis** | Uploaded PDF/DOCX/XLSX/TXT | covered/partial/missing findings | document-store, parsers | **Partial** (keyword overlap, not semantic) |
 | **Excel template fill** | Policy + .xlsx template | Filled workbook (download) | excel-writer, exceljs | **Partial** (fills existing template only) |
-| **Voice conversation** | Mic (Chrome) | Streamed spoken answer | browser STT, Cartesia TTS | **Experimental** |
+| **Voice conversation** | Mic (Chrome) | Streamed spoken answer | browser STT, browser TTS (Web Speech) | **Experimental** |
 | **Conversation memory** | Session/user | Persisted transcript + resume | Postgres, memory.ts | **Production-ready** |
 | **Soul personalization** | User-confirmed prefs | Style block in prompt | soul-store | **Partial** (manual learning) |
 
@@ -144,17 +144,15 @@ createToolRegistry(spec.defaultTools)  → only that mode's tools exposed to the
 
 ## Part 5 — Voice
 
-Two distinct subsystems: (A) the **shipped web stack** (browser STT + Cartesia/browser TTS, fully wired into chat), and (B) `services/voice-gateway/` — a **skeleton provider seam** (different API version, throwing Kokoro stub) **not on the request path** (Planned-only).
+One subsystem: the **shipped web stack** — browser STT + browser TTS (Web Speech `speechSynthesis`), fully wired into chat. Speech is synthesized entirely on the device; there is no cloud TTS provider and no server-side speech service.
 
 | Piece | State | Evidence |
 |---|---|---|
 | **Speech recognition (STT)** | **Partial — Chrome/Edge only** | Browser Web Speech API; two impls (`AegisVoiceMode.tsx:31-35`, `AegisVoiceButton.tsx:41-48`). Graceful "bitte Chrome verwenden" degradation. No server-side STT. STT residency not addressed (Google cloud). |
-| **TTS — Cartesia (sonic-3)** | **Production-ready** | 32 German voices allow-listed (`cartesia-voices.ts:26-59`); key server-side only (`tts/route.ts`). Demo-only residency flag. |
-| **TTS — browser fallback** | **Production-ready** | `speechSynthesis`, prefers Google DE voice. |
-| **TTS — Kokoro (in-infra)** | **Planned-only** | Throwing stub (`voice-gateway/.../kokoro.ts:21-32`). |
-| **Streaming** | **Production-ready** | Sentence-level into TTS as tokens arrive (`client-store.ts:762-826`); byte-level MP3 in `AegisTtsButton` via MediaSource. |
+| **TTS — browser (Web Speech)** | **Production-ready** | `speechSynthesis`, prefers Google DE voice; per-user voice preference (`browser:<voiceURI>` tokens) via `/api/aegis/voice`. |
+| **Streaming** | **Production-ready** | Sentence-level into TTS as tokens arrive (`client-store.ts:762-826`). |
 | **Sentence detection + chunking** | **Production-ready** (well-tested) | `sentence.ts` (German abbrevs, decimals, unclosed `[R-...]`), `speech-chunk.ts` (pause-aware, adaptive flush). |
-| **Playback / queueing** | **Production-ready** | FIFO queue (`AegisVoiceMode.tsx:146-369`); iOS gesture-unlock singleton audio (`speak.ts:44-127`). |
+| **Playback / queueing** | **Production-ready** | FIFO queue (`AegisVoiceMode.tsx`); gesture-warmed `speechSynthesis` (`speak.ts` `primeSpeech`). |
 | **Interruptibility (barge-in)** | **Partial** | Manual tap/hold barge-in works (`clearQueueAndStop`); **no live VAD** — `vad` pref exists but is unused. LLM keeps generating after barge-in (only client audio stops). |
 | **Voice prompts** | **Production-ready** | Spoken overlay + per-user name directive (`prompts/voice.ts`). |
 | **Telemetry** | **Production-ready (dev-only)** | `voice-debug.ts` + `AegisVoiceTimingOverlay.tsx`; "Zeit bis Audio" / "Runde gesamt". No server-side analytics. |
@@ -348,7 +346,7 @@ Ranked by business value × architectural leverage, with effort and dependencies
 1. **Gap-analysis quality + semantic retrieval** — *High value, High effort.* Replace `analyze_document` keyword overlap with embeddings/semantic matching; add severity, de-dup, false-positive suppression; build the eval harness against the answer key (`GAP_ANALYSIS_TESTING_PLAN.md`). Unblocks the platform's flagship workflow. *Depends on:* a vector store decision.
 2. **Standalone report export** — *High value, Med effort.* Implement `generate_report` (currently a stub) to emit a self-contained Excel/PDF gap report without requiring a user template. *Depends on:* a writer lib (exceljs already present; add a PDF lib).
 3. **Reconcile compaction** — *Med value, Low effort.* Unify the 40K/150K landmarks; auto-trigger the structured digest; add a programmatic R-ID firewall to in-loop compression. *Depends on:* nothing.
-4. **Voice productionization** — *Med value, Med effort.* Server-side/cross-browser STT (residency-safe), wire VAD for auto barge-in, swap Cartesia→Kokoro for in-infra TTS. *Depends on:* the voice-gateway skeleton.
+4. **Voice productionization** — *Med value, Med effort.* Cross-browser STT (residency-safe) and wire VAD for auto barge-in. TTS stays on-device (browser Web Speech) by design. *Depends on:* nothing.
 5. **Tech-debt sweep** — *Low value, Low effort.* Remove dead `routeToModel` ceilings and `generate_report` from enums, fix the `.xls` accept mismatch, enforce a KB ID pattern. *Depends on:* nothing.
 6. **Soul auto-learning** — *Low value, Med effort.* Bridge `digest.preferencesObserved` → soul proposals with the existing governance gates. *Depends on:* digest auto-trigger (#3).
 

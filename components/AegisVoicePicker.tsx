@@ -1,39 +1,26 @@
 'use client';
 
 import { useEffect, useRef, useState } from 'react';
-import { CARTESIA_GERMAN_VOICES } from '@/lib/aegis/cartesia-voices';
-import { BROWSER_VOICE_ID, resolveVoiceId, VOICE_SAMPLE_DE } from '@/lib/aegis/voices';
+import {
+  BROWSER_VOICE_ID,
+  BROWSER_VOICE_PREFIX,
+  resolveVoiceId,
+  VOICE_SAMPLE_DE,
+} from '@/lib/aegis/voices';
 
 /**
- * Lets the user pick which voice the "Vorlesen" buttons use. Most options are
+ * Lets the user pick which voice the "Vorlesen" buttons use. All options are
  * OS/browser voices (Web Speech `speechSynthesis`, e.g. macOS Anna, Markus,
- * Petra). A group of "KI-Stimmen" are Cartesia (sonic-3) German cloud voices
- * synthesized server-side via /api/aegis/tts; AegisTtsButton branches on them.
- * The choice is module-global + persisted to localStorage and shared by every
- * AegisTtsButton.
+ * Petra) — synthesized entirely on the device, no cloud TTS. The choice is
+ * module-global + persisted to localStorage (and, when signed in, to the
+ * account via /api/aegis/voice) and shared by every AegisTtsButton.
  */
 
 const STORAGE_KEY = 'aegis-tts-voice';
 
-/**
- * Cartesia voices are stored as the selected "voice URI" with this prefix
- * (e.g. `cartesia:9b4d08b6-...`). They are not real SpeechSynthesisVoices —
- * AegisTtsButton detects the prefix and routes playback through the TTS API,
- * passing the trailing voice id along.
- */
-const CARTESIA_PREFIX = 'cartesia:';
-
-export function cartesiaVoiceURI(id: string): string {
-  return `${CARTESIA_PREFIX}${id}`;
-}
-
-export function isCartesiaVoice(uri: string | null): boolean {
-  return typeof uri === 'string' && uri.startsWith(CARTESIA_PREFIX);
-}
-
-/** Extract the Cartesia voice id from a stored URI, or null if not a Cartesia voice. */
-export function getCartesiaVoiceId(uri: string | null): string | null {
-  return isCartesiaVoice(uri) ? uri!.slice(CARTESIA_PREFIX.length) : null;
+/** Preference token for a specific device voice: `browser:<voiceURI>`. */
+export function browserVoiceToken(voiceURI: string): string {
+  return `${BROWSER_VOICE_PREFIX}${voiceURI}`;
 }
 
 let selectedVoiceURI: string | null = null;
@@ -80,6 +67,20 @@ export function getGermanVoices(): SpeechSynthesisVoice[] {
 }
 
 /**
+ * Resolve a preference token to a concrete SpeechSynthesisVoice, or null when
+ * it names no specific available voice. Accepts `browser:<voiceURI>` tokens and
+ * (legacy) raw voiceURIs from older localStorage entries.
+ */
+export function voiceByToken(token: string | null | undefined): SpeechSynthesisVoice | null {
+  if (!token || typeof window === 'undefined' || !('speechSynthesis' in window)) return null;
+  const uri = token.startsWith(BROWSER_VOICE_PREFIX)
+    ? token.slice(BROWSER_VOICE_PREFIX.length)
+    : token;
+  if (!uri || uri === BROWSER_VOICE_ID) return null;
+  return window.speechSynthesis.getVoices().find((v) => v.voiceURI === uri) ?? null;
+}
+
+/**
  * Resolve the SpeechSynthesisVoice the TTS button should use: the user's saved
  * choice if still available, else a de-DE / de-* fallback.
  */
@@ -87,9 +88,9 @@ export function resolveSelectedVoice(): SpeechSynthesisVoice | null {
   if (typeof window === 'undefined' || !('speechSynthesis' in window)) return null;
   const voices = window.speechSynthesis.getVoices();
   const uri = getSelectedVoiceURI();
-  // A specific browser voice the user picked explicitly (not a cartesia/browser token).
-  if (uri && uri !== BROWSER_VOICE_ID && !isCartesiaVoice(uri)) {
-    const match = voices.find((v) => v.voiceURI === uri);
+  // A specific device voice the user picked explicitly.
+  if (uri && uri !== BROWSER_VOICE_ID) {
+    const match = voiceByToken(uri);
     if (match) return match;
   }
   // Standard browser voice = Google's German voice. The OS default ("device")
@@ -108,7 +109,6 @@ export function AegisVoicePicker() {
   const [voices, setVoices] = useState<SpeechSynthesisVoice[]>([]);
   const [selected, setSelected] = useState<string>('');
   const touchedRef = useRef(false);
-  const previewRef = useRef<HTMLAudioElement | null>(null);
 
   useEffect(() => {
     if (typeof window === 'undefined' || !('speechSynthesis' in window)) return;
@@ -155,7 +155,7 @@ export function AegisVoicePicker() {
     }).catch(() => {});
   }
 
-  function previewBrowser() {
+  function preview() {
     if (typeof window === 'undefined' || !('speechSynthesis' in window)) return;
     window.speechSynthesis.cancel();
     const u = new SpeechSynthesisUtterance(VOICE_SAMPLE_DE);
@@ -163,35 +163,6 @@ export function AegisVoicePicker() {
     u.lang = v?.lang ?? 'de-DE';
     if (v) u.voice = v;
     window.speechSynthesis.speak(u);
-  }
-
-  async function preview() {
-    const uri = getSelectedVoiceURI();
-    try {
-      previewRef.current?.pause();
-    } catch {
-      /* ignore */
-    }
-    if (isCartesiaVoice(uri)) {
-      try {
-        const res = await fetch('/api/aegis/tts', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ text: VOICE_SAMPLE_DE, voiceId: getCartesiaVoiceId(uri) }),
-        });
-        if (res.ok) {
-          const audio = new Audio(URL.createObjectURL(await res.blob()));
-          previewRef.current = audio;
-          await audio.play();
-          return;
-        }
-      } catch {
-        /* fall through */
-      }
-      previewBrowser(); // Cartesia unavailable (e.g. limit) → browser voice
-      return;
-    }
-    previewBrowser();
   }
 
   return (
@@ -205,25 +176,11 @@ export function AegisVoicePicker() {
           title="Aegis-Stimme wählen"
           className="max-w-[10rem] rounded-md border border-border-brand bg-surface/60 px-1.5 py-1 text-xs text-foreground hover:border-brand-primary/50 focus:border-brand-primary focus:outline-none"
         >
-          <optgroup label="KI-Stimmen (weiblich)">
-            {CARTESIA_GERMAN_VOICES.filter((v) => v.gender === 'feminine').map((v) => (
-              <option key={v.id} value={cartesiaVoiceURI(v.id)}>
-                {v.name} (KI){cartesiaVoiceURI(v.id) === resolveVoiceId(null) ? ' ★' : ''}
-              </option>
-            ))}
-          </optgroup>
-          <optgroup label="KI-Stimmen (männlich)">
-            {CARTESIA_GERMAN_VOICES.filter((v) => v.gender === 'masculine').map((v) => (
-              <option key={v.id} value={cartesiaVoiceURI(v.id)}>
-                {v.name} (KI){cartesiaVoiceURI(v.id) === resolveVoiceId(null) ? ' ★' : ''}
-              </option>
-            ))}
-          </optgroup>
-          <option value={BROWSER_VOICE_ID}>Browser-Stimme (Google)</option>
+          <option value={BROWSER_VOICE_ID}>Browser-Stimme (Standard) ★</option>
           {voices.length > 0 ? (
             <optgroup label="Browser-Stimmen">
               {voices.map((v) => (
-                <option key={v.voiceURI} value={v.voiceURI}>
+                <option key={v.voiceURI} value={browserVoiceToken(v.voiceURI)}>
                   {v.name} ({v.lang})
                 </option>
               ))}

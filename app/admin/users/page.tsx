@@ -2,13 +2,15 @@ import type { Metadata } from 'next';
 import Link from 'next/link';
 import { redirect } from 'next/navigation';
 import { AdminUsers } from '@/components/AdminUsers';
-import { getUserFromCookies, isApproved } from '@/lib/auth';
+import { authMode, getUserFromCookies, isApproved } from '@/lib/auth';
 
 export const metadata: Metadata = {
   title: 'Benutzerverwaltung — RegCompass',
 };
 
 export default async function AdminUsersPage() {
+  // Local mode has no accounts to manage.
+  if (authMode() === 'local') redirect('/aegis');
   const user = await getUserFromCookies();
   if (!user) redirect('/login?next=/admin/users');
   // Approved admins only; everyone else is bounced (no info leak about the page).

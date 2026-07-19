@@ -349,7 +349,7 @@ export function AegisVoiceMode({
       },
       onEnd: () => playNext(),
       onError: () => {
-        // Both Cartesia AND the browser voice failed for this clip.
+        // The browser voice failed for this clip.
         if (!anyClipStartedRef.current) {
           // Nothing has played at all (autoplay blocked) — fall back to the
           // existing tap-to-play prompt with the full reply.
@@ -416,7 +416,7 @@ export function AegisVoiceMode({
   }, [enqueueSentence, clearQueueAndStop, finalizeStreamedTurn]);
 
   // ── Greeting: play once per Voice Mode session, then start listening. ──
-  // Gated on voiceUri so the greeting speaks in Sebastian, not the browser voice.
+  // Gated on voiceUri so the greeting speaks with the user's selected voice.
   useEffect(() => {
     if (greetedRef.current) return;
     if (voiceUri === null) return; // wait until the selected voice is resolved
@@ -496,7 +496,7 @@ export function AegisVoiceMode({
       onError: () => {
         // Autoplay blocked or TTS unavailable: don't leave the user in silence —
         // offer a tap-to-play button (a fresh gesture always unlocks playback).
-        vlog('speaking error (both Cartesia and browser failed)');
+        vlog('speaking error (browser voice failed)');
         setSpeaking(false);
         setPendingReply({ id: last.id, text: spoken });
         autoListen();

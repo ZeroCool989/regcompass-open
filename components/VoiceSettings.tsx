@@ -1,24 +1,36 @@
 'use client';
 
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import {
-  AEGIS_VOICES,
+  BROWSER_VOICE_ID,
   DEFAULT_VOICE_PREFS,
   resolveVoiceId,
   VOICE_SAMPLE_DE,
-  type AegisVoice,
   type VoicePrefs,
 } from '@/lib/aegis/voices';
 import {
-  getCartesiaVoiceId,
-  isCartesiaVoice,
+  browserVoiceToken,
+  getGermanVoices,
   resolveSelectedVoice,
   setSelectedVoiceURI,
+  voiceByToken,
 } from '@/components/AegisVoicePicker';
 
-const female = AEGIS_VOICES.filter((v) => v.provider === 'cartesia' && v.gender === 'feminine');
-const male = AEGIS_VOICES.filter((v) => v.provider === 'cartesia' && v.gender === 'masculine');
-const browser = AEGIS_VOICES.filter((v) => v.provider === 'browser');
+/** One selectable row: the standard voice or a specific device voice. */
+interface VoiceOption {
+  /** Preference token: "browser" | "browser:<voiceURI>". */
+  id: string;
+  name: string;
+  detail?: string;
+  recommended?: boolean;
+}
+
+const STANDARD_OPTION: VoiceOption = {
+  id: BROWSER_VOICE_ID,
+  name: 'Browser-Stimme (Standard)',
+  detail: 'Deutsche Standardstimme dieses Browsers',
+  recommended: true,
+};
 
 export function VoiceSettings() {
   const [current, setCurrent] = useState<string | null>(null); // stored pref (null = default)
@@ -27,7 +39,7 @@ export function VoiceSettings() {
   const [previewing, setPreviewing] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [prefs, setPrefs] = useState<VoicePrefs>(DEFAULT_VOICE_PREFS);
-  const audioRef = useRef<HTMLAudioElement | null>(null);
+  const [deviceVoices, setDeviceVoices] = useState<VoiceOption[]>([]);
 
   useEffect(() => {
     (async () => {
@@ -42,6 +54,23 @@ export function VoiceSettings() {
         setLoaded(true);
       }
     })();
+  }, []);
+
+  // The device's German Web Speech voices — loaded async (getVoices() is often
+  // empty until voiceschanged fires).
+  useEffect(() => {
+    if (typeof window === 'undefined' || !('speechSynthesis' in window)) return;
+    const load = () =>
+      setDeviceVoices(
+        getGermanVoices().map((v) => ({
+          id: browserVoiceToken(v.voiceURI),
+          name: v.name,
+          detail: v.lang,
+        })),
+      );
+    load();
+    window.speechSynthesis.addEventListener('voiceschanged', load);
+    return () => window.speechSynthesis.removeEventListener('voiceschanged', load);
   }, []);
 
   const savePrefs = useCallback(async (patch: Partial<VoicePrefs>) => {
@@ -80,57 +109,32 @@ export function VoiceSettings() {
     }
   }, []);
 
-  const preview = useCallback(async (id: string) => {
+  const preview = useCallback((id: string) => {
+    if (typeof window === 'undefined' || !('speechSynthesis' in window)) return;
     setPreviewing(id);
-    try {
-      audioRef.current?.pause();
-    } catch {
-      /* ignore */
-    }
-    const speakBrowser = () => {
-      if (typeof window === 'undefined' || !('speechSynthesis' in window)) {
-        setPreviewing(null);
-        return;
-      }
-      window.speechSynthesis.cancel();
-      const u = new SpeechSynthesisUtterance(VOICE_SAMPLE_DE);
-      const v = resolveSelectedVoice();
-      u.lang = v?.lang ?? 'de-DE';
-      if (v) u.voice = v;
-      u.onend = () => setPreviewing(null);
-      window.speechSynthesis.speak(u);
-    };
-    try {
-      if (isCartesiaVoice(id)) {
-        const res = await fetch('/api/aegis/tts', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ text: VOICE_SAMPLE_DE, voiceId: getCartesiaVoiceId(id) }),
-        });
-        if (res.ok) {
-          const audio = new Audio(URL.createObjectURL(await res.blob()));
-          audioRef.current = audio;
-          audio.onended = () => setPreviewing(null);
-          await audio.play();
-          return;
-        }
-        speakBrowser(); // Cartesia unavailable (e.g. limit) → browser voice
-        return;
-      }
-      speakBrowser();
-    } catch {
-      speakBrowser();
-    }
+    window.speechSynthesis.cancel();
+    const u = new SpeechSynthesisUtterance(VOICE_SAMPLE_DE);
+    // Preview the row's voice (not the saved selection); the standard row
+    // previews the default resolution chain.
+    const v = voiceByToken(id) ?? resolveSelectedVoice();
+    u.lang = v?.lang ?? 'de-DE';
+    if (v) u.voice = v;
+    u.onend = () => setPreviewing(null);
+    u.onerror = () => setPreviewing(null);
+    window.speechSynthesis.speak(u);
   }, []);
 
   if (!loaded) return <p className="text-sm text-text-secondary">Lädt…</p>;
 
-  const Row = ({ v }: { v: AegisVoice }) => {
+  const Row = ({ v }: { v: VoiceOption }) => {
     const isSel = resolved === v.id;
     return (
       <li className="flex items-center justify-between gap-3 px-4 py-2.5">
         <div className="flex items-center gap-2 min-w-0">
           <span className="text-sm text-foreground">{v.name}</span>
+          {v.detail ? (
+            <span className="text-xs text-text-secondary/70 truncate">{v.detail}</span>
+          ) : null}
           {v.recommended ? (
             <span className="text-[0.6rem] px-1.5 py-0.5 rounded border border-brand-primary/40 text-brand-primary">
               Empfohlen
@@ -160,7 +164,7 @@ export function VoiceSettings() {
     );
   };
 
-  const Group = ({ title, items }: { title: string; items: AegisVoice[] }) => (
+  const Group = ({ title, items }: { title: string; items: VoiceOption[] }) => (
     <section>
       <h2 className="text-sm font-semibold mb-2">{title}</h2>
       <ul className="divide-y divide-border-brand/40 rounded-lg border border-border-brand overflow-hidden">
@@ -197,9 +201,15 @@ export function VoiceSettings() {
   return (
     <div className="space-y-6">
       {error ? <div className="text-sm text-red-400">{error}</div> : null}
-      <Group title="KI-Stimmen (weiblich)" items={female} />
-      <Group title="KI-Stimmen (männlich)" items={male} />
-      <Group title="Gerätestimme" items={browser} />
+      <Group title="Standard" items={[STANDARD_OPTION]} />
+      {deviceVoices.length > 0 ? (
+        <Group title="Gerätestimmen (Deutsch)" items={deviceVoices} />
+      ) : (
+        <p className="text-xs text-text-secondary/70">
+          Keine weiteren deutschen Gerätestimmen gefunden — die Standardstimme
+          des Browsers wird verwendet.
+        </p>
+      )}
 
       <section>
         <h2 className="text-sm font-semibold mb-2">Wiedergabe & Steuerung</h2>

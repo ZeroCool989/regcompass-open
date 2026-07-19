@@ -34,10 +34,11 @@ Harte Invarianten (Verstoß = blockierend):
    attachment, ping, done, error) und die Verify-Profile bleiben
    byte-identisch, außer explizit beauftragt. Neue Pfade verzweigen DAVOR.
 5. Keine neuen Third-Party-Endpunkte mit Kunden-/Dokumentdaten (Residency).
-   Modell-/TTS-/Übersetzungs-Calls nur über die bestehenden Provider-Seams:
-   `lib/aegis/client.ts` (Anthropic), `lib/aegis/speak.ts` +
-   `app/api/aegis/tts` (Cartesia), `lib/translate` (DeepL). Ein neuer
-   fetch/SDK-Call an einen anderen Host mit Nutzerinhalten ist blockierend.
+   Modell-/Übersetzungs-Calls nur über die bestehenden Provider-Seams:
+   `lib/aegis/client.ts` (Anthropic), `lib/translate` (DeepL). Sprachausgabe
+   (TTS) ausschließlich lokal im Browser via Web Speech (`lib/aegis/speak.ts`)
+   — kein Cloud-TTS-Provider. Ein neuer fetch/SDK-Call an einen anderen Host
+   mit Nutzerinhalten ist blockierend.
 6. UI-Strings deutsch. Neue Status-/Fehlertexte gehören zentralisiert —
    sobald `lib/aegis/statusLabels.ts` existiert (geplant PR 3 Sectioned
    Generation), dorthin; bis dahin keine NEUEN englischen User-facing

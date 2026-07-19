@@ -1,5 +1,14 @@
-import { afterEach, describe, expect, it, vi } from 'vitest';
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { NextRequest } from 'next/server';
+
+// These tests cover the ANONYMOUS-SESSION ownership semantics (multi mode,
+// no auth cookie sent). In the default local mode every request resolves to
+// the implicit local user instead, which is covered by the shipped behaviour
+// of the conversation adoption path.
+const savedMode = process.env.AUTH_MODE;
+beforeEach(() => {
+  process.env.AUTH_MODE = 'multi';
+});
 
 vi.mock('@/lib/db', async () => {
   const { fakeDb } = await import('./helpers/fake-db');
@@ -18,7 +27,11 @@ import {
   DELETE as wipeRoute,
 } from '@/app/api/aegis/conversations/route';
 
-afterEach(() => fakeDb.reset());
+afterEach(() => {
+  fakeDb.reset();
+  if (savedMode === undefined) delete process.env.AUTH_MODE;
+  else process.env.AUTH_MODE = savedMode;
+});
 
 function request(sessionValue?: string): NextRequest {
   return new NextRequest('http://localhost/api/aegis/conversations/test', {

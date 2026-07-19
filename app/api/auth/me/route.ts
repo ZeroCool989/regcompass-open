@@ -1,5 +1,5 @@
 import { NextResponse, type NextRequest } from 'next/server';
-import { getUserFromRequest } from '@/lib/auth';
+import { authMode, getUserFromRequest } from '@/lib/auth';
 
 export async function GET(req: NextRequest) {
   const user = await getUserFromRequest(req);
@@ -10,6 +10,9 @@ export async function GET(req: NextRequest) {
       username: user.username,
       status: user.status,
       role: user.role,
+      // Local mode: implicit single user — the account menu hides login-only
+      // affordances (logout, user management).
+      local: authMode() === 'local',
     },
   });
 }

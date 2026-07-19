@@ -2,7 +2,6 @@ import { describe, expect, it } from 'vitest';
 import {
   AEGIS_VOICES,
   BROWSER_VOICE_ID,
-  cartesiaVoiceId,
   DEFAULT_VOICE_ID,
   DEFAULT_VOICE_PREFS,
   isValidVoiceId,
@@ -11,14 +10,12 @@ import {
   resolveVoiceId,
   voiceById,
 } from '@/lib/aegis/voices';
-import { DEFAULT_CARTESIA_VOICE_ID } from '@/lib/aegis/cartesia-voices';
 
 describe('voice catalog', () => {
-  it('default is the recommended Sebastian voice (masculine, German)', () => {
-    expect(DEFAULT_VOICE_ID).toBe(cartesiaVoiceId(DEFAULT_CARTESIA_VOICE_ID));
+  it('default is the recommended browser voice (German)', () => {
+    expect(DEFAULT_VOICE_ID).toBe(BROWSER_VOICE_ID);
     expect(RECOMMENDED_VOICE.id).toBe(DEFAULT_VOICE_ID);
-    expect(RECOMMENDED_VOICE.name).toBe('Sebastian');
-    expect(RECOMMENDED_VOICE.gender).toBe('masculine');
+    expect(RECOMMENDED_VOICE.provider).toBe('browser');
     expect(RECOMMENDED_VOICE.language).toBe('de');
   });
 
@@ -26,18 +23,23 @@ describe('voice catalog', () => {
     expect(AEGIS_VOICES.filter((v) => v.recommended)).toHaveLength(1);
   });
 
-  it('includes German Cartesia voices and a provider-agnostic browser option', () => {
-    expect(AEGIS_VOICES.some((v) => v.provider === 'cartesia' && v.language === 'de')).toBe(true);
+  it('contains only browser (Web Speech) voices — no cloud provider', () => {
+    expect(AEGIS_VOICES.every((v) => v.provider === 'browser')).toBe(true);
     expect(voiceById(BROWSER_VOICE_ID)?.provider).toBe('browser');
   });
 
   it('resolveVoiceId falls back to the default', () => {
     expect(resolveVoiceId(null)).toBe(DEFAULT_VOICE_ID);
     expect(resolveVoiceId('')).toBe(DEFAULT_VOICE_ID);
-    expect(resolveVoiceId('cartesia:abc')).toBe('cartesia:abc');
+    expect(resolveVoiceId('browser:com.apple.voice.Anna')).toBe('browser:com.apple.voice.Anna');
   });
 
-  it('validates known ids, browser tokens, and null; rejects unknown', () => {
+  it('resolveVoiceId maps legacy cloud-provider tokens to the default', () => {
+    expect(resolveVoiceId('cartesia:b7187e84-fe22-4344-ba4a-bc013fcb533e')).toBe(DEFAULT_VOICE_ID);
+    expect(resolveVoiceId('garbage')).toBe(DEFAULT_VOICE_ID);
+  });
+
+  it('validates browser tokens and null; rejects unknown/legacy ids', () => {
     expect(isValidVoiceId(null)).toBe(true);
     expect(isValidVoiceId(DEFAULT_VOICE_ID)).toBe(true);
     expect(isValidVoiceId(BROWSER_VOICE_ID)).toBe(true);
