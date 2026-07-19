@@ -1,15 +1,21 @@
 /**
- * One-time local setup: ensure the local user row exists. The SQLite schema is
- * created by `pnpm db:push`; this seeds the single local identity every request
- * resolves to. Idempotent — safe to re-run.
+ * One-time local setup. The SQLite schema is created by `pnpm db:push`; this
+ * script only reports the account state — accounts themselves are created in
+ * the browser: the first registration on a fresh database becomes the approved
+ * admin (app/api/auth/register). Idempotent — safe to re-run.
  *
  * Run (loads .env for DATABASE_URL): pnpm setup
  */
-import { ensureLocalUser } from '@/lib/auth';
+import { db } from '@/lib/db';
 
 async function main() {
-  const user = await ensureLocalUser();
-  console.log(`Local user ready: ${user.email} (${user.id}).`);
+  const users = await db.user.count();
+  if (users === 0) {
+    console.log('Database ready. No accounts yet — open /register in the browser;');
+    console.log('the first account automatically becomes the approved admin.');
+  } else {
+    console.log(`Database ready. ${users} account(s) exist — sign in at /login.`);
+  }
 }
 
 main()

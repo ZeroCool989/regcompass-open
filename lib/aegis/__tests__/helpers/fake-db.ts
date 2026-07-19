@@ -142,15 +142,11 @@ function createFakeDb() {
       usageRows.length = 0;
     },
 
-    // The local single-user build resolves every request to a constant local
-    // user (auth.ensureLocalUser upserts it). The routes only need the row to
-    // exist, so a static object suffices for these tests.
+    // Routes under test mock @/lib/auth for identity; the DB user table only
+    // has to answer lookups without throwing. A static approved row suffices.
     user: {
-      async upsert(): Promise<Record<string, unknown>> {
-        return { id: 'local', email: 'local@regcompass.open', role: 'ADMIN', status: 'APPROVED' };
-      },
       async findUnique(): Promise<Record<string, unknown> | null> {
-        return { id: 'local', email: 'local@regcompass.open', role: 'ADMIN', status: 'APPROVED' };
+        return { id: 'u1', email: 'user@test', role: 'ADMIN', status: 'APPROVED' };
       },
     },
 

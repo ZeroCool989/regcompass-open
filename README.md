@@ -43,6 +43,12 @@ regcompass-open          # builds on first run, then opens http://localhost:3000
 
 Prefer to do it by hand? Clone the repo, run `pnpm install`, `pnpm setup`, and `pnpm start`.
 
+## Accounts and login
+
+On first launch, open **http://localhost:3000/register** and create your account — the first account on a fresh database automatically becomes the approved administrator. Anyone else who can reach the instance can register too; their accounts start as *pending* and are approved (or blocked) by an admin under **Admin → Benutzerverwaltung** (`/admin/users`). Everything runs offline: there is no email verification and no external identity provider.
+
+Two optional `.env` switches (see `.env.example`): `AUTH_ALLOWLIST` restricts registration to listed email addresses, and `ADMIN_EMAILS` makes the listed addresses admins automatically when they register.
+
 ## Getting started: choose your brain
 
 Out of the box you can browse the knowledge base immediately. To run an assessment, open **http://localhost:3000 → Konto → AI-Provider** and connect a model:

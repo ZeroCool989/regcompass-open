@@ -4,6 +4,7 @@ import {
   scryptSync,
   timingSafeEqual,
 } from 'node:crypto';
+import { cookies } from 'next/headers';
 import type { NextRequest } from 'next/server';
 import { db } from '@/lib/db';
 import type { User } from '@/app/generated/prisma/client';
@@ -240,72 +241,45 @@ export function authCookieOptions() {
   };
 }
 
-// ─────────────────────────── Local single-user identity ───────────────────────────
-// This build runs as one local user on one machine, so there is no login: every
-// request resolves to the same approved local admin. The row is upserted on
-// first resolution so foreign keys (conversations, credentials, …) always have a
-// valid target.
+// ─────────────────────────── User lookup / status ───────────────────────────
 
-export const LOCAL_USER_ID = 'local';
-
-const LOCAL_USER: User = {
-  id: LOCAL_USER_ID,
-  email: 'local@regcompass.open',
-  username: 'Local',
-  passwordHash: '',
-  status: 'APPROVED',
-  role: 'ADMIN',
-  createdAt: new Date(0),
-  approvedAt: new Date(0),
-  emailVerifiedAt: new Date(0),
-  voiceId: null,
-  voicePrefs: null,
-  preferredAiProvider: null,
-};
-
-/** Ensure the local user row exists (idempotent) and return the live row. */
-export async function ensureLocalUser(): Promise<User> {
-  return db.user.upsert({
-    where: { id: LOCAL_USER_ID },
-    update: {},
-    create: {
-      id: LOCAL_USER_ID,
-      email: LOCAL_USER.email,
-      username: LOCAL_USER.username,
-      passwordHash: '',
-      status: 'APPROVED',
-      role: 'ADMIN',
-    },
-  });
+export function isApproved(user: Pick<User, 'status'> | null): boolean {
+  return !!user && user.status === 'APPROVED';
 }
 
-export function isApproved(_user: Pick<User, 'status'> | null): boolean {
-  // The local user is always approved.
-  return true;
-}
-
-/** Admin gate — always satisfied for the local single user. */
+/**
+ * The one admin gate for API routes and pages: admin role AND approved
+ * status. Blocking or un-approving an admin must revoke their admin powers
+ * immediately (SEC-2) — role alone is NOT sufficient. `isAdminEmail` is
+ * consulted as role source of truth for the admin email allowlist, but the
+ * live DB status always gates.
+ */
 export function requireAdmin<T extends Pick<User, 'email' | 'role' | 'status'>>(
   user: T | null,
 ): user is T {
-  return user != null;
+  if (!user) return false;
+  if (!isApproved(user)) return false;
+  return user.role === 'ADMIN' || isAdminEmail(user.email);
 }
 
-/** Resolve the local user (seeding the row on first access). */
+/** Load the user behind a (verified) auth-cookie value, or null. */
 export async function userFromCookieValue(
-  _value: string | null | undefined,
+  value: string | null | undefined,
 ): Promise<User | null> {
-  return ensureLocalUser();
+  const id = verifyAuthValue(value);
+  if (!id) return null;
+  return db.user.findUnique({ where: { id } });
 }
 
-/** Current user from a route-handler request — always the local user. */
-export async function getUserFromRequest(_req: NextRequest): Promise<User | null> {
-  return ensureLocalUser();
+/** Current user from a route-handler request (NextRequest), or null. */
+export async function getUserFromRequest(req: NextRequest): Promise<User | null> {
+  return userFromCookieValue(req.cookies.get(AUTH_COOKIE)?.value);
 }
 
-/** Current user in a Server Component / page — always the local user. */
+/** Current user in a Server Component / page (reads next/headers cookies), or null. */
 export async function getUserFromCookies(): Promise<User | null> {
-  return ensureLocalUser();
+  const store = await cookies();
+  return userFromCookieValue(store.get(AUTH_COOKIE)?.value);
 }
 
 // ─────────────────────────── Admin bootstrap ───────────────────────────
@@ -327,10 +301,10 @@ export function isAdminEmail(email: string): boolean {
 // ─────────────────────────── Login allowlist ───────────────────────────
 
 /**
- * Lowercased login allowlist from AUTH_ALLOWLIST (comma/space separated). Who is
- * allowed to AUTHENTICATE at all — distinct from ADMIN_EMAILS, which only grants
- * the admin role. ADMIN_EMAILS is expected to be a subset of this set. Accounts
- * are created exclusively by `scripts/seed-users.ts` (no public registration).
+ * Lowercased login allowlist from AUTH_ALLOWLIST (comma/space separated).
+ * OPTIONAL in this build: when empty (the default), registration is open to
+ * anyone who can reach the instance; when set, only listed emails may register.
+ * Distinct from ADMIN_EMAILS, which only grants the admin role.
  */
 export function allowlistEmails(): Set<string> {
   return new Set(
@@ -346,12 +320,12 @@ export function isAllowlisted(email: string): boolean {
 }
 
 /**
- * May this account authenticate at all? Two entry paths (D7):
- *  - allowlisted (seeded/admin-created accounts, the original path), or
- *  - self-registered with a completed email verification.
+ * May this account authenticate at all? Two entry paths:
+ *  - allowlisted, or
+ *  - a completed registration (`emailVerifiedAt` is stamped at signup — this
+ *    build runs offline, so there is no email round-trip to wait for).
  * BLOCKED is checked separately by callers; this only answers "is the account
- * eligible to log in". Unverified self-registrations return false — they look
- * identical to unknown accounts from outside (anti-enumeration).
+ * eligible to log in". Rows missing the stamp fail closed.
  */
 export function canAuthenticate(
   user: (Pick<User, 'email'> & { emailVerifiedAt?: Date | null }) | null,

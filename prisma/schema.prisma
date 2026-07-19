@@ -10,7 +10,6 @@ datasource db {
   provider = "sqlite"
 }
 
-// The app runs as a single local user, so there is no multi-tenant auth.
 // Enum-like columns are plain strings (SQLite has no native enums); the
 // allowed values are documented inline and enforced in TypeScript.
 
@@ -55,8 +54,8 @@ model User {
   email        String  @unique
   username     String? @unique
   passwordHash String
-  status       String  @default("APPROVED") // "PENDING" | "APPROVED" | "BLOCKED"
-  role         String  @default("ADMIN") // "USER" | "ADMIN"
+  status       String  @default("PENDING") // "PENDING" | "APPROVED" | "BLOCKED"
+  role         String  @default("USER") // "USER" | "ADMIN"
   createdAt    DateTime  @default(now())
   approvedAt   DateTime?
   emailVerifiedAt DateTime?

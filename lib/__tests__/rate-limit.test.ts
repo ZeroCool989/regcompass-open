@@ -1,15 +1,14 @@
-import { describe, expect, it } from 'vitest';
+import { describe, expect, it, vi, afterEach } from 'vitest';
 import { createHash } from 'node:crypto';
 import type { NextRequest } from 'next/server';
-
-// The local single-user build does not rate limit — every check is allowed.
-// These cover the preserved no-op contract and the ipHash helper.
 
 import { ipHash, rateLimit } from '../rate-limit';
 
 const sha = (s: string) => createHash('sha256').update(s).digest('hex');
 const reqWith = (xff: string | null): NextRequest =>
   ({ headers: { get: (h: string) => (h === 'x-forwarded-for' ? xff : null) } } as unknown as NextRequest);
+
+afterEach(() => vi.useRealTimers());
 
 describe('ipHash', () => {
   it('hashes the first x-forwarded-for IP, deterministically', () => {
@@ -22,13 +21,30 @@ describe('ipHash', () => {
   });
 });
 
-describe('rateLimit.check — local no-op', () => {
-  const limiter = () => rateLimit({ key: 'k', limit: 30, windowMs: 60_000 });
+describe('rateLimit.check — in-memory fixed window', () => {
+  it('allows up to the limit, then rejects within the window', async () => {
+    const limiter = rateLimit({ key: 'k1', limit: 3, windowMs: 60_000 });
+    expect((await limiter.check('id')).ok).toBe(true);
+    expect((await limiter.check('id')).ok).toBe(true);
+    const third = await limiter.check('id');
+    expect(third.ok).toBe(true);
+    expect(third.remaining).toBe(0);
+    expect((await limiter.check('id')).ok).toBe(false);
+  });
 
-  it('always allows and reports the full budget as remaining', async () => {
-    const r = await limiter().check('id');
-    expect(r.ok).toBe(true);
-    expect(r.remaining).toBe(30);
-    expect(r.resetAt).toBeGreaterThan(Date.now());
+  it('tracks identifiers independently', async () => {
+    const limiter = rateLimit({ key: 'k2', limit: 1, windowMs: 60_000 });
+    expect((await limiter.check('a')).ok).toBe(true);
+    expect((await limiter.check('a')).ok).toBe(false);
+    expect((await limiter.check('b')).ok).toBe(true);
+  });
+
+  it('resets after the window elapses', async () => {
+    vi.useFakeTimers();
+    const limiter = rateLimit({ key: 'k3', limit: 1, windowMs: 60_000 });
+    expect((await limiter.check('id')).ok).toBe(true);
+    expect((await limiter.check('id')).ok).toBe(false);
+    vi.advanceTimersByTime(60_001);
+    expect((await limiter.check('id')).ok).toBe(true);
   });
 });
