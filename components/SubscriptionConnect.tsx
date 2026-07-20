@@ -2,6 +2,16 @@
 
 import { useEffect, useState } from 'react';
 
+// German, user-actionable copy for the reasons the callback can hand back.
+const ERROR_REASONS: Record<string, string> = {
+  denied: 'Die Anmeldung wurde beim Anbieter abgebrochen.',
+  missing: 'Der Anbieter hat die Anmeldung unvollständig zurückgegeben. Bitte erneut versuchen.',
+  state: 'Sicherheitsprüfung fehlgeschlagen (abgelaufen oder erneut geöffnet). Bitte erneut anmelden.',
+  exchange: 'Der Anbieter hat die Anmeldung nicht bestätigt. Bitte erneut versuchen.',
+  setup: 'Für diesen Anbieter ist noch kein OAuth-Client hinterlegt.',
+  session: 'Sitzung abgelaufen. Bitte erneut anmelden.',
+};
+
 /**
  * Connect a model subscription (Claude, ChatGPT, Gemini) via OAuth. Because
  * regcompass-open runs locally, the login happens on your own machine and the
@@ -24,17 +34,44 @@ type ProviderView = {
   lastError: string | null;
 };
 
+type ReturnNotice = { kind: 'connected' | 'error'; brand: string; message?: string };
+
 export function SubscriptionConnect() {
   const [providers, setProviders] = useState<ProviderView[] | null>(null);
   const [busy, setBusy] = useState<string | null>(null);
+  const [notice, setNotice] = useState<ReturnNotice | null>(null);
 
-  async function load() {
+  async function load(): Promise<ProviderView[] | null> {
     const res = await fetch('/api/aegis/oauth', { cache: 'no-store' });
-    if (res.ok) setProviders((await res.json()).providers as ProviderView[]);
+    if (!res.ok) return null;
+    const list = (await res.json()).providers as ProviderView[];
+    setProviders(list);
+    return list;
   }
 
+  // On return from the provider the callback redirects here with
+  // ?subscription=<id>&result=connected|error[&reason=...]. Show a banner for
+  // that round-trip, then strip the params so a refresh doesn't repeat it.
   useEffect(() => {
-    void load();
+    void (async () => {
+      const list = await load();
+      const params = new URLSearchParams(window.location.search);
+      const result = params.get('result');
+      const id = params.get('subscription');
+      if ((result === 'connected' || result === 'error') && id) {
+        const brand = list?.find((p) => p.id === id)?.brand ?? id;
+        setNotice(
+          result === 'connected'
+            ? { kind: 'connected', brand }
+            : { kind: 'error', brand, message: ERROR_REASONS[params.get('reason') ?? ''] },
+        );
+        params.delete('subscription');
+        params.delete('result');
+        params.delete('reason');
+        const qs = params.toString();
+        window.history.replaceState(null, '', `${window.location.pathname}${qs ? `?${qs}` : ''}`);
+      }
+    })();
   }, []);
 
   async function disconnect(id: string) {
@@ -57,6 +94,20 @@ export function SubscriptionConnect() {
         leitet Sie direkt zur Anmeldeseite des Anbieters weiter; die Anmeldung läuft lokal auf
         diesem Rechner und das Token verlässt Ihren Rechner nicht.
       </p>
+      {notice && (
+        <div
+          role="status"
+          className={`mb-4 rounded-lg border px-4 py-3 text-sm ${
+            notice.kind === 'connected'
+              ? 'border-emerald-500/30 bg-emerald-500/10 text-emerald-300'
+              : 'border-danger/30 bg-danger/10 text-danger'
+          }`}
+        >
+          {notice.kind === 'connected'
+            ? `${notice.brand} verbunden — Sie sind zurück in der App und können AEGIS jetzt darüber betreiben.`
+            : `${notice.brand}: Verbindung nicht abgeschlossen.${notice.message ? ` ${notice.message}` : ''}`}
+        </div>
+      )}
       <ul className="space-y-3">
         {providers.map((p) => (
           <li
