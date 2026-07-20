@@ -2,7 +2,7 @@ import { db } from '@/lib/db';
 import { encodeStrList } from '@/lib/db-json';
 import { newsDedupeKey, suggestionDedupeKey } from './dedupe';
 import { OFFICIAL_SOURCES } from './sources';
-import { defaultResearchProvider, type RegulatoryResearchProvider } from './research';
+import { selectResearchProvider, type RegulatoryResearchProvider } from './research';
 import type { KbSuggestion, NewsItem } from './types';
 
 /** Prisma unique-constraint violation (duplicate dedupeKey). */
@@ -93,7 +93,7 @@ export type RadarRunSummary = {
  * itself never crashes (the route wraps this in try/catch).
  */
 export async function runRegulatoryRadar(
-  provider: RegulatoryResearchProvider = defaultResearchProvider,
+  provider: RegulatoryResearchProvider = selectResearchProvider(),
 ): Promise<RadarRunSummary> {
   const run = await db.regulatoryRunLog.create({ data: {} });
   try {

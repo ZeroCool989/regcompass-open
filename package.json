@@ -16,6 +16,7 @@
     "validate:kb": "tsx scripts/validate-kb.ts",
     "check:docs": "tsx scripts/check-doc-links.ts",
     "kb:manifest": "tsx scripts/generate-kb-manifest.ts",
+    "news:refresh": "tsx --env-file=.env scripts/refresh-news.ts",
     "postinstall": "prisma generate",
     "setup": "prisma db push && tsx --env-file=.env scripts/setup-local.ts",
     "serve": "node bin/regcompass-open"

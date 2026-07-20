@@ -3,6 +3,7 @@ import { decodeStrList } from '@/lib/db-json';
 import { getUserFromCookies, requireAdmin } from '@/lib/auth';
 import { RegulatoryNewsFeed, type NewsDto } from '@/components/RegulatoryNewsFeed';
 import { KbSuggestionReview, type SuggestionDto } from '@/components/KbSuggestionReview';
+import { RefreshNewsButton } from '@/components/RefreshNewsButton';
 
 export const dynamic = 'force-dynamic';
 
@@ -78,10 +79,13 @@ export default async function RegulatoryNewsPage() {
   return (
     <main className="mx-auto max-w-5xl px-4 py-10">
       <header className="mb-8">
-        <h1 className="text-2xl font-semibold text-foreground">Regulatorik News</h1>
+        <div className="flex items-start justify-between gap-4">
+          <h1 className="text-2xl font-semibold text-foreground">Regulatorik News</h1>
+          {isAdmin && <RefreshNewsButton />}
+        </div>
         <p className="mt-1 text-sm text-text-secondary">
-          Täglich aktualisierte regulatorische Entwicklungen für KI im Finanzsektor (EU · Deutschland ·
-          Schweiz). Jeder Eintrag ist mit einer offiziellen Quelle belegt.
+          Regulatorische Entwicklungen für KI im Finanzsektor (EU · Deutschland · Schweiz) aus den
+          offiziellen RSS-Quellen der Aufsichtsbehörden. Jeder Eintrag ist mit seiner Quelle belegt.
         </p>
       </header>
 

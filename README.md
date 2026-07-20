@@ -61,9 +61,21 @@ Out of the box you can browse the knowledge base immediately. To run an assessme
 
 Every option can also be set in `.env` (see `.env.example` for `AEGIS_BRAIN` and the per-provider variables).
 
-## Your data stays local
+## Your data and your knowledge base stay local
 
-Everything — conversations, uploaded documents, generated deliverables, and any credentials you add — is stored on your machine: a single SQLite database file plus, for subscription logins, a `~/.regcompass-open/auth.json` token file with owner-only permissions. Nothing is sent to a shared server. The knowledge base location is configurable via `KB_DIR` (see [docs/KNOWLEDGE_BASE.md](docs/KNOWLEDGE_BASE.md)).
+Everything — conversations, uploaded documents, generated deliverables, and any credentials you add — is stored on your machine: a single SQLite database file plus, for subscription logins, a `~/.regcompass-open/auth.json` token file with owner-only permissions. Nothing is ever sent to a shared server, and there is no code path that pushes your data anywhere.
+
+The knowledge base is yours to change. Point `KB_DIR` at your own folder of KB JSON files and edit them freely (see [docs/KNOWLEDGE_BASE.md](docs/KNOWLEDGE_BASE.md)); the app loads your copy at startup. Your edits never leave your machine and cannot be pushed back to this repository — make your own fork if you want to publish a KB.
+
+## Regulatory news (no LLM needed)
+
+The **Regulatorik News** page collects recent regulatory developments from official supervisor RSS feeds (EBA, ESMA, Deutsche Bundesbank, FINMA out of the box) — no model call involved. Refresh it any of three ways:
+
+- **`pnpm news:refresh`** — run it manually, or put it in a cron job (e.g. `0 7 * * * cd /path/to/regcompass-open && pnpm news:refresh`).
+- **"Jetzt aktualisieren"** button on the news page.
+- **`POST /api/regulatory-news/refresh`** — for a scheduled trigger; protect it with `CRON_SECRET` if the instance is reachable by others.
+
+Bring your own feeds with `REGULATORY_FEEDS_FILE`, or set `REGULATORY_NEWS_PROVIDER=llm` to use Claude + web search instead of RSS. See `.env.example`.
 
 ## Troubleshooting
 
