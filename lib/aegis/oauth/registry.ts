@@ -20,6 +20,14 @@ export const OAUTH_PROVIDER_IDS: readonly OAuthProviderId[] = ['anthropic', 'ope
 export type OAuthProviderMeta = {
   id: OAuthProviderId;
   label: string;
+  /** Product name used in the connect CTA, e.g. "Mit {brand} anmelden". */
+  brand: string;
+  /** One-glyph mark shown on the row (no external logo assets). */
+  mark: string;
+  /** Where "Anmelden" forwards the user — the provider's own login domain. */
+  loginHost: string;
+  /** Provider site the user is sent to (shown as the seamless-forward hint). */
+  loginUrl: string;
   /** Human hint shown in the Setup-erforderlich state. */
   setupHint: string;
   /** Extra authorize-endpoint params some providers require (e.g. access_type). */
@@ -30,17 +38,29 @@ export const OAUTH_PROVIDER_META: Record<OAuthProviderId, OAuthProviderMeta> = {
   anthropic: {
     id: 'anthropic',
     label: 'Claude (Anthropic-Abo)',
+    brand: 'Claude',
+    mark: '✳',
+    loginHost: 'claude.ai',
+    loginUrl: 'https://claude.ai/login',
     setupHint:
       'OAuth-Client bei Anthropic registrieren und ANTHROPIC_OAUTH_CLIENT_ID / ANTHROPIC_OAUTH_TOKEN_URL setzen.',
   },
   openai: {
     id: 'openai',
     label: 'ChatGPT (OpenAI-Abo)',
+    brand: 'ChatGPT',
+    mark: '◍',
+    loginHost: 'chatgpt.com',
+    loginUrl: 'https://chatgpt.com/auth/login',
     setupHint: 'OAuth-Client bei OpenAI registrieren und OPENAI_OAUTH_CLIENT_ID setzen.',
   },
   google: {
     id: 'google',
     label: 'Gemini (Google-Abo)',
+    brand: 'Gemini',
+    mark: '✦',
+    loginHost: 'gemini.google.com',
+    loginUrl: 'https://gemini.google.com/app',
     setupHint:
       'OAuth-Client in der Google Cloud Console anlegen und GOOGLE_OAUTH_CLIENT_ID / GOOGLE_OAUTH_CLIENT_SECRET setzen.',
     authorizeExtra: { access_type: 'offline', prompt: 'consent' },

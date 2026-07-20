@@ -52,6 +52,10 @@ export type ProviderStatus = 'unconfigured' | 'disconnected' | 'connected';
 export type ProviderView = ConnectionView & {
   id: OAuthProviderId;
   label: string;
+  brand: string;
+  mark: string;
+  loginHost: string;
+  loginUrl: string;
   status: ProviderStatus;
   setupHint: string;
 };
@@ -64,7 +68,17 @@ export function providerView(id: OAuthProviderId): ProviderView {
     : connection.connected
       ? 'connected'
       : 'disconnected';
-  return { id, label: meta.label, setupHint: meta.setupHint, status, ...connection };
+  return {
+    id,
+    label: meta.label,
+    brand: meta.brand,
+    mark: meta.mark,
+    loginHost: meta.loginHost,
+    loginUrl: meta.loginUrl,
+    setupHint: meta.setupHint,
+    status,
+    ...connection,
+  };
 }
 
 export function allProviderViews(): ProviderView[] {
