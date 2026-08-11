@@ -11,22 +11,30 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      # This project uses pnpm (pnpm-lock.yaml). Install pnpm before setup-node
+      # so its pnpm cache can resolve the store path.
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 11.7.0
+
       - uses: actions/setup-node@v4
         with:
           node-version: 22
-          cache: npm
+          cache: pnpm
 
       - name: Install dependencies
-        run: npm ci
+        # Builds better-sqlite3's native module (allowed in pnpm-workspace.yaml)
+        # against the runner's Node, and runs `prisma generate` (postinstall).
+        run: pnpm install --frozen-lockfile
 
       - name: Typecheck
-        run: npx tsc --noEmit
+        run: pnpm exec tsc --noEmit
 
       - name: Unit tests
-        run: npx vitest run
+        run: pnpm exec vitest run
 
       - name: KB integrity gate (schema, provenance, checksums, article refs)
-        run: npx tsx scripts/validate-kb.ts
+        run: pnpm exec tsx scripts/validate-kb.ts
 
       - name: Documentation link check
-        run: npx tsx scripts/check-doc-links.ts
+        run: pnpm exec tsx scripts/check-doc-links.ts
