@@ -3,9 +3,9 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev --turbopack",
+    "dev": "next dev --turbopack -H 127.0.0.1",
     "build": "prisma generate && next build",
-    "start": "next start",
+    "start": "tsx scripts/start.ts",
     "lint": "eslint",
     "test": "vitest run",
     "test:watch": "vitest",
@@ -18,7 +18,8 @@
     "kb:manifest": "tsx scripts/generate-kb-manifest.ts",
     "news:refresh": "tsx --env-file=.env scripts/refresh-news.ts",
     "postinstall": "prisma generate",
-    "setup": "prisma db push && tsx --env-file=.env scripts/setup-local.ts",
+    "db:migrate": "tsx --env-file=.env scripts/db-migrate.ts",
+    "setup": "tsx --env-file=.env scripts/db-migrate.ts && tsx --env-file=.env scripts/setup-local.ts",
     "serve": "node bin/regcompass-open"
   },
   "dependencies": {
@@ -48,6 +49,7 @@
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4",
+    "@types/better-sqlite3": "^9.6.0",
     "@types/node": "^20",
     "@types/pdf-parse": "^1.1.5",
     "@types/pg": "^8.20.0",

@@ -64,7 +64,11 @@ model User {
   /// Voice-experience preferences (VoicePrefs in lib/aegis/voices.ts).
   voicePrefs   Json?
   /// Preferred AI provider for AEGIS: "ANTHROPIC" | "OPENAI" | "GOOGLE".
+  /// Legacy BYOK-key preference (which stored key backs the Anthropic runtime).
   preferredAiProvider String?
+  /// Selected Aegis provider (three-card model): "chatgpt-codex" | "anthropic-api" | "gemini-api".
+  /// Null = not configured yet (first-use prompt). Source of truth for runtime provider selection.
+  aegisProvider String?
 
   soulEntries   SoulEntry[]
   soulProposals SoulProposal[]
@@ -206,7 +210,14 @@ model AegisUsageLog {
   cachedTokens        Int @default(0)
   cacheCreationTokens Int @default(0)
 
-  costCents      Float
+  /// Provider that served the run: "anthropic" | "gemini" | "chatgpt-codex".
+  /// Defaults to "anthropic" so existing rows (all Anthropic) migrate unchanged.
+  provider       String @default("anthropic")
+  /// Cost attribution: "priced" | "subscription_unpriced" | "pricing_unknown".
+  priceStatus    String @default("priced")
+  /// Monetary cost in USD cents. NULL when unpriced (subscription/unknown) — a
+  /// subscription or unknown-rate run must not record a fabricated dollar figure.
+  costCents      Float?
   pricingVersion String @default("legacy")
 
   exitReason String @default("unknown")

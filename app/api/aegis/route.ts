@@ -10,6 +10,7 @@ import { deriveFirstName } from '@/lib/aegis/prompts/voice';
 import { AegisError } from '@/lib/aegis/types';
 import { intEnv } from '@/lib/aegis/env';
 import { createHeartbeat } from '@/lib/aegis/heartbeat';
+import { isHostedDeployment } from '@/lib/deployment';
 import { KB } from '@/lib/kb';
 
 // Allow long, streamed report generations to run server-side. Must be ≥
@@ -86,11 +87,14 @@ function encodeSse(event: string, data: unknown): Uint8Array {
 // attempts) is the long pole; 270s stays under typical serverless function
 // caps while still giving complex runs room.
 // App-level stream deadline: AEGIS emits its own clean `timeout` error before
-// the hosting platform kills the function. Must stay BELOW the platform's
-// function limit (Vercel `maxDuration`). Env-overridable so long-report
-// deployments (Fluid compute) can push it toward the platform max, and local
-// dev can raise it freely. Default 290s uses the full maxDuration=300 window.
-const STREAM_DEADLINE_MS = intEnv('AEGIS_STREAM_DEADLINE_MS', 290_000);
+// the hosting platform kills the function. On a HOSTED deploy it must stay
+// BELOW the platform's function limit (Vercel `maxDuration=300`), so the default
+// is 290s. A LOCAL build has no serverless ceiling, so long regulatory analyses
+// should run to completion — the default there is effectively unbounded (a 24h
+// safety net against a truly stuck stream). `AEGIS_STREAM_DEADLINE_MS` overrides
+// either default.
+const DEFAULT_STREAM_DEADLINE_MS = isHostedDeployment() ? 290_000 : 24 * 60 * 60 * 1000;
+const STREAM_DEADLINE_MS = intEnv('AEGIS_STREAM_DEADLINE_MS', DEFAULT_STREAM_DEADLINE_MS);
 
 function streamingResponse(
   body: unknown,

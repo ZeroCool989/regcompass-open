@@ -1,5 +1,6 @@
 import { createCipheriv, createDecipheriv, createHash, createHmac, randomBytes } from 'node:crypto';
 import { db } from '@/lib/db';
+import { requiresRealSecrets } from '@/lib/deployment';
 import { MODEL_IDS } from './types';
 
 export type AegisAiProvider = 'ANTHROPIC' | 'OPENAI' | 'GOOGLE';
@@ -19,14 +20,33 @@ export const PROVIDER_DEFAULT_MODELS: Record<AegisAiProvider, string> = {
 const PROVIDERS = new Set<AegisAiProvider>(['ANTHROPIC', 'OPENAI', 'GOOGLE']);
 const DEV_SECRET = 'regcompass-dev-insecure-byok-key-change-me';
 
-function deployed(): boolean {
-  return process.env.NODE_ENV === 'production' || process.env.VERCEL_ENV === 'production' || process.env.VERCEL_ENV === 'preview';
+/**
+ * The three selectable Aegis providers (the card model). Distinct from the BYOK
+ * {@link AegisAiProvider} enum: `chatgpt-codex` authenticates via the official
+ * Codex App Server (no stored key in RegCompass), while `anthropic-api` /
+ * `gemini-api` are backed by a user-supplied API key stored under the ANTHROPIC
+ * / GOOGLE BYOK rows respectively.
+ */
+export type AegisProvider = 'chatgpt-codex' | 'anthropic-api' | 'gemini-api';
+export const AEGIS_PROVIDERS: readonly AegisProvider[] = ['chatgpt-codex', 'anthropic-api', 'gemini-api'];
+
+/** Which stored BYOK key backs each Aegis provider (codex stores none here). */
+const AEGIS_TO_BYOK: Record<AegisProvider, AegisAiProvider | null> = {
+  'chatgpt-codex': null,
+  'anthropic-api': 'ANTHROPIC',
+  'gemini-api': 'GOOGLE',
+};
+
+export function parseAegisProvider(value: unknown): AegisProvider | null {
+  return typeof value === 'string' && (AEGIS_PROVIDERS as readonly string[]).includes(value)
+    ? (value as AegisProvider)
+    : null;
 }
 
 function masterKey(): Buffer {
   const raw = process.env.AEGIS_BYOK_ENCRYPTION_KEY;
   if (raw && raw.length >= 32) return createHash('sha256').update(raw).digest();
-  if (deployed()) {
+  if (requiresRealSecrets()) {
     throw new Error('AEGIS_BYOK_ENCRYPTION_KEY must be set (>=32 chars) before storing user AI credentials.');
   }
   return createHash('sha256').update(DEV_SECRET).digest();
@@ -159,6 +179,32 @@ export async function validateAnthropicKey(
   }
 }
 
+/**
+ * Live-validate a Gemini (Google Generative Language) key with a token-free
+ * models-list call. Key travels in the `x-goog-api-key` header (never the URL).
+ * Returns null when valid, else a German, user-actionable message. Injectable
+ * fetch for tests.
+ */
+export async function validateGeminiKey(
+  key: string,
+  fetchImpl: typeof fetch = fetch,
+): Promise<string | null> {
+  try {
+    const res = await fetchImpl('https://generativelanguage.googleapis.com/v1beta/models?pageSize=1', {
+      headers: { 'x-goog-api-key': key },
+      signal: AbortSignal.timeout(10_000),
+    });
+    if (res.ok) return null;
+    if (res.status === 400 || res.status === 401 || res.status === 403) {
+      return 'Google hat diesen API-Schlüssel abgelehnt. Bitte prüfen Sie den Schlüssel in Google AI Studio.';
+    }
+    // Transient upstream trouble must not block saving a probably-good key.
+    return null;
+  } catch {
+    return null; // network trouble ≠ invalid key
+  }
+}
+
 export async function upsertProviderCredential(params: {
   userId: string;
   provider: AegisAiProvider;
@@ -180,6 +226,10 @@ export async function upsertProviderCredential(params: {
       throw new Error('Unbekanntes Modell. Bitte eines der angebotenen Modelle wählen.');
     }
     const validationError = await validateAnthropicKey(key);
+    if (validationError) throw new Error(validationError);
+    validatedAt = new Date();
+  } else if (params.provider === 'GOOGLE') {
+    const validationError = await validateGeminiKey(key);
     if (validationError) throw new Error(validationError);
     validatedAt = new Date();
   }
@@ -239,4 +289,80 @@ export async function resolveAnthropicCredential(userId: string | null): Promise
     );
   }
   return { apiKey, modelHint: row.preferredModel, source: 'user' };
+}
+
+// ───────────────────── Aegis provider selection (three-card model) ─────────────────────
+
+export async function getAegisProvider(userId: string): Promise<AegisProvider | null> {
+  const user = await db.user.findUnique({ where: { id: userId }, select: { aegisProvider: true } });
+  return parseAegisProvider(user?.aegisProvider ?? null);
+}
+
+export async function setAegisProvider(userId: string, provider: AegisProvider | null): Promise<void> {
+  await db.user.update({ where: { id: userId }, data: { aegisProvider: provider } });
+}
+
+/** Thrown when a request runs but the user has not chosen an Aegis provider. */
+export class AegisProviderNotConfiguredError extends Error {
+  constructor() {
+    super(
+      'Kein Aegis-Anbieter ausgewählt. Bitte unter Konto → AI-Provider ChatGPT, Claude API oder Gemini API wählen.',
+    );
+    this.name = 'AegisProviderNotConfiguredError';
+  }
+}
+
+/** Thrown when the selected key-backed provider has no usable API key. */
+export class AegisProviderKeyMissingError extends Error {
+  constructor(public readonly provider: AegisProvider) {
+    super(
+      'Für den gewählten Anbieter ist kein API-Schlüssel hinterlegt. Bitte unter Konto → AI-Provider hinterlegen.',
+    );
+    this.name = 'AegisProviderKeyMissingError';
+  }
+}
+
+export type SelectedCredential =
+  | { provider: 'chatgpt-codex' }
+  | { provider: 'anthropic-api'; apiKey: string; modelHint: string | null }
+  | { provider: 'gemini-api'; apiKey: string; modelHint: string | null };
+
+/**
+ * Pure mapping from (selected provider, its stored credential row) to the
+ * resolved runtime credential. NO SILENT FALLBACK: a selected key-backed
+ * provider with no usable key throws rather than switching providers or brains.
+ * Exported for tests.
+ */
+export function selectCredentialFrom(
+  selected: AegisProvider,
+  row: { encryptedApiKey: string; preferredModel: string | null; enabled: boolean } | null,
+): SelectedCredential {
+  if (selected === 'chatgpt-codex') return { provider: 'chatgpt-codex' };
+  if (!row || !row.enabled) throw new AegisProviderKeyMissingError(selected);
+  let apiKey: string;
+  try {
+    apiKey = decryptApiKey(row.encryptedApiKey);
+  } catch {
+    throw new Error(
+      'Der gespeicherte API-Schlüssel konnte nicht entschlüsselt werden. Bitte unter Konto → AI-Provider neu speichern.',
+    );
+  }
+  return { provider: selected, apiKey, modelHint: row.preferredModel };
+}
+
+/**
+ * Resolve the runtime credential for the user's selected Aegis provider.
+ * Throws {@link AegisProviderNotConfiguredError} when nothing is selected and
+ * {@link AegisProviderKeyMissingError} when a key-backed provider lacks a key —
+ * callers surface these as explicit states, never a silent provider switch.
+ */
+export async function resolveSelectedProviderCredential(userId: string): Promise<SelectedCredential> {
+  const selected = await getAegisProvider(userId);
+  if (!selected) throw new AegisProviderNotConfiguredError();
+  if (selected === 'chatgpt-codex') return { provider: 'chatgpt-codex' };
+  const byok = AEGIS_TO_BYOK[selected];
+  const row = byok
+    ? await db.userAiCredential.findUnique({ where: { userId_provider: { userId, provider: byok } } })
+    : null;
+  return selectCredentialFrom(selected, row);
 }

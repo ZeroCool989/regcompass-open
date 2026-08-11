@@ -1,6 +1,7 @@
 import { NextResponse, type NextRequest } from 'next/server';
 import { getUserFromRequest, requireAdmin } from '@/lib/auth';
-import { checkCronAuth, isDeployedEnv } from '@/lib/regulatory/cron-auth';
+import { checkCronAuth } from '@/lib/regulatory/cron-auth';
+import { isHostedDeployment } from '@/lib/deployment';
 import { runRegulatoryRadar } from '@/lib/regulatory/store';
 
 /**
@@ -19,7 +20,7 @@ export async function POST(req: NextRequest) {
   if (!requireAdmin(user)) {
     const auth = checkCronAuth(req.headers.get('authorization'), {
       secret: process.env.CRON_SECRET,
-      deployed: isDeployedEnv(),
+      deployed: isHostedDeployment(),
     });
     if (!auth.ok) {
       return NextResponse.json({ error: auth.error, message: auth.message }, { status: auth.status });

@@ -1,7 +1,11 @@
 import {
   MODEL_COSTS,
+  lookupPricing,
+  priceStatusFor,
   type CostBreakdown,
   type ModelId,
+  type ModelRef,
+  type PriceStatus,
 } from '../types';
 
 /**
@@ -76,9 +80,37 @@ export function computeCost(model: ModelId, usage: ClaudeUsage): number {
   return usd * 100;
 }
 
+/** Priced cost of one call, in cents, or null when no per-token rate applies. */
+export type PricedResult = { costCents: number | null; status: PriceStatus };
+
+/**
+ * Provider-aware cost of a single call. Prices only when a rate is configured for
+ * (provider, model); otherwise returns `costCents: null` with an explicit status
+ * — `subscription_unpriced` for subscription brains, `pricing_unknown` for a
+ * per-token provider with no configured rate. NEVER substitutes another
+ * provider's rate, and never throws (unknown pricing is a first-class state).
+ */
+export function computeCostRef(ref: ModelRef, usage: ClaudeUsage): PricedResult {
+  const pricing = lookupPricing(ref);
+  if (!pricing) return { costCents: null, status: priceStatusFor(ref) };
+
+  const cacheRead = usage.cache_read_input_tokens ?? 0;
+  const { write5m, write1h } = splitCacheWrites(usage);
+  const usd =
+    (usage.input_tokens / 1_000_000) * pricing.input +
+    (usage.output_tokens / 1_000_000) * pricing.output +
+    (cacheRead / 1_000_000) * pricing.cacheRead +
+    (write5m / 1_000_000) * pricing.cacheWrite5m +
+    (write1h / 1_000_000) * pricing.cacheWrite1h;
+  return { costCents: usd * 100, status: 'priced' };
+}
+
 export type CostEntry = {
-  model: ModelId;
-  cents: number;
+  model: string;
+  provider: ModelRef['provider'];
+  /** Priced cents for this call, or null when unpriced (subscription/unknown). */
+  cents: number | null;
+  status: PriceStatus;
   inputTokens: number;
   outputTokens: number;
   cacheReadTokens: number;
@@ -91,23 +123,32 @@ export class CostAccumulator {
   private cacheReadTokens = 0;
   private cacheCreationTokens = 0;
   private costCents = 0;
+  private status: PriceStatus = 'priced';
   private readonly perCall: CostEntry[] = [];
 
-  /** Record one Claude call from its raw `usage` object. */
+  /** Record one Anthropic call (back-compat) — priced via Anthropic rates. */
   add(model: ModelId, usage: ClaudeUsage): CostEntry {
+    return this.addRef({ provider: 'anthropic', model }, usage);
+  }
+
+  /** Record one provider-qualified call; prices it or marks it unpriced. */
+  addRef(ref: ModelRef, usage: ClaudeUsage): CostEntry {
     const cacheRead = usage.cache_read_input_tokens ?? 0;
     const cacheCreation = usage.cache_creation_input_tokens ?? 0;
-    const cents = computeCost(model, usage);
+    const { costCents, status } = computeCostRef(ref, usage);
 
     this.inputTokens += usage.input_tokens;
     this.outputTokens += usage.output_tokens;
     this.cacheReadTokens += cacheRead;
     this.cacheCreationTokens += cacheCreation;
-    this.costCents += cents;
+    if (status === 'priced' && costCents != null) this.costCents += costCents;
+    this.degrade(status);
 
     const entry: CostEntry = {
-      model,
-      cents,
+      model: ref.model,
+      provider: ref.provider,
+      cents: costCents,
+      status,
       inputTokens: usage.input_tokens,
       outputTokens: usage.output_tokens,
       cacheReadTokens: cacheRead,
@@ -117,24 +158,46 @@ export class CostAccumulator {
     return entry;
   }
 
-  /** Total cost so far, in cents (fractional). */
+  /** Worst-status-wins across a run: any unpriced call taints the run's total. */
+  private degrade(status: PriceStatus): void {
+    const rank: Record<PriceStatus, number> = { priced: 0, subscription_unpriced: 1, pricing_unknown: 2 };
+    if (rank[status] > rank[this.status]) this.status = status;
+  }
+
+  /** The run's cost-attribution status (priced only if every call was priced). */
+  priceStatus(): PriceStatus {
+    return this.status;
+  }
+
+  /** Priced total in cents, or null when the run is not fully priced. */
+  totalCentsOrNull(): number | null {
+    return this.status === 'priced' ? this.costCents : null;
+  }
+
+  /** Total priced cost so far, in cents (fractional). Priced portion only. */
   total(): number {
     return this.costCents;
   }
 
-  /** Total cost so far, in USD. */
+  /** Total priced cost so far, in USD. Priced portion only. */
   totalUsd(): number {
     return this.costCents / 100;
   }
 
-  /** Aggregate breakdown matching the public `CostBreakdown` shape. */
-  breakdown(): CostBreakdown {
+  /**
+   * Aggregate breakdown. `costCents`/`status` are the authoritative attribution
+   * (null cost when subscription/unknown); `usd` remains the priced-portion sum
+   * for existing readouts.
+   */
+  breakdown(): CostBreakdown & { status: PriceStatus; costCents: number | null } {
     return {
       inputTokens: this.inputTokens,
       outputTokens: this.outputTokens,
       cachedTokens: this.cacheReadTokens,
       cacheCreationTokens: this.cacheCreationTokens,
       usd: this.costCents / 100,
+      status: this.status,
+      costCents: this.totalCentsOrNull(),
     };
   }
 

@@ -11,7 +11,8 @@ type AegisLog = {
   model: string;
   inputTokens: number;
   outputTokens: number;
-  costCents: number;
+  /** Null for subscription/unknown-priced runs — shown as "—". */
+  costCents: number | null;
   latencyMs: number;
   iterations: number;
   toolCalls: number;
@@ -48,7 +49,8 @@ function formatTokens(input: number, output: number): string {
   return `${fmtK(input)}/${fmtK(output)}`;
 }
 
-function formatCost(cents: number): string {
+function formatCost(cents: number | null): string {
+  if (cents == null) return '—';
   if (cents < 1) return `$${(cents / 100).toFixed(4)}`;
   return `$${(cents / 100).toFixed(2)}`;
 }
@@ -91,7 +93,7 @@ export function HistoryTable({ logs }: { logs: AegisLog[] }) {
     const dir = sortDir === 'asc' ? 1 : -1;
     return [...result].sort((a, b) => {
       if (sortKey === 'createdAt') return dir * (new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime());
-      if (sortKey === 'costCents') return dir * (a.costCents - b.costCents);
+      if (sortKey === 'costCents') return dir * ((a.costCents ?? 0) - (b.costCents ?? 0));
       if (sortKey === 'latencyMs') return dir * (a.latencyMs - b.latencyMs);
       if (sortKey === 'mode') return dir * a.mode.localeCompare(b.mode);
       return 0;

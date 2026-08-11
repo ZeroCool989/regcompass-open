@@ -96,7 +96,7 @@ fi
 
 # ── Database + local user ──────────────────────────────────────────────────
 info "Setting up the local database…"
-pnpm exec prisma db push >/dev/null
+pnpm exec tsx --env-file=.env scripts/db-migrate.ts
 pnpm exec tsx --env-file=.env scripts/setup-local.ts
 ok "Local database ready"
 

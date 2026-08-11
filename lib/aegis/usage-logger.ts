@@ -23,8 +23,12 @@ export const AegisUsageRecordSchema = z.object({
   cachedTokens: z.number().int().nonnegative(),
   /** Prompt-cache WRITE (creation) tokens, both TTLs combined. */
   cacheCreationTokens: z.number().int().nonnegative(),
-  /** Cost in USD cents (e.g. 0.42 = 0.42¢). */
-  costCents: z.number().nonnegative(),
+  /** Provider that served the run: "anthropic" | "gemini" | "chatgpt-codex". */
+  provider: z.string(),
+  /** Cost attribution: "priced" | "subscription_unpriced" | "pricing_unknown". */
+  priceStatus: z.string(),
+  /** Cost in USD cents (e.g. 0.42 = 0.42¢). NULL when unpriced (subscription/unknown). */
+  costCents: z.number().nonnegative().nullable(),
   /** Rate table version used to compute `costCents`. */
   pricingVersion: z.string(),
   /** How the run terminated: "done", an AegisError code, or "aborted". */

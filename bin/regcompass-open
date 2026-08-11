@@ -18,6 +18,9 @@ const path = require('node:path');
 
 const APP_DIR = path.resolve(__dirname, '..');
 const PORT = process.env.PORT || '3000';
+// The browser always opens loopback; the actual bind host + its network-safety
+// rule live in the ONE place that starts the server: scripts/start.ts
+// (assertBindingAllowed). This launcher delegates the production serve to it.
 const URL = `http://localhost:${PORT}`;
 
 function run(cmd, args, opts = {}) {
@@ -39,7 +42,7 @@ function ensureSetup() {
   }
   if (!has('local.db')) {
     console.log('› First run — creating the local database…');
-    run('pnpm', ['exec', 'prisma', 'db', 'push']);
+    run('pnpm', ['exec', 'tsx', '--env-file=.env', 'scripts/db-migrate.ts']);
     run('pnpm', ['exec', 'tsx', '--env-file=.env', 'scripts/setup-local.ts']);
   }
 }
@@ -63,7 +66,7 @@ if (arg === '--help' || arg === '-h') {
 }
 
 if (arg === 'setup') {
-  run('pnpm', ['exec', 'prisma', 'db', 'push']);
+  run('pnpm', ['exec', 'tsx', '--env-file=.env', 'scripts/db-migrate.ts']);
   run('pnpm', ['exec', 'tsx', '--env-file=.env', 'scripts/setup-local.ts']);
   console.log('✓ Local database + user ready.');
   process.exit(0);
@@ -73,11 +76,15 @@ if (arg === 'dev') {
   ensureSetup();
   console.log('› Starting dev server on ' + URL + ' …');
   setTimeout(() => openBrowser(URL), 4000);
-  run('pnpm', ['exec', 'next', 'dev']);
+  // Dev is loopback-only (safe); no network exposure to guard.
+  run('pnpm', ['exec', 'next', 'dev', '--turbopack', '-H', '127.0.0.1']);
   process.exit(0);
 }
 
-// Default: production start (build first if there's no build output).
+// Default: production start (build first if there's no build output). The
+// centralized launcher (scripts/start.ts) enforces the network-binding rule and
+// runs the DB migration before Next.js binds a socket — if either fails it exits
+// non-zero and the server never starts.
 ensureSetup();
 if (!has('.next/BUILD_ID')) {
   console.log('› Building the app (first run only)…');
@@ -85,4 +92,4 @@ if (!has('.next/BUILD_ID')) {
 }
 console.log('› Starting RegCompass Open on ' + URL + ' …');
 setTimeout(() => openBrowser(URL), 3000);
-run('pnpm', ['exec', 'next', 'start', '-p', PORT]);
+run('pnpm', ['exec', 'tsx', 'scripts/start.ts']);

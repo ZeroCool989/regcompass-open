@@ -1,5 +1,6 @@
 import { NextResponse, type NextRequest } from 'next/server';
-import { getUserFromRequest, isApproved, isDeployedEnv } from '@/lib/auth';
+import { getUserFromRequest, isApproved } from '@/lib/auth';
+import { cookiesSecure } from '@/lib/deployment';
 import { parseProviderId } from '@/lib/aegis/oauth/registry';
 import { PKCE_COOKIE, startConnect } from '@/lib/aegis/oauth';
 
@@ -30,7 +31,7 @@ export async function GET(req: NextRequest, ctx: { params: Promise<{ provider: s
   const res = NextResponse.redirect(started.authorizeUrl, { status: 302 });
   res.cookies.set(PKCE_COOKIE, started.cookie, {
     httpOnly: true,
-    secure: isDeployedEnv(),
+    secure: cookiesSecure(),
     sameSite: 'lax',
     path: `/api/aegis/oauth/${id}`,
     maxAge: 600,

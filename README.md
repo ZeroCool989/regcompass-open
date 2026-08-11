@@ -77,6 +77,17 @@ The **Regulatorik News** page collects recent regulatory developments from offic
 
 Bring your own feeds with `REGULATORY_FEEDS_FILE`, or set `REGULATORY_NEWS_PROVIDER=llm` to use Claude + web search instead of RSS. See `.env.example`.
 
+## Upgrades, backups & data safety
+
+RegCompass migrates and **backs up** your local database automatically before the
+app starts, and refuses to start rather than risk an unknown database state. It
+binds to loopback (`127.0.0.1`) by default and refuses network exposure unless you
+run authenticated multi-user mode. See
+[docs/UPGRADES_AND_BACKUP.md](docs/UPGRADES_AND_BACKUP.md) for migration states,
+backup location/permissions, the restore procedure, and how to recover if a
+migration is intentionally refused. **Keep your `.env`** — your provider
+credentials are encrypted with its `AEGIS_BYOK_ENCRYPTION_KEY`.
+
 ## Troubleshooting
 
 - **`NODE_MODULE_VERSION` / native module error after changing Node versions:** the local database driver is a native module compiled for the Node version you installed with. If you switch Node versions, run `pnpm rebuild better-sqlite3` in the install directory.

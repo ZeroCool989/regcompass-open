@@ -4,6 +4,7 @@ import { createSession, verifySessionValue } from '@/lib/session';
 // Snapshot only the keys these tests mutate; restore exactly after each case.
 const saved = {
   VERCEL_ENV: process.env.VERCEL_ENV,
+  REGCOMPASS_HOSTED: process.env.REGCOMPASS_HOSTED,
   NODE_ENV: process.env.NODE_ENV,
   SESSION_SECRET: process.env.SESSION_SECRET,
 };
@@ -28,9 +29,20 @@ describe('session secret fail-closed', () => {
     expect(() => createSession()).toThrow(/SESSION_SECRET/);
   });
 
-  it('throws on a NODE_ENV=production build when SESSION_SECRET is missing', () => {
+  it('does NOT throw on a local NODE_ENV=production build — a local build stays local', () => {
+    delete process.env.VERCEL_ENV;
+    delete process.env.REGCOMPASS_HOSTED;
+    (process.env as Record<string, string | undefined>).NODE_ENV = 'production';
+    delete process.env.SESSION_SECRET;
+    // Downloadable local install: uses the dev fallback rather than crashing.
+    const s = createSession();
+    expect(verifySessionValue(s.value)).toBe(s.id);
+  });
+
+  it('throws on an explicit hosted deploy (REGCOMPASS_HOSTED=1) when SESSION_SECRET is missing', () => {
     delete process.env.VERCEL_ENV;
     (process.env as Record<string, string | undefined>).NODE_ENV = 'production';
+    process.env.REGCOMPASS_HOSTED = '1';
     delete process.env.SESSION_SECRET;
     expect(() => createSession()).toThrow(/SESSION_SECRET/);
   });

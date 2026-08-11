@@ -1,6 +1,14 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { NextRequest } from 'next/server';
 
+// The route reads its stream deadline at module load. Locally the default is now
+// effectively unbounded (24h), so pin an explicit small deadline BEFORE the route
+// is imported (vi.hoisted runs before hoisted imports) to keep this test fast and
+// deterministic regardless of hosted/local defaults.
+vi.hoisted(() => {
+  process.env.AEGIS_STREAM_DEADLINE_MS = '290000';
+});
+
 // Limiter allows; session fixed.
 vi.mock('@/lib/rate-limit', () => ({
   rateLimit: () => ({ check: async () => ({ ok: true, remaining: 29, resetAt: Date.now() + 1000 }) }),

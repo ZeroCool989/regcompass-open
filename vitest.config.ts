@@ -5,6 +5,7 @@ export default defineConfig({
   test: {
     globals: true,
     environment: 'node',
+    setupFiles: ['./vitest.setup.ts'],
     include: ['**/__tests__/**/*.test.ts'],
     // Agent worktrees nest a full second checkout under .claude/worktrees/ —
     // without this exclude their in-progress tests leak into every run.

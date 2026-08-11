@@ -25,6 +25,8 @@ const SAMPLE: AegisUsageRecord = {
   outputTokens: 400,
   cachedTokens: 1000,
   cacheCreationTokens: 500,
+  provider: 'anthropic',
+  priceStatus: 'priced',
   costCents: 0.42,
   pricingVersion: '2026-06-02',
   exitReason: 'done',

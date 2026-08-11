@@ -64,6 +64,61 @@ export const MODEL_COSTS: Record<ModelId, ModelPricing> = {
   [MODEL_IDS.opus]: { input: 5, output: 25, cacheRead: 0.5, cacheWrite5m: 6.25, cacheWrite1h: 10 },
 };
 
+// ───────────────────── Provider-qualified model reference & pricing ─────────────────────
+
+/**
+ * The runtime brains AEGIS can be pointed at. Cost is attributed *per provider +
+ * model*, never by model name alone — the same nominal string could belong to a
+ * different provider with different (or no) per-token pricing.
+ */
+export type ModelProviderId = 'anthropic' | 'gemini' | 'chatgpt-codex';
+
+/** A provider-qualified model reference — the key for pricing and usage rows. */
+export type ModelRef = { provider: ModelProviderId; model: string };
+
+/**
+ * Cost-attribution status for a call/run:
+ *  - `priced`               — a per-token rate is configured for (provider, model).
+ *  - `subscription_unpriced`— billed by a consumer subscription (e.g. ChatGPT via
+ *                             Codex); no per-token API price applies → cost is null.
+ *  - `pricing_unknown`      — a per-token provider whose (provider, model) rate is
+ *                             not configured; cost is null. We NEVER substitute
+ *                             another provider's rates to fill the gap.
+ */
+export type PriceStatus = 'priced' | 'subscription_unpriced' | 'pricing_unknown';
+
+/** Providers billed per API token. `chatgpt-codex` is subscription-billed, so absent. */
+const PER_TOKEN_PROVIDERS: ReadonlySet<ModelProviderId> = new Set(['anthropic', 'gemini']);
+
+/**
+ * Provider-qualified pricing (USD per 1M tokens). ONLY (provider, model) pairs
+ * present here are priced; anything else resolves to `pricing_unknown` (cost
+ * null) — we never borrow another provider's rate.
+ *
+ * - `anthropic`: the verified rates from {@link MODEL_COSTS}.
+ * - `gemini`: intentionally EMPTY until each model's rate is verified against
+ *   real Google billing. An unverified rate would misreport spend, so a Gemini
+ *   call stays `pricing_unknown` (cost null) until a rate is added here. Add a
+ *   `'model-id': { input, output, cacheRead, cacheWrite5m, cacheWrite1h }` entry
+ *   once confirmed; `computeCostRef` prices it immediately (proven in tests).
+ * - `chatgpt-codex`: never per-token priced here — subscription-billed.
+ */
+export const PRICING: Record<ModelProviderId, Record<string, ModelPricing>> = {
+  anthropic: { ...MODEL_COSTS },
+  gemini: {},
+  'chatgpt-codex': {},
+};
+
+export function lookupPricing(ref: ModelRef): ModelPricing | null {
+  return PRICING[ref.provider]?.[ref.model] ?? null;
+}
+
+/** Status for a ref with no configured rate: subscription vs unknown-per-token. */
+export function priceStatusFor(ref: ModelRef): PriceStatus {
+  if (lookupPricing(ref)) return 'priced';
+  return PER_TOKEN_PROVIDERS.has(ref.provider) ? 'pricing_unknown' : 'subscription_unpriced';
+}
+
 // ───────────────────────── Model drift ─────────────────────────
 
 /** Coarse model tier, independent of any version/snapshot suffix. */

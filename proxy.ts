@@ -1,32 +1,25 @@
 import { NextResponse, type NextRequest } from 'next/server';
+import { cookiesSecure, requiresRealSecrets } from '@/lib/deployment';
 
 /**
  * Issues the anonymous session cookie on every request that doesn't already
  * carry a valid one. The signing scheme (HMAC-SHA256 hex over a UUID) must
  * stay byte-identical to `lib/session.ts` — this file cannot import it because
  * proxy runs on the edge runtime, where `node:crypto` is unavailable, so the
- * HMAC is implemented with Web Crypto here.
+ * HMAC is implemented with Web Crypto here. Both derive the secret the same way
+ * (SESSION_SECRET, else the dev fallback, hard-failing only on a hosted deploy),
+ * so the signatures stay identical. `@/lib/deployment` is edge-safe (no node:crypto).
  */
 
 const SESSION_COOKIE = 'rc_session';
 const FALLBACK_SECRET = 'rc-dev-insecure-session-secret';
 
-/**
- * True on Vercel production/preview, or any NODE_ENV=production build. Kept
- * byte-identical to `lib/session.ts` — a missing secret must fail LOUD here too
- * rather than mint cookies with the insecure dev key.
- */
-function isDeployedEnv(): boolean {
-  const v = process.env.VERCEL_ENV;
-  return v === 'production' || v === 'preview' || process.env.NODE_ENV === 'production';
-}
-
 function secret(): string {
   const s = process.env.SESSION_SECRET;
   if (s && s.length >= 16) return s;
-  if (isDeployedEnv()) {
+  if (requiresRealSecrets()) {
     throw new Error(
-      'SESSION_SECRET is unset or shorter than 16 chars in a deployed environment — ' +
+      'SESSION_SECRET is unset or shorter than 16 chars in a hosted deployment — ' +
         'refusing to issue sessions with the insecure dev fallback.',
     );
   }
@@ -67,7 +60,7 @@ export async function proxy(req: NextRequest) {
     value: `${id}.${await hmacHex(id)}`,
     httpOnly: true,
     sameSite: 'lax',
-    secure: process.env.NODE_ENV === 'production',
+    secure: cookiesSecure(),
     path: '/',
     maxAge: 60 * 60 * 24 * 30,
   });

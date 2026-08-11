@@ -10,11 +10,6 @@ export type CronAuthResult =
   | { ok: true }
   | { ok: false; status: number; error: string; message: string };
 
-export function isDeployedEnv(): boolean {
-  const v = process.env.VERCEL_ENV;
-  return v === 'production' || v === 'preview' || process.env.NODE_ENV === 'production';
-}
-
 export function checkCronAuth(
   authHeader: string | null,
   opts: { secret: string | undefined; deployed: boolean },

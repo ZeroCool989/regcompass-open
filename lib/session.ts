@@ -1,5 +1,6 @@
 import { createHmac, randomUUID, timingSafeEqual } from 'node:crypto';
 import type { NextRequest } from 'next/server';
+import { cookiesSecure, requiresRealSecrets } from '@/lib/deployment';
 
 /**
  * Anonymous browser sessions, used to scope uploaded documents (and any other
@@ -19,22 +20,12 @@ export const SESSION_COOKIE = 'rc_session';
 // Sessions signed with it are NOT secure — a deployed env must set the env var.
 const FALLBACK_SECRET = 'rc-dev-insecure-session-secret';
 
-/**
- * True on Vercel production/preview, or any NODE_ENV=production build. In these
- * environments a missing secret must fail LOUD rather than silently downgrade
- * to the insecure dev key.
- */
-function isDeployedEnv(): boolean {
-  const v = process.env.VERCEL_ENV;
-  return v === 'production' || v === 'preview' || process.env.NODE_ENV === 'production';
-}
-
 function secret(): string {
   const s = process.env.SESSION_SECRET;
   if (s && s.length >= 16) return s;
-  if (isDeployedEnv()) {
+  if (requiresRealSecrets()) {
     throw new Error(
-      'SESSION_SECRET is unset or shorter than 16 chars in a deployed environment — ' +
+      'SESSION_SECRET is unset or shorter than 16 chars in a hosted deployment — ' +
         'refusing to sign sessions with the insecure dev fallback.',
     );
   }
@@ -74,7 +65,7 @@ export function sessionCookieOptions() {
   return {
     httpOnly: true,
     sameSite: 'lax' as const,
-    secure: process.env.NODE_ENV === 'production',
+    secure: cookiesSecure(),
     path: '/',
     maxAge: 60 * 60 * 24 * 30, // 30 days
   };

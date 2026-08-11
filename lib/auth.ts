@@ -6,6 +6,7 @@ import {
 } from 'node:crypto';
 import { cookies } from 'next/headers';
 import type { NextRequest } from 'next/server';
+import { cookiesSecure, requiresRealSecrets } from '@/lib/deployment';
 import { db } from '@/lib/db';
 import type { User } from '@/app/generated/prisma/client';
 
@@ -27,17 +28,12 @@ export const AUTH_COOKIE = 'rc_auth';
 // loud rather than signing auth tokens with the insecure fallback.
 const FALLBACK_SECRET = 'rc-dev-insecure-session-secret';
 
-export function isDeployedEnv(): boolean {
-  const v = process.env.VERCEL_ENV;
-  return v === 'production' || v === 'preview' || process.env.NODE_ENV === 'production';
-}
-
 function secret(): string {
   const s = process.env.SESSION_SECRET;
   if (s && s.length >= 16) return s;
-  if (isDeployedEnv()) {
+  if (requiresRealSecrets()) {
     throw new Error(
-      'SESSION_SECRET is unset or shorter than 16 chars in a deployed environment — ' +
+      'SESSION_SECRET is unset or shorter than 16 chars in a hosted deployment — ' +
         'refusing to sign auth tokens with the insecure dev fallback.',
     );
   }
@@ -235,7 +231,7 @@ export function authCookieOptions() {
   return {
     httpOnly: true,
     sameSite: 'lax' as const,
-    secure: process.env.NODE_ENV === 'production',
+    secure: cookiesSecure(),
     path: '/',
     maxAge: 60 * 60 * 24 * 30, // 30 days
   };

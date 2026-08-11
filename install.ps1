@@ -77,15 +77,29 @@ if (-not (Test-Path .env)) {
 
 # Database + local user
 Info 'Setting up the local database…'
-pnpm exec prisma db push | Out-Null
+pnpm exec tsx --env-file=.env scripts/db-migrate.ts
 pnpm exec tsx --env-file=.env scripts/setup-local.ts
 Ok 'Local database ready'
+
+# Launcher (parity with install.sh's ~/.local/bin symlink)
+$binDir   = Join-Path $HOME '.local\bin'
+New-Item -ItemType Directory -Force -Path $binDir | Out-Null
+$launcher = Join-Path $binDir 'regcompass-open.cmd'
+$target   = Join-Path $InstallDir 'bin\regcompass-open'
+Set-Content -Path $launcher -Value "@echo off`r`nnode `"$target`" %*" -Encoding ASCII
+$userPath = [Environment]::GetEnvironmentVariable('Path','User')
+if ($userPath -notlike "*$binDir*") {
+  [Environment]::SetEnvironmentVariable('Path', "$userPath;$binDir", 'User')
+  Ok "Launcher installed → $launcher (added $binDir to your PATH; reopen your terminal)"
+} else {
+  Ok "Launcher installed → $launcher"
+}
 
 Write-Host ''
 Ok "RegCompass Open is installed at $InstallDir"
 Write-Host ''
 Info 'Start it with:'
-Write-Host '    pnpm start' -ForegroundColor White
-Write-Host '  (from ' $InstallDir ')'
+Write-Host '    regcompass-open' -ForegroundColor White
+Write-Host '  (or, from ' $InstallDir '): pnpm start'
 Write-Host ''
 Info 'Then open http://localhost:3000 and pick your model under Konto → AI-Provider.'

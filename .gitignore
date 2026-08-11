@@ -60,6 +60,9 @@ reference/
 !/scripts/check-doc-links.ts
 !/scripts/kb-migrate-governance.ts
 !/scripts/generate-kb-manifest.ts
+# production launchers (start + safe DB migration), wired into package.json/bin/installers
+!/scripts/start.ts
+!/scripts/db-migrate.ts
 
 # regulatory source PDFs (local only — re-download from official sources)
 lib/kb/sources/
@@ -67,7 +70,9 @@ lib/kb/sources/
 # 3D model source assets (kept local; only the converted GLB ships)
 models-source/
 
-# local database
+# local database (+ WAL/SHM sidecars and the runner's *.lock files via local.db*)
 *.db
 *.db-journal
 local.db*
+# runner-created database backups (contain user data — never commit)
+/backups/

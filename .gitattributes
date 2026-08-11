@@ -1,0 +1,6 @@
+# Prisma migration + reconcile SQL must use LF on every platform so their
+# SHA-256 checksums (Prisma migration history, and our immutable reconcile
+# asset) stay identical on Windows and Unix. A CRLF checkout would change the
+# hash and break migration verification.
+prisma/migrations/**/*.sql text eol=lf
+prisma/reconcile/*.sql      text eol=lf

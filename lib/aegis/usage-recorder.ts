@@ -20,6 +20,8 @@ export type UsageRecorderMeta = {
   conversationId: string;
   mode: string;
   model: string;
+  /** Provider that served the run. Defaults to "anthropic" (the historical brain). */
+  provider: string;
   language: string;
   iterations: number;
   toolCalls: number;
@@ -44,6 +46,7 @@ export class UsageRecorder {
     conversationId: '',
     mode: 'unknown',
     model: '',
+    provider: 'anthropic',
     language: 'de',
     iterations: 0,
     toolCalls: 0,
@@ -88,7 +91,11 @@ export class UsageRecorder {
       outputTokens: bd.outputTokens,
       cachedTokens: bd.cachedTokens,
       cacheCreationTokens: bd.cacheCreationTokens,
-      costCents: bd.usd * 100,
+      provider: this.meta.provider || 'anthropic',
+      priceStatus: bd.status,
+      // Authoritative attribution: null cost for subscription/unknown runs — never
+      // a fabricated figure. Priced runs carry the accumulated cents.
+      costCents: bd.costCents,
       pricingVersion: PRICING_VERSION,
       exitReason: this.meta.exitReason,
       latencyMs: Math.max(0, Math.round(latencyMs)),
