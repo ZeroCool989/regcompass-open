@@ -1,5 +1,7 @@
 import { KB } from '@/lib/kb';
 import { KBBrowser } from './KBBrowser';
+import { KbVersionBanner } from './KbVersionBanner';
+import { summarizeManifest } from '@/lib/kb/version';
 
 export const metadata = {
   title: 'Wissensbasis | RegCompass',
@@ -15,6 +17,7 @@ export default function KBPage() {
         {KB.requirements.length} Anforderungen aus {KB.regulations.length}{' '}
         Regulierungen
       </p>
+      <KbVersionBanner local={summarizeManifest(KB.manifest)} />
       <KBBrowser
         requirements={KB.requirements}
         regulations={KB.regulations}

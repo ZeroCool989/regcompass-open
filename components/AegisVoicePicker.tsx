@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from 'react';
 import {
   BROWSER_VOICE_ID,
   BROWSER_VOICE_PREFIX,
+  isGoogleGermanVoice,
   resolveVoiceId,
   VOICE_SAMPLE_DE,
 } from '@/lib/aegis/voices';
@@ -93,12 +94,12 @@ export function resolveSelectedVoice(): SpeechSynthesisVoice | null {
     const match = voiceByToken(uri);
     if (match) return match;
   }
-  // Standard browser voice = Google's German voice. The OS default ("device")
-  // voice is often missing/silent, whereas Google Deutsch reliably produces
-  // audio, so we prefer it; fall back to any de-DE / de-* voice if absent.
+  // Standard browser voice = Google's free German voice. The OS default
+  // ("device") voice is often missing/silent, whereas Google Deutsch reliably
+  // produces audio, so we prefer it; fall back to any de-DE / de-* voice.
   const isDe = (v: SpeechSynthesisVoice) => v.lang.toLowerCase().startsWith('de');
   return (
-    voices.find((v) => isDe(v) && /google/i.test(v.name)) ??
+    voices.find((v) => isGoogleGermanVoice(v.name, v.lang)) ??
     voices.find((v) => v.lang === 'de-DE') ??
     voices.find(isDe) ??
     null
@@ -176,7 +177,7 @@ export function AegisVoicePicker() {
           title="Aegis-Stimme wählen"
           className="max-w-[10rem] rounded-md border border-border-brand bg-surface/60 px-1.5 py-1 text-xs text-foreground hover:border-brand-primary/50 focus:border-brand-primary focus:outline-none"
         >
-          <option value={BROWSER_VOICE_ID}>Browser-Stimme (Standard) ★</option>
+          <option value={BROWSER_VOICE_ID}>Google Deutsch – kostenlos (Standard) ★</option>
           {voices.length > 0 ? (
             <optgroup label="Browser-Stimmen">
               {voices.map((v) => (

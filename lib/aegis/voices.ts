@@ -10,6 +10,11 @@
  * Speech is synthesized entirely on the device via the browser's built-in
  * speechSynthesis — no cloud TTS provider is involved. Pure + dependency-light
  * so it runs on client and server.
+ *
+ * Open edition: the recommended default is the free "Google Deutsch" Web Speech
+ * voice, which Chrome (and Chromium browsers) provide at no cost and with no API
+ * key. It is exposed through the standard `browser` token so the resolver can
+ * fall back gracefully to any German voice on browsers that lack it.
  */
 
 export type VoiceProvider = 'browser';
@@ -29,9 +34,23 @@ export const BROWSER_VOICE_ID = 'browser';
 export const BROWSER_VOICE_PREFIX = 'browser:';
 
 /**
- * The default Aegis voice: the device's standard German Web Speech voice.
- * Specific device voices ("browser:<voiceURI>") are offered dynamically in the
- * settings UI, since the available set differs per OS/browser.
+ * voiceURI Chrome/Chromium expose for their free German Web Speech voice.
+ * `resolveSelectedVoice` (client) prefers any de-* voice whose name contains
+ * "google", so this constant is the canonical match used for detection and
+ * labelling. Kept here (server-safe) so UI + resolver agree on one name.
+ */
+export const GOOGLE_DE_VOICE_URI = 'Google Deutsch';
+
+/** True for the free Google German Web Speech voice, however the OS labels it. */
+export function isGoogleGermanVoice(name: string, lang: string): boolean {
+  return lang.toLowerCase().startsWith('de') && /google/i.test(name);
+}
+
+/**
+ * The default Aegis voice: the free German Web Speech voice, resolving to
+ * "Google Deutsch" where the browser offers it (Chrome/Chromium) and to any
+ * de-* voice otherwise. Specific device voices ("browser:<voiceURI>") are
+ * offered dynamically in the settings UI, since the set differs per OS/browser.
  */
 export const DEFAULT_VOICE_ID = BROWSER_VOICE_ID;
 
@@ -39,7 +58,7 @@ export const AEGIS_VOICES: AegisVoice[] = [
   {
     id: BROWSER_VOICE_ID,
     provider: 'browser',
-    name: 'Browser-Stimme (Standard)',
+    name: 'Google Deutsch (kostenlos)',
     language: 'de',
     recommended: true,
   },

@@ -4,6 +4,7 @@ import { useCallback, useEffect, useState } from 'react';
 import {
   BROWSER_VOICE_ID,
   DEFAULT_VOICE_PREFS,
+  isGoogleGermanVoice,
   resolveVoiceId,
   VOICE_SAMPLE_DE,
   type VoicePrefs,
@@ -27,8 +28,8 @@ interface VoiceOption {
 
 const STANDARD_OPTION: VoiceOption = {
   id: BROWSER_VOICE_ID,
-  name: 'Browser-Stimme (Standard)',
-  detail: 'Deutsche Standardstimme dieses Browsers',
+  name: 'Google Deutsch (kostenlos)',
+  detail: 'Kostenlose deutsche Stimme – keine Anmeldung, kein API-Schlüssel',
   recommended: true,
 };
 
@@ -40,6 +41,8 @@ export function VoiceSettings() {
   const [error, setError] = useState<string | null>(null);
   const [prefs, setPrefs] = useState<VoicePrefs>(DEFAULT_VOICE_PREFS);
   const [deviceVoices, setDeviceVoices] = useState<VoiceOption[]>([]);
+  // Whether the free Google German voice is present in this browser (Chrome).
+  const [googleAvailable, setGoogleAvailable] = useState(true);
 
   useEffect(() => {
     (async () => {
@@ -60,14 +63,20 @@ export function VoiceSettings() {
   // empty until voiceschanged fires).
   useEffect(() => {
     if (typeof window === 'undefined' || !('speechSynthesis' in window)) return;
-    const load = () =>
+    const load = () => {
+      const german = getGermanVoices();
       setDeviceVoices(
-        getGermanVoices().map((v) => ({
+        german.map((v) => ({
           id: browserVoiceToken(v.voiceURI),
           name: v.name,
           detail: v.lang,
         })),
       );
+      // Once voices have loaded, note whether the free Google voice is present.
+      if (german.length > 0) {
+        setGoogleAvailable(german.some((v) => isGoogleGermanVoice(v.name, v.lang)));
+      }
+    };
     load();
     window.speechSynthesis.addEventListener('voiceschanged', load);
     return () => window.speechSynthesis.removeEventListener('voiceschanged', load);
@@ -202,6 +211,12 @@ export function VoiceSettings() {
     <div className="space-y-6">
       {error ? <div className="text-sm text-red-400">{error}</div> : null}
       <Group title="Standard" items={[STANDARD_OPTION]} />
+      {!googleAvailable ? (
+        <p className="text-xs text-text-secondary/70 -mt-4">
+          Tipp: Die kostenlose Google-Stimme ist in Google Chrome verfügbar. In
+          anderen Browsern wird die deutsche Standardstimme des Systems genutzt.
+        </p>
+      ) : null}
       {deviceVoices.length > 0 ? (
         <Group title="Gerätestimmen (Deutsch)" items={deviceVoices} />
       ) : (

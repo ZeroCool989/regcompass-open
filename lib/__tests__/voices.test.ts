@@ -4,6 +4,8 @@ import {
   BROWSER_VOICE_ID,
   DEFAULT_VOICE_ID,
   DEFAULT_VOICE_PREFS,
+  GOOGLE_DE_VOICE_URI,
+  isGoogleGermanVoice,
   isValidVoiceId,
   normalizeVoicePrefs,
   RECOMMENDED_VOICE,
@@ -26,6 +28,18 @@ describe('voice catalog', () => {
   it('contains only browser (Web Speech) voices — no cloud provider', () => {
     expect(AEGIS_VOICES.every((v) => v.provider === 'browser')).toBe(true);
     expect(voiceById(BROWSER_VOICE_ID)?.provider).toBe('browser');
+  });
+
+  it('the recommended default is the free Google German voice', () => {
+    expect(RECOMMENDED_VOICE.name).toContain('Google');
+    expect(GOOGLE_DE_VOICE_URI).toBe('Google Deutsch');
+  });
+
+  it('isGoogleGermanVoice matches German Google voices only', () => {
+    expect(isGoogleGermanVoice('Google Deutsch', 'de-DE')).toBe(true);
+    expect(isGoogleGermanVoice('Google US English', 'en-US')).toBe(false); // wrong language
+    expect(isGoogleGermanVoice('Anna', 'de-DE')).toBe(false); // not Google
+    expect(isGoogleGermanVoice('Google Deutsch', 'de')).toBe(true);
   });
 
   it('resolveVoiceId falls back to the default', () => {
