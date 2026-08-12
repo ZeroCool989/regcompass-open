@@ -9,7 +9,7 @@ import { getModeSpec } from '@/lib/aegis/modes';
 import { UsageRecorder } from '@/lib/aegis';
 import { KB } from '@/lib/kb';
 import { AegisError, AegisModeInput } from '@/lib/aegis/types';
-import { runtimeProviderForJob } from '@/lib/aegis/runtime-selection';
+import { resolveRuntimeCredential, runtimeProviderForJob } from '@/lib/aegis/runtime-selection';
 import {
   consumeResume,
   firstUserMessage,
@@ -213,6 +213,10 @@ export async function GET(
         // Fails closed on a gated (gemini/codex) or missing legacy provider — the
         // section loop, repair, digest and glue then all dispatch on this brain.
         const jobProvider = runtimeProviderForJob(fresh.job.provider, conversationLanguage);
+        // Resolve the credential for THAT provider + this owner, with the same
+        // BYOK → system-key → typed-failure precedence as the initial run — so a
+        // job started on the user's BYOK key resumes on it, not the system account.
+        const jobCredential = await resolveRuntimeCredential(jobProvider, user.id, conversationLanguage);
         const originalAsk = await firstUserMessage(fresh.job.conversationId);
         const executor = executeJobSections(
           fresh,
@@ -227,6 +231,9 @@ export async function GET(
               userId: user.id,
               conversationId: fresh.job.conversationId,
               provider: jobProvider,
+              // BYOK key when the user has one; null → the provider's system env
+              // key. Same precedence as the initial run; never logged.
+              anthropicApiKey: jobCredential.source === 'user' ? jobCredential.apiKey : null,
               onUsage: (model, usage) => costAcc.add(model, usage),
             },
           },

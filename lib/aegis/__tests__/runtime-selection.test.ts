@@ -16,12 +16,14 @@ vi.mock('@/lib/db', () => ({
 import {
   AegisCodexRuntimePendingError,
   AegisGeminiCapabilityNotReadyError,
+  AegisProviderKeyUndecryptableError,
   AegisProviderModelMismatchError,
   assertModelForProvider,
   buildRuntimeSelection,
   dispatchModelId,
   mapToRuntimeModel,
   resolveProviderAccess,
+  resolveRuntimeCredential,
   type ProviderAccess,
 } from '../runtime-selection';
 import {
@@ -146,6 +148,73 @@ describe('resolveProviderAccess — provider selection (resolved once, no fallba
     const en = await resolveProviderAccess({ userId: 'u1', language: 'en' }).catch((e) => e.message);
     expect(de).toMatch(/ausgewählt/);
     expect(en).toMatch(/selected/);
+  });
+});
+
+describe('resolveRuntimeCredential — resume credential precedence (provider explicit)', () => {
+  it('resumes an Anthropic job on the user BYOK key when one exists (not the system key)', async () => {
+    mockCredFindUnique.mockResolvedValue({
+      encryptedApiKey: encryptApiKey('sk-ant-user'),
+      preferredModel: MODEL_IDS.sonnet,
+      enabled: true,
+    });
+    process.env.ANTHROPIC_API_KEY = 'sk-ant-system'; // present, but the user key must win
+    const cred = await resolveRuntimeCredential('anthropic', 'u1', 'de');
+    expect(cred).toEqual({ source: 'user', apiKey: 'sk-ant-user', modelHint: MODEL_IDS.sonnet });
+    // Never re-reads User.aegisProvider on resume, and reads ONLY the ANTHROPIC row.
+    expect(mockUserFindUnique).not.toHaveBeenCalled();
+    expect(mockCredFindUnique.mock.calls[0][0]).toMatchObject({
+      where: { userId_provider: { userId: 'u1', provider: 'ANTHROPIC' } },
+    });
+  });
+
+  it('resumes on the system key when the user has no BYOK credential', async () => {
+    mockCredFindUnique.mockResolvedValue(null);
+    process.env.ANTHROPIC_API_KEY = 'sk-ant-system';
+    expect(await resolveRuntimeCredential('anthropic', 'u1', 'de')).toEqual({
+      source: 'system',
+      apiKey: null,
+      modelHint: null,
+    });
+  });
+
+  it('an undecryptable BYOK key fails typed — NEVER silently falls back to the system key', async () => {
+    mockCredFindUnique.mockResolvedValue({ encryptedApiKey: 'v1.bad.bad.bad', preferredModel: null, enabled: true });
+    process.env.ANTHROPIC_API_KEY = 'sk-ant-system'; // a system key exists but must NOT be used
+    await expect(resolveRuntimeCredential('anthropic', 'u1', 'de')).rejects.toBeInstanceOf(
+      AegisProviderKeyUndecryptableError,
+    );
+  });
+
+  it('missing BYOK + missing system key → typed missing-key error', async () => {
+    mockCredFindUnique.mockResolvedValue(null);
+    delete process.env.ANTHROPIC_API_KEY;
+    await expect(resolveRuntimeCredential('anthropic', 'u1', 'de')).rejects.toBeInstanceOf(
+      AegisProviderKeyMissingError,
+    );
+  });
+
+  it('a Gemini resume fails BEFORE any credential access (gated)', async () => {
+    await expect(resolveRuntimeCredential('gemini', 'u1', 'de')).rejects.toBeInstanceOf(
+      AegisGeminiCapabilityNotReadyError,
+    );
+    expect(mockCredFindUnique).not.toHaveBeenCalled();
+  });
+
+  it('initial and resumed Anthropic precedence are identical (same resolver)', async () => {
+    const row = { encryptedApiKey: encryptApiKey('sk-ant-x'), preferredModel: MODEL_IDS.opus, enabled: true };
+    mockUserFindUnique.mockResolvedValue({ aegisProvider: 'anthropic-api' });
+    mockCredFindUnique.mockResolvedValue(row);
+    const initial = (await resolveProviderAccess({ userId: 'u1', language: 'de' })).credential;
+    const resumed = await resolveRuntimeCredential('anthropic', 'u1', 'de');
+    expect(resumed).toEqual(initial);
+  });
+
+  it('no secret (encrypted value or key) appears in the typed error message', async () => {
+    mockCredFindUnique.mockResolvedValue({ encryptedApiKey: 'v1.bad.SECRETPART.bad', preferredModel: null, enabled: true });
+    const msg = await resolveRuntimeCredential('anthropic', 'u1', 'de').catch((e) => (e as Error).message);
+    expect(msg).not.toContain('SECRETPART');
+    expect(msg).not.toMatch(/sk-ant/);
   });
 });
 

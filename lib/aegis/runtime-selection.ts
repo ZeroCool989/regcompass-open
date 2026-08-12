@@ -216,6 +216,26 @@ async function resolveAnthropicCredential(userId: string, language: UiLanguage):
   throw new AegisProviderKeyMissingError('anthropic-api', language);
 }
 
+/**
+ * Resolve the runtime credential for an EXPLICIT provider + owner — used by the
+ * resume path. The provider is passed in (from the persisted `AegisJob.provider`,
+ * already gated by {@link runtimeProviderForJob}); this NEVER re-reads
+ * `User.aegisProvider` and never re-chooses the provider. Anthropic follows the
+ * exact same BYOK → system-key → typed-failure precedence as the initial run
+ * (same {@link resolveAnthropicCredential}), so an Anthropic job that started on a
+ * user's BYOK key resumes on that user's key, not the system account. Reads only
+ * the selected provider's credential. Gemini is gated upstream and never reaches
+ * a credential read; the branch here is defensive for when that gate lifts.
+ */
+export async function resolveRuntimeCredential(
+  provider: RuntimeProvider,
+  userId: string,
+  language: UiLanguage,
+): Promise<RuntimeCredential> {
+  if (provider === 'anthropic') return resolveAnthropicCredential(userId, language);
+  throw new AegisGeminiCapabilityNotReadyError(language);
+}
+
 // ───────────────────────── Resolution entry points ─────────────────────────
 
 /**
