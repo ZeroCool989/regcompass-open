@@ -7,6 +7,7 @@ import {
   type ModelPricing,
 } from '@/lib/aegis/types';
 import { CostAccumulator, computeCost, computeCostRef } from '@/lib/aegis/context/cost';
+import { resolveAttributionProvider } from '@/lib/aegis/providers/catalog';
 
 const USAGE = { input_tokens: 1_000_000, output_tokens: 1_000_000 };
 
@@ -25,6 +26,19 @@ describe('provider-qualified pricing lookup', () => {
 
   it('marks ChatGPT/Codex subscription_unpriced (never per-token here)', () => {
     expect(priceStatusFor({ provider: 'chatgpt-codex', model: 'gpt-5.5-codex' })).toBe('subscription_unpriced');
+  });
+
+  it('attributes the local escape-hatch brains honestly (never Anthropic-priced)', () => {
+    // OpenAI-proper / local / self-hosted: a per-token provider with no rate here.
+    expect(priceStatusFor({ provider: 'openai', model: 'gpt-4.1' })).toBe('pricing_unknown');
+    expect(priceStatusFor({ provider: 'ollama', model: 'llama3.3' })).toBe('pricing_unknown');
+    expect(priceStatusFor({ provider: 'custom', model: 'hermes-1' })).toBe('pricing_unknown');
+    // The CLI bridge rides a subscription you're already signed in to.
+    expect(priceStatusFor({ provider: 'cli', model: 'claude-sonnet-4-6' })).toBe('subscription_unpriced');
+    // And crucially none of them borrow an Anthropic rate.
+    for (const provider of ['openai', 'ollama', 'custom', 'cli'] as const) {
+      expect(computeCostRef({ provider, model: 'claude-sonnet-4-6' }, USAGE).costCents).toBeNull();
+    }
   });
 });
 
@@ -93,5 +107,80 @@ describe('CostAccumulator — provider-aware', () => {
     acc.addRef({ provider: 'gemini', model: 'gemini-2.5-pro' }, USAGE); // pricing_unknown
     expect(acc.priceStatus()).toBe('pricing_unknown');
     expect(acc.totalCentsOrNull()).toBeNull();
+  });
+});
+
+describe('CostAccumulator — injected provider resolver (runtime wiring)', () => {
+  const SAVED = { ...process.env };
+  afterEach(() => {
+    process.env = { ...SAVED };
+  });
+
+  it('add() prices an Anthropic run unchanged when no override is set', () => {
+    delete process.env.AEGIS_BRAIN;
+    const acc = new CostAccumulator(resolveAttributionProvider);
+    acc.add(MODEL_IDS.sonnet, USAGE);
+    expect(acc.priceStatus()).toBe('priced');
+    expect(acc.totalCentsOrNull()).toBeCloseTo(computeCost(MODEL_IDS.sonnet, USAGE), 10);
+    expect(acc.providerLabel()).toBe('anthropic');
+  });
+
+  it('add() attributes a Gemini-brained run to gemini → pricing_unknown, null cost', () => {
+    process.env.AEGIS_BRAIN = 'gemini';
+    const acc = new CostAccumulator(resolveAttributionProvider);
+    // Same nominal haiku id, but the brain override routes it to Gemini.
+    acc.add(MODEL_IDS.haiku, USAGE);
+    expect(acc.priceStatus()).toBe('pricing_unknown');
+    expect(acc.totalCentsOrNull()).toBeNull();
+    expect(acc.providerLabel()).toBe('gemini');
+  });
+
+  it('add() attributes a CLI-brained run to a subscription (never Anthropic cost)', () => {
+    process.env.AEGIS_BRAIN = 'cli';
+    process.env.AEGIS_CLI_COMMAND = 'claude';
+    const acc = new CostAccumulator(resolveAttributionProvider);
+    acc.add(MODEL_IDS.sonnet, USAGE);
+    expect(acc.priceStatus()).toBe('subscription_unpriced');
+    expect(acc.totalCentsOrNull()).toBeNull();
+    expect(acc.providerLabel()).toBe('cli');
+  });
+
+  it('the default resolver (no argument) keeps the historical Anthropic behaviour', () => {
+    process.env.AEGIS_BRAIN = 'gemini'; // must be ignored: no resolver injected
+    const acc = new CostAccumulator();
+    acc.add(MODEL_IDS.sonnet, USAGE);
+    expect(acc.priceStatus()).toBe('priced');
+    expect(acc.providerLabel()).toBe('anthropic');
+  });
+
+  it('providerLabel() reports "mixed" when more than one provider contributed', () => {
+    const acc = new CostAccumulator();
+    acc.addRef({ provider: 'anthropic', model: MODEL_IDS.haiku }, { input_tokens: 10, output_tokens: 10 });
+    acc.addRef({ provider: 'gemini', model: 'gemini-2.5-pro' }, { input_tokens: 5_000, output_tokens: 5_000 });
+    // Never silently collapsed to one brand; cost is still tainted null by worst-wins.
+    expect(acc.providerLabel()).toBe('mixed');
+    expect(acc.totalCentsOrNull()).toBeNull();
+  });
+
+  it('providerLabel() reports the sole provider for a uniform multi-call run', () => {
+    const acc = new CostAccumulator();
+    acc.addRef({ provider: 'gemini', model: 'gemini-2.5-pro' }, USAGE);
+    acc.addRef({ provider: 'gemini', model: 'gemini-2.5-flash' }, USAGE);
+    expect(acc.providerLabel()).toBe('gemini');
+  });
+
+  it('providerLabel() defaults to anthropic when nothing was recorded', () => {
+    expect(new CostAccumulator().providerLabel()).toBe('anthropic');
+  });
+
+  it('pinProvider() makes attribution follow the request-scoped selection, not AEGIS_BRAIN', () => {
+    // Dispatch honours the user's selection over the env override; attribution must too.
+    process.env.AEGIS_BRAIN = 'gemini'; // env says gemini…
+    const acc = new CostAccumulator(resolveAttributionProvider);
+    acc.pinProvider('anthropic'); // …but the selection is anthropic — pin it.
+    acc.add(MODEL_IDS.sonnet, USAGE);
+    expect(acc.providerLabel()).toBe('anthropic');
+    expect(acc.priceStatus()).toBe('priced');
+    expect(acc.totalCentsOrNull()).toBeGreaterThan(0);
   });
 });

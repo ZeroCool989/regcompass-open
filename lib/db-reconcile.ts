@@ -7,6 +7,7 @@ import {
   readSchemaFingerprint,
   schemaHashOf,
   CURRENT_SCHEMA_HASH,
+  INIT_SCHEMA_HASH,
   PREPROVIDER_SCHEMA_HASH,
 } from './db-fingerprint';
 
@@ -49,11 +50,14 @@ export class FingerprintMismatchError extends Error {
 }
 
 /**
- * Upgrade an exact `legacy_preprovider` database to the current schema, in one
+ * Upgrade an exact `legacy_preprovider` database to the INIT schema, in one
  * transaction. Preconditions and postconditions are hard fingerprint checks:
  *   pre:  schema hash == PREPROVIDER_SCHEMA_HASH
- *   post: schema hash == CURRENT_SCHEMA_HASH
- * Never runs against a database that is not exactly the recognized legacy shape.
+ *   post: schema hash == INIT_SCHEMA_HASH
+ * The immutable asset lands the database at the `init` schema; the runner then
+ * forward-applies the remaining migration(s) (`aegis_job_provider`) with
+ * `migrate deploy`. Never runs against a database that is not exactly the
+ * recognized legacy shape.
  */
 export function reconcilePreprovider(dbPath: string): void {
   const before = schemaHashOf(dbPath);
@@ -77,9 +81,9 @@ export function reconcilePreprovider(dbPath: string): void {
       throw err;
     }
     const after = canonicalSchemaHash(readSchemaFingerprint(db));
-    if (after !== CURRENT_SCHEMA_HASH) {
+    if (after !== INIT_SCHEMA_HASH) {
       throw new FingerprintMismatchError(
-        `reconcile produced schema ${after}, expected current ${CURRENT_SCHEMA_HASH}`,
+        `reconcile produced schema ${after}, expected init schema ${INIT_SCHEMA_HASH}`,
       );
     }
   } finally {

@@ -23,7 +23,8 @@ export const AegisUsageRecordSchema = z.object({
   cachedTokens: z.number().int().nonnegative(),
   /** Prompt-cache WRITE (creation) tokens, both TTLs combined. */
   cacheCreationTokens: z.number().int().nonnegative(),
-  /** Provider that served the run: "anthropic" | "gemini" | "chatgpt-codex". */
+  /** Provider that served the run (a `ModelProviderId`, e.g. "anthropic" |
+   *  "gemini" | "chatgpt-codex" | "openai" | "ollama" | "custom" | "cli"). */
   provider: z.string(),
   /** Cost attribution: "priced" | "subscription_unpriced" | "pricing_unknown". */
   priceStatus: z.string(),

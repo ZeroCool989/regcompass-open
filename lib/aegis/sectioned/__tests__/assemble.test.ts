@@ -76,7 +76,7 @@ describe('maybeGlueIntro — optional additive glue pass', () => {
   it('is a no-op when the flag is off (default)', async () => {
     const call = vi.fn();
     const report = { text: 'REPORT', citations: [], dedupedBlocks: 0, degradedSections: 0 };
-    expect(await maybeGlueIntro(report, ['Eins'], undefined, call as never)).toBe('REPORT');
+    expect(await maybeGlueIntro(report, ['Eins'], undefined, undefined, call as never)).toBe('REPORT');
     expect(call).not.toHaveBeenCalled();
   });
 
@@ -84,13 +84,13 @@ describe('maybeGlueIntro — optional additive glue pass', () => {
     process.env.AEGIS_GLUE_PASS_ENABLED = '1';
     const call = vi.fn().mockResolvedValue({ text: 'Einleitung.', usage: { input_tokens: 1, output_tokens: 1 } });
     const report = { text: 'REPORT', citations: [], dedupedBlocks: 0, degradedSections: 0 };
-    expect(await maybeGlueIntro(report, ['Eins'], undefined, call as never)).toBe('Einleitung.\n\nREPORT');
+    expect(await maybeGlueIntro(report, ['Eins'], undefined, undefined, call as never)).toBe('Einleitung.\n\nREPORT');
   });
 
   it('fails open: glue transport error yields the untouched report', async () => {
     process.env.AEGIS_GLUE_PASS_ENABLED = '1';
     const call = vi.fn().mockRejectedValue(new Error('boom'));
     const report = { text: 'REPORT', citations: [], dedupedBlocks: 0, degradedSections: 0 };
-    expect(await maybeGlueIntro(report, ['Eins'], undefined, call as never)).toBe('REPORT');
+    expect(await maybeGlueIntro(report, ['Eins'], undefined, undefined, call as never)).toBe('REPORT');
   });
 });

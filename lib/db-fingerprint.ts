@@ -35,17 +35,33 @@ const PROVIDER_AWARE = {
  * checksum — so both classify as `migration_managed`.
  */
 export const INIT_MIGRATION = '20260810000000_init_provider_aware_cost';
-/** Migration names the runner recognizes as legitimate history. */
-export const KNOWN_MIGRATIONS: ReadonlySet<string> = new Set([INIT_MIGRATION]);
+/** Adds the frozen runtime provider to AegisJob (the second forward migration). */
+export const AEGIS_JOB_PROVIDER_MIGRATION = '20260812000000_aegis_job_provider';
+/**
+ * Migration names the runner recognizes as legitimate history, in apply order.
+ * The forward strategy generalizes to a SEQUENCE: `init` established the
+ * provider-aware baseline; `aegis_job_provider` adds `AegisJob.provider`. A
+ * managed database may sit at any prefix of this list and is migrated forward to
+ * the full set — never rewritten. Anything OUTSIDE this set fails closed.
+ */
+export const MIGRATION_SEQUENCE: readonly string[] = [INIT_MIGRATION, AEGIS_JOB_PROVIDER_MIGRATION];
+export const KNOWN_MIGRATIONS: ReadonlySet<string> = new Set(MIGRATION_SEQUENCE);
 
 /**
  * Exact canonical schema-hash fingerprints (see {@link canonicalSchemaHash}).
  * Classification requires an EXACT match — presence of provider columns alone is
  * insufficient — so a partially-migrated or foreign schema fails closed as
  * `unknown`. A test recomputes these from reference fixtures and fails on drift.
+ *
+ *  - PREPROVIDER: pre-migration `db push` baseline (no provider-aware columns).
+ *  - INIT: schema after `init` only — provider-aware columns, but AegisJob has NO
+ *    `provider` column. This is where every database created before the
+ *    `aegis_job_provider` migration sits; the reconcile also lands here.
+ *  - CURRENT: schema after the full sequence (AegisJob.provider present).
  */
 export const PREPROVIDER_SCHEMA_HASH = 'bf075953c0828392de7062c186e8aebe54fbeff4bf40dcdddbf4d9ece7c35a8a';
-export const CURRENT_SCHEMA_HASH = 'feab30bd527c5fad585cb378e6055e3ca17a84de5cc1ac4a77a5e36ba88ea289';
+export const INIT_SCHEMA_HASH = 'feab30bd527c5fad585cb378e6055e3ca17a84de5cc1ac4a77a5e36ba88ea289';
+export const CURRENT_SCHEMA_HASH = 'efce4f91e7e2435835255639b407a41f19d67b3062374c3a16918a350a3ae76b';
 
 export type ColumnInfo = { name: string; type: string; notnull: boolean; dflt: string | null; pk: boolean };
 export type SchemaFingerprint = {
@@ -68,17 +84,27 @@ export type DbState =
   | 'empty'
   /** db push, no _prisma_migrations, schema WITHOUT provider-aware columns. */
   | 'legacy_preprovider'
-  /** db push, no _prisma_migrations, schema already HAS provider-aware columns. */
+  /** db push, no _prisma_migrations, INIT schema (provider-aware cols, NO
+   *  AegisJob.provider) → baseline init, then apply the provider migration. */
+  | 'legacy_init'
+  /** db push, no _prisma_migrations, full CURRENT schema (AegisJob.provider
+   *  present) → baseline the full sequence, no SQL to apply. */
   | 'legacy_current'
   /**
-   * `_prisma_migrations` shows the init migration applied (finished, not rolled
-   * back) and the schema is current. This SUBSUMES the spec's "manually
-   * baselined" state: a db that was `db push`ed + `migrate resolve --applied`
-   * (the dev local.db) is byte-identical on disk — same rows, same sha256
-   * checksum — to one created by `migrate deploy`, so they cannot and need not
-   * be distinguished. Runner action: no-op.
+   * `_prisma_migrations` shows the FULL migration sequence applied (finished, not
+   * rolled back) and the schema is current. SUBSUMES the "manually baselined"
+   * state: a db that was `db push`ed + `migrate resolve --applied` (the dev
+   * local.db) is byte-identical on disk to one created by `migrate deploy`, so
+   * they cannot and need not be distinguished. Runner action: no-op.
    */
   | 'migration_managed'
+  /**
+   * Managed database at an EARLIER point in the sequence: init applied, the
+   * `aegis_job_provider` migration not yet applied, schema still at INIT. The
+   * common upgrade case for an install created before this migration. Runner
+   * action: apply the pending migration forward (backup first), never rewrite.
+   */
+  | 'migration_pending'
   /** History/schema do not match any known state → fail closed. */
   | 'unknown';
 
@@ -242,6 +268,7 @@ export function classifyDatabase(dbPath: string = resolveSqlitePath()): Classifi
     // columns), so a partial or foreign schema fails closed.
     const hash = canonicalSchemaHash(schema);
     const isCurrent = hash === CURRENT_SCHEMA_HASH;
+    const isInitSchema = hash === INIT_SCHEMA_HASH;
     const isPreprovider = hash === PREPROVIDER_SCHEMA_HASH;
     const applied = appliedNames(history);
     const anyRolledBackOrUnfinished = history.rows.some((r) => r.rolledBack || !r.finished);
@@ -249,13 +276,13 @@ export function classifyDatabase(dbPath: string = resolveSqlitePath()): Classifi
     if (!history.hasTable) {
       // No Prisma history → a db push database. Require an exact known schema.
       if (isCurrent) return { state: 'legacy_current', providerAware, history, detail: 'db push, exact current schema, no history' };
+      if (isInitSchema) return { state: 'legacy_init', providerAware, history, detail: 'db push, exact init schema (pre AegisJob.provider), no history' };
       if (isPreprovider) return { state: 'legacy_preprovider', providerAware, history, detail: 'db push, exact pre-provider schema, no history' };
-      return { state: 'unknown', providerAware, history, detail: `db push, schema matches neither known fingerprint (${hash.slice(0, 12)}…)` };
+      return { state: 'unknown', providerAware, history, detail: `db push, schema matches no known fingerprint (${hash.slice(0, 12)}…)` };
     }
 
-    // Has _prisma_migrations. Under the preserve-init strategy, a managed (or
-    // manually-baselined) database has exactly the init migration applied AND the
-    // exact current schema.
+    // Has _prisma_migrations. Under the forward-only strategy a managed database
+    // sits at some prefix of MIGRATION_SEQUENCE and is migrated forward.
     if (anyRolledBackOrUnfinished) {
       return { state: 'unknown', providerAware, history, detail: 'history has an unfinished or rolled-back migration' };
     }
@@ -263,14 +290,22 @@ export function classifyDatabase(dbPath: string = resolveSqlitePath()): Classifi
     if (unrecognized.length > 0) {
       return { state: 'unknown', providerAware, history, detail: `unrecognized migration(s): [${unrecognized.join(', ')}]` };
     }
-    if (applied.has(INIT_MIGRATION) && isCurrent) {
-      return { state: 'migration_managed', providerAware, history, detail: 'init migration applied; schema current' };
+    const hasInit = applied.has(INIT_MIGRATION);
+    const hasProviderMig = applied.has(AEGIS_JOB_PROVIDER_MIGRATION);
+
+    // Full sequence applied + current schema → managed, no-op.
+    if (hasInit && hasProviderMig && isCurrent) {
+      return { state: 'migration_managed', providerAware, history, detail: 'full migration sequence applied; schema current' };
+    }
+    // Init applied, provider migration pending, schema still at INIT → forward-migrate.
+    if (hasInit && !hasProviderMig && isInitSchema) {
+      return { state: 'migration_pending', providerAware, history, detail: 'init applied; AegisJob.provider migration pending' };
     }
     return {
       state: 'unknown',
       providerAware,
       history,
-      detail: isCurrent ? 'current schema but init not marked applied' : `history present but schema not current (${hash.slice(0, 12)}…)`,
+      detail: `history present but (schema, applied) unrecognized (schema ${hash.slice(0, 12)}…, applied [${[...applied].sort().join(', ')}])`,
     };
   } finally {
     db.close();

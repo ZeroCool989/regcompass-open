@@ -247,6 +247,13 @@ model AegisJob {
   id             String   @id @default(cuid())
   conversationId String
   status         String // 'planning' | 'running' | 'paused' | 'done' | 'failed'
+  /// The runtime provider FROZEN at job creation (the three-card selection value:
+  /// "anthropic-api" | "gemini-api" | "chatgpt-codex"). A paused+resumed job is the
+  /// same run, so resume reads THIS — never re-reading User.aegisProvider — and a
+  /// later preference change affects only new jobs. Nullable ONLY for pre-migration
+  /// legacy rows (backfilled to "anthropic-api"); new jobs always set it, and a
+  /// null on resume fails closed. No credential/token is ever stored here.
+  provider       String?
   planJson       Json
   vocabJson      Json
   cursor         Int      @default(0)

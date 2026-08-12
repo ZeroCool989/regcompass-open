@@ -1,5 +1,10 @@
 import { afterEach, describe, expect, it } from 'vitest';
-import { activeOAuthProviderId, resolveProvider } from '../catalog';
+import {
+  activeOAuthProviderId,
+  providerForSelection,
+  resolveAttributionProvider,
+  resolveProvider,
+} from '../catalog';
 
 const SAVED = { ...process.env };
 afterEach(() => {
@@ -72,5 +77,78 @@ describe('activeOAuthProviderId — which subscription backs the active brain', 
     expect(activeOAuthProviderId('claude-sonnet-4-6')).toBeNull();
     process.env.AEGIS_BRAIN = 'custom';
     expect(activeOAuthProviderId('claude-sonnet-4-6')).toBeNull();
+  });
+});
+
+describe('providerForSelection — an explicit selection ignores AEGIS_BRAIN', () => {
+  it('dispatches Anthropic for an anthropic selection even when AEGIS_BRAIN=gemini', () => {
+    process.env.AEGIS_BRAIN = 'gemini';
+    expect(providerForSelection('anthropic').id).toBe('anthropic');
+  });
+
+  it('dispatches Gemini for a gemini selection even when AEGIS_BRAIN=ollama', () => {
+    process.env.AEGIS_BRAIN = 'ollama';
+    expect(providerForSelection('gemini').id).toBe('gemini');
+  });
+});
+
+describe('resolveAttributionProvider — cost label for the served brain', () => {
+  it('attributes by model family when no override is set', () => {
+    delete process.env.AEGIS_BRAIN;
+    expect(resolveAttributionProvider('claude-sonnet-4-6')).toBe('anthropic');
+    expect(resolveAttributionProvider(undefined)).toBe('anthropic');
+    expect(resolveAttributionProvider('gemini-2.5-pro')).toBe('gemini');
+    expect(resolveAttributionProvider('gpt-5')).toBe('openai');
+  });
+
+  it('honors the AEGIS_BRAIN override for every model id (override wins)', () => {
+    for (const [brain, expected] of [
+      ['gemini', 'gemini'],
+      ['openai', 'openai'],
+      ['ollama', 'ollama'],
+      ['cli', 'cli'],
+      ['custom', 'custom'],
+      ['anything-else', 'custom'],
+    ] as const) {
+      process.env.AEGIS_BRAIN = brain;
+      // Even a claude id is attributed to the override brain, not Anthropic.
+      expect(resolveAttributionProvider('claude-sonnet-4-6')).toBe(expected);
+    }
+  });
+
+  it('never throws — even for AEGIS_BRAIN=cli with no command configured', () => {
+    process.env.AEGIS_BRAIN = 'cli';
+    delete process.env.AEGIS_CLI_COMMAND;
+    // resolveProvider would throw here; the attribution label must not.
+    expect(() => resolveAttributionProvider('claude-sonnet-4-6')).not.toThrow();
+    expect(resolveAttributionProvider('claude-sonnet-4-6')).toBe('cli');
+  });
+
+  it('stays in lockstep with the brain resolveProvider actually dispatches to', () => {
+    // The attribution label must track the real brain id, so cost is never
+    // pinned to a different provider than the one that served the call.
+    const brainIdToAttribution: Record<string, string> = {
+      anthropic: 'anthropic',
+      gemini: 'gemini',
+      openai: 'openai',
+      ollama: 'ollama',
+      custom: 'custom',
+      'cli:claude': 'cli',
+    };
+    const cases: Array<{ brain?: string; model: string; cliCommand?: string }> = [
+      { model: 'claude-sonnet-4-6' }, // no override → anthropic
+      { model: 'gpt-4.1' }, // no override → openai
+      { model: 'gemini-2.5-pro' }, // no override → gemini
+      { brain: 'ollama', model: 'claude-sonnet-4-6' },
+      { brain: 'custom', model: 'claude-sonnet-4-6' },
+      { brain: 'cli', cliCommand: 'claude', model: 'claude-sonnet-4-6' },
+    ];
+    for (const c of cases) {
+      if (c.brain) process.env.AEGIS_BRAIN = c.brain;
+      else delete process.env.AEGIS_BRAIN;
+      if (c.cliCommand) process.env.AEGIS_CLI_COMMAND = c.cliCommand;
+      const brainId = resolveProvider(c.model).id;
+      expect(resolveAttributionProvider(c.model)).toBe(brainIdToAttribution[brainId]);
+    }
   });
 });

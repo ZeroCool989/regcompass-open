@@ -1,7 +1,8 @@
 import { callHaiku } from '../client';
 import { CostAccumulator, type ClaudeUsage } from '../context/cost';
 import type { ModeSpec } from '../modes';
-import { MODEL_IDS } from '../types';
+import { AegisError, MODEL_IDS } from '../types';
+import { jobProviderForRuntime } from '../runtime-selection';
 import type { LoopState } from '../loop';
 import type { ToolAuditEntry } from '../types';
 import { classifyTriage, type TriageResult } from './triage';
@@ -27,9 +28,11 @@ export function sectionedEnabled(): boolean {
  */
 export async function triageRequest(
   message: string,
+  provider: 'anthropic' | 'gemini',
   onUsage: (usage: ClaudeUsage) => void,
 ): Promise<TriageResult> {
-  return classifyTriage(message, callHaiku, onUsage);
+  // Triage dispatches on the request's selected brain — same as the main loop.
+  return classifyTriage(message, (p) => callHaiku({ ...p, provider }), onUsage);
 }
 
 export type SectionedStartArgs = {
@@ -61,9 +64,17 @@ export async function* startSectionedJob(
 ): AsyncGenerator<SectionedStreamEvent, SectionedStartOutcome, void> {
   const planFn = args.planFn ?? generatePlan;
 
+  // The request's ALREADY-FROZEN provider — resolved BEFORE the plan pass so no
+  // Sectioned model call (plan included) can ever run without it. Never
+  // re-resolved, never defaulted to Anthropic; resume reads it from the job.
+  const frozen = args.toolContext?.provider;
+  if (!frozen) {
+    throw new AegisError('internal_error', 'Sectioned job started without a frozen provider selection.');
+  }
+
   let plan: AegisPlan;
   try {
-    const result = await planFn(args.userMessage, args.language);
+    const result = await planFn(args.userMessage, args.language, frozen);
     args.cost.add(MODEL_IDS.sonnet, result.usage);
     plan = result.plan;
   } catch (err) {
@@ -79,7 +90,8 @@ export async function* startSectionedJob(
     return { kind: 'fallback_single_pass', reason };
   }
 
-  const job = await createJob(args.conversationId, plan, args.client);
+  // Persist the frozen provider on the job — resume reads this, not User.aegisProvider.
+  const job = await createJob(args.conversationId, plan, jobProviderForRuntime(frozen), args.client);
   await transitionJob(job.id, 'planning', 'running', args.client);
   yield {
     type: 'job_created',
@@ -115,6 +127,7 @@ export async function* startSectionedJob(
       jobId: job.id,
       conversationId: args.conversationId,
       mode: args.mode,
+      provider: args.toolContext?.provider,
       client: args.client,
     });
   }

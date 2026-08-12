@@ -89,6 +89,9 @@ export async function generateSectionDigest(
   deps: {
     call?: typeof callStructured;
     onUsage?: (model: ModelId, usage: ClaudeUsage) => void;
+    /** The request's frozen provider selection — the per-section digest
+     *  dispatches on the same brain as the run, never a dev AEGIS_BRAIN override. */
+    provider?: 'anthropic' | 'gemini';
   } = {},
 ): Promise<SectionDigest> {
   const call = deps.call ?? callStructured;
@@ -99,6 +102,7 @@ export async function generateSectionDigest(
       prompt: sectionText.slice(0, intEnv('AEGIS_SECTION_DIGEST_MAX_CHARS', 24_000)),
       schema: DIGEST_JSON_SCHEMA,
       maxTokens: 1024,
+      provider: deps.provider,
     });
     deps.onUsage?.(MODEL_IDS.haiku, usage);
     const { digest, fabricated } = firewallSectionDigest(

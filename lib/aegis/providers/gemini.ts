@@ -164,7 +164,17 @@ export class GeminiProvider implements ModelProvider {
     };
     if (system) body.system_instruction = { parts: [{ text: system }] };
     const tools = toGeminiTools(params.tools);
-    if (tools) body.tools = tools;
+    if (tools) {
+      body.tools = tools;
+      // Honour a forced tool-free turn: the loop's degrade / citation-repair
+      // passes send toolChoice:{type:'none'} to force a final answer. Gemini's
+      // equivalent is functionCallingConfig mode NONE — without it those passes
+      // could keep calling tools and never finalise (the D4 forced-answer gap).
+      const toolChoice = (params as ProviderCallParams).toolChoice as { type?: string } | undefined;
+      if (toolChoice?.type === 'none') {
+        body.tool_config = { function_calling_config: { mode: 'NONE' } };
+      }
+    }
     return body;
   }
 
@@ -173,7 +183,7 @@ export class GeminiProvider implements ModelProvider {
       `${this.base()}/models/${params.model}:generateContent`,
       this.headers(params.apiKey, params.authToken),
       this.buildBody(params),
-      { providerLabel: this.cfg.label, usedByokKey: !!params.apiKey },
+      { providerLabel: this.cfg.label, usedByokKey: !!params.apiKey, signal: params.signal },
     );
     const json = (await res.json()) as {
       candidates?: { content?: { parts?: GeminiPart[] }; finishReason?: string }[];
@@ -199,13 +209,19 @@ export class GeminiProvider implements ModelProvider {
       `${this.base()}/models/${params.model}:streamGenerateContent?alt=sse`,
       this.headers(params.apiKey, params.authToken),
       this.buildBody(params),
-      { providerLabel: this.cfg.label, usedByokKey: !!params.apiKey },
+      { providerLabel: this.cfg.label, usedByokKey: !!params.apiKey, signal: params.signal },
     );
     if (!res.body) throw new AegisError('upstream_error', `${this.cfg.label} returned no stream body.`);
     const model = params.model;
 
     let textAcc = '';
-    const toolCalls: { name: string; args: Record<string, unknown> }[] = [];
+    // Each tool call carries its id from first sight, so the streamed
+    // content_block_start event and the assembled finalMessage() block share the
+    // SAME id — the loop pairs tool_result → tool_use by that id, and Gemini's
+    // id→name recovery survives the verify-retry / trimForRetry envelope.
+    const toolCalls: { id: string; name: string; args: Record<string, unknown> }[] = [];
+    // Per-stream suffix keeps ids unique across turns without a shared counter.
+    const idSuffix = Math.random().toString(36).slice(2, 8);
     let finishReason: string | undefined;
     let usageIn = 0;
     let usageOut = 0;
@@ -229,12 +245,10 @@ export class GeminiProvider implements ModelProvider {
             textAcc += p.text;
             yield textDeltaEvent(p.text);
           } else if ('functionCall' in p && p.functionCall) {
-            toolCalls.push({ name: p.functionCall.name, args: p.functionCall.args ?? {} });
-            yield toolUseStartEvent(
-              ++toolIndex,
-              `call_${toolIndex}_${Date.now().toString(36)}`,
-              p.functionCall.name,
-            );
+            toolIndex += 1;
+            const id = `gemcall_${toolIndex}_${idSuffix}`;
+            toolCalls.push({ id, name: p.functionCall.name, args: p.functionCall.args ?? {} });
+            yield toolUseStartEvent(toolIndex, id, p.functionCall.name);
           }
         }
       }
@@ -252,7 +266,7 @@ export class GeminiProvider implements ModelProvider {
         const content: ProviderContentBlock[] = [];
         if (textAcc) content.push(textBlock(textAcc));
         for (const tc of toolCalls) {
-          content.push(toolUseBlock(`call_${Math.round(Math.random() * 1e9).toString(36)}`, tc.name, tc.args));
+          content.push(toolUseBlock(tc.id, tc.name, tc.args));
         }
         if (content.length === 0) content.push(textBlock(''));
         return buildCanonicalMessage({

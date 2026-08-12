@@ -70,8 +70,27 @@ export const MODEL_COSTS: Record<ModelId, ModelPricing> = {
  * The runtime brains AEGIS can be pointed at. Cost is attributed *per provider +
  * model*, never by model name alone — the same nominal string could belong to a
  * different provider with different (or no) per-token pricing.
+ *
+ * The first three are the product's selectable providers (the three-card model).
+ * The remainder are the local `AEGIS_BRAIN` escape-hatch brains a downloadable
+ * install can point AEGIS at (see `.env.example` / `providers/catalog.ts`); each
+ * is attributed to its own label so its spend is never fake-priced as Anthropic:
+ *   - `openai`  — real OpenAI or an OpenAI-proper endpoint (per-token, no rate
+ *                 configured here → `pricing_unknown`).
+ *   - `ollama`  — a local model (no marginal cost we track → `pricing_unknown`).
+ *   - `custom`  — a self-hosted / gateway OpenAI-compatible endpoint
+ *                 (`pricing_unknown`).
+ *   - `cli`     — a local agent CLI you are already signed in to; billed by that
+ *                 subscription, not per API token → `subscription_unpriced`.
  */
-export type ModelProviderId = 'anthropic' | 'gemini' | 'chatgpt-codex';
+export type ModelProviderId =
+  | 'anthropic'
+  | 'gemini'
+  | 'chatgpt-codex'
+  | 'openai'
+  | 'ollama'
+  | 'custom'
+  | 'cli';
 
 /** A provider-qualified model reference — the key for pricing and usage rows. */
 export type ModelRef = { provider: ModelProviderId; model: string };
@@ -87,8 +106,20 @@ export type ModelRef = { provider: ModelProviderId; model: string };
  */
 export type PriceStatus = 'priced' | 'subscription_unpriced' | 'pricing_unknown';
 
-/** Providers billed per API token. `chatgpt-codex` is subscription-billed, so absent. */
-const PER_TOKEN_PROVIDERS: ReadonlySet<ModelProviderId> = new Set(['anthropic', 'gemini']);
+/**
+ * Providers billed per API token (an unconfigured rate → `pricing_unknown`).
+ * The subscription-billed brains — `chatgpt-codex` and the local `cli` bridge —
+ * are absent, so an unpriced call on them resolves to `subscription_unpriced`.
+ * `ollama`/`custom` are local/self-hosted: we hold no rate, so they read as
+ * `pricing_unknown` (cost null) rather than a fabricated figure.
+ */
+const PER_TOKEN_PROVIDERS: ReadonlySet<ModelProviderId> = new Set([
+  'anthropic',
+  'gemini',
+  'openai',
+  'ollama',
+  'custom',
+]);
 
 /**
  * Provider-qualified pricing (USD per 1M tokens). ONLY (provider, model) pairs
@@ -107,6 +138,13 @@ export const PRICING: Record<ModelProviderId, Record<string, ModelPricing>> = {
   anthropic: { ...MODEL_COSTS },
   gemini: {},
   'chatgpt-codex': {},
+  // Local `AEGIS_BRAIN` escape-hatch brains: no verified rate → never priced.
+  // (openai/ollama/custom → pricing_unknown; cli → subscription_unpriced via the
+  // PER_TOKEN_PROVIDERS membership above. Add a verified rate here to price one.)
+  openai: {},
+  ollama: {},
+  custom: {},
+  cli: {},
 };
 
 export function lookupPricing(ref: ModelRef): ModelPricing | null {
@@ -228,6 +266,13 @@ export type ToolContext = {
   onUsage?: (model: ModelId, usage: import('./context/cost').ClaudeUsage) => void;
   /** Optional per-request Anthropic BYOK credential. Server-only, never exposed to tools/model text. */
   anthropicApiKey?: string | null;
+  /**
+   * Explicit request-scoped runtime provider (the user's selection). Threaded
+   * onto every model call in the loop so dispatch honours the selection and no
+   * `AEGIS_BRAIN` env override can silently replace it. Absent → legacy
+   * env/model-family resolution (internal/escape-hatch calls).
+   */
+  provider?: 'anthropic' | 'gemini';
 };
 
 /**

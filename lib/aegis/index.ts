@@ -23,14 +23,18 @@ import { estimateSeedTokens } from './memory-seed';
 import { defaultConversationRetriever } from './memory-retrieval';
 import { getModeSpec } from './modes';
 import { annotateProvenance } from './provenance';
-import { resolveAnthropicCredential } from './provider-settings';
+import {
+  buildRuntimeSelection,
+  dispatchModelId,
+  resolveProviderAccess,
+  type ProviderAccess,
+  type RuntimeProvider,
+} from './runtime-selection';
 import { buildVoiceNameDirective, buildVoicePrompt } from './prompts/voice';
 import {
   classifyIntent,
   estimateComplexity,
   getIntentClassifier,
-  applyModelPreference,
-  routeToModel,
 } from './router';
 import {
   AegisError,
@@ -250,10 +254,21 @@ async function persistAssistantTurn(
  * seed exceeds the soft budget (single oversized pair), run pre-flight
  * compaction — closing the "compaction can't fire before the first call" gap.
  */
+/**
+ * Bind `callHaiku` to the request's provider so the helper model calls (intent
+ * classification, context compaction, triage) dispatch on the SAME brain as the
+ * main loop. The selection is fixed for the ENTIRE request — a dev `AEGIS_BRAIN`
+ * override can never split a run across brains once a provider is threaded.
+ */
+function haikuOn(provider: RuntimeProvider): typeof callHaiku {
+  return (p) => callHaiku({ ...p, provider });
+}
+
 async function assembleSeed(
   req: AegisRequest,
   memory: MemoryTurn | null,
   sanitizedMessage: string,
+  provider: RuntimeProvider,
   recorder?: UsageRecorder,
 ): Promise<Anthropic.MessageParam[]> {
   const userTurn = { role: 'user' as const, content: sanitizedMessage };
@@ -265,7 +280,7 @@ async function assembleSeed(
       ];
 
   if (memory && memory.seedTokens > DEFAULT_GUARDRAILS.seedTokenBudget) {
-    messages = await compressContext(messages, MemoryConfig.compactionKeepLast, callHaiku, (usage) =>
+    messages = await compressContext(messages, MemoryConfig.compactionKeepLast, haikuOn(provider), (usage) =>
       recorder?.cost.add(MODEL_IDS.haiku, usage),
     );
   }
@@ -281,11 +296,15 @@ export async function runAegis(
   const sessionId = options?.sessionId ?? null;
   const userId = options?.userId ?? null;
   const sanitized = sanitizeUserMessage(req.message);
-  const resolvedAnthropic = options?.anthropicApiKey
-    ? { apiKey: options.anthropicApiKey }
-    : await resolveAnthropicCredential(userId).catch((err) => {
-        throw new AegisError('invalid_input', err instanceof Error ? err.message : 'AI-Provider ist für AEGIS nicht verfügbar.');
-      });
+  // Request-scoped provider selection, resolved ONCE and fail-fast (before any
+  // conversation turn is persisted). Reads only the user's stored aegisProvider;
+  // gemini-api/chatgpt-codex throw their typed gated errors here, anthropic-api
+  // resolves its (isolated) credential. No env/model-family fallback.
+  const access = await resolveProviderAccess({
+    userId,
+    language: req.language,
+    directAnthropicKey: options?.anthropicApiKey ?? null,
+  });
 
   // Memory start: resolve/create the conversation and persist the user turn
   // before anything that can fail downstream. Throws only `not_found`.
@@ -302,14 +321,18 @@ export async function runAegis(
     if (getIntentClassifier() === 'heuristic') {
       complexity = estimateComplexity(req.message);
     } else {
-      const intent = await classifyIntent(req.message, callHaiku, (usage) =>
+      const intent = await classifyIntent(req.message, haikuOn(access.provider), (usage) =>
         recorder?.cost.add(MODEL_IDS.haiku, usage),
       );
       complexity = intent.complexity;
     }
   }
-  const route = applyModelPreference(routeToModel(req.mode, complexity), resolvedAnthropic);
-  recorder?.setMeta({ model: route.model });
+  // Assemble the immutable selection now that complexity (→ routed tier) is known.
+  const selection = buildRuntimeSelection(access, req.mode, complexity);
+  // Attribution follows the actually-dispatched provider (the selection), not any
+  // AEGIS_BRAIN env override — pin the accumulator + record the provider.
+  recorder?.cost.pinProvider(selection.provider);
+  recorder?.setMeta({ model: selection.model.model, provider: selection.provider });
   const baseSpec = getModeSpec(req.mode, req.language);
   if (req.voice) {
     baseSpec.maxIterations = 5;
@@ -330,7 +353,7 @@ export async function runAegis(
   }
   const spec = withSoulBlock(baseSpec, options?.soulBlock);
 
-  const messages = await assembleSeed(req, memory, sanitized, recorder);
+  const messages = await assembleSeed(req, memory, sanitized, access.provider, recorder);
 
   // Shared with the tool-context usage hook so tool-level model spend
   // (conversation-findings extraction) lands in the same accumulator.
@@ -351,7 +374,9 @@ export async function runAegis(
       userId,
       conversationId,
       onUsage: (model, usage) => costAcc.add(model, usage),
-      anthropicApiKey: resolvedAnthropic?.apiKey ?? null,
+      anthropicApiKey: access.credential.source === 'user' ? access.credential.apiKey : null,
+      // Explicit request-scoped provider — dispatch honours it over AEGIS_BRAIN.
+      provider: selection.provider,
     },
     toolAudit: [],
   };
@@ -360,7 +385,7 @@ export async function runAegis(
     const { text: rawText, state, verify } = await runOuterLoop(
       spec,
       initialState,
-      route.model,
+      dispatchModelId(selection),
       req.language,
     );
 
@@ -399,7 +424,7 @@ export async function runAegis(
       citedIds: citations,
       status: 'complete',
       exitReason,
-      model: route.model,
+      model: selection.model.model,
       mode: req.mode,
       toolAudit: state.toolAudit ?? [],
       traceId: recorder?.traceId,
@@ -409,7 +434,7 @@ export async function runAegis(
       text,
       citations,
       conversationId,
-      modelUsed: route.model,
+      modelUsed: dispatchModelId(selection),
       iterations: state.iteration,
       toolCalls: state.toolCalls,
       cost: state.cost.breakdown(),
@@ -426,7 +451,7 @@ export async function runAegis(
       citedIds: [],
       status: 'failed',
       exitReason,
-      model: route.model,
+      model: selection.model.model,
       mode: req.mode,
       toolAudit: initialState.toolAudit ?? [],
       traceId: recorder?.traceId,
@@ -511,16 +536,22 @@ export async function* runAegisStreaming(
   const sessionId = options?.sessionId ?? null;
   const userId = options?.userId ?? null;
   const sanitized = sanitizeUserMessage(req.message);
-  let resolvedAnthropic: { apiKey: string } | null = null;
+  // Request-scoped provider selection (see runAegis). A gated/misconfigured
+  // provider yields a typed SSE error before the stream begins — never a silent
+  // fallback to a different brain.
+  let access: ProviderAccess;
   try {
-    resolvedAnthropic = options?.anthropicApiKey
-      ? { apiKey: options.anthropicApiKey }
-      : await resolveAnthropicCredential(userId);
+    access = await resolveProviderAccess({
+      userId,
+      language: req.language,
+      directAnthropicKey: options?.anthropicApiKey ?? null,
+    });
   } catch (err) {
-    recorder?.setMeta({ exitReason: 'invalid_input' });
+    const code = err instanceof AegisError ? err.code : 'invalid_input';
+    recorder?.setMeta({ exitReason: code });
     yield {
       type: 'error',
-      code: 'invalid_input',
+      code,
       message: err instanceof Error ? err.message : 'AI-Provider ist für AEGIS nicht verfügbar.',
       conversationId: req.conversationId ?? 'unknown',
     };
@@ -557,7 +588,7 @@ export async function* runAegisStreaming(
   const sectionedCandidate =
     sectionedEnabled() && !req.voice && memory !== null && options?.deadlineAt !== undefined;
   if (sectionedCandidate) {
-    triage = await triageRequest(sanitized, (usage) =>
+    triage = await triageRequest(sanitized, access.provider, (usage) =>
       recorder?.cost.add(MODEL_IDS.haiku, usage),
     );
     if (req.mode === 'CONVERSATIONAL') complexity = triage.complexity;
@@ -566,7 +597,7 @@ export async function* runAegisStreaming(
       complexity = estimateComplexity(req.message);
     } else {
       try {
-        const intent = await classifyIntent(req.message, callHaiku, (usage) =>
+        const intent = await classifyIntent(req.message, haikuOn(access.provider), (usage) =>
           recorder?.cost.add(MODEL_IDS.haiku, usage),
         );
         complexity = intent.complexity;
@@ -575,8 +606,12 @@ export async function* runAegisStreaming(
       }
     }
   }
-  const route = applyModelPreference(routeToModel(req.mode, complexity), resolvedAnthropic);
-  recorder?.setMeta({ model: route.model });
+  // Assemble the immutable selection now that complexity (→ routed tier) is known.
+  const selection = buildRuntimeSelection(access, req.mode, complexity);
+  // Attribution follows the actually-dispatched provider (the selection), not any
+  // AEGIS_BRAIN env override — pin the accumulator + record the provider.
+  recorder?.cost.pinProvider(selection.provider);
+  recorder?.setMeta({ model: selection.model.model, provider: selection.provider });
   const baseSpec = getModeSpec(req.mode, req.language);
   if (req.voice) {
     baseSpec.maxIterations = 5;
@@ -597,7 +632,7 @@ export async function* runAegisStreaming(
   }
   const spec = withSoulBlock(baseSpec, options?.soulBlock);
 
-  const messages = await assembleSeed(req, memory, sanitized, recorder);
+  const messages = await assembleSeed(req, memory, sanitized, access.provider, recorder);
   // Shared with the tool-context usage hook (see runAegis).
   const costAcc = recorder?.cost ?? new CostAccumulator();
   const initialState: LoopState = {
@@ -616,7 +651,9 @@ export async function* runAegisStreaming(
       userId,
       conversationId,
       onUsage: (model, usage) => costAcc.add(model, usage),
-      anthropicApiKey: resolvedAnthropic?.apiKey ?? null,
+      anthropicApiKey: access.credential.source === 'user' ? access.credential.apiKey : null,
+      // Explicit request-scoped provider — dispatch honours it over AEGIS_BRAIN.
+      provider: selection.provider,
     },
     toolAudit: [],
     // Wall-clock deadline for time-budget-aware verify recovery (graceful
@@ -640,7 +677,7 @@ export async function* runAegisStreaming(
     turnPersisted = true;
     return persistAssistantTurn(memory, {
       ...turn,
-      model: route.model,
+      model: selection.model.model,
       mode: req.mode,
       toolAudit: initialState.toolAudit ?? [],
       traceId: recorder?.traceId,
@@ -681,7 +718,7 @@ export async function* runAegisStreaming(
   }
 
   try {
-    const outer = runOuterLoopStreaming(spec, initialState, route.model, req.language);
+    const outer = runOuterLoopStreaming(spec, initialState, dispatchModelId(selection), req.language);
     while (true) {
       const r = await outer.next();
       if (r.done) {
@@ -725,7 +762,7 @@ export async function* runAegisStreaming(
           citations,
           meta: {
             mode: req.mode,
-            model: route.model,
+            model: selection.model.model,
             cost: state.cost.breakdown(),
             latency: Date.now() - startedAt,
             verification: verify,

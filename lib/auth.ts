@@ -257,7 +257,7 @@ export const LOCAL_USER_ID = 'local';
  * multi-user registrations.
  */
 export async function ensureLocalUser(): Promise<User> {
-  return db.user.upsert({
+  const user = await db.user.upsert({
     where: { id: LOCAL_USER_ID },
     // No username: keeps the spoken-name directive off (deriveFirstName(null))
     // instead of AEGIS addressing the user as "Local". Also normalises rows
@@ -270,8 +270,29 @@ export async function ensureLocalUser(): Promise<User> {
       passwordHash: '',
       status: 'APPROVED',
       role: 'ADMIN',
+      // The implicit local user is created with an explicit, stored Aegis
+      // provider selection — Anthropic. This is a real persisted default (not a
+      // runtime fallback), so the request router reads a concrete provider and
+      // the no-login app works out of the box. A user who later picks Gemini or
+      // ChatGPT replaces this normally and is never reverted.
+      aegisProvider: 'anthropic-api',
     },
   });
+
+  // One-time, idempotent compatibility backfill for a local user created by an
+  // earlier build (before the stored default existed): if — and only if — this
+  // is the local user with no selection yet, seed Anthropic. Guarded on
+  // `aegisProvider: null`, so it never overwrites an explicit Gemini/ChatGPT
+  // pick and never touches any non-local user. A freshly-created row already
+  // carries the default, so this matches nothing after the first transition.
+  if (user.aegisProvider === null) {
+    await db.user.updateMany({
+      where: { id: LOCAL_USER_ID, aegisProvider: null },
+      data: { aegisProvider: 'anthropic-api' },
+    });
+    return { ...user, aegisProvider: 'anthropic-api' };
+  }
+  return user;
 }
 
 // ─────────────────────────── User lookup / status ───────────────────────────

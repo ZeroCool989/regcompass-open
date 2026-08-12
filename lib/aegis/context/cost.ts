@@ -4,9 +4,19 @@ import {
   priceStatusFor,
   type CostBreakdown,
   type ModelId,
+  type ModelProviderId,
   type ModelRef,
   type PriceStatus,
 } from '../types';
+
+/**
+ * Resolves the attribution provider for a bare model id. Injected into
+ * {@link CostAccumulator} so this module needs no dependency on provider
+ * selection (which would create an import cycle). Defaults to Anthropic — the
+ * historical single-brain behaviour — so a pure Anthropic run is unchanged.
+ */
+export type ProviderResolver = (model: string) => ModelProviderId;
+const ANTHROPIC_ONLY: ProviderResolver = () => 'anthropic';
 
 /**
  * The raw token-usage shape Anthropic returns on every message. Structurally
@@ -126,9 +136,26 @@ export class CostAccumulator {
   private status: PriceStatus = 'priced';
   private readonly perCall: CostEntry[] = [];
 
-  /** Record one Anthropic call (back-compat) — priced via Anthropic rates. */
+  /**
+   * @param resolveProvider maps a bare model id to its attribution provider.
+   * Defaults to Anthropic-only so an unconfigured accumulator (and every existing
+   * caller) prices exactly as before; the runtime injects the brain-aware resolver.
+   */
+  constructor(private resolveProvider: ProviderResolver = ANTHROPIC_ONLY) {}
+
+  /**
+   * Pin every subsequent `add()` to one provider — the request-scoped selection.
+   * Dispatch honours the user's chosen provider over any `AEGIS_BRAIN` env
+   * override, so attribution must follow the same provider (not the env). Called
+   * once the selection is known; earlier calls keep their resolved provider.
+   */
+  pinProvider(provider: ModelProviderId): void {
+    this.resolveProvider = () => provider;
+  }
+
+  /** Record one call by bare model id; the injected resolver supplies the provider. */
   add(model: ModelId, usage: ClaudeUsage): CostEntry {
-    return this.addRef({ provider: 'anthropic', model }, usage);
+    return this.addRef({ provider: this.resolveProvider(model), model }, usage);
   }
 
   /** Record one provider-qualified call; prices it or marks it unpriced. */
@@ -204,6 +231,25 @@ export class CostAccumulator {
   /** Per-call detail (read-only view). Useful for telemetry / debugging. */
   entries(): readonly CostEntry[] {
     return this.perCall;
+  }
+
+  /**
+   * The run's provider label for the persisted `provider` column: the sole
+   * provider that served it, or `'mixed'` when more than one distinct provider
+   * contributed. A mixed run is therefore never silently collapsed to a single
+   * brand — and its cost is still correct because worst-status-wins already
+   * taints `priceStatus`/`costCents` (any unpriced call → null cost). In the live
+   * runtime a run is provider-uniform (the `AEGIS_BRAIN` override points every
+   * call at one brain; absent an override every call is claude → anthropic), so
+   * `'mixed'` is a defensive honesty guarantee for future multi-brain dispatch.
+   * `anthropic` when nothing was recorded (matches the historical default).
+   */
+  providerLabel(): ModelProviderId | 'mixed' {
+    const distinct = new Set<ModelProviderId>();
+    for (const e of this.perCall) distinct.add(e.provider);
+    if (distinct.size === 0) return 'anthropic';
+    if (distinct.size > 1) return 'mixed';
+    return [...distinct][0];
   }
 
   /**

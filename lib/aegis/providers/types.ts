@@ -70,6 +70,17 @@ export type ProviderCallParams = {
   authToken?: string | null;
   /** Optional tool-choice override; kept out of the cached prefix. */
   toolChoice?: ProviderToolChoice;
+  /**
+   * Explicit runtime provider for this call — the request-scoped selection. When
+   * present, dispatch uses exactly this brain (see `getProviderFor`), so no
+   * `AEGIS_BRAIN` env override or model-id prefix can silently replace the user's
+   * chosen provider. Absent → legacy resolution by env/model-family (the internal
+   * escape-hatch path).
+   */
+  provider?: 'anthropic' | 'gemini';
+  /** Optional abort signal — cancels the upstream request when the client
+   *  disconnects. Adapters wire it into their fetch/SDK call. */
+  signal?: AbortSignal;
 };
 
 /**

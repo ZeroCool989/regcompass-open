@@ -1,4 +1,5 @@
 import { CostAccumulator } from './context/cost';
+import { resolveAttributionProvider } from './providers/catalog';
 import { PRICING_VERSION } from './types';
 import { logUsage } from './usage-logger';
 
@@ -20,7 +21,12 @@ export type UsageRecorderMeta = {
   conversationId: string;
   mode: string;
   model: string;
-  /** Provider that served the run. Defaults to "anthropic" (the historical brain). */
+  /**
+   * Provider that served the run. Left empty by default: `flush()` derives it
+   * from the brains that actually served the calls (the accumulator's
+   * `providerLabel()` — a single provider, or `"mixed"`) unless a caller sets it
+   * explicitly.
+   */
   provider: string;
   language: string;
   iterations: number;
@@ -40,13 +46,16 @@ export type UsageRecorderMeta = {
 };
 
 export class UsageRecorder {
-  readonly cost = new CostAccumulator();
+  // Brain-aware: each recorded call is attributed to the provider that served it
+  // (AEGIS_BRAIN override, else the model's family), so a non-Anthropic run is
+  // never fake-priced at Anthropic rates.
+  readonly cost = new CostAccumulator(resolveAttributionProvider);
   private logged = false;
   private readonly meta: UsageRecorderMeta = {
     conversationId: '',
     mode: 'unknown',
     model: '',
-    provider: 'anthropic',
+    provider: '',
     language: 'de',
     iterations: 0,
     toolCalls: 0,
@@ -91,7 +100,7 @@ export class UsageRecorder {
       outputTokens: bd.outputTokens,
       cachedTokens: bd.cachedTokens,
       cacheCreationTokens: bd.cacheCreationTokens,
-      provider: this.meta.provider || 'anthropic',
+      provider: this.meta.provider || this.cost.providerLabel(),
       priceStatus: bd.status,
       // Authoritative attribution: null cost for subscription/unknown runs — never
       // a fabricated figure. Priced runs carry the accumulated cents.

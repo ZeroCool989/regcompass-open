@@ -334,6 +334,7 @@ export async function* executeJobSections(
     }
     const digest = await digestFn(text, {
       onUsage: (model, usage) => ctx.cost.add(model, usage),
+      provider: ctx.toolContext?.provider,
     });
     const citations = [...new Set(text.match(/\[R-[A-Z0-9]+-[A-Z0-9-]+\]/g) ?? [])];
     await persistSectionResult(

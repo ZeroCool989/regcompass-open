@@ -8,7 +8,8 @@ import { createHeartbeat } from '@/lib/aegis/heartbeat';
 import { getModeSpec } from '@/lib/aegis/modes';
 import { UsageRecorder } from '@/lib/aegis';
 import { KB } from '@/lib/kb';
-import { AegisModeInput } from '@/lib/aegis/types';
+import { AegisError, AegisModeInput } from '@/lib/aegis/types';
+import { resolveRuntimeCredential, runtimeProviderForJob } from '@/lib/aegis/runtime-selection';
 import {
   consumeResume,
   firstUserMessage,
@@ -208,6 +209,14 @@ export async function GET(
         // degenerate cases, none at all) — coerce instead of crashing the resume.
         const parsedMode = AegisModeInput.safeParse(fresh.conversation.mode);
         const mode = parsedMode.success ? parsedMode.data : 'CONVERSATIONAL';
+        // Restore the FROZEN provider from the job (never re-read User.aegisProvider).
+        // Fails closed on a gated (gemini/codex) or missing legacy provider — the
+        // section loop, repair, digest and glue then all dispatch on this brain.
+        const jobProvider = runtimeProviderForJob(fresh.job.provider, conversationLanguage);
+        // Resolve the credential for THAT provider + this owner, with the same
+        // BYOK → system-key → typed-failure precedence as the initial run — so a
+        // job started on the user's BYOK key resumes on it, not the system account.
+        const jobCredential = await resolveRuntimeCredential(jobProvider, user.id, conversationLanguage);
         const originalAsk = await firstUserMessage(fresh.job.conversationId);
         const executor = executeJobSections(
           fresh,
@@ -221,6 +230,10 @@ export async function GET(
               sessionId,
               userId: user.id,
               conversationId: fresh.job.conversationId,
+              provider: jobProvider,
+              // BYOK key when the user has one; null → the provider's system env
+              // key. Same precedence as the initial run; never logged.
+              anthropicApiKey: jobCredential.source === 'user' ? jobCredential.apiKey : null,
               onUsage: (model, usage) => costAcc.add(model, usage),
             },
           },
@@ -236,6 +249,7 @@ export async function GET(
             jobId,
             conversationId: fresh.job.conversationId,
             mode,
+            provider: jobProvider,
           });
         }
         recorder.setMeta({
@@ -244,12 +258,17 @@ export async function GET(
         });
       } catch (err) {
         console.error('[aegis job resume] stream error:', err);
+        // A typed AegisError (e.g. the fail-closed provider restore, or a gated
+        // Gemini/Codex job) carries a user-safe message + code; surface those.
+        const isTyped = err instanceof AegisError;
         safeEnqueue(
           encodeSse('job_failed', {
             type: 'job_failed',
             jobId,
-            code: 'internal_error',
-            message: 'Der Report konnte nicht fortgesetzt werden. Bereits fertige Abschnitte sind gespeichert.',
+            code: isTyped ? err.code : 'internal_error',
+            message: isTyped
+              ? err.message
+              : 'Der Report konnte nicht fortgesetzt werden. Bereits fertige Abschnitte sind gespeichert.',
           }),
         );
         terminalSent = true;

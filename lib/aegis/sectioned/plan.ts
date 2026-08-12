@@ -279,6 +279,9 @@ export type GeneratePlanResult = {
 export async function generatePlan(
   message: string,
   language: 'de' | 'en',
+  // The request's frozen provider selection — the plan-pass dispatches on the
+  // same brain as the rest of the run, so a dev AEGIS_BRAIN cannot split it off.
+  provider: 'anthropic' | 'gemini' | undefined,
   deps: { call?: typeof callStructured } = {},
 ): Promise<GeneratePlanResult> {
   const call = deps.call ?? callStructured;
@@ -288,6 +291,7 @@ export async function generatePlan(
     prompt: message,
     schema: PLAN_JSON_SCHEMA,
     maxTokens: intEnv('AEGIS_PLAN_MAX_TOKENS', 3000),
+    provider,
   });
   // Structural parse → deterministic ownership normalization → authoritative
   // refined validation (disjointness now holds by construction).
