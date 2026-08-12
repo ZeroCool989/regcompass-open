@@ -114,6 +114,9 @@ export function assembleReport(sections: SectionRow[]): AssembledReport {
 export async function maybeGlueIntro(
   report: AssembledReport,
   titles: string[],
+  // The request's frozen provider selection — the optional glue call dispatches
+  // on the same brain as the run, never a dev AEGIS_BRAIN override.
+  provider: 'anthropic' | 'gemini' | undefined,
   onUsage?: (model: string, usage: ClaudeUsage) => void,
   call: typeof callHaiku = callHaiku,
 ): Promise<string> {
@@ -127,6 +130,7 @@ export async function maybeGlueIntro(
         'keine neuen Fakten oder Regulierungsangaben.\n\n' +
         `Der Report hat folgende Abschnitte: ${titles.join('; ')}`,
       maxTokens: 300,
+      provider,
     });
     onUsage?.(MODEL_IDS.haiku, usage);
     const trimmed = intro.trim();
@@ -141,6 +145,8 @@ export async function persistAssembledReport(args: {
   jobId: string;
   conversationId: string;
   mode: string;
+  /** The request's frozen provider selection — pins the optional glue call. */
+  provider?: 'anthropic' | 'gemini';
   client?: JobDb;
   onUsage?: (model: string, usage: ClaudeUsage) => void;
 }): Promise<boolean> {
@@ -155,6 +161,7 @@ export async function persistAssembledReport(args: {
     const text = await maybeGlueIntro(
       report,
       sections.map((s) => s.title),
+      args.provider,
       args.onUsage,
     );
     const seq = await appendMessage(args.conversationId, {

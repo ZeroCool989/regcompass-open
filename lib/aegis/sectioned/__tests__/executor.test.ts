@@ -1,4 +1,4 @@
-import { describe, expect, it, vi } from 'vitest';
+import { afterEach, describe, expect, it, vi } from 'vitest';
 import type { ModeSpec } from '../../modes';
 import type { VerifyResult } from '../../types';
 import { CostAccumulator } from '../../context/cost';
@@ -70,7 +70,7 @@ async function seededRunningJob(stub: ReturnType<typeof makeStubDb>): Promise<Jo
     mode: 'ASSESS',
     language: 'de',
   });
-  const job = await createJob('conv-1', PLAN, stub);
+  const job = await createJob('conv-1', PLAN, 'anthropic-api', stub);
   await transitionJob(job.id, 'planning', 'running', stub);
   return {
     job: { ...job, status: 'running' },
@@ -124,6 +124,35 @@ describe('executeJobSections — happy path', () => {
     expect(stub.jobs[0].cursor).toBe(2);
     expect(stub.sections.map((s) => s.status)).toEqual(['done', 'done']);
     expect(stub.sections[0].firstPassOk).toBe(true);
+  });
+});
+
+describe('executeJobSections — provider pinning (real done-path digest)', () => {
+  const SAVED = { ...process.env };
+  afterEach(() => {
+    process.env = { ...SAVED };
+  });
+
+  it('pins the per-section digest to the request provider even when AEGIS_BRAIN=gemini', async () => {
+    process.env.AEGIS_BRAIN = 'gemini'; // hostile: names a different brain
+    const stub = makeStubDb();
+    const loaded = await seededRunningJob(stub);
+    const digestSpy = vi.fn(
+      (_text: string, _deps?: { provider?: 'anthropic' | 'gemini' }) => Promise.resolve(EMPTY_SECTION_DIGEST),
+    );
+    const deps: ExecutorDeps = { ...happyDeps(stub, ['Text A.']), digestFn: digestSpy as never };
+    const c = ctx(Date.now() + 600_000);
+    // The request's frozen selection is Anthropic (index.ts sets toolContext.provider).
+    c.toolContext!.provider = 'anthropic';
+
+    await runToEnd(executeJobSections(loaded, c, deps));
+
+    // The done path reached the digest, and it was handed the frozen provider —
+    // NOT left to fall through to AEGIS_BRAIN=gemini.
+    expect(digestSpy).toHaveBeenCalled();
+    for (const call of digestSpy.mock.calls) {
+      expect(call[1]?.provider).toBe('anthropic');
+    }
   });
 });
 

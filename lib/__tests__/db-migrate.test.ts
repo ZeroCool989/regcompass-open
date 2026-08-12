@@ -11,16 +11,36 @@ import {
   sanitize,
   type PrismaRunner,
 } from '@/lib/db-migrate';
-import { classifyDatabase, schemaHashOf, INIT_MIGRATION, PREPROVIDER_SCHEMA_HASH, CURRENT_SCHEMA_HASH } from '@/lib/db-fingerprint';
+import {
+  classifyDatabase,
+  schemaHashOf,
+  INIT_MIGRATION,
+  AEGIS_JOB_PROVIDER_MIGRATION,
+  PREPROVIDER_SCHEMA_HASH,
+  INIT_SCHEMA_HASH,
+  CURRENT_SCHEMA_HASH,
+} from '@/lib/db-fingerprint';
 import { LockHeldError, type Liveness } from '@/lib/db-lock';
 import { encryptApiKey, decryptApiKey, fingerprintApiKey } from '@/lib/aegis/provider-settings';
 
 const ROOT = join(__dirname, '..', '..');
 const PRE_SQL = readFileSync(join(__dirname, 'fixtures', 'preprovider-schema.sql'), 'utf8');
-const CUR_SQL = readFileSync(join(__dirname, 'fixtures', 'current-schema.sql'), 'utf8');
-const INIT_CHECKSUM = createHash('sha256')
-  .update(readFileSync(join(ROOT, 'prisma', 'migrations', INIT_MIGRATION, 'migration.sql')))
-  .digest('hex');
+// `current-schema.sql` is the schema after the INIT migration only (no
+// AegisJob.provider); it is the INIT schema in the two-migration sequence.
+const INIT_SQL = readFileSync(join(__dirname, 'fixtures', 'current-schema.sql'), 'utf8');
+const checksumOf = (name: string) =>
+  createHash('sha256').update(readFileSync(join(ROOT, 'prisma', 'migrations', name, 'migration.sql'))).digest('hex');
+const INIT_CHECKSUM = checksumOf(INIT_MIGRATION);
+const PROVIDER_MIG_SQL = readFileSync(
+  join(ROOT, 'prisma', 'migrations', AEGIS_JOB_PROVIDER_MIGRATION, 'migration.sql'),
+  'utf8',
+);
+const PROVIDER_CHECKSUM = checksumOf(AEGIS_JOB_PROVIDER_MIGRATION);
+/** The migration checksum used when recording/resolving a given migration name. */
+const CHECKSUM_OF: Record<string, string> = {
+  [INIT_MIGRATION]: INIT_CHECKSUM,
+  [AEGIS_JOB_PROVIDER_MIGRATION]: PROVIDER_CHECKSUM,
+};
 
 const ALIVE: Liveness = () => 'alive';
 const DEAD: Liveness = () => 'dead';
@@ -49,40 +69,53 @@ function ensureMigrations(db: Database.Database) {
     `CREATE TABLE IF NOT EXISTS "_prisma_migrations" ("id" TEXT PRIMARY KEY NOT NULL,"checksum" TEXT NOT NULL,"finished_at" DATETIME,"migration_name" TEXT NOT NULL,"logs" TEXT,"rolled_back_at" DATETIME,"started_at" DATETIME NOT NULL DEFAULT current_timestamp,"applied_steps_count" INTEGER NOT NULL DEFAULT 0);`,
   );
 }
-function initApplied(db: Database.Database): boolean {
+function migApplied(db: Database.Database, name: string): boolean {
   const t = db.prepare("SELECT 1 FROM sqlite_master WHERE type='table' AND name='_prisma_migrations'").get();
   if (!t) return false;
   return !!db
     .prepare("SELECT 1 FROM _prisma_migrations WHERE migration_name=? AND finished_at IS NOT NULL AND rolled_back_at IS NULL")
-    .get(INIT_MIGRATION);
+    .get(name);
 }
-function recordInit(db: Database.Database) {
+function recordMig(db: Database.Database, name: string) {
   ensureMigrations(db);
-  if (!db.prepare('SELECT 1 FROM _prisma_migrations WHERE migration_name=?').get(INIT_MIGRATION)) {
+  if (!db.prepare('SELECT 1 FROM _prisma_migrations WHERE migration_name=?').get(name)) {
     db.prepare(
       "INSERT INTO _prisma_migrations (id,checksum,migration_name,finished_at,started_at,applied_steps_count) VALUES (?,?,?,datetime('now'),datetime('now'),1)",
-    ).run(`m${Math.round(performance.now())}`, INIT_CHECKSUM, INIT_MIGRATION);
+    ).run(`m${Math.round(performance.now())}_${name}`, CHECKSUM_OF[name] ?? 'x', name);
   }
 }
+// Back-compat wrappers used by a few scenarios that seed the init migration directly.
+const initApplied = (db: Database.Database) => migApplied(db, INIT_MIGRATION);
+const recordInit = (db: Database.Database) => recordMig(db, INIT_MIGRATION);
 function hasUser(db: Database.Database): boolean {
   return !!db.prepare("SELECT 1 FROM sqlite_master WHERE type='table' AND name='User'").get();
 }
+/**
+ * Faithful emulated Prisma for the ORDERED two-migration sequence. `migrate
+ * deploy` forward-applies each not-yet-applied migration in order (init builds
+ * the baseline schema; aegis_job_provider runs its ALTER + backfill), recording
+ * each in `_prisma_migrations`. `migrate resolve --applied <name>` marks that
+ * exact migration applied WITHOUT running its SQL (baselining).
+ */
 function emulatedPrisma(): PrismaRunner {
   return (args, dbPath) => {
     const db = new Database(dbPath);
     try {
       const cmd = args.join(' ');
       if (cmd.startsWith('migrate deploy')) {
-        if (initApplied(db)) return { code: 0, output: 'No pending migrations to apply.' };
-        if (!hasUser(db)) {
-          db.exec(CUR_SQL);
-          recordInit(db);
-          return { code: 0, output: 'applied init' };
+        if (!migApplied(db, INIT_MIGRATION)) {
+          if (hasUser(db)) return { code: 1, output: 'drift: schema present without history' };
+          db.exec(INIT_SQL);
+          recordMig(db, INIT_MIGRATION);
         }
-        return { code: 1, output: 'drift: schema present without history' };
+        if (!migApplied(db, AEGIS_JOB_PROVIDER_MIGRATION)) {
+          db.exec(PROVIDER_MIG_SQL); // ALTER ADD COLUMN provider + backfill
+          recordMig(db, AEGIS_JOB_PROVIDER_MIGRATION);
+        }
+        return { code: 0, output: 'deployed' };
       }
       if (cmd.startsWith('migrate resolve')) {
-        recordInit(db);
+        recordMig(db, args[args.length - 1]); // resolve --applied <name>
         return { code: 0, output: 'resolved' };
       }
       return { code: 0, output: '' };
@@ -126,6 +159,21 @@ function seedCredential(db: Database.Database, userId: string, secret: string) {
 function run(dbPath: string, prisma = emulatedPrisma(), liveness: Liveness = DEAD) {
   return runMigration({ dbPath, prisma, liveness });
 }
+/** Build a fully-migrated (CURRENT schema, full sequence recorded) database. */
+function buildCurrent(fn?: (db: Database.Database) => void): string {
+  return apply(newPath(), INIT_SQL, (db) => {
+    db.exec(PROVIDER_MIG_SQL); // ALTER adds AegisJob.provider → CURRENT schema
+    recordMig(db, INIT_MIGRATION);
+    recordMig(db, AEGIS_JOB_PROVIDER_MIGRATION);
+    fn?.(db);
+  });
+}
+/** Seed a paused AegisJob (INIT schema — no provider column yet). */
+function seedJob(db: Database.Database, id: string) {
+  db.prepare(
+    "INSERT INTO \"AegisJob\" (id,conversationId,status,planJson,vocabJson,updatedAt,expiresAt) VALUES (?,?,?,?,?,datetime('now'),datetime('now','+1 day'))",
+  ).run(id, 'conv-1', 'paused', '{}', '{}');
+}
 
 // ── The 16-scenario matrix ─────────────────────────────────────────────────────
 describe('migration runner — mandatory scenarios', () => {
@@ -157,50 +205,85 @@ describe('migration runner — mandatory scenarios', () => {
     expect(row).toEqual({ provider: 'anthropic', priceStatus: 'priced', costCents: 0.99 });
   });
 
-  it('3. migration-managed baseline → pending migration succeeds (no-op here)', async () => {
-    const p = apply(newPath(), CUR_SQL, (db) => recordInit(db));
+  it('3. managed DB missing the new migration → forward-migrated to current', async () => {
+    // init applied, schema still at INIT (no AegisJob.provider): the common upgrade
+    // case for an install created before this migration.
+    const p = apply(newPath(), INIT_SQL, (db) => recordInit(db));
+    expect(classifyDatabase(p).state).toBe('migration_pending');
     const r = await run(p);
-    expect(r.action).toBe('noop');
+    expect(r.action).toBe('migrated');
+    expect(r.backupPath).not.toBeNull(); // mutating an existing DB → backed up first
+    expect(classifyDatabase(p).state).toBe('migration_managed');
+    expect(schemaHashOf(p)).toBe(CURRENT_SCHEMA_HASH);
   });
 
-  it('4. manually baselined (state #4) → safe reconciliation = no-op', async () => {
-    // Built exactly like the dev local.db: current schema + init recorded via resolve.
-    const p = apply(newPath(), CUR_SQL);
-    emulatedPrisma()(['migrate', 'resolve', '--applied', INIT_MIGRATION], p);
+  it('4. fully-migrated managed DB (whole sequence applied) → safe no-op', async () => {
+    const p = buildCurrent();
+    expect(classifyDatabase(p).state).toBe('migration_managed');
     const r = await run(p);
     expect(r.action).toBe('noop');
     expect(r.backupPath).toBeNull();
   });
 
-  it('5. legacy current schema (no history) → safely baselined', async () => {
-    const p = apply(newPath(), CUR_SQL, (db) => seedUser(db, 'u1'));
+  it('5. legacy INIT schema (db push, no history) → baselined + forward-migrated', async () => {
+    const p = apply(newPath(), INIT_SQL, (db) => seedUser(db, 'u1'));
+    expect(classifyDatabase(p).state).toBe('legacy_init');
+    const r = await run(p);
+    expect(r.action).toBe('baselined');
+    expect(classifyDatabase(p).state).toBe('migration_managed');
+    expect(schemaHashOf(p)).toBe(CURRENT_SCHEMA_HASH);
+  });
+
+  it('5b. legacy CURRENT schema (db push, no history) → baselines the whole sequence, no re-run', async () => {
+    // db push already carrying AegisJob.provider — re-running the ALTER would fail;
+    // the runner must only baseline (resolve) both migrations.
+    const p = apply(newPath(), INIT_SQL, (db) => {
+      db.exec(PROVIDER_MIG_SQL);
+      seedUser(db, 'u1');
+    });
     expect(classifyDatabase(p).state).toBe('legacy_current');
     const r = await run(p);
     expect(r.action).toBe('baselined');
     expect(classifyDatabase(p).state).toBe('migration_managed');
   });
 
-  it('6. already-current → fast no-op with NO backup', async () => {
-    const p = apply(newPath(), CUR_SQL, (db) => recordInit(db));
+  it('6. already fully current → fast no-op with NO backup', async () => {
+    const p = buildCurrent();
     const r = await run(p);
     expect(r.action).toBe('noop');
     expect(existsSync(join(dir, 'backups'))).toBe(false); // no backup dir created
   });
 
+  it('10b. an existing AegisJob survives the forward migration, backfilled to anthropic-api', async () => {
+    const p = apply(newPath(), INIT_SQL, (db) => {
+      seedUser(db, 'u1');
+      recordInit(db);
+      seedJob(db, 'job-1');
+    });
+    expect(classifyDatabase(p).state).toBe('migration_pending');
+    const r = await run(p);
+    expect(r.action).toBe('migrated');
+    const job = new Database(p, { readonly: true })
+      .prepare('SELECT id, provider, status FROM AegisJob WHERE id=?')
+      .get('job-1') as { id: string; provider: string; status: string };
+    // Row preserved; provider backfilled to the only pre-provider runtime.
+    expect(job).toEqual({ id: 'job-1', provider: 'anthropic-api', status: 'paused' });
+  });
+
   it('7. unknown schema → rejected without modification', async () => {
-    const p = apply(newPath(), CUR_SQL, (db) => db.exec('CREATE TABLE "Weird" (x TEXT)'));
+    const p = apply(newPath(), INIT_SQL, (db) => db.exec('CREATE TABLE "Weird" (x TEXT)'));
     const before = schemaHashOf(p);
     await expect(run(p)).rejects.toThrow(/unrecognized|unknown/i);
     expect(schemaHashOf(p)).toBe(before); // unchanged
   });
 
   it('8. partially matching schema → rejected without modification', async () => {
-    const p = apply(newPath(), CUR_SQL, (db) => db.exec('ALTER TABLE "User" DROP COLUMN "aegisProvider"'));
+    const p = apply(newPath(), INIT_SQL, (db) => db.exec('ALTER TABLE "User" DROP COLUMN "aegisProvider"'));
     await expect(run(p)).rejects.toThrow(/unknown|unrecognized/i);
   });
 
   it('9. unfinished/rolled-back history → rejected', async () => {
-    const p = apply(newPath(), CUR_SQL, (db) => {
+    const p = apply(newPath(), INIT_SQL, (db) => {
       ensureMigrations(db);
       db.prepare("INSERT INTO _prisma_migrations (id,checksum,migration_name,started_at,applied_steps_count) VALUES (?,?,?,datetime('now'),1)").run(
         'x',
@@ -274,7 +357,7 @@ describe('migration runner — mandatory scenarios', () => {
 
 describe('runner internals', () => {
   it('resolves DATABASE_URL, never a hardcoded local.db (fixtures are under tmp)', () => {
-    const p = apply(newPath(), CUR_SQL);
+    const p = apply(newPath(), INIT_SQL);
     expect(p.startsWith(tmpdir())).toBe(true);
     expect(p).not.toBe(join(ROOT, 'local.db'));
   });

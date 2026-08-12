@@ -20,7 +20,7 @@ async function seededJob(stub: ReturnType<typeof makeStubDb>) {
     mode: 'ASSESS',
     language: 'de',
   });
-  return createJob('conv-1', PLAN, stub);
+  return createJob('conv-1', PLAN, 'anthropic-api', stub);
 }
 
 describe('createJob', () => {

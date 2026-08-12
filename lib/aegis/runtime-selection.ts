@@ -11,6 +11,8 @@ import {
   AegisProviderNotConfiguredError,
   decryptApiKey,
   getAegisProvider,
+  parseAegisProvider,
+  type AegisProvider,
   type UiLanguage,
 } from './provider-settings';
 import { applyModelPreference, routeToModel } from './router';
@@ -116,6 +118,21 @@ export class AegisProviderKeyUndecryptableError extends AegisError {
         : 'Ihr gespeicherter Anthropic API-Schlüssel konnte nicht entschlüsselt werden. Bitte unter Konto → AI-Provider neu speichern.',
     );
     this.name = 'AegisProviderKeyUndecryptableError';
+  }
+}
+
+/** A sectioned job with no persisted provider (a pre-migration legacy row that
+ *  slipped past the backfill) fails CLOSED on resume — never assumed Anthropic. */
+export class AegisJobProviderMissingError extends AegisError {
+  readonly kind = 'job_provider_missing' as const;
+  constructor(language: UiLanguage = 'de') {
+    super(
+      'invalid_input',
+      language === 'en'
+        ? 'This paused job predates provider tracking and cannot be safely resumed. Please start a new request.'
+        : 'Dieser pausierte Job stammt aus der Zeit vor der Provider-Zuordnung und kann nicht sicher fortgesetzt werden. Bitte starten Sie eine neue Anfrage.',
+    );
+    this.name = 'AegisJobProviderMissingError';
   }
 }
 
@@ -264,4 +281,38 @@ export function buildRuntimeSelection(
     model: Object.freeze(model),
     credential: access.credential,
   });
+}
+
+// ───────────────────────── Sectioned job provider (persist ↔ restore) ─────────────────────────
+
+/**
+ * The canonical three-card value to PERSIST on a sectioned job for a resolved
+ * runtime provider. Freezes the selection made at job creation so a resumed job
+ * runs on the same brain even if the user later changes their preference. Only
+ * `anthropic` reaches job creation today (Gemini/Codex throw in
+ * {@link resolveProviderAccess} before a job exists); the Gemini mapping is here
+ * for when that gate lifts.
+ */
+export function jobProviderForRuntime(provider: RuntimeProvider): AegisProvider {
+  return provider === 'gemini' ? 'gemini-api' : 'anthropic-api';
+}
+
+/**
+ * Restore the runtime provider for a RESUMED job from its persisted value —
+ * WITHOUT re-reading `User.aegisProvider` (a later preference change must not
+ * switch a running job's brain). Applies the same gate as the initial path:
+ * `gemini-api`/`chatgpt-codex` throw their typed not-ready errors, and a missing/
+ * unparseable value fails CLOSED. Never silently assumes Anthropic.
+ */
+export function runtimeProviderForJob(persisted: string | null | undefined, language: UiLanguage): RuntimeProvider {
+  const parsed = parseAegisProvider(persisted);
+  if (!parsed) throw new AegisJobProviderMissingError(language);
+  switch (parsed) {
+    case 'anthropic-api':
+      return 'anthropic';
+    case 'gemini-api':
+      throw new AegisGeminiCapabilityNotReadyError(language);
+    case 'chatgpt-codex':
+      throw new AegisCodexRuntimePendingError(language);
+  }
 }

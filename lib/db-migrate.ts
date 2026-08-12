@@ -1,7 +1,14 @@
 import { spawnSync } from 'node:child_process';
 import { existsSync, readFileSync } from 'node:fs';
 import { join } from 'node:path';
-import { classifyDatabase, resolveSqlitePath, schemaHashOf, INIT_MIGRATION, type DbState } from './db-fingerprint';
+import {
+  classifyDatabase,
+  resolveSqlitePath,
+  schemaHashOf,
+  INIT_MIGRATION,
+  MIGRATION_SEQUENCE,
+  type DbState,
+} from './db-fingerprint';
 import { acquireLock, releaseLock, defaultLiveness, LockHeldError, type Liveness, type LockHandle } from './db-lock';
 import { backupDatabase, restoreDatabase, verifyIntegrity } from './db-backup';
 import { reconcilePreprovider, CURRENT_SCHEMA_HASH, PREPROVIDER_SCHEMA_HASH } from './db-reconcile';
@@ -38,7 +45,7 @@ export function sanitize(s: string): string {
     .trim();
 }
 
-export type MigrationAction = 'noop' | 'fresh' | 'baselined' | 'reconciled';
+export type MigrationAction = 'noop' | 'fresh' | 'baselined' | 'reconciled' | 'migrated';
 export type MigrationResult = { action: MigrationAction; state: DbState; backupPath: string | null };
 
 export function migrationLockPath(dbPath: string): string {
@@ -106,23 +113,43 @@ export async function runMigration(opts: RunOptions = {}): Promise<MigrationResu
       return { action: 'fresh', state: cls.state, backupPath: null };
     }
 
-    // legacy_* mutate existing data/history → (7) integrity + (8) backup first.
+    // Every remaining state mutates existing data/history → (7) integrity + (8)
+    // backup first. Forward-only: reconcile (if needed) lands at the INIT schema,
+    // baselining marks already-present migrations applied WITHOUT re-running their
+    // SQL, and `migrate deploy` applies only the genuinely-pending migrations.
     verifyIntegrity(dbPath, 'source');
     preHash = schemaHashOf(dbPath);
     backupPath = await backupDatabase(dbPath);
 
     try {
-      if (cls.state === 'legacy_preprovider') {
-        // (9) transactional, fingerprint-gated reconcile → then mark init applied.
-        reconcilePreprovider(dbPath);
-        prismaOrThrow(prisma, ['migrate', 'resolve', '--applied', INIT_MIGRATION], dbPath);
-      } else {
-        // legacy_current: schema already current, just baseline the init migration.
-        prismaOrThrow(prisma, ['migrate', 'resolve', '--applied', INIT_MIGRATION], dbPath);
+      switch (cls.state) {
+        case 'legacy_preprovider':
+          // (9) transactional, fingerprint-gated reconcile → INIT schema, mark
+          // init applied, then (10) forward-apply the pending provider migration.
+          reconcilePreprovider(dbPath);
+          prismaOrThrow(prisma, ['migrate', 'resolve', '--applied', INIT_MIGRATION], dbPath);
+          prismaOrThrow(prisma, ['migrate', 'deploy'], dbPath);
+          break;
+        case 'legacy_init':
+          // db push at the INIT schema: baseline init, then forward-apply the
+          // provider migration (its ALTER adds the missing column + backfills).
+          prismaOrThrow(prisma, ['migrate', 'resolve', '--applied', INIT_MIGRATION], dbPath);
+          prismaOrThrow(prisma, ['migrate', 'deploy'], dbPath);
+          break;
+        case 'legacy_current':
+          // db push already at the CURRENT schema (AegisJob.provider present):
+          // baseline the WHOLE sequence — never re-run an ALTER for a column that
+          // already exists (which would fail). No SQL is applied.
+          for (const m of MIGRATION_SEQUENCE) {
+            prismaOrThrow(prisma, ['migrate', 'resolve', '--applied', m], dbPath);
+          }
+          break;
+        case 'migration_pending':
+          // Managed DB missing only the newest migration → (10) forward-apply it.
+          prismaOrThrow(prisma, ['migrate', 'deploy'], dbPath);
+          break;
       }
-      // (10) apply any further pending migrations (none today; forward-safe).
-      prismaOrThrow(prisma, ['migrate', 'deploy'], dbPath);
-      // (11) verify.
+      // (11) verify → must be migration_managed at the CURRENT schema.
       verifyCurrent(dbPath);
     } catch (err) {
       // (12) restore from the verified backup, sidecar-safe, back to pre-migration.
@@ -131,7 +158,13 @@ export async function runMigration(opts: RunOptions = {}): Promise<MigrationResu
         `migration failed and the database was restored from ${backupPath}. Cause: ${(err as Error).message}`,
       );
     }
-    return { action: cls.state === 'legacy_preprovider' ? 'reconciled' : 'baselined', state: cls.state, backupPath };
+    const action: MigrationAction =
+      cls.state === 'legacy_preprovider'
+        ? 'reconciled'
+        : cls.state === 'migration_pending'
+          ? 'migrated'
+          : 'baselined';
+    return { action, state: cls.state, backupPath };
   } finally {
     // (13) release lock.
     releaseLock(lock);

@@ -51,6 +51,9 @@ export type JobRow = {
   id: string;
   conversationId: string;
   status: string;
+  /** The frozen runtime provider (three-card value). Null only for pre-migration
+   *  legacy rows; resume fails closed on null. */
+  provider: string | null;
   planJson: unknown;
   vocabJson: unknown;
   cursor: number;
@@ -79,6 +82,9 @@ const defaultDb = (): JobDb => db as unknown as JobDb;
 export async function createJob(
   conversationId: string,
   plan: AegisPlan,
+  /** The frozen runtime provider (three-card value), persisted so resume runs on
+   *  the SAME brain. New jobs always set it — never null in application code. */
+  provider: string,
   client: JobDb = defaultDb(),
 ): Promise<JobRow> {
   return client.$transaction(async (tx) => {
@@ -86,6 +92,7 @@ export async function createJob(
       data: {
         conversationId,
         status: 'planning' satisfies JobStatus,
+        provider,
         planJson: plan.sections as unknown,
         vocabJson: plan.vocab as unknown,
         cursor: 0,

@@ -128,7 +128,7 @@ describe('generatePlan', () => {
       value: validPlan(),
       usage: { input_tokens: 900, output_tokens: 700 },
     });
-    const { plan, usage } = await generatePlan('Analysiere …', 'de', { call });
+    const { plan, usage } = await generatePlan('Analysiere …', 'de', 'anthropic', { call });
     expect(plan.sections).toHaveLength(3);
     expect(plan.vocab.entities).toContain('FlowDesk');
     expect(usage.output_tokens).toBe(700);
@@ -142,12 +142,12 @@ describe('generatePlan', () => {
     const bad = validPlan();
     bad.sections[1].kbDomains = []; // grounded without domain
     const call = vi.fn().mockResolvedValue({ value: bad, usage: { input_tokens: 1, output_tokens: 1 } });
-    await expect(generatePlan('…', 'de', { call })).rejects.toBeInstanceOf(PlanValidationError);
+    await expect(generatePlan('…', 'de', 'anthropic', { call })).rejects.toBeInstanceOf(PlanValidationError);
   });
 
   it('throws PlanValidationError on structurally alien output', async () => {
     const call = vi.fn().mockResolvedValue({ value: { foo: 'bar' }, usage: { input_tokens: 1, output_tokens: 1 } });
-    await expect(generatePlan('…', 'de', { call })).rejects.toBeInstanceOf(PlanValidationError);
+    await expect(generatePlan('…', 'de', 'anthropic', { call })).rejects.toBeInstanceOf(PlanValidationError);
   });
 });
 
@@ -240,7 +240,7 @@ describe('normalizePlanOwnership — deterministic disjointness (epic resolution
     const p = validPlan();
     p.sections[1].covers = [...p.sections[1].covers, p.sections[0].covers[0]];
     const call = vi.fn().mockResolvedValue({ value: p, usage: { input_tokens: 1, output_tokens: 1 } });
-    const { plan } = await generatePlan('Analysiere …', 'de', { call });
+    const { plan } = await generatePlan('Analysiere …', 'de', 'anthropic', { call });
     expect(plan.sections.length).toBeGreaterThanOrEqual(2);
     const all = plan.sections.flatMap((s) => s.covers.map((c) => c.toLowerCase()));
     expect(new Set(all).size).toBe(all.length);

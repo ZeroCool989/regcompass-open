@@ -4,8 +4,10 @@ import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { afterEach, beforeEach, describe, expect, it } from 'vitest';
 import {
+  AEGIS_JOB_PROVIDER_MIGRATION,
   CURRENT_SCHEMA_HASH,
   INIT_MIGRATION,
+  INIT_SCHEMA_HASH,
   PREPROVIDER_SCHEMA_HASH,
   canonicalSchemaHash,
   classifyDatabase,
@@ -16,7 +18,14 @@ import {
 
 const ROOT = join(__dirname, '..', '..');
 const PRE_SQL = readFileSync(join(__dirname, 'fixtures', 'preprovider-schema.sql'), 'utf8');
-const CUR_SQL = readFileSync(join(__dirname, 'fixtures', 'current-schema.sql'), 'utf8');
+// `current-schema.sql` is the schema after INIT only (no AegisJob.provider); in
+// the two-migration sequence it is the INIT schema. The CURRENT schema is INIT +
+// the aegis_job_provider migration's ALTER.
+const INIT_SQL = readFileSync(join(__dirname, 'fixtures', 'current-schema.sql'), 'utf8');
+const PROVIDER_MIG_SQL = readFileSync(
+  join(ROOT, 'prisma', 'migrations', AEGIS_JOB_PROVIDER_MIGRATION, 'migration.sql'),
+  'utf8',
+);
 
 let dir: string;
 let counter = 0;
@@ -26,10 +35,14 @@ beforeEach(() => {
 });
 afterEach(() => rmSync(dir, { recursive: true, force: true }));
 
-function build(sql: string | null, opts: { history?: Array<{ name: string; finished?: boolean; rolledBack?: boolean }> } = {}): string {
+function build(
+  sql: string | null,
+  opts: { extraSql?: string; history?: Array<{ name: string; finished?: boolean; rolledBack?: boolean }> } = {},
+): string {
   const path = join(dir, `test-${counter++}.db`);
   const db = new Database(path);
   if (sql) db.exec(sql);
+  if (opts.extraSql) db.exec(opts.extraSql);
   if (opts.history) {
     db.exec(
       `CREATE TABLE "_prisma_migrations" ("id" TEXT PRIMARY KEY NOT NULL,"checksum" TEXT NOT NULL,"finished_at" DATETIME,"migration_name" TEXT NOT NULL,"logs" TEXT,"rolled_back_at" DATETIME,"started_at" DATETIME NOT NULL DEFAULT current_timestamp,"applied_steps_count" INTEGER NOT NULL DEFAULT 0);`,
@@ -44,12 +57,16 @@ function build(sql: string | null, opts: { history?: Array<{ name: string; finis
   db.close();
   return path;
 }
+/** SQL string that produces the full CURRENT schema (INIT + provider ALTER). */
+const CUR_SQL = `${INIT_SQL}\n${PROVIDER_MIG_SQL}`;
 
 describe('recorded fingerprints match the reference fixtures (drift guard)', () => {
-  it('the hardcoded PREPROVIDER/CURRENT hashes equal the fixtures', () => {
+  it('the hardcoded PREPROVIDER/INIT/CURRENT hashes equal the fixtures', () => {
     expect(schemaHashOf(build(PRE_SQL))).toBe(PREPROVIDER_SCHEMA_HASH);
+    expect(schemaHashOf(build(INIT_SQL))).toBe(INIT_SCHEMA_HASH);
     expect(schemaHashOf(build(CUR_SQL))).toBe(CURRENT_SCHEMA_HASH);
-    expect(PREPROVIDER_SCHEMA_HASH).not.toBe(CURRENT_SCHEMA_HASH);
+    // All three are distinct fingerprints.
+    expect(new Set([PREPROVIDER_SCHEMA_HASH, INIT_SCHEMA_HASH, CURRENT_SCHEMA_HASH]).size).toBe(3);
   });
 });
 
@@ -95,12 +112,28 @@ describe('classifyDatabase — exact schema + history', () => {
     expect(classifyDatabase(build(PRE_SQL)).state).toBe('legacy_preprovider');
   });
 
+  it('legacy_init: exact INIT schema (pre AegisJob.provider), no history', () => {
+    expect(classifyDatabase(build(INIT_SQL)).state).toBe('legacy_init');
+  });
+
   it('legacy_current: exact current schema, no history', () => {
     expect(classifyDatabase(build(CUR_SQL)).state).toBe('legacy_current');
   });
 
-  it('migration_managed: current schema + init applied (covers manually-baselined)', () => {
-    expect(classifyDatabase(build(CUR_SQL, { history: [{ name: INIT_MIGRATION }] })).state).toBe('migration_managed');
+  it('migration_pending: INIT schema + init applied, provider migration not yet applied', () => {
+    expect(classifyDatabase(build(INIT_SQL, { history: [{ name: INIT_MIGRATION }] })).state).toBe('migration_pending');
+  });
+
+  it('migration_managed: current schema + FULL sequence applied (covers manually-baselined)', () => {
+    expect(
+      classifyDatabase(
+        build(CUR_SQL, { history: [{ name: INIT_MIGRATION }, { name: AEGIS_JOB_PROVIDER_MIGRATION }] }),
+      ).state,
+    ).toBe('migration_managed');
+  });
+
+  it('unknown: current schema but the provider migration is not recorded → drift, fails closed', () => {
+    expect(classifyDatabase(build(CUR_SQL, { history: [{ name: INIT_MIGRATION }] })).state).toBe('unknown');
   });
 
   it('unknown: PARTIAL schema (current minus a column) fails closed', () => {
