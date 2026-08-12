@@ -1,5 +1,10 @@
 import { afterEach, describe, expect, it } from 'vitest';
-import { activeOAuthProviderId, resolveAttributionProvider, resolveProvider } from '../catalog';
+import {
+  activeOAuthProviderId,
+  providerForSelection,
+  resolveAttributionProvider,
+  resolveProvider,
+} from '../catalog';
 
 const SAVED = { ...process.env };
 afterEach(() => {
@@ -72,6 +77,18 @@ describe('activeOAuthProviderId — which subscription backs the active brain', 
     expect(activeOAuthProviderId('claude-sonnet-4-6')).toBeNull();
     process.env.AEGIS_BRAIN = 'custom';
     expect(activeOAuthProviderId('claude-sonnet-4-6')).toBeNull();
+  });
+});
+
+describe('providerForSelection — an explicit selection ignores AEGIS_BRAIN', () => {
+  it('dispatches Anthropic for an anthropic selection even when AEGIS_BRAIN=gemini', () => {
+    process.env.AEGIS_BRAIN = 'gemini';
+    expect(providerForSelection('anthropic').id).toBe('anthropic');
+  });
+
+  it('dispatches Gemini for a gemini selection even when AEGIS_BRAIN=ollama', () => {
+    process.env.AEGIS_BRAIN = 'ollama';
+    expect(providerForSelection('gemini').id).toBe('gemini');
   });
 });
 

@@ -72,7 +72,12 @@ export function toolUseStartEvent(index: number, id: string, name: string): Prov
 
 // ─────────────────── stop-reason mapping ───────────────────
 
-/** Map an OpenAI-style finish_reason onto the canonical stop_reason. */
+/**
+ * Map an OpenAI-/Gemini-style finish_reason onto the canonical stop_reason.
+ * Every Gemini "the model declined / was filtered" finish is mapped explicitly to
+ * `refusal` — never silently to `end_turn` (which would present a blocked answer
+ * as a clean completion). The loop then handles `refusal` as its typed outcome.
+ */
 export function mapFinishReason(reason: string | null | undefined): ProviderStopReason {
   switch (reason) {
     case 'tool_calls':
@@ -85,6 +90,10 @@ export function mapFinishReason(reason: string | null | undefined): ProviderStop
     case 'content_filter':
     case 'SAFETY':
     case 'RECITATION':
+    case 'BLOCKLIST':
+    case 'PROHIBITED_CONTENT':
+    case 'SPII':
+    case 'IMAGE_SAFETY':
       return 'refusal';
     default:
       return 'end_turn';
@@ -125,7 +134,14 @@ export async function postJson(
   url: string,
   headers: Record<string, string>,
   body: unknown,
-  opts: { maxAttempts?: number; usedByokKey?: boolean; providerLabel: string } = { providerLabel: 'model provider' },
+  opts: {
+    maxAttempts?: number;
+    usedByokKey?: boolean;
+    providerLabel: string;
+    /** Abort signal — cancels the request on client disconnect. An abort is NOT
+     *  a retryable failure: it throws immediately without another attempt. */
+    signal?: AbortSignal;
+  } = { providerLabel: 'model provider' },
 ): Promise<Response> {
   const maxAttempts = opts.maxAttempts ?? 3;
   for (let attempt = 1; attempt <= maxAttempts; attempt++) {
@@ -135,8 +151,14 @@ export async function postJson(
         method: 'POST',
         headers: { 'content-type': 'application/json', ...headers },
         body: JSON.stringify(body),
+        signal: opts.signal,
       });
     } catch (err) {
+      // A cancellation is a deliberate stop, never a transient error — do not
+      // retry, and surface it as a clean cancelled state (no key/payload leak).
+      if (opts.signal?.aborted || (err instanceof Error && err.name === 'AbortError')) {
+        throw new AegisError('upstream_error', `${opts.providerLabel} request was cancelled.`);
+      }
       if (attempt < maxAttempts) {
         await sleep(backoffMs(attempt));
         continue;

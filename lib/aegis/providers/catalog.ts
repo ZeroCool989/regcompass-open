@@ -103,6 +103,24 @@ export function resolveProvider(model?: string): ModelProvider {
 }
 
 /**
+ * Construct the provider for an EXPLICIT request-scoped selection, bypassing the
+ * `AEGIS_BRAIN` override entirely: a user's chosen provider must win over any
+ * environment setting. This is the dispatch path for user-selected runs; the
+ * `AEGIS_BRAIN` escape hatch (via {@link resolveProvider}) applies only when NO
+ * explicit provider is threaded (internal/developer calls).
+ */
+export function providerForSelection(provider: 'anthropic' | 'gemini'): ModelProvider {
+  if (provider === 'gemini') {
+    return new GeminiProvider({
+      id: 'gemini',
+      label: 'Google Gemini',
+      apiKey: env('GOOGLE_API_KEY') ?? env('GEMINI_API_KEY') ?? null,
+    });
+  }
+  return anthropic;
+}
+
+/**
  * The subscription provider whose OAuth token (if connected) should back the
  * active brain, or null when the active brain is a local/self-hosted endpoint
  * that has no subscription concept (Ollama, custom gateway). Mirrors the brain

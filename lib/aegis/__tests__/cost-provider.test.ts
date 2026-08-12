@@ -172,4 +172,15 @@ describe('CostAccumulator — injected provider resolver (runtime wiring)', () =
   it('providerLabel() defaults to anthropic when nothing was recorded', () => {
     expect(new CostAccumulator().providerLabel()).toBe('anthropic');
   });
+
+  it('pinProvider() makes attribution follow the request-scoped selection, not AEGIS_BRAIN', () => {
+    // Dispatch honours the user's selection over the env override; attribution must too.
+    process.env.AEGIS_BRAIN = 'gemini'; // env says gemini…
+    const acc = new CostAccumulator(resolveAttributionProvider);
+    acc.pinProvider('anthropic'); // …but the selection is anthropic — pin it.
+    acc.add(MODEL_IDS.sonnet, USAGE);
+    expect(acc.providerLabel()).toBe('anthropic');
+    expect(acc.priceStatus()).toBe('priced');
+    expect(acc.totalCentsOrNull()).toBeGreaterThan(0);
+  });
 });

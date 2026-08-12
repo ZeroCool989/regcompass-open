@@ -266,6 +266,13 @@ export type ToolContext = {
   onUsage?: (model: ModelId, usage: import('./context/cost').ClaudeUsage) => void;
   /** Optional per-request Anthropic BYOK credential. Server-only, never exposed to tools/model text. */
   anthropicApiKey?: string | null;
+  /**
+   * Explicit request-scoped runtime provider (the user's selection). Threaded
+   * onto every model call in the loop so dispatch honours the selection and no
+   * `AEGIS_BRAIN` env override can silently replace it. Absent → legacy
+   * env/model-family resolution (internal/escape-hatch calls).
+   */
+  provider?: 'anthropic' | 'gemini';
 };
 
 /**

@@ -35,12 +35,22 @@ vi.mock('../router', () => ({
 vi.mock('../client', () => ({
   callHaiku: vi.fn(),
 }));
-// BYOK landed in parallel with this test: without a mock the credential
-// lookup hits real Prisma in the test env. null = system key, the
-// pre-BYOK behavior F5 byte-identity is defined against.
-vi.mock('../provider-settings', () => ({
-  resolveAnthropicCredential: vi.fn(async () => null),
-}));
+// Provider selection is exercised by its own tests; here pin a fixed Anthropic
+// selection (system key) so these F5 byte-identity assertions don't depend on
+// the DB/aegisProvider lookup. This is the pre-BYOK behaviour F5 is defined against.
+vi.mock('../runtime-selection', () => {
+  const credential = { source: 'system', apiKey: null, modelHint: null } as const;
+  const selection = {
+    provider: 'anthropic' as const,
+    model: { provider: 'anthropic' as const, model: 'claude-sonnet-4-6' },
+    credential,
+  };
+  return {
+    resolveProviderAccess: vi.fn(async () => ({ provider: 'anthropic' as const, credential })),
+    buildRuntimeSelection: vi.fn(() => selection),
+    dispatchModelId: vi.fn(() => 'claude-sonnet-4-6'),
+  };
+});
 vi.mock('../sectioned/run', () => ({
   sectionedEnabled: vi.fn(() => false),
   triageRequest: vi.fn(),
@@ -49,11 +59,13 @@ vi.mock('../sectioned/run', () => ({
 
 import { runAegisStreaming, type AegisStreamEvent } from '../index';
 import { runOuterLoopStreaming } from '../loop';
-import { classifyIntent, routeToModel } from '../router';
+import { classifyIntent } from '../router';
+import { buildRuntimeSelection } from '../runtime-selection';
 import { sectionedEnabled, startSectionedJob, triageRequest } from '../sectioned/run';
 import type { TriageResult } from '../sectioned/triage';
 
 const mockOuter = vi.mocked(runOuterLoopStreaming);
+const mockBuildSelection = vi.mocked(buildRuntimeSelection);
 const mockEnabled = vi.mocked(sectionedEnabled);
 const mockTriage = vi.mocked(triageRequest);
 const mockStart = vi.mocked(startSectionedJob);
@@ -138,8 +150,9 @@ describe('F5 — SINGLE_PASS byte-identity', () => {
     expect(mockStart).not.toHaveBeenCalled();
     // F7: the ONE triage call replaces classifyIntent for the turn…
     expect(classifyIntent).not.toHaveBeenCalled();
-    // …and its complexity drives the routing decision.
-    expect(routeToModel).toHaveBeenCalledWith('CONVERSATIONAL', 0.7);
+    // …and its complexity drives the routed model (routing now lives inside the
+    // request-scoped selection: buildRuntimeSelection(access, mode, complexity)).
+    expect(mockBuildSelection).toHaveBeenCalledWith(expect.anything(), 'CONVERSATIONAL', 0.7);
   });
 
   it('voice turns skip triage entirely (F7)', async () => {

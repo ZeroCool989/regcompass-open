@@ -71,3 +71,100 @@ describe('GeminiProvider — translation', () => {
     expect(fnResponse.functionResponse.name).toBe('search_kb');
   });
 });
+
+// ─────────── Stage 1b-ii-b1 structural parity fixes (adapter stays D4-gated) ───────────
+
+const A_TOOL = { name: 'search_kb', description: 'd', input_schema: { type: 'object' as const } };
+
+function sseStream(chunks: unknown[]): ReadableStream<Uint8Array> {
+  const enc = new TextEncoder();
+  return new ReadableStream({
+    start(controller) {
+      for (const c of chunks) controller.enqueue(enc.encode(`data: ${JSON.stringify(c)}\n\n`));
+      controller.close();
+    },
+  });
+}
+
+describe('GeminiProvider — tool_choice enforcement', () => {
+  it('translates toolChoice:{type:none} to functionCallingConfig mode NONE (forced tool-free turn)', async () => {
+    const fetchMock = vi.fn().mockResolvedValue(
+      jsonResponse({ candidates: [{ content: { parts: [{ text: 'final' }] }, finishReason: 'STOP' }], usageMetadata: {} }),
+    );
+    vi.stubGlobal('fetch', fetchMock);
+    await provider().createMessage({
+      model: 'gemini-2.5-pro' as ModelId, systemBlocks: [], tools: [A_TOOL],
+      messages: [{ role: 'user', content: 'x' }], maxTokens: 100, toolChoice: { type: 'none' },
+    });
+    expect(JSON.parse(fetchMock.mock.calls[0][1].body).tool_config).toEqual({
+      function_calling_config: { mode: 'NONE' },
+    });
+  });
+
+  it('sends no tool_config when tools are offered without a none override (default AUTO)', async () => {
+    const fetchMock = vi.fn().mockResolvedValue(
+      jsonResponse({ candidates: [{ content: { parts: [{ text: 'ok' }] }, finishReason: 'STOP' }], usageMetadata: {} }),
+    );
+    vi.stubGlobal('fetch', fetchMock);
+    await provider().createMessage({
+      model: 'gemini-2.5-pro' as ModelId, systemBlocks: [], tools: [A_TOOL],
+      messages: [{ role: 'user', content: 'x' }], maxTokens: 100,
+    });
+    expect(JSON.parse(fetchMock.mock.calls[0][1].body).tool_config).toBeUndefined();
+  });
+});
+
+describe('GeminiProvider — canonical refusal handling', () => {
+  it('maps a SAFETY finish to a canonical refusal, never a silent clean finish', async () => {
+    vi.stubGlobal('fetch', vi.fn().mockResolvedValue(
+      jsonResponse({ candidates: [{ content: { parts: [{ text: '' }] }, finishReason: 'SAFETY' }], usageMetadata: {} }),
+    ));
+    const msg = await provider().createMessage({
+      model: 'gemini-2.5-pro' as ModelId, systemBlocks: [], tools: [], messages: [{ role: 'user', content: 'x' }], maxTokens: 100,
+    });
+    expect(msg.stop_reason).toBe('refusal');
+  });
+});
+
+describe('GeminiProvider — cancellation', () => {
+  it('forwards the abort signal to fetch and surfaces a cancelled state without retrying', async () => {
+    const ctrl = new AbortController();
+    const fetchMock = vi.fn().mockImplementation(() => {
+      const e = new Error('aborted');
+      e.name = 'AbortError';
+      throw e;
+    });
+    vi.stubGlobal('fetch', fetchMock);
+    ctrl.abort();
+    await expect(
+      provider().createMessage({
+        model: 'gemini-2.5-pro' as ModelId, systemBlocks: [], tools: [], messages: [{ role: 'user', content: 'x' }], maxTokens: 100, signal: ctrl.signal,
+      }),
+    ).rejects.toThrow(/cancelled/i);
+    expect(fetchMock.mock.calls[0][1].signal).toBe(ctrl.signal);
+    expect(fetchMock).toHaveBeenCalledTimes(1); // no retry on cancellation
+  });
+});
+
+describe('GeminiProvider — stable tool-call ids (streaming)', () => {
+  it('uses the SAME id in the content_block_start event and the assembled finalMessage()', async () => {
+    const body = sseStream([
+      { candidates: [{ content: { parts: [{ functionCall: { name: 'search_kb', args: { q: 'dora' } } }] } }] },
+      { candidates: [{ finishReason: 'STOP' }], usageMetadata: { promptTokenCount: 5, candidatesTokenCount: 2 } },
+    ]);
+    vi.stubGlobal('fetch', vi.fn().mockResolvedValue({ ok: true, status: 200, headers: new Headers(), body } as unknown as Response));
+
+    const stream = await provider().streamMessage({
+      model: 'gemini-2.5-pro' as ModelId, systemBlocks: [], tools: [A_TOOL], messages: [{ role: 'user', content: 'x' }], maxTokens: 100,
+    });
+    let startedId: string | undefined;
+    for await (const ev of stream) {
+      const e = ev as { type?: string; content_block?: { type?: string; id?: string } };
+      if (e.type === 'content_block_start' && e.content_block?.type === 'tool_use') startedId = e.content_block.id;
+    }
+    const final = await stream.finalMessage();
+    const toolUse = final.content.find((c) => (c as { type?: string }).type === 'tool_use') as { id: string };
+    expect(startedId).toBeDefined();
+    expect(toolUse.id).toBe(startedId);
+  });
+});

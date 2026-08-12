@@ -1,7 +1,7 @@
 import { createCipheriv, createDecipheriv, createHash, createHmac, randomBytes } from 'node:crypto';
 import { db } from '@/lib/db';
 import { requiresRealSecrets } from '@/lib/deployment';
-import { MODEL_IDS } from './types';
+import { AegisError, MODEL_IDS } from './types';
 
 export type AegisAiProvider = 'ANTHROPIC' | 'OPENAI' | 'GOOGLE';
 
@@ -260,36 +260,12 @@ export async function deleteProviderCredential(userId: string, provider: AegisAi
   });
 }
 
-export async function resolveAnthropicCredential(userId: string | null): Promise<{
-  apiKey: string;
-  modelHint: string | null;
-  source: 'user' | 'system';
-} | null> {
-  // Credential resolution for the stored-key (BYOK) path. Connected
-  // subscriptions are handled separately by the local OAuth module
-  // (lib/aegis/oauth), whose token takes precedence over a stored key when the
-  // active brain matches; see the registry wiring.
-  if (!userId) return null;
-  const user = await db.user.findUnique({ where: { id: userId }, select: { preferredAiProvider: true } });
-  if (user?.preferredAiProvider && user.preferredAiProvider !== 'ANTHROPIC') {
-    throw new Error(`${PROVIDER_LABELS[user.preferredAiProvider as AegisAiProvider]} ist gespeichert, aber für AEGIS noch nicht runtime-freigegeben. Bitte Anthropic wählen oder System-Provider verwenden.`);
-  }
-  const row = await db.userAiCredential.findUnique({
-    where: { userId_provider: { userId, provider: 'ANTHROPIC' } },
-  });
-  if (!row || !row.enabled) return null;
-  let apiKey: string;
-  try {
-    apiKey = decryptApiKey(row.encryptedApiKey);
-  } catch {
-    // Master key rotated or ciphertext corrupted — actionable for the user,
-    // and must never surface as an English internal error mid-conversation.
-    throw new Error(
-      'Ihr gespeicherter Anthropic API-Schlüssel konnte nicht entschlüsselt werden. Bitte speichern Sie ihn unter Konto → AI-Provider neu.',
-    );
-  }
-  return { apiKey, modelHint: row.preferredModel, source: 'user' };
-}
+// The legacy `resolveAnthropicCredential` (which gated on the old
+// `preferredAiProvider` column) has been superseded by the request-scoped
+// selection in `runtime-selection.ts` — `User.aegisProvider` is now the single
+// source of truth for the runtime provider, and Anthropic credential resolution
+// (BYOK row → system env key → typed missing-key) lives there. Removed to avoid
+// two conflicting credential paths.
 
 // ───────────────────── Aegis provider selection (three-card model) ─────────────────────
 
@@ -302,21 +278,36 @@ export async function setAegisProvider(userId: string, provider: AegisProvider |
   await db.user.update({ where: { id: userId }, data: { aegisProvider: provider } });
 }
 
-/** Thrown when a request runs but the user has not chosen an Aegis provider. */
-export class AegisProviderNotConfiguredError extends Error {
-  constructor() {
+export type UiLanguage = 'de' | 'en';
+
+/**
+ * Thrown when a request runs but the user has not chosen an Aegis provider.
+ * An `AegisError` (400) so the route surfaces it cleanly with the right status
+ * instead of a generic 500. Bilingual — defaults to German (the app's primary).
+ */
+export class AegisProviderNotConfiguredError extends AegisError {
+  constructor(language: UiLanguage = 'de') {
     super(
-      'Kein Aegis-Anbieter ausgewählt. Bitte unter Konto → AI-Provider ChatGPT, Claude API oder Gemini API wählen.',
+      'invalid_input',
+      language === 'en'
+        ? 'No Aegis provider selected. Please choose ChatGPT, Claude API or Gemini API under Account → AI provider.'
+        : 'Kein Aegis-Anbieter ausgewählt. Bitte unter Konto → AI-Provider ChatGPT, Claude API oder Gemini API wählen.',
     );
     this.name = 'AegisProviderNotConfiguredError';
   }
 }
 
 /** Thrown when the selected key-backed provider has no usable API key. */
-export class AegisProviderKeyMissingError extends Error {
-  constructor(public readonly provider: AegisProvider) {
+export class AegisProviderKeyMissingError extends AegisError {
+  constructor(
+    public readonly provider: AegisProvider,
+    language: UiLanguage = 'de',
+  ) {
     super(
-      'Für den gewählten Anbieter ist kein API-Schlüssel hinterlegt. Bitte unter Konto → AI-Provider hinterlegen.',
+      'invalid_input',
+      language === 'en'
+        ? 'No API key is stored for the selected provider. Please add one under Account → AI provider.'
+        : 'Für den gewählten Anbieter ist kein API-Schlüssel hinterlegt. Bitte unter Konto → AI-Provider hinterlegen.',
     );
     this.name = 'AegisProviderKeyMissingError';
   }

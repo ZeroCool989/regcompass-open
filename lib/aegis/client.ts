@@ -5,7 +5,7 @@ import type {
   ProviderMessage,
   ProviderMessageStream,
 } from './providers/types';
-import { getProvider } from './providers/registry';
+import { getProvider, getProviderFor } from './providers/registry';
 import { activeOAuthProviderId } from './providers/catalog';
 import { getAccessToken } from './oauth';
 
@@ -57,13 +57,13 @@ async function withSubscription<T extends { model: ModelId; apiKey?: string | nu
 /** Non-streaming message create (main loop + helpers route through here). */
 export async function callClaude(params: ClaudeCallParams): Promise<ProviderMessage> {
   const p = await withSubscription(params);
-  return getProvider(p.model).createMessage(p);
+  return getProviderFor(p.provider, p.model).createMessage(p);
 }
 
 /** Streaming message create (SSE path). */
 export async function streamClaude(params: ClaudeCallParams): Promise<ClaudeMessageStream> {
   const p = await withSubscription(params);
-  return getProvider(p.model).streamMessage(p);
+  return getProviderFor(p.provider, p.model).streamMessage(p);
 }
 
 /** Single-shot text helper (intent classification, compaction). */
@@ -73,9 +73,11 @@ export async function callHaiku(params: {
   maxTokens: number;
   apiKey?: string | null;
   authToken?: string | null;
+  /** Explicit request-scoped provider — honours the selection over AEGIS_BRAIN. */
+  provider?: 'anthropic' | 'gemini';
 }): Promise<{ text: string; usage: ClaudeUsage }> {
   const p = await withSubscription(params);
-  return getProvider(p.model).completeText(p);
+  return getProviderFor(p.provider, p.model).completeText(p);
 }
 
 /** Single-shot schema-constrained structured output (compaction digest). */
@@ -87,7 +89,9 @@ export async function callStructured<T>(params: {
   maxTokens: number;
   apiKey?: string | null;
   authToken?: string | null;
+  /** Explicit request-scoped provider — honours the selection over AEGIS_BRAIN. */
+  provider?: 'anthropic' | 'gemini';
 }): Promise<{ value: T; usage: ClaudeUsage }> {
   const p = await withSubscription(params);
-  return getProvider(p.model).structured<T>(p);
+  return getProviderFor(p.provider, p.model).structured<T>(p);
 }

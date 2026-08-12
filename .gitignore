@@ -63,6 +63,8 @@ reference/
 # production launchers (start + safe DB migration), wired into package.json/bin/installers
 !/scripts/start.ts
 !/scripts/db-migrate.ts
+# opt-in Gemini D4 conformance probe (manual; wired into package.json as gemini:conformance)
+!/scripts/gemini-conformance.ts
 
 # regulatory source PDFs (local only — re-download from official sources)
 lib/kb/sources/

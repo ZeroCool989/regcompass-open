@@ -27,9 +27,11 @@ export function sectionedEnabled(): boolean {
  */
 export async function triageRequest(
   message: string,
+  provider: 'anthropic' | 'gemini',
   onUsage: (usage: ClaudeUsage) => void,
 ): Promise<TriageResult> {
-  return classifyTriage(message, callHaiku, onUsage);
+  // Triage dispatches on the request's selected brain — same as the main loop.
+  return classifyTriage(message, (p) => callHaiku({ ...p, provider }), onUsage);
 }
 
 export type SectionedStartArgs = {

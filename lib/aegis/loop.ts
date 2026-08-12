@@ -317,6 +317,7 @@ export async function runToolFreeRepair(
     messages,
     maxTokens: spec.maxTokens,
     apiKey: state.toolContext?.anthropicApiKey,
+    provider: state.toolContext?.provider,
     toolChoice: { type: 'none' },
   });
   state.cost.add(model, response.usage);
@@ -406,6 +407,7 @@ async function runInnerLoop(
       messages: withForceAnswerNudge(state.messages),
       maxTokens: budgetedMaxTokens(spec.maxTokens, timeLeftMs(state)),
       apiKey: state.toolContext?.anthropicApiKey,
+      provider: state.toolContext?.provider,
       toolChoice: { type: 'none' },
     });
     state.cost.add(model, response.usage);
@@ -451,7 +453,11 @@ async function runInnerLoop(
     }
     if (pre.action === 'compress') {
       state.guardrailsTriggered.push('compress');
-      state.messages = await compressContext(state.messages, MemoryConfig.compactionKeepLast, callHaiku, (usage) =>
+      state.messages = await compressContext(
+        state.messages,
+        MemoryConfig.compactionKeepLast,
+        (p) => callHaiku({ ...p, provider: state.toolContext?.provider }),
+        (usage) =>
         state.cost.add(MODEL_IDS.haiku, usage),
       );
     }
@@ -472,6 +478,7 @@ async function runInnerLoop(
       messages: state.messages,
       maxTokens: budgetedMaxTokens(spec.maxTokens, timeLeftMs(state)),
       apiKey: state.toolContext?.anthropicApiKey,
+      provider: state.toolContext?.provider,
     });
 
     // Pass the raw usage straight through. The accumulator prices every bucket
@@ -847,6 +854,7 @@ export async function* runInnerLoopStreaming(
       messages: withForceAnswerNudge(state.messages),
       maxTokens: budgetedMaxTokens(spec.maxTokens, timeLeftMs(state)),
       apiKey: state.toolContext?.anthropicApiKey,
+      provider: state.toolContext?.provider,
       toolChoice: { type: 'none' },
     });
 
@@ -913,7 +921,11 @@ export async function* runInnerLoopStreaming(
     }
     if (pre.action === 'compress') {
       state.guardrailsTriggered.push('compress');
-      state.messages = await compressContext(state.messages, MemoryConfig.compactionKeepLast, callHaiku, (usage) =>
+      state.messages = await compressContext(
+        state.messages,
+        MemoryConfig.compactionKeepLast,
+        (p) => callHaiku({ ...p, provider: state.toolContext?.provider }),
+        (usage) =>
         state.cost.add(MODEL_IDS.haiku, usage),
       );
     }
@@ -934,6 +946,7 @@ export async function* runInnerLoopStreaming(
       messages: state.messages,
       maxTokens: budgetedMaxTokens(spec.maxTokens, timeLeftMs(state)),
       apiKey: state.toolContext?.anthropicApiKey,
+      provider: state.toolContext?.provider,
     });
 
     let textInThisIteration = '';

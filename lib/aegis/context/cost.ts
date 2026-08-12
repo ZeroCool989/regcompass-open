@@ -141,7 +141,17 @@ export class CostAccumulator {
    * Defaults to Anthropic-only so an unconfigured accumulator (and every existing
    * caller) prices exactly as before; the runtime injects the brain-aware resolver.
    */
-  constructor(private readonly resolveProvider: ProviderResolver = ANTHROPIC_ONLY) {}
+  constructor(private resolveProvider: ProviderResolver = ANTHROPIC_ONLY) {}
+
+  /**
+   * Pin every subsequent `add()` to one provider — the request-scoped selection.
+   * Dispatch honours the user's chosen provider over any `AEGIS_BRAIN` env
+   * override, so attribution must follow the same provider (not the env). Called
+   * once the selection is known; earlier calls keep their resolved provider.
+   */
+  pinProvider(provider: ModelProviderId): void {
+    this.resolveProvider = () => provider;
+  }
 
   /** Record one call by bare model id; the injected resolver supplies the provider. */
   add(model: ModelId, usage: ClaudeUsage): CostEntry {
