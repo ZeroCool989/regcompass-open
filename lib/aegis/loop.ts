@@ -349,6 +349,22 @@ function buildDegraded(
 // ───────────────────────── Inner loop ─────────────────────────
 
 /**
+ * The monetary cost cap can only bind on a fully-priced run. On an unpriced brain
+ * (subscription or unknown-rate) `state.cost.totalUsd()` is 0 by construction, so
+ * evaluating `0 >= cap` would silently read as a run comfortably "under budget".
+ * Instead we mark the cap as explicitly unavailable — once, as a guardrail token
+ * that lands on the usage row and audit — and let the iteration cap bound the run.
+ * Returns whether the monetary cap applies this iteration.
+ */
+export function monetaryCostCapApplies(state: LoopState): boolean {
+  if (state.cost.priceStatus() === 'priced') return true;
+  if (!state.guardrailsTriggered.includes('cost_cap_unavailable')) {
+    state.guardrailsTriggered.push('cost_cap_unavailable');
+  }
+  return false;
+}
+
+/**
  * Tool-call cycle. Runs until the model emits `end_turn` (or `max_tokens`,
  * which we treat as a finished — possibly truncated — turn) or a guard kills
  * the conversation.
@@ -414,7 +430,7 @@ async function runInnerLoop(
     // 3.1 — out of budget? Force one tool-free answer rather than hard-killing.
     // Checked before the pre-guard kill (softer thresholds), so a turn that
     // would have thrown iteration_limit/cost_limit answers with what it has.
-    if (state.cost.totalUsd() >= guardConfig.maxCostUsd * COST_DEGRADE_FRACTION) {
+    if (monetaryCostCapApplies(state) && state.cost.totalUsd() >= guardConfig.maxCostUsd * COST_DEGRADE_FRACTION) {
       return forceAnswer('cost');
     }
     if (state.iteration >= spec.maxIterations - 1) {
@@ -876,7 +892,7 @@ export async function* runInnerLoopStreaming(
 
   while (state.iteration < spec.maxIterations) {
     // 3.1 — out of budget? Force one tool-free streamed answer, not a hard kill.
-    if (state.cost.totalUsd() >= guardConfig.maxCostUsd * COST_DEGRADE_FRACTION) {
+    if (monetaryCostCapApplies(state) && state.cost.totalUsd() >= guardConfig.maxCostUsd * COST_DEGRADE_FRACTION) {
       return yield* forceAnswerStreaming('cost');
     }
     if (state.iteration >= spec.maxIterations - 1) {

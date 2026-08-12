@@ -1,4 +1,4 @@
-import { AegisError } from '../types';
+import { AegisError, type ModelProviderId } from '../types';
 import type { ModelProvider } from './types';
 import type { OAuthProviderId } from '../oauth/registry';
 import { AnthropicProvider } from './anthropic';
@@ -118,4 +118,27 @@ export function activeOAuthProviderId(model?: string): OAuthProviderId | null {
   if (!model || model.startsWith('claude')) return 'anthropic';
   if (model.startsWith('gemini')) return 'google';
   return 'openai';
+}
+
+/**
+ * The cost-attribution provider for a routed model — the {@link ModelProviderId}
+ * that owns this call for pricing and usage rows. Mirrors {@link resolveProvider}'s
+ * brain selection (global `AEGIS_BRAIN` override first, else the routed model's
+ * family) but returns a plain label and NEVER throws or constructs a provider, so
+ * it is safe to call on every recorded usage. Any brain we cannot faithfully price
+ * resolves to its own non-priced label — spend is never fake-priced as Anthropic.
+ */
+export function resolveAttributionProvider(model?: string): ModelProviderId {
+  const brain = env('AEGIS_BRAIN')?.toLowerCase();
+  if (brain && brain !== 'anthropic') {
+    if (brain === 'gemini') return 'gemini';
+    if (brain === 'openai') return 'openai';
+    if (brain === 'ollama') return 'ollama';
+    if (brain === 'cli') return 'cli';
+    return 'custom'; // "custom" or any other value → a self-hosted endpoint
+  }
+  // No override → attribute by the routed model's family (matches providerForModel).
+  if (!model || model.startsWith('claude')) return 'anthropic';
+  if (model.startsWith('gemini')) return 'gemini';
+  return 'openai'; // gpt-*, o1-*, o3-*, any non-claude/non-gemini id
 }

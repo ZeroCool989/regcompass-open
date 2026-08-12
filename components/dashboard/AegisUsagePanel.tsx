@@ -51,7 +51,8 @@ type RecentCall = {
   model: string;
   inputTokens: number;
   outputTokens: number;
-  costCents: number;
+  /** Null when the run was subscription/unknown-priced — rendered as "—", not $0. */
+  costCents: number | null;
   latencyMs: number;
   verifyPassed: boolean;
   citationCount: number;

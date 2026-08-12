@@ -16,7 +16,7 @@ vi.mock('../client', () => ({
 
 // Import AFTER the mock so the loop picks up our stubs.
 import { callClaude, callHaiku } from '../client';
-import { runOuterLoop, trimForRetry, type LoopState } from '../loop';
+import { monetaryCostCapApplies, runOuterLoop, trimForRetry, type LoopState } from '../loop';
 import {
   REPAIR_RESERVE_MS,
   RETRY_RESERVE_MS,
@@ -44,6 +44,25 @@ function makeState(message = 'Was sind die DORA-Anforderungen?'): LoopState {
     guardrailsTriggered: [],
   };
 }
+
+describe('monetaryCostCapApplies — the $-cap only binds on a priced run', () => {
+  const USAGE = { input_tokens: 100, output_tokens: 50 };
+
+  it('applies on a priced Anthropic run, recording no unavailability marker', () => {
+    const state = makeState();
+    state.cost.add(MODEL_IDS.sonnet, USAGE); // anthropic → priced
+    expect(monetaryCostCapApplies(state)).toBe(true);
+    expect(state.guardrailsTriggered).not.toContain('cost_cap_unavailable');
+  });
+
+  it('is unavailable on an unpriced run and marks it exactly once (never a silent $0)', () => {
+    const state = makeState();
+    state.cost.addRef({ provider: 'gemini', model: 'gemini-2.5-pro' }, USAGE); // pricing_unknown
+    expect(monetaryCostCapApplies(state)).toBe(false);
+    expect(monetaryCostCapApplies(state)).toBe(false); // idempotent across iterations
+    expect(state.guardrailsTriggered.filter((g) => g === 'cost_cap_unavailable')).toHaveLength(1);
+  });
+});
 
 function makeMessage(opts: {
   text?: string;

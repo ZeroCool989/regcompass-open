@@ -1,4 +1,4 @@
-import { beforeEach, describe, expect, it, vi } from 'vitest';
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 
 // Capture what flush() hands to logUsage without touching the DB.
 const { mockLogUsage } = vi.hoisted(() => ({ mockLogUsage: vi.fn() }));
@@ -45,5 +45,59 @@ describe('UsageRecorder.flush — Phase 2 fields', () => {
     recNone.flush(1);
     expect(mockLogUsage.mock.calls[0][0].servedModel).toBeNull();
     expect(mockLogUsage.mock.calls[0][0].guardrailsTriggered).toEqual([]);
+  });
+});
+
+describe('UsageRecorder.flush — provider attribution', () => {
+  const SAVED = { ...process.env };
+  beforeEach(() => mockLogUsage.mockReset());
+  afterEach(() => {
+    process.env = { ...SAVED };
+  });
+
+  const ONE_CALL = { input_tokens: 100, output_tokens: 50, cache_read_input_tokens: 0, cache_creation_input_tokens: 0 };
+
+  it('records provider=anthropic, priced, with a real cost for the default brain', () => {
+    delete process.env.AEGIS_BRAIN;
+    const rec = new UsageRecorder('t-a', 'v');
+    rec.cost.add(MODEL_IDS.sonnet, ONE_CALL);
+    rec.flush(1);
+    const row = mockLogUsage.mock.calls[0][0];
+    expect(row.provider).toBe('anthropic');
+    expect(row.priceStatus).toBe('priced');
+    expect(row.costCents).toBeGreaterThan(0);
+  });
+
+  it('attributes a Gemini-brained run to gemini with a null (unpriced) cost', () => {
+    process.env.AEGIS_BRAIN = 'gemini';
+    const rec = new UsageRecorder('t-g', 'v');
+    rec.cost.add(MODEL_IDS.sonnet, ONE_CALL); // routed to Gemini by the override
+    rec.flush(1);
+    const row = mockLogUsage.mock.calls[0][0];
+    expect(row.provider).toBe('gemini');
+    expect(row.priceStatus).toBe('pricing_unknown');
+    expect(row.costCents).toBeNull();
+  });
+
+  it('lets an explicit setMeta({ provider }) override the derived label', () => {
+    delete process.env.AEGIS_BRAIN;
+    const rec = new UsageRecorder('t-x', 'v');
+    rec.cost.add(MODEL_IDS.sonnet, ONE_CALL);
+    rec.setMeta({ provider: 'chatgpt-codex' });
+    rec.flush(1);
+    expect(mockLogUsage.mock.calls[0][0].provider).toBe('chatgpt-codex');
+  });
+
+  it('records provider="mixed" (never a silent single brand) if a run spans providers', () => {
+    delete process.env.AEGIS_BRAIN;
+    const rec = new UsageRecorder('t-m', 'v');
+    rec.cost.addRef({ provider: 'anthropic', model: MODEL_IDS.sonnet }, ONE_CALL);
+    rec.cost.addRef({ provider: 'gemini', model: 'gemini-2.5-pro' }, ONE_CALL);
+    rec.flush(1);
+    const row = mockLogUsage.mock.calls[0][0];
+    expect(row.provider).toBe('mixed');
+    // Worst-status-wins already tainted the cost to unpriced (null), independently.
+    expect(row.priceStatus).toBe('pricing_unknown');
+    expect(row.costCents).toBeNull();
   });
 });
