@@ -153,14 +153,6 @@ export default async function DashboardPage() {
     /* directory missing → 0 */
   }
   const todayIso = today.toISOString().slice(0, 10);
-  const byokTodoItems = [
-    'Set AEGIS_BYOK_ENCRYPTION_KEY and confirm ANTHROPIC_API_KEY fallback exists.',
-    'Run corepack pnpm db:push on this branch.',
-    'Open /account/providers and save an Anthropic BYOK credential.',
-    'Run AEGIS with Anthropic BYOK, then remove the key and verify fallback.',
-    'Test a long prompt and confirm graceful validation/degrade instead of crash.',
-  ];
-
   const regulatoryView = (
     <div className="space-y-10 mt-8">
       {/* KB headline KPIs */}
@@ -393,46 +385,6 @@ export default async function DashboardPage() {
             regulatorische Lage.
           </p>
         </header>
-
-        <section className="mb-8 rounded-2xl border border-brand-primary/30 bg-brand-primary/10 p-5 shadow-[0_0_40px_rgba(0,191,255,0.06)]">
-          <div className="flex flex-col gap-4 lg:flex-row lg:items-start lg:justify-between">
-            <div>
-              <div className="text-[0.65rem] font-mono uppercase tracking-wider text-brand-primary mb-2">
-                Feature branch · Testing tomorrow
-              </div>
-              <h2 className="text-xl md:text-2xl font-bold font-heading">
-                Tomorrow BYOK Test TODO
-              </h2>
-              <p className="mt-1 max-w-3xl text-sm text-text-secondary">
-                Checklist for validating AEGIS provider credentials, fallback behaviour,
-                and long-prompt robustness before opening the PR.
-              </p>
-            </div>
-            <a
-              href="/account/providers"
-              className="inline-flex items-center justify-center rounded-lg border border-brand-primary/40 bg-brand-primary/15 px-4 py-2 text-sm font-semibold text-brand-primary transition-colors hover:bg-brand-primary/25"
-            >
-              Open provider settings
-            </a>
-          </div>
-          <ol className="mt-5 grid gap-3 md:grid-cols-2 xl:grid-cols-3">
-            {byokTodoItems.map((item, index) => (
-              <li
-                key={item}
-                className="rounded-xl border border-border-brand bg-background/45 p-4 text-sm text-foreground"
-              >
-                <div className="mb-2 inline-flex h-6 w-6 items-center justify-center rounded-full bg-brand-primary/20 font-mono text-xs font-bold text-brand-primary">
-                  {index + 1}
-                </div>
-                <div>{item}</div>
-              </li>
-            ))}
-          </ol>
-          <div className="mt-4 rounded-lg border border-yellow-500/30 bg-yellow-500/10 px-4 py-3 text-sm text-yellow-100">
-            OpenAI/Gemini are foundation/status only for this branch. Treat Anthropic BYOK
-            as the real runtime path for tomorrow’s test.
-          </div>
-        </section>
 
         <DashboardTabs regulatory={regulatoryView} cost={costView} />
       </div>

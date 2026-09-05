@@ -84,6 +84,22 @@ export function SubscriptionConnect() {
     }
   }
 
+  async function connectCodex() {
+    setBusy('openai');
+    try {
+      const res = await fetch('/api/aegis/oauth/openai/codex-login', { method: 'POST' });
+      const data = await res.json();
+      if (data.connected) {
+        setNotice({ kind: 'connected', brand: 'ChatGPT' });
+      } else {
+        setNotice({ kind: 'error', brand: 'ChatGPT', message: data.message });
+      }
+      await load();
+    } finally {
+      setBusy(null);
+    }
+  }
+
   if (!providers) return null;
 
   return (
@@ -128,7 +144,12 @@ export function SubscriptionConnect() {
                     Weiterleitung zu {p.loginHost}
                   </div>
                 )}
-                {p.status === 'unconfigured' && (
+                {p.status === 'unconfigured' && p.id === 'openai' && (
+                  <div className="text-xs text-text-secondary mt-0.5">
+                    ChatGPT-Abo verbinden — zuerst <code className="text-brand-primary">npx openai-oauth login</code> im Terminal ausführen, dann hier verbinden.
+                  </div>
+                )}
+                {p.status === 'unconfigured' && p.id !== 'openai' && (
                   <div className="text-xs text-text-secondary mt-0.5">
                     Setup erforderlich — {p.setupHint}{' '}
                     <a
@@ -159,7 +180,18 @@ export function SubscriptionConnect() {
                   <span aria-hidden>→</span>
                 </a>
               )}
-              {p.status === 'unconfigured' && (
+              {p.status === 'unconfigured' && p.id === 'openai' && (
+                <button
+                  type="button"
+                  disabled={busy === 'openai'}
+                  onClick={connectCodex}
+                  className="inline-flex items-center gap-1.5 rounded-md bg-brand-primary px-3 py-1.5 text-sm text-white hover:opacity-90 disabled:opacity-50"
+                >
+                  {busy === 'openai' ? 'Verbinden …' : 'Mit ChatGPT-Abo verbinden'}
+                  <span aria-hidden>→</span>
+                </button>
+              )}
+              {p.status === 'unconfigured' && p.id !== 'openai' && (
                 <a
                   href={p.loginUrl}
                   target="_blank"

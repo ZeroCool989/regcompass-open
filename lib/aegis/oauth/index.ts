@@ -24,6 +24,7 @@ import {
   viewConnection,
   type ConnectionView,
 } from './store';
+import { syncCodexAuth, hasCodexAuth } from './codex-bridge';
 
 /**
  * High-level subscription-connect orchestration for the local app. Combines the
@@ -61,13 +62,21 @@ export type ProviderView = ConnectionView & {
 };
 
 export function providerView(id: OAuthProviderId): ProviderView {
+  // For OpenAI, auto-import a locally-cached Codex auth token when present.
+  // This lets users run `npx openai-oauth login` once and have RegCompass
+  // pick up their ChatGPT subscription automatically.
+  if (id === 'openai') syncCodexAuth();
+
   const meta = OAUTH_PROVIDER_META[id];
   const connection = viewConnection(id);
-  const status: ProviderStatus = !isConfigured(id)
-    ? 'unconfigured'
-    : connection.connected
+  // OpenAI is a special case: even without a registered OAuth client, a Codex
+  // auth token counts as a valid connection (subscription via Codex login).
+  const status: ProviderStatus =
+    connection.connected
       ? 'connected'
-      : 'disconnected';
+      : !isConfigured(id) && !(id === 'openai' && hasCodexAuth())
+        ? 'unconfigured'
+        : 'disconnected';
   return {
     id,
     label: meta.label,
@@ -190,13 +199,16 @@ export async function getAccessToken(
   now: number = Date.now(),
 ): Promise<string | null> {
   const config = oauthConfig(id);
-  if (!config) return null;
+  // For OpenAI, a Codex-bridged token may exist even without a registered
+  // OAuth client. We can still serve the access token; refresh requires the
+  // user to re-run `npx openai-oauth login` when it expires.
+  if (!config && !(id === 'openai' && hasCodexAuth())) return null;
   const secrets = readSecrets(id);
   if (!secrets) return null;
   if (!secrets.expiresAt || secrets.expiresAt.getTime() - REFRESH_SKEW_MS > now) {
     return secrets.accessToken; // still fresh
   }
-  if (!secrets.refreshToken) {
+  if (!secrets.refreshToken || !config) {
     setConnectionError(id, 'Die Verbindung ist abgelaufen. Bitte neu anmelden.');
     return null;
   }
