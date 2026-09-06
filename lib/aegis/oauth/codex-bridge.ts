@@ -20,12 +20,27 @@ import { saveConnection, readSecrets, viewConnection } from './store';
  * in registry.ts takes precedence and this bridge becomes a no-op.
  */
 
-type CodexAuthFile = {
+/** Flat format (older Codex versions): { access_token, refresh_token, ... } */
+type CodexAuthFlat = {
   access_token?: string;
   refresh_token?: string;
   expires_at?: number | string;
   token_type?: string;
 };
+
+/** Nested format (openai-oauth v2+): { tokens: { access_token, ... }, auth_mode, ... } */
+type CodexAuthNested = {
+  auth_mode?: string;
+  tokens?: {
+    access_token?: string;
+    refresh_token?: string;
+    id_token?: string;
+    account_id?: string;
+  };
+  last_refresh?: string;
+};
+
+type CodexAuthFile = CodexAuthFlat & CodexAuthNested;
 
 const CODEX_AUTH_PATHS = [
   join(homedir(), '.codex', 'auth.json'),
@@ -39,11 +54,19 @@ function findCodexAuth(): string | null {
   return null;
 }
 
-function readCodexAuth(): CodexAuthFile | null {
+function readCodexAuth(): CodexAuthFlat | null {
   const path = findCodexAuth();
   if (!path) return null;
   try {
     const raw = JSON.parse(readFileSync(path, 'utf8')) as CodexAuthFile;
+    // Nested format (openai-oauth v2+): { tokens: { access_token, ... } }
+    if (raw?.tokens && typeof raw.tokens.access_token === 'string' && raw.tokens.access_token.trim()) {
+      return {
+        access_token: raw.tokens.access_token,
+        refresh_token: raw.tokens.refresh_token ?? undefined,
+      };
+    }
+    // Flat format (older Codex versions): { access_token, ... }
     if (raw && typeof raw.access_token === 'string' && raw.access_token.trim()) {
       return raw;
     }

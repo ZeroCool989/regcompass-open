@@ -1,6 +1,6 @@
 import { afterEach, beforeEach, describe, expect, it } from 'vitest';
-import { mkdtempSync, rmSync, statSync } from 'node:fs';
-import { tmpdir } from 'node:os';
+import { existsSync, mkdtempSync, renameSync, rmSync, statSync } from 'node:fs';
+import { homedir, tmpdir } from 'node:os';
 import { join } from 'node:path';
 import {
   buildAuthorizeUrl,
@@ -221,14 +221,26 @@ describe('PKCE cookie', () => {
 
 describe('orchestration', () => {
   let dir: string;
+  // Temporarily hide the real Codex auth file so it doesn't leak into tests.
+  const codexAuthPath = join(homedir(), '.codex', 'auth.json');
+  const codexAuthBackup = codexAuthPath + '.test-bak';
+  let codexHidden = false;
   beforeEach(() => {
     dir = mkdtempSync(join(tmpdir(), 'rco-oauth2-'));
     process.env.REGCOMPASS_OPEN_DIR = dir;
+    if (existsSync(codexAuthPath)) {
+      renameSync(codexAuthPath, codexAuthBackup);
+      codexHidden = true;
+    }
   });
   afterEach(() => {
     delete process.env.REGCOMPASS_OPEN_DIR;
     for (const k of ['OPENAI_OAUTH_CLIENT_ID']) delete process.env[k];
     rmSync(dir, { recursive: true, force: true });
+    if (codexHidden && existsSync(codexAuthBackup)) {
+      renameSync(codexAuthBackup, codexAuthPath);
+      codexHidden = false;
+    }
   });
 
   it('reports unconfigured → disconnected → connected', () => {
