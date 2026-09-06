@@ -277,11 +277,13 @@ export async function resolveProviderAccess(params: {
 
   let selected = params.userId ? await getAegisProvider(params.userId) : null;
 
-  // Auto-detect: if no provider is selected but a ChatGPT subscription is
-  // connected (token already in the local store), auto-select it so the user
-  // doesn't have to configure separately. Uses `viewConnection` directly
-  // (not `providerView`) to avoid triggering `syncCodexAuth` side-effects.
-  if (!selected && params.userId) {
+  // Auto-detect: if no provider is selected OR the selected provider is NOT
+  // already chatgpt-codex, check whether a ChatGPT subscription is connected
+  // (token in the local store). A connected subscription takes precedence
+  // because it was the most recent explicit user action. Uses `viewConnection`
+  // directly (not `providerView`) to avoid triggering `syncCodexAuth`
+  // side-effects.
+  if (selected !== 'chatgpt-codex' && params.userId) {
     const openaiConn = viewConnection('openai');
     if (openaiConn.connected) {
       selected = 'chatgpt-codex';

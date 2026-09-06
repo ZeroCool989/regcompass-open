@@ -203,6 +203,10 @@ export function SubscriptionConnect() {
                 {p.status === 'connected' && (
                   <div className="text-xs text-text-secondary mt-0.5">
                     Verbunden{p.expiresAt ? ` · gültig bis ${new Date(p.expiresAt).toLocaleString('de-DE')}` : ''}
+                    {' · '}
+                    <span className="text-text-secondary/70">
+                      Proxy benötigt: <code className="text-xs">npx openai-oauth --detach</code>
+                    </span>
                   </div>
                 )}
                 {p.status === 'connected' && p.modelOptions.length > 0 && (

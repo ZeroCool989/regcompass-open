@@ -109,9 +109,8 @@ export const OPENAI_MODEL_OPTIONS: ReadonlyArray<{ id: string; label: string }> 
   { id: 'gpt-5.6-sol', label: 'GPT-5.6 Sol – stark und vielseitig' },
   { id: 'gpt-5.6-terra', label: 'GPT-5.6 Terra – ausgewogen (empfohlen)' },
   { id: 'gpt-5.6-luna', label: 'GPT-5.6 Luna – schnell und günstig' },
-  { id: 'gpt-5.4', label: 'GPT-5.4 – bewährt und zuverlässig' },
-  { id: 'o3', label: 'o3 – Reasoning' },
-  { id: 'gpt-4.1', label: 'GPT-4.1 – Legacy' },
+  { id: 'gpt-5.5', label: 'GPT-5.5 – bewährt und vielseitig' },
+  { id: 'gpt-5.4-mini', label: 'GPT-5.4 Mini – schnell und sparsam' },
 ];
 
 export const OPENAI_DEFAULT_MODEL = 'gpt-5.6-terra';
