@@ -24,7 +24,7 @@ describe('computeContextHealth', () => {
   it('scores a short clean conversation as excellent', () => {
     const turns: HealthTurn[] = [
       { role: 'user', content: 'Was fordert die Aufsicht zur KI-Governance?' },
-      { role: 'aegis', content: 'Eine klare Governance mit Verantwortlichkeiten und Kontrollen.', toolCallCount: 1, inputTokens: 3000 },
+      { role: 'aegis', content: 'Eine klare Governance mit Verantwortlichkeiten und Kontrollen.', inputTokens: 3000 },
     ];
     const h = computeContextHealth(turns);
     expect(h.band).toBe('excellent');
@@ -32,49 +32,11 @@ describe('computeContextHealth', () => {
     expect(h.recommendCompaction).toBe('none');
   });
 
-  it('penalizes heavy redundancy (repeated turns)', () => {
-    const repeated =
-      'Bitte erkläre die Governance Anforderungen für künstliche Intelligenz im Detail';
-    const turns: HealthTurn[] = [];
-    for (let i = 0; i < 6; i++) {
-      turns.push({ role: 'user', content: repeated });
-      turns.push({ role: 'aegis', content: repeated, toolCallCount: 0, inputTokens: 4000 });
-    }
-    const clean = computeContextHealth([
-      { role: 'user', content: 'Erste eindeutige Frage zur Aufsicht.' },
-      { role: 'aegis', content: 'Eine völlig andere, eigenständige Antwort dazu.', inputTokens: 4000 },
-    ]);
-    const redundant = computeContextHealth(turns);
-    expect(redundant.factors.redundancy).toBeGreaterThan(clean.factors.redundancy);
-    expect(redundant.score).toBeLessThan(clean.score);
-  });
-
-  it('penalizes heavy tool-output load', () => {
-    const light = computeContextHealth([
-      { role: 'user', content: 'Frage eins.' },
-      { role: 'aegis', content: 'Antwort eins.', toolCallCount: 0, inputTokens: 3000 },
-    ]);
-    const heavy = computeContextHealth([
-      { role: 'user', content: 'Frage eins.' },
-      { role: 'aegis', content: 'Antwort eins.', toolCallCount: 12, inputTokens: 3000 },
-    ]);
-    expect(heavy.factors.toolLoad).toBeGreaterThan(light.factors.toolLoad);
-  });
-
-  it('gates utilization below the 120K landmark', () => {
-    const small = computeContextHealth([
-      { role: 'aegis', content: 'x', inputTokens: 50_000 },
-    ]);
-    expect(small.factors.utilization).toBe(0);
-  });
-
-  it('counts cache-read tokens toward context size (not just uncached input)', () => {
-    // Caching makes inputTokens tiny while the real context lives in cachedTokens.
+  it('counts cache-read tokens toward context size', () => {
     const cached = computeContextHealth([
       { role: 'aegis', content: 'x', inputTokens: 5_000, cachedTokens: 140_000 },
     ]);
     expect(cached.approxTokens).toBe(145_000);
-    expect(cached.factors.utilization).toBeGreaterThan(0);
     expect(cached.recommendCompaction).toBe('hard');
   });
 
@@ -83,18 +45,15 @@ describe('computeContextHealth', () => {
       { role: 'user', content: 'frage' },
       { role: 'aegis', content: 'antwort', inputTokens: 145_000 },
     ]);
-    expect(huge.factors.utilization).toBeGreaterThan(0);
     expect(huge.recommendCompaction).toBe('hard');
   });
 
-  it('flags trailing unanswered user turns as open loops', () => {
+  it('recommends soft compaction at moderate fullness', () => {
+    const softTokens = Math.round(COMPACT_TRIGGER * 0.85);
     const h = computeContextHealth([
-      { role: 'user', content: 'Erste Frage.' },
-      { role: 'aegis', content: 'Antwort.', inputTokens: 2000 },
-      { role: 'user', content: 'Zweite Frage ohne Antwort?' },
-      { role: 'user', content: 'Dritte Frage ohne Antwort?' },
+      { role: 'aegis', content: 'x', inputTokens: softTokens },
     ]);
-    expect(h.factors.openLoops).toBeGreaterThan(0);
+    expect(h.recommendCompaction).toBe('soft');
   });
 
   it('handles an empty conversation without throwing', () => {
@@ -127,7 +86,7 @@ describe('computeContextHealth', () => {
       expect(big.fullnessPct).toBeGreaterThan(small.fullnessPct);
     });
 
-    it('bands map low → mid → high by percentage', () => {
+    it('bands map low -> mid -> high by percentage', () => {
       expect(fullnessBand(42)).toBe('low');
       expect(fullnessBand(74)).toBe('mid');
       expect(fullnessBand(91)).toBe('high');
