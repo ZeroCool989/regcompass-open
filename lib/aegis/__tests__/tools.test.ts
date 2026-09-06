@@ -326,7 +326,7 @@ describe('executeReadSource', () => {
 // ───────────────────────── Registry + stub tools ─────────────────────────
 
 describe('createToolRegistry', () => {
-  it('exposes all 12 tools by default', () => {
+  it('exposes all 13 tools by default', () => {
     const reg = createToolRegistry();
     const names = reg.schemas.map((s) => s.name);
     expect(names).toEqual(
@@ -343,9 +343,10 @@ describe('createToolRegistry', () => {
         'export_assessment',
         'improve_uploaded_deck',
         'improve_document',
+        'save_fact',
       ]),
     );
-    expect(reg.schemas).toHaveLength(12);
+    expect(reg.schemas).toHaveLength(13);
   });
 
   it('subset only exposes the requested tools', () => {

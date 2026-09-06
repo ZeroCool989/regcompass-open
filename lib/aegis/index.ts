@@ -77,6 +77,12 @@ export type AegisRunOptions = {
    */
   soulBlock?: string | null;
   /**
+   * Pre-rendered cross-conversation memory block. Injected as an UNCACHED
+   * trailing system block AFTER the soul block, explicitly subordinated to the
+   * KB (see lib/aegis/cross-memory.ts → renderPriorKnowledgeBlock).
+   */
+  priorKnowledgeBlock?: string | null;
+  /**
    * Spoken first name (voice mode only). When present, Aegis addresses the user
    * by name once at the end of the answer. Injected as an UNCACHED block so the
    * generic voice overlay stays cache-shared across users.
@@ -108,6 +114,15 @@ function withSoulBlock(spec: ReturnType<typeof getModeSpec>, soulBlock?: string 
   return {
     ...spec,
     systemBlocks: [...spec.systemBlocks, { text: soulBlock, cached: false }],
+  };
+}
+
+/** Append the prior-knowledge block (cross-conversation memory) as an uncached trailing system block. */
+function withPriorKnowledge(spec: ReturnType<typeof getModeSpec>, block?: string | null) {
+  if (!block) return spec;
+  return {
+    ...spec,
+    systemBlocks: [...spec.systemBlocks, { text: block, cached: false }],
   };
 }
 
@@ -351,7 +366,10 @@ export async function runAegis(
       ];
     }
   }
-  const spec = withSoulBlock(baseSpec, options?.soulBlock);
+  const spec = withPriorKnowledge(
+    withSoulBlock(baseSpec, options?.soulBlock),
+    options?.priorKnowledgeBlock,
+  );
 
   const messages = await assembleSeed(req, memory, sanitized, access.provider, recorder);
 
@@ -630,7 +648,10 @@ export async function* runAegisStreaming(
       ];
     }
   }
-  const spec = withSoulBlock(baseSpec, options?.soulBlock);
+  const spec = withPriorKnowledge(
+    withSoulBlock(baseSpec, options?.soulBlock),
+    options?.priorKnowledgeBlock,
+  );
 
   const messages = await assembleSeed(req, memory, sanitized, access.provider, recorder);
   // Shared with the tool-context usage hook (see runAegis).

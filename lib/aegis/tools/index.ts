@@ -48,6 +48,10 @@ import {
   IMPROVE_DOCUMENT_SCHEMA,
   executeImproveDocument,
 } from './improve_document';
+import {
+  SAVE_FACT_SCHEMA,
+  executeSaveFact,
+} from './save_fact';
 
 /**
  * Tool registry returned by `createToolRegistry()`.
@@ -77,6 +81,7 @@ const SCHEMA_BY_NAME: Record<ToolName, Anthropic.Tool> = {
   export_assessment: EXPORT_ASSESSMENT_SCHEMA,
   improve_uploaded_deck: IMPROVE_UPLOADED_DECK_SCHEMA,
   improve_document: IMPROVE_DOCUMENT_SCHEMA,
+  save_fact: SAVE_FACT_SCHEMA,
 };
 
 const ALL_TOOL_NAMES: ToolName[] = [
@@ -92,6 +97,7 @@ const ALL_TOOL_NAMES: ToolName[] = [
   'export_assessment',
   'improve_uploaded_deck',
   'improve_document',
+  'save_fact',
 ];
 
 async function dispatch(
@@ -124,6 +130,8 @@ async function dispatch(
       return { content: await executeImproveUploadedDeck(input, ctx), isError: false };
     case 'improve_document':
       return { content: await executeImproveDocument(input, ctx), isError: false };
+    case 'save_fact':
+      return { content: await executeSaveFact(input, ctx), isError: false };
   }
 }
 
@@ -200,5 +208,6 @@ export {
   SEARCH_INGESTED_DOCUMENTS_SCHEMA,
   GENERATE_ASSESSMENT_DECK_SCHEMA,
   EXPORT_ASSESSMENT_SCHEMA,
+  SAVE_FACT_SCHEMA,
   ALL_TOOL_NAMES,
 };

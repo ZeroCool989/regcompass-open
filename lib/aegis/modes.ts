@@ -24,9 +24,9 @@ export type ModeSpec = {
 };
 
 const MODE_TOOLS: Record<AegisMode, ToolName[]> = {
-  ASSESS: ['search_kb', 'get_requirements', 'get_crosswalk', 'read_source', 'search_ingested_documents', 'generate_assessment_deck', 'export_assessment'],
-  GAP_ANALYZE: ['search_kb', 'get_requirements', 'get_crosswalk', 'analyze_document', 'fill_template', 'read_source', 'search_ingested_documents', 'generate_assessment_deck', 'export_assessment', 'improve_uploaded_deck', 'improve_document'],
-  CONVERSATIONAL: ['search_kb', 'get_requirements', 'get_crosswalk', 'read_source', 'search_ingested_documents', 'export_assessment'],
+  ASSESS: ['search_kb', 'get_requirements', 'get_crosswalk', 'read_source', 'search_ingested_documents', 'generate_assessment_deck', 'export_assessment', 'save_fact'],
+  GAP_ANALYZE: ['search_kb', 'get_requirements', 'get_crosswalk', 'analyze_document', 'fill_template', 'read_source', 'search_ingested_documents', 'generate_assessment_deck', 'export_assessment', 'improve_uploaded_deck', 'improve_document', 'save_fact'],
+  CONVERSATIONAL: ['search_kb', 'get_requirements', 'get_crosswalk', 'read_source', 'search_ingested_documents', 'export_assessment', 'save_fact'],
 };
 
 // Per-mode output ceiling — the SINGLE source of truth for max output tokens.

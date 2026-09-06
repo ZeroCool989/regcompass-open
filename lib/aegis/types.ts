@@ -230,7 +230,8 @@ export type ToolName =
   | 'generate_assessment_deck'
   | 'export_assessment'
   | 'improve_uploaded_deck'
-  | 'improve_document';
+  | 'improve_document'
+  | 'save_fact';
 
 export type ToolCall = {
   id: string;

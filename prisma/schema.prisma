@@ -73,6 +73,7 @@ model User {
   soulEntries   SoulEntry[]
   soulProposals SoulProposal[]
   soulAudits    SoulAudit[]
+  memoryFacts   MemoryFact[]
   aiCredentials UserAiCredential[]
   claudeOAuth   UserClaudeOAuth?
 
@@ -127,6 +128,37 @@ model SoulAudit {
   user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@index([userId, createdAt])
+}
+
+// ── Cross-conversation memory (facts) ────────────────────────────────────────
+// Regulatory decisions, conclusions, and open tasks promoted from conversation
+// digests or saved explicitly by the model via the save_fact tool. Unlike Soul
+// entries (style-only), these carry substantive compliance content. User-scoped,
+// tag-indexed for recall without embeddings.
+
+model MemoryFact {
+  id                   String   @id @default(uuid())
+  userId               String
+  /// The fact text — a precise, single-sentence regulatory insight.
+  content              String
+  /// JSON-encoded string[] of regulation tags for retrieval (e.g. ["DORA","MaRisk"]).
+  tags                 String   @default("[]")
+  /// "decision" | "conclusion" | "open_task" | "general"
+  category             String   @default("general")
+  /// "active" | "superseded" | "archived"
+  status               String   @default("active")
+  /// 1–5: how important the model judged the fact (default 3).
+  importance           Int      @default(3)
+  /// Conversation that originated this fact (plain string, not FK — conversations expire).
+  sourceConversationId String?
+  /// ID of the fact this one superseded, if any.
+  supersededFactId     String?
+  createdAt            DateTime @default(now())
+  updatedAt            DateTime @updatedAt
+  user                 User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId, status])
+  @@index([userId, status, updatedAt])
 }
 
 // Uploaded documents (gap-analysis policies, Excel templates, filled outputs).
