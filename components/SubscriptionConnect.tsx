@@ -87,13 +87,34 @@ export function SubscriptionConnect() {
   async function connectCodex() {
     setBusy('openai');
     try {
-      const res = await fetch('/api/aegis/oauth/openai/codex-login', { method: 'POST' });
-      const data = await res.json();
-      if (data.connected) {
-        setNotice({ kind: 'connected', brand: 'ChatGPT' });
-      } else {
-        setNotice({ kind: 'error', brand: 'ChatGPT', message: data.message });
+      // Step 1: Launch the login flow — opens a browser tab to ChatGPT.
+      const startRes = await fetch('/api/aegis/oauth/openai/start-login', { method: 'POST' });
+      const startData = await startRes.json();
+      if (!startData.started) {
+        setNotice({ kind: 'error', brand: 'ChatGPT', message: startData.message });
+        setBusy(null);
+        return;
       }
+
+      // Step 2: Poll until the token appears (user is logging in in the browser).
+      const maxAttempts = 60; // 2 minutes max
+      for (let i = 0; i < maxAttempts; i++) {
+        await new Promise((r) => setTimeout(r, 2000));
+        const checkRes = await fetch('/api/aegis/oauth/openai/codex-login', { method: 'POST' });
+        const checkData = await checkRes.json();
+        if (checkData.connected) {
+          setNotice({ kind: 'connected', brand: 'ChatGPT' });
+          await load();
+          return;
+        }
+      }
+
+      // Timed out waiting.
+      setNotice({
+        kind: 'error',
+        brand: 'ChatGPT',
+        message: 'Zeitüberschreitung — bitte erneut versuchen.',
+      });
       await load();
     } finally {
       setBusy(null);
@@ -146,7 +167,9 @@ export function SubscriptionConnect() {
                 )}
                 {p.status === 'unconfigured' && p.id === 'openai' && (
                   <div className="text-xs text-text-secondary mt-0.5">
-                    ChatGPT-Abo verbinden — zuerst <code className="text-brand-primary">npx openai-oauth login</code> im Terminal ausführen, dann hier verbinden.
+                    {busy === 'openai'
+                      ? 'Login-Fenster geöffnet — bitte bei ChatGPT anmelden …'
+                      : 'Ein Klick öffnet die ChatGPT-Anmeldung im Browser.'}
                   </div>
                 )}
                 {p.status === 'unconfigured' && p.id !== 'openai' && (
