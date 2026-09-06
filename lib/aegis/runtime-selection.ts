@@ -13,10 +13,12 @@ import {
   getAegisProvider,
   OPENAI_DEFAULT_MODEL,
   parseAegisProvider,
+  setAegisProvider,
   type AegisProvider,
   type UiLanguage,
 } from './provider-settings';
 import { getSubscriptionModel } from './oauth';
+import { viewConnection } from './oauth/store';
 import { applyModelPreference, routeToModel } from './router';
 
 /**
@@ -273,7 +275,21 @@ export async function resolveProviderAccess(params: {
     return Object.freeze({ provider: 'anthropic', credential });
   }
 
-  const selected = params.userId ? await getAegisProvider(params.userId) : null;
+  let selected = params.userId ? await getAegisProvider(params.userId) : null;
+
+  // Auto-detect: if no provider is selected but a ChatGPT subscription is
+  // connected (token already in the local store), auto-select it so the user
+  // doesn't have to configure separately. Uses `viewConnection` directly
+  // (not `providerView`) to avoid triggering `syncCodexAuth` side-effects.
+  if (!selected && params.userId) {
+    const openaiConn = viewConnection('openai');
+    if (openaiConn.connected) {
+      selected = 'chatgpt-codex';
+      // Persist so this detection only runs once.
+      setAegisProvider(params.userId, 'chatgpt-codex').catch(() => {});
+    }
+  }
+
   if (!selected) throw new AegisProviderNotConfiguredError(params.language);
 
   switch (selected) {

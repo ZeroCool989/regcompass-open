@@ -1,6 +1,7 @@
 import { NextResponse, type NextRequest } from 'next/server';
 import { getUserFromRequest, isApproved } from '@/lib/auth';
 import { importCodexAuth, hasCodexAuth } from '@/lib/aegis/oauth/codex-bridge';
+import { setAegisProvider } from '@/lib/aegis/provider-settings';
 
 /**
  * Codex-based ChatGPT subscription connect.
@@ -9,6 +10,9 @@ import { importCodexAuth, hasCodexAuth } from '@/lib/aegis/oauth/codex-bridge';
  * The actual browser-based login happens client-side via a shell command
  * (`npx openai-oauth login`) that opens the ChatGPT sign-in page — this
  * endpoint just checks whether a token has appeared and imports it.
+ *
+ * On successful import, also sets the user's aegisProvider to 'chatgpt-codex'
+ * so AEGIS dispatches to OpenAI automatically.
  */
 
 export async function POST(req: NextRequest) {
@@ -25,6 +29,15 @@ export async function POST(req: NextRequest) {
   }
 
   const ok = importCodexAuth();
+  if (ok) {
+    // Auto-select ChatGPT as the AEGIS provider so the user doesn't have to
+    // configure it separately — connecting the subscription is the selection.
+    try {
+      await setAegisProvider(user.id, 'chatgpt-codex');
+    } catch {
+      // Non-blocking: the token is stored, provider selection is a convenience.
+    }
+  }
   return NextResponse.json({
     connected: ok,
     message: ok
