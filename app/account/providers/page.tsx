@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import { redirect } from 'next/navigation';
+import { AiProviderSettings } from '@/components/AiProviderSettings';
 import { SubscriptionConnect } from '@/components/SubscriptionConnect';
 import { getUserFromCookies } from '@/lib/auth';
 
@@ -19,9 +20,11 @@ export default async function AiProvidersPage() {
         <Link href="/aegis" className="text-sm text-text-secondary hover:text-brand-primary transition-colors no-underline shrink-0">← AEGIS</Link>
       </div>
       <p className="text-sm text-text-secondary mb-8 max-w-2xl">
-        Verbinden Sie Ihr ChatGPT-Abo, um AEGIS darüber zu betreiben. Die Anmeldung läuft
-        lokal auf diesem Rechner — Ihre Zugangsdaten verlassen Ihren Rechner nicht.
+        Verbinden Sie das Modell, das AEGIS antreibt: eigener API-Schlüssel (BYOK, verschlüsselt
+        gespeichert und nie wieder angezeigt) oder ein verbundenes ChatGPT-Abo (OAuth — Sie melden
+        sich direkt bei ChatGPT an; die Zugangsdaten bleiben auf diesem Rechner).
       </p>
+      <AiProviderSettings />
       <SubscriptionConnect />
     </div>
   );

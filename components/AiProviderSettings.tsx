@@ -99,17 +99,6 @@ export function AiProviderSettings() {
   return (
     <div className="space-y-5">
       {message ? <div className="rounded-md border border-border-brand px-3 py-2 text-sm text-text-secondary">{message}</div> : null}
-      <div className="rounded-lg border border-border-brand p-4 text-sm text-text-secondary">
-        <p className="font-semibold text-foreground mb-1">System-Provider</p>
-        <p>Ohne Auswahl nutzt AEGIS den serverseitigen Anthropic-Key. Nutzer-Keys werden nie an den Browser zurückgegeben.</p>
-        <button
-          type="button"
-          onClick={() => prefer(null)}
-          className="mt-3 rounded-md border border-border-brand px-3 py-1.5 text-xs hover:border-brand-primary/50"
-        >
-          System-Provider verwenden
-        </button>
-      </div>
       {settings.providers.map((p) => {
         const preferred = settings.preferredProvider === p.provider;
         return (
