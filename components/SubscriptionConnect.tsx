@@ -135,13 +135,16 @@ export function SubscriptionConnect() {
 
   if (!providers) return null;
 
+  // Only show providers that are relevant — Claude and Gemini subscription
+  // OAuth is not available, so filter to OpenAI/ChatGPT only.
+  const visible = providers.filter((p) => p.id === 'openai');
+
   return (
     <section className="mt-10">
       <h2 className="text-lg font-heading font-semibold mb-1">Abo verbinden</h2>
       <p className="text-sm text-text-secondary mb-4 max-w-2xl">
-        Verbinden Sie ein bestehendes Abo, statt einen API-Schlüssel zu hinterlegen. Ein Klick
-        leitet Sie direkt zur Anmeldeseite des Anbieters weiter; die Anmeldung läuft lokal auf
-        diesem Rechner und das Token verlässt Ihren Rechner nicht.
+        Verbinden Sie ein bestehendes ChatGPT-Abo. Ein Klick öffnet die Anmeldeseite; die
+        Anmeldung läuft lokal auf diesem Rechner und das Token verlässt Ihren Rechner nicht.
       </p>
       {notice && (
         <div
@@ -158,7 +161,7 @@ export function SubscriptionConnect() {
         </div>
       )}
       <ul className="space-y-3">
-        {providers.map((p) => (
+        {visible.map((p) => (
           <li
             key={p.id}
             className="flex items-center justify-between gap-4 rounded-lg border border-border px-4 py-3"
