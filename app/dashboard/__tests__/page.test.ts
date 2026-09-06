@@ -17,15 +17,14 @@ vi.mock('@/lib/auth', () => ({
 import DashboardPage from '../page';
 
 describe('/dashboard', () => {
-  it('shows the tomorrow BYOK test checklist for admins', async () => {
+  it('shows the regulatory dashboard for admins', async () => {
     getUserFromCookies.mockResolvedValue({ id: 'admin-1', role: 'ADMIN', status: 'APPROVED' });
 
     const page = await DashboardPage();
     const html = renderToStaticMarkup(page);
 
-    expect(html).toContain('Tomorrow BYOK Test TODO');
-    expect(html).toContain('AEGIS_BYOK_ENCRYPTION_KEY');
-    expect(html).toContain('/account/providers');
-    expect(html).toContain('Anthropic BYOK');
+    expect(html).toContain('Regulatory Intelligence Dashboard');
+    expect(html).toContain('Regulatorik');
+    expect(html).not.toContain('Tomorrow BYOK Test TODO');
   });
 });
