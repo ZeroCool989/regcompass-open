@@ -105,14 +105,16 @@ export const ANTHROPIC_MODEL_OPTIONS: ReadonlyArray<{ id: string; label: string 
  * complexity-based tier routing (haiku↔sonnet) does not apply.
  */
 export const OPENAI_MODEL_OPTIONS: ReadonlyArray<{ id: string; label: string }> = [
-  { id: 'gpt-4.1', label: 'GPT-4.1 – Standard (empfohlen)' },
-  { id: 'gpt-4o', label: 'GPT-4o – schnell und multimodal' },
-  { id: 'gpt-4.1-mini', label: 'GPT-4.1 Mini – schnell und günstig' },
-  { id: 'o3', label: 'o3 – höchste Qualität, langsamer' },
-  { id: 'o4-mini', label: 'o4-mini – Reasoning, günstig' },
+  { id: 'gpt-6-astra', label: 'GPT-6 Astra – höchste Qualität' },
+  { id: 'gpt-5.6-sol', label: 'GPT-5.6 Sol – stark und vielseitig' },
+  { id: 'gpt-5.6-terra', label: 'GPT-5.6 Terra – ausgewogen (empfohlen)' },
+  { id: 'gpt-5.6-luna', label: 'GPT-5.6 Luna – schnell und günstig' },
+  { id: 'gpt-5.4', label: 'GPT-5.4 – bewährt und zuverlässig' },
+  { id: 'o3', label: 'o3 – Reasoning' },
+  { id: 'gpt-4.1', label: 'GPT-4.1 – Legacy' },
 ];
 
-export const OPENAI_DEFAULT_MODEL = 'gpt-4.1';
+export const OPENAI_DEFAULT_MODEL = 'gpt-5.6-terra';
 
 export const MODEL_PIN_NOTE =
   'Modi mit festem Qualitätsminimum (z. B. Kontroll-Empfehlungen: Opus) überstimmen Ihre Auswahl nach oben — nie nach unten.';
