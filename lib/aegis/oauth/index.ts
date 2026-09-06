@@ -24,7 +24,7 @@ import {
   viewConnection,
   type ConnectionView,
 } from './store';
-import { syncCodexAuth, hasCodexAuth } from './codex-bridge';
+import { syncCodexAuth, hasCodexAuth, clearCodexAuth } from './codex-bridge';
 
 /**
  * High-level subscription-connect orchestration for the local app. Combines the
@@ -182,6 +182,9 @@ export async function completeCallback(params: {
 
 export function disconnect(id: OAuthProviderId): void {
   deleteConnection(id);
+  // For OpenAI: also remove the local Codex auth file so syncCodexAuth()
+  // doesn't immediately re-import the token when the UI refreshes.
+  if (id === 'openai') clearCodexAuth();
 }
 
 // ── Access token for the brain (auto-refresh) ───────────────────────────────

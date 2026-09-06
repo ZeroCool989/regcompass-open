@@ -1,4 +1,4 @@
-import { existsSync, readFileSync } from 'node:fs';
+import { existsSync, readFileSync, unlinkSync } from 'node:fs';
 import { homedir } from 'node:os';
 import { join } from 'node:path';
 import type { OAuthTokens } from './core';
@@ -117,5 +117,20 @@ export function syncCodexAuth(): void {
   if (connection.connected) return; // already have a connection, don't overwrite
   if (hasCodexAuth()) {
     importCodexAuth();
+  }
+}
+
+/**
+ * Remove the locally cached Codex auth file so that `syncCodexAuth()` doesn't
+ * re-import the token after the user explicitly disconnects. Called from
+ * `disconnect('openai')`. Safe to call when no file exists.
+ */
+export function clearCodexAuth(): void {
+  for (const p of CODEX_AUTH_PATHS) {
+    try {
+      if (existsSync(p)) unlinkSync(p);
+    } catch {
+      // Best-effort — file may be read-only or already gone.
+    }
   }
 }
