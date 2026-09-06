@@ -108,11 +108,12 @@ describe('resolveProviderAccess — provider selection (resolved once, no fallba
     expect(err.message).toMatch(/D4/);
   });
 
-  it('chatgpt-codex → runtime-pending, never another provider', async () => {
+  it('chatgpt-codex → resolves to openai provider with subscription credential', async () => {
     selectionIs('chatgpt-codex');
-    await expect(resolveProviderAccess({ userId: 'u1', language: 'de' })).rejects.toBeInstanceOf(
-      AegisCodexRuntimePendingError,
-    );
+    const access = await resolveProviderAccess({ userId: 'u1', language: 'de' });
+    expect(access.provider).toBe('openai');
+    expect(access.credential.source).toBe('subscription');
+    expect(access.credential.modelHint).toBeTruthy();
     expect(mockCredFindUnique).not.toHaveBeenCalled();
   });
 

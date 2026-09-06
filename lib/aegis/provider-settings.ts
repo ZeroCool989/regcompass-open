@@ -99,6 +99,21 @@ export const ANTHROPIC_MODEL_OPTIONS: ReadonlyArray<{ id: string; label: string 
   { id: MODEL_IDS.haiku, label: 'Haiku – schnell und günstig' },
 ];
 
+/**
+ * Curated model choices for the OpenAI/ChatGPT subscription. The user picks
+ * one model for all requests — subscription pricing is flat, so the
+ * complexity-based tier routing (haiku↔sonnet) does not apply.
+ */
+export const OPENAI_MODEL_OPTIONS: ReadonlyArray<{ id: string; label: string }> = [
+  { id: 'gpt-4.1', label: 'GPT-4.1 – Standard (empfohlen)' },
+  { id: 'gpt-4o', label: 'GPT-4o – schnell und multimodal' },
+  { id: 'gpt-4.1-mini', label: 'GPT-4.1 Mini – schnell und günstig' },
+  { id: 'o3', label: 'o3 – höchste Qualität, langsamer' },
+  { id: 'o4-mini', label: 'o4-mini – Reasoning, günstig' },
+];
+
+export const OPENAI_DEFAULT_MODEL = 'gpt-4.1';
+
 export const MODEL_PIN_NOTE =
   'Modi mit festem Qualitätsminimum (z. B. Kontroll-Empfehlungen: Opus) überstimmen Ihre Auswahl nach oben — nie nach unten.';
 

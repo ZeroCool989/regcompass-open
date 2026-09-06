@@ -32,6 +32,9 @@ type ProviderView = {
   setupHint: string;
   expiresAt: string | null;
   lastError: string | null;
+  preferredModel: string | null;
+  modelOptions: Array<{ id: string; label: string }>;
+  defaultModel: string | null;
 };
 
 type ReturnNotice = { kind: 'connected' | 'error'; brand: string; message?: string };
@@ -82,6 +85,15 @@ export function SubscriptionConnect() {
     } finally {
       setBusy(null);
     }
+  }
+
+  async function setModel(providerId: string, model: string) {
+    await fetch('/api/aegis/oauth', {
+      method: 'PATCH',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ provider: providerId, model }),
+    });
+    await load();
   }
 
   async function connectCodex() {
@@ -188,6 +200,25 @@ export function SubscriptionConnect() {
                 {p.status === 'connected' && (
                   <div className="text-xs text-text-secondary mt-0.5">
                     Verbunden{p.expiresAt ? ` · gültig bis ${new Date(p.expiresAt).toLocaleString('de-DE')}` : ''}
+                  </div>
+                )}
+                {p.status === 'connected' && p.modelOptions.length > 0 && (
+                  <div className="mt-1.5 flex items-center gap-2">
+                    <label htmlFor={`model-${p.id}`} className="text-xs text-text-secondary whitespace-nowrap">
+                      Modell:
+                    </label>
+                    <select
+                      id={`model-${p.id}`}
+                      value={p.preferredModel ?? p.defaultModel ?? ''}
+                      onChange={(e) => setModel(p.id, e.target.value)}
+                      className="text-xs rounded border border-border bg-surface px-2 py-1 text-foreground"
+                    >
+                      {p.modelOptions.map((opt) => (
+                        <option key={opt.id} value={opt.id}>
+                          {opt.label}
+                        </option>
+                      ))}
+                    </select>
                   </div>
                 )}
                 {p.lastError && <div className="text-xs text-danger mt-0.5">{p.lastError}</div>}

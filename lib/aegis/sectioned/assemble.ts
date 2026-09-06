@@ -116,7 +116,7 @@ export async function maybeGlueIntro(
   titles: string[],
   // The request's frozen provider selection — the optional glue call dispatches
   // on the same brain as the run, never a dev AEGIS_BRAIN override.
-  provider: 'anthropic' | 'gemini' | undefined,
+  provider: 'anthropic' | 'openai' | 'gemini' | undefined,
   onUsage?: (model: string, usage: ClaudeUsage) => void,
   call: typeof callHaiku = callHaiku,
 ): Promise<string> {
@@ -146,7 +146,7 @@ export async function persistAssembledReport(args: {
   conversationId: string;
   mode: string;
   /** The request's frozen provider selection — pins the optional glue call. */
-  provider?: 'anthropic' | 'gemini';
+  provider?: 'anthropic' | 'openai' | 'gemini';
   client?: JobDb;
   onUsage?: (model: string, usage: ClaudeUsage) => void;
 }): Promise<boolean> {

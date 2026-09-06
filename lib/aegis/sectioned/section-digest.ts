@@ -91,7 +91,7 @@ export async function generateSectionDigest(
     onUsage?: (model: ModelId, usage: ClaudeUsage) => void;
     /** The request's frozen provider selection — the per-section digest
      *  dispatches on the same brain as the run, never a dev AEGIS_BRAIN override. */
-    provider?: 'anthropic' | 'gemini';
+    provider?: 'anthropic' | 'openai' | 'gemini';
   } = {},
 ): Promise<SectionDigest> {
   const call = deps.call ?? callStructured;

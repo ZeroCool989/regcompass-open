@@ -23,6 +23,8 @@ type StoredConnection = {
   expiresAt: string | null; // ISO
   connectedAt: string; // ISO
   lastError: string | null;
+  /** User's chosen model for this subscription (e.g. "gpt-4.1"). */
+  preferredModel: string | null;
 };
 
 type StoreFile = {
@@ -76,6 +78,7 @@ export type ConnectionView = {
   expiresAt: string | null;
   scope: string | null;
   lastError: string | null;
+  preferredModel: string | null;
 };
 
 export function viewConnection(id: OAuthProviderId): ConnectionView {
@@ -86,6 +89,7 @@ export function viewConnection(id: OAuthProviderId): ConnectionView {
     expiresAt: row?.expiresAt ?? null,
     scope: row?.scope ?? null,
     lastError: row?.lastError ?? null,
+    preferredModel: row?.preferredModel ?? null,
   };
 }
 
@@ -100,8 +104,23 @@ export function saveConnection(id: OAuthProviderId, tokens: OAuthTokens): void {
     expiresAt: tokens.expiresAt ? tokens.expiresAt.toISOString() : null,
     connectedAt: existing?.connectedAt ?? new Date().toISOString(),
     lastError: null,
+    preferredModel: existing?.preferredModel ?? null,
   };
   writeStore(store);
+}
+
+/** Update only the preferred model for a connected subscription. */
+export function setPreferredModel(id: OAuthProviderId, model: string | null): void {
+  const store = readStore();
+  const row = store.connections[id];
+  if (!row) return;
+  row.preferredModel = model;
+  writeStore(store);
+}
+
+/** Read the preferred model for a connected subscription. */
+export function getPreferredModel(id: OAuthProviderId): string | null {
+  return readStore().connections[id]?.preferredModel ?? null;
 }
 
 export function setConnectionError(id: OAuthProviderId, message: string): void {

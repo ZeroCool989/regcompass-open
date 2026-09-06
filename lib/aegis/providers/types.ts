@@ -77,7 +77,7 @@ export type ProviderCallParams = {
    * chosen provider. Absent → legacy resolution by env/model-family (the internal
    * escape-hatch path).
    */
-  provider?: 'anthropic' | 'gemini';
+  provider?: 'anthropic' | 'openai' | 'gemini';
   /** Optional abort signal — cancels the upstream request when the client
    *  disconnects. Adapters wire it into their fetch/SDK call. */
   signal?: AbortSignal;

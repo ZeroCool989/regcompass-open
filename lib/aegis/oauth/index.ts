@@ -18,13 +18,16 @@ import {
 } from './registry';
 import {
   deleteConnection,
+  getPreferredModel,
   readSecrets,
   saveConnection,
   setConnectionError,
+  setPreferredModel,
   viewConnection,
   type ConnectionView,
 } from './store';
 import { syncCodexAuth, hasCodexAuth, clearCodexAuth } from './codex-bridge';
+import { OPENAI_MODEL_OPTIONS, OPENAI_DEFAULT_MODEL } from '../provider-settings';
 
 /**
  * High-level subscription-connect orchestration for the local app. Combines the
@@ -59,6 +62,10 @@ export type ProviderView = ConnectionView & {
   loginUrl: string;
   status: ProviderStatus;
   setupHint: string;
+  /** Curated model options for connected subscriptions (empty = no picker). */
+  modelOptions: Array<{ id: string; label: string }>;
+  /** Default model id when no preference is stored. */
+  defaultModel: string | null;
 };
 
 export function providerView(id: OAuthProviderId): ProviderView {
@@ -86,6 +93,8 @@ export function providerView(id: OAuthProviderId): ProviderView {
     loginUrl: meta.loginUrl,
     setupHint: meta.setupHint,
     status,
+    modelOptions: id === 'openai' ? [...OPENAI_MODEL_OPTIONS] : [],
+    defaultModel: id === 'openai' ? OPENAI_DEFAULT_MODEL : null,
     ...connection,
   };
 }
@@ -185,6 +194,16 @@ export function disconnect(id: OAuthProviderId): void {
   // For OpenAI: also remove the local Codex auth file so syncCodexAuth()
   // doesn't immediately re-import the token when the UI refreshes.
   if (id === 'openai') clearCodexAuth();
+}
+
+/** Set the preferred model for a connected subscription. */
+export function setSubscriptionModel(id: OAuthProviderId, model: string | null): void {
+  setPreferredModel(id, model);
+}
+
+/** Get the preferred model for a connected subscription. */
+export function getSubscriptionModel(id: OAuthProviderId): string | null {
+  return getPreferredModel(id);
 }
 
 // ── Access token for the brain (auto-refresh) ───────────────────────────────

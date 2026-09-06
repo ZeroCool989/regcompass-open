@@ -109,7 +109,15 @@ export function resolveProvider(model?: string): ModelProvider {
  * `AEGIS_BRAIN` escape hatch (via {@link resolveProvider}) applies only when NO
  * explicit provider is threaded (internal/developer calls).
  */
-export function providerForSelection(provider: 'anthropic' | 'gemini'): ModelProvider {
+export function providerForSelection(provider: 'anthropic' | 'openai' | 'gemini'): ModelProvider {
+  if (provider === 'openai') {
+    return new OpenAiCompatibleProvider({
+      id: 'openai',
+      label: 'OpenAI (ChatGPT-Abo)',
+      baseURL: env('OPENAI_BASE_URL') ?? 'https://api.openai.com/v1',
+      apiKey: env('OPENAI_API_KEY') ?? null,
+    });
+  }
   if (provider === 'gemini') {
     return new GeminiProvider({
       id: 'gemini',

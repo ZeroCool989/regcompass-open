@@ -273,7 +273,7 @@ export type ToolContext = {
    * `AEGIS_BRAIN` env override can silently replace it. Absent → legacy
    * env/model-family resolution (internal/escape-hatch calls).
    */
-  provider?: 'anthropic' | 'gemini';
+  provider?: 'anthropic' | 'openai' | 'gemini';
 };
 
 /**

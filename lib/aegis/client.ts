@@ -74,7 +74,7 @@ export async function callHaiku(params: {
   apiKey?: string | null;
   authToken?: string | null;
   /** Explicit request-scoped provider — honours the selection over AEGIS_BRAIN. */
-  provider?: 'anthropic' | 'gemini';
+  provider?: 'anthropic' | 'openai' | 'gemini';
 }): Promise<{ text: string; usage: ClaudeUsage }> {
   const p = await withSubscription(params);
   return getProviderFor(p.provider, p.model).completeText(p);
@@ -90,7 +90,7 @@ export async function callStructured<T>(params: {
   apiKey?: string | null;
   authToken?: string | null;
   /** Explicit request-scoped provider — honours the selection over AEGIS_BRAIN. */
-  provider?: 'anthropic' | 'gemini';
+  provider?: 'anthropic' | 'openai' | 'gemini';
 }): Promise<{ value: T; usage: ClaudeUsage }> {
   const p = await withSubscription(params);
   return getProviderFor(p.provider, p.model).structured<T>(p);

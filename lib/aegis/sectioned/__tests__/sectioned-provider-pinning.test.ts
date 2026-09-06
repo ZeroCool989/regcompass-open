@@ -131,9 +131,12 @@ describe('Sectioned job provider — persisted at creation, frozen across resume
     expect(runtimeProviderForJob('anthropic-api', 'de')).toBe('anthropic');
   });
 
-  it('a Gemini or Codex job fails closed on resume with its typed gated error', () => {
+  it('a Gemini job fails closed on resume with its typed gated error', () => {
     expect(() => runtimeProviderForJob('gemini-api', 'de')).toThrow(AegisGeminiCapabilityNotReadyError);
-    expect(() => runtimeProviderForJob('chatgpt-codex', 'de')).toThrow(AegisCodexRuntimePendingError);
+  });
+
+  it('a Codex job resumes on the openai provider', () => {
+    expect(runtimeProviderForJob('chatgpt-codex', 'de')).toBe('openai');
   });
 
   it('a missing or unparseable persisted provider fails closed (never assumed Anthropic)', () => {
