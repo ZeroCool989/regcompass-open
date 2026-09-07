@@ -75,6 +75,23 @@ export const MemoryConfig = {
 
   /** Max chars of transcript fed into soul-observation proposal generation. */
   soulTranscriptMaxChars: intEnv('AEGIS_SOUL_TRANSCRIPT_MAX_CHARS', 40_000),
+
+  // ── Cross-conversation memory ─────────────────────────────────────────────
+
+  /** Max facts recalled into the system prompt per turn. */
+  memoryFactsBudget: intEnv('AEGIS_MEMORY_FACTS_BUDGET', 15),
+
+  /** Max estimated tokens for the recalled prior-knowledge block. */
+  memoryRecallTokenBudget: intEnv('AEGIS_MEMORY_RECALL_TOKEN_BUDGET', 4_000),
+
+  /** Max active facts per user (hard cap — oldest are auto-archived). */
+  memoryMaxActiveFacts: intEnv('AEGIS_MEMORY_MAX_ACTIVE_FACTS', 200),
+
+  /** Cosine-similarity threshold for fact deduplication. */
+  memoryDuplicateThreshold: numEnv('AEGIS_MEMORY_DUPLICATE_THRESHOLD', 0.6),
+
+  /** Days after which an untouched fact is auto-archived. */
+  memoryFactRetentionDays: intEnv('AEGIS_MEMORY_FACT_RETENTION_DAYS', 180),
 } as const;
 
 export type MemoryConfigShape = typeof MemoryConfig;

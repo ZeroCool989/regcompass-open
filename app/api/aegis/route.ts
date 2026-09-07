@@ -5,6 +5,7 @@ import { ipHash, rateLimit } from '@/lib/rate-limit';
 import { readSessionId } from '@/lib/session';
 import { getUserFromRequest, isApproved } from '@/lib/auth';
 import { buildUserSoulBlock } from '@/lib/aegis/soul-store';
+import { buildPriorKnowledgeBlock } from '@/lib/aegis/cross-memory';
 import { runAegis, runAegisStreaming, UsageRecorder } from '@/lib/aegis';
 import { deriveFirstName } from '@/lib/aegis/prompts/voice';
 import { AegisError } from '@/lib/aegis/types';
@@ -103,6 +104,7 @@ function streamingResponse(
   userId: string | null,
   soulBlock: string | null,
   firstName: string | null,
+  priorKnowledgeBlock: string | null,
 ): Response {
   const startedAt = Date.now();
   // The recorder owns the run's CostAccumulator. Flushing it from `finally`
@@ -135,6 +137,7 @@ function streamingResponse(
         userId,
         soulBlock,
         firstName,
+        priorKnowledgeBlock,
         deadlineAt,
       });
       let deadlineTimer: ReturnType<typeof setTimeout> | undefined;
@@ -280,6 +283,10 @@ export async function POST(
     }
   }
 
+  // Cross-conversation memory: recalled facts from prior conversations.
+  // Fail-open: a recall error must never block a chat turn.
+  let priorKnowledgeBlock: string | null = null;
+
   let body: unknown;
   try {
     body = await req.json();
@@ -290,6 +297,18 @@ export async function POST(
     );
   }
 
+  // Now that `body` is parsed, load prior-knowledge using the user's message
+  // for relevance matching. Non-blocking — errors yield null.
+  if (userId && typeof body === 'object' && body && 'message' in body) {
+    try {
+      const msg = String((body as { message: unknown }).message);
+      const lang = ((body as { language?: unknown }).language === 'en' ? 'en' : 'de') as 'de' | 'en';
+      priorKnowledgeBlock = await buildPriorKnowledgeBlock(userId, msg, lang);
+    } catch {
+      priorKnowledgeBlock = null;
+    }
+  }
+
   const traceId = randomUUID();
   // Session scope for memory + document tools: the verified browser cookie
   // (set by proxy.ts / the upload route), or null (stateless turn).
@@ -298,14 +317,14 @@ export async function POST(
   // SSE branch — UI default. Caller opts in via `Accept: text/event-stream`.
   // Streams tool-call status updates and token deltas of the final answer.
   if (wantsStreaming(req)) {
-    return streamingResponse(body, traceId, sessionId, userId, soulBlock, firstName);
+    return streamingResponse(body, traceId, sessionId, userId, soulBlock, firstName, priorKnowledgeBlock);
   }
 
   // The recorder is flushed in `finally`, so usage is logged whether runAegis
   // returns or throws (cost cap, verify exhaustion, upstream error).
   const recorder = new UsageRecorder(traceId, KB.version);
   try {
-    const result = await runAegis(body, recorder, { sessionId, userId, soulBlock, firstName });
+    const result = await runAegis(body, recorder, { sessionId, userId, soulBlock, firstName, priorKnowledgeBlock });
     const latency = Date.now() - startedAt;
 
     // Echo the validated `mode` if present in the request, otherwise omit.

@@ -14,9 +14,6 @@ import {
   type SoulProposalDraft,
 } from './soul';
 import {
-  computeMemoryHealth,
-  deriveStage,
-  detectContradictions,
   DUPLICATE_THRESHOLD,
   findConflict,
   findDuplicates,
@@ -30,7 +27,6 @@ const ENTRY_SELECT = {
   content: true,
   signalCount: true,
   status: true,
-  usedCount: true,
   lastConfirmedAt: true,
   createdAt: true,
 } as const;
@@ -60,30 +56,20 @@ export async function listPendingProposals(userId: string) {
 }
 
 /**
- * Build the style-only system block from ACTIVE entries only, and bump their
- * usedCount (fire-and-forget — a usefulness signal that must never block or
- * slow a chat turn). Returns null if there are no active entries.
+ * Build the style-only system block from ACTIVE entries only.
+ * Returns null if there are no active entries.
  */
 export async function buildUserSoulBlock(userId: string): Promise<string | null> {
   const entries = await listActiveEntries(userId);
   if (entries.length === 0) return null;
-  void db.soulEntry
-    .updateMany({ where: { id: { in: entries.map((e) => e.id) } }, data: { usedCount: { increment: 1 } } })
-    .catch(() => {});
   return soulSystemBlock(entries);
 }
 
 /** Everything the memory dashboard needs in one read. */
 export async function soulSnapshot(userId: string, username?: string | null) {
-  const [all, proposals, audit] = await Promise.all([
+  const [all, proposals] = await Promise.all([
     listAllEntries(userId),
     listPendingProposals(userId),
-    db.soulAudit.findMany({
-      where: { userId },
-      orderBy: { createdAt: 'desc' },
-      take: 10,
-      select: { action: true, section: true, content: true, createdAt: true },
-    }),
   ]);
 
   const gov: GovEntry[] = all.map((e) => ({
@@ -92,15 +78,11 @@ export async function soulSnapshot(userId: string, username?: string | null) {
     content: e.content,
     signalCount: e.signalCount,
     status: e.status as GovEntry['status'],
-    usedCount: e.usedCount,
-    lastConfirmedAt: e.lastConfirmedAt.toISOString(),
   }));
   const active = gov.filter((e) => e.status === 'ACTIVE');
 
   const maturity = computeMaturity(active);
-  const memoryHealth = computeMemoryHealth(active);
   const duplicates = findDuplicates(active);
-  const contradictions = detectContradictions(active);
 
   const entries = all.map((e) => ({
     id: e.id,
@@ -108,9 +90,7 @@ export async function soulSnapshot(userId: string, username?: string | null) {
     content: e.content,
     signalCount: e.signalCount,
     status: e.status as GovEntry['status'],
-    usedCount: e.usedCount,
     lastConfirmedAt: e.lastConfirmedAt.toISOString(),
-    stage: deriveStage({ status: e.status, lastConfirmedAt: e.lastConfirmedAt } as GovEntry),
   }));
 
   const markdown = renderSoulMarkdown(active, {
@@ -123,10 +103,7 @@ export async function soulSnapshot(userId: string, username?: string | null) {
     entries,
     proposals,
     maturity,
-    memoryHealth,
     duplicates,
-    contradictions,
-    recentChanges: audit.map((a) => ({ ...a, createdAt: a.createdAt.toISOString() })),
     markdown,
   };
 }
@@ -174,7 +151,7 @@ type DecisionResult =
     };
 
 /**
- * Accept (optionally edit) a pending proposal → SoulEntry. Gates, in order:
+ * Accept (optionally edit) a pending proposal -> SoulEntry. Gates, in order:
  *   1. content firewall (style-only; a user edit can't smuggle data),
  *   2. contradiction with an ACTIVE entry (same section, opposite pole),
  *   3. near-duplicate of an ACTIVE entry.
@@ -241,9 +218,6 @@ export async function acceptProposal(
         where: { id: archiveConflictId, userId },
         data: { status: 'ARCHIVED' },
       }),
-      db.soulAudit.create({
-        data: { userId, action: 'archived', section: proposal.section, content: blocker?.content ?? '' },
-      }),
     );
   }
   ops.push(
@@ -251,9 +225,6 @@ export async function acceptProposal(
     db.soulProposal.update({
       where: { id: proposalId },
       data: { status: edited ? 'EDITED' : 'ACCEPTED', decidedAt: new Date() },
-    }),
-    db.soulAudit.create({
-      data: { userId, action: edited ? 'edited' : 'accepted', section: proposal.section, content },
     }),
   );
   await db.$transaction(ops);
@@ -267,15 +238,10 @@ export async function rejectProposal(userId: string, proposalId: string): Promis
   if (!proposal) {
     return { ok: false, status: 404, error: 'not_found', message: 'Vorschlag nicht gefunden.' };
   }
-  await db.$transaction([
-    db.soulProposal.update({
-      where: { id: proposalId },
-      data: { status: 'REJECTED', decidedAt: new Date() },
-    }),
-    db.soulAudit.create({
-      data: { userId, action: 'rejected', section: proposal.section, content: proposal.content },
-    }),
-  ]);
+  await db.soulProposal.update({
+    where: { id: proposalId },
+    data: { status: 'REJECTED', decidedAt: new Date() },
+  });
   return { ok: true };
 }
 
@@ -295,23 +261,16 @@ export async function transitionEntry(
       : action === 'archive'
         ? { status: 'ARCHIVED' as const }
         : { status: 'ACTIVE' as const, lastConfirmedAt: new Date() }; // restore
-  const auditAction = action === 'confirm' ? 'confirmed' : action === 'archive' ? 'archived' : 'restored';
-  await db.$transaction([
-    db.soulEntry.update({ where: { id: entryId }, data }),
-    db.soulAudit.create({ data: { userId, action: auditAction, section: entry.section, content: entry.content } }),
-  ]);
+  await db.soulEntry.update({ where: { id: entryId }, data });
   return { ok: true };
 }
 
-/** Hard-remove an entry. Writes an audit row. */
+/** Hard-remove an entry. */
 export async function revokeEntry(userId: string, entryId: string): Promise<DecisionResult> {
   const entry = await db.soulEntry.findFirst({ where: { id: entryId, userId } });
   if (!entry) {
     return { ok: false, status: 404, error: 'not_found', message: 'Eintrag nicht gefunden.' };
   }
-  await db.$transaction([
-    db.soulEntry.delete({ where: { id: entryId } }),
-    db.soulAudit.create({ data: { userId, action: 'removed', section: entry.section, content: entry.content } }),
-  ]);
+  await db.soulEntry.delete({ where: { id: entryId } });
   return { ok: true };
 }

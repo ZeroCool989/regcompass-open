@@ -28,7 +28,7 @@ export function sectionedEnabled(): boolean {
  */
 export async function triageRequest(
   message: string,
-  provider: 'anthropic' | 'gemini',
+  provider: 'anthropic' | 'openai' | 'gemini',
   onUsage: (usage: ClaudeUsage) => void,
 ): Promise<TriageResult> {
   // Triage dispatches on the request's selected brain — same as the main loop.

@@ -18,12 +18,16 @@ import {
 } from './registry';
 import {
   deleteConnection,
+  getPreferredModel,
   readSecrets,
   saveConnection,
   setConnectionError,
+  setPreferredModel,
   viewConnection,
   type ConnectionView,
 } from './store';
+import { syncCodexAuth, hasCodexAuth, clearCodexAuth } from './codex-bridge';
+import { OPENAI_MODEL_OPTIONS, OPENAI_DEFAULT_MODEL } from '../provider-settings';
 
 /**
  * High-level subscription-connect orchestration for the local app. Combines the
@@ -58,16 +62,28 @@ export type ProviderView = ConnectionView & {
   loginUrl: string;
   status: ProviderStatus;
   setupHint: string;
+  /** Curated model options for connected subscriptions (empty = no picker). */
+  modelOptions: Array<{ id: string; label: string }>;
+  /** Default model id when no preference is stored. */
+  defaultModel: string | null;
 };
 
 export function providerView(id: OAuthProviderId): ProviderView {
+  // For OpenAI, auto-import a locally-cached Codex auth token when present.
+  // This lets users run `npx openai-oauth login` once and have RegCompass
+  // pick up their ChatGPT subscription automatically.
+  if (id === 'openai') syncCodexAuth();
+
   const meta = OAUTH_PROVIDER_META[id];
   const connection = viewConnection(id);
-  const status: ProviderStatus = !isConfigured(id)
-    ? 'unconfigured'
-    : connection.connected
+  // OpenAI is a special case: even without a registered OAuth client, a Codex
+  // auth token counts as a valid connection (subscription via Codex login).
+  const status: ProviderStatus =
+    connection.connected
       ? 'connected'
-      : 'disconnected';
+      : !isConfigured(id) && !(id === 'openai' && hasCodexAuth())
+        ? 'unconfigured'
+        : 'disconnected';
   return {
     id,
     label: meta.label,
@@ -77,6 +93,8 @@ export function providerView(id: OAuthProviderId): ProviderView {
     loginUrl: meta.loginUrl,
     setupHint: meta.setupHint,
     status,
+    modelOptions: id === 'openai' ? [...OPENAI_MODEL_OPTIONS] : [],
+    defaultModel: id === 'openai' ? OPENAI_DEFAULT_MODEL : null,
     ...connection,
   };
 }
@@ -173,6 +191,19 @@ export async function completeCallback(params: {
 
 export function disconnect(id: OAuthProviderId): void {
   deleteConnection(id);
+  // For OpenAI: also remove the local Codex auth file so syncCodexAuth()
+  // doesn't immediately re-import the token when the UI refreshes.
+  if (id === 'openai') clearCodexAuth();
+}
+
+/** Set the preferred model for a connected subscription. */
+export function setSubscriptionModel(id: OAuthProviderId, model: string | null): void {
+  setPreferredModel(id, model);
+}
+
+/** Get the preferred model for a connected subscription. */
+export function getSubscriptionModel(id: OAuthProviderId): string | null {
+  return getPreferredModel(id);
 }
 
 // ── Access token for the brain (auto-refresh) ───────────────────────────────
@@ -190,13 +221,16 @@ export async function getAccessToken(
   now: number = Date.now(),
 ): Promise<string | null> {
   const config = oauthConfig(id);
-  if (!config) return null;
+  // For OpenAI, a Codex-bridged token may exist even without a registered
+  // OAuth client. We can still serve the access token; refresh requires the
+  // user to re-run `npx openai-oauth login` when it expires.
+  if (!config && !(id === 'openai' && hasCodexAuth())) return null;
   const secrets = readSecrets(id);
   if (!secrets) return null;
   if (!secrets.expiresAt || secrets.expiresAt.getTime() - REFRESH_SKEW_MS > now) {
     return secrets.accessToken; // still fresh
   }
-  if (!secrets.refreshToken) {
+  if (!secrets.refreshToken || !config) {
     setConnectionError(id, 'Die Verbindung ist abgelaufen. Bitte neu anmelden.');
     return null;
   }

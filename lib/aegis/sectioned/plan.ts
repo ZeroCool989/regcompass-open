@@ -281,7 +281,7 @@ export async function generatePlan(
   language: 'de' | 'en',
   // The request's frozen provider selection — the plan-pass dispatches on the
   // same brain as the rest of the run, so a dev AEGIS_BRAIN cannot split it off.
-  provider: 'anthropic' | 'gemini' | undefined,
+  provider: 'anthropic' | 'openai' | 'gemini' | undefined,
   deps: { call?: typeof callStructured } = {},
 ): Promise<GeneratePlanResult> {
   const call = deps.call ?? callStructured;

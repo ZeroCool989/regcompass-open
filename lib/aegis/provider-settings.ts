@@ -12,9 +12,9 @@ export const PROVIDER_LABELS: Record<AegisAiProvider, string> = {
 };
 
 export const PROVIDER_DEFAULT_MODELS: Record<AegisAiProvider, string> = {
-  ANTHROPIC: 'claude-sonnet-4-6',
-  OPENAI: 'gpt-4.1',
-  GOOGLE: 'gemini-2.5-pro',
+  ANTHROPIC: 'claude-sonnet-5',
+  OPENAI: 'gpt-5.6-terra',
+  GOOGLE: 'gemini-3.8-flash',
 };
 
 const PROVIDERS = new Set<AegisAiProvider>(['ANTHROPIC', 'OPENAI', 'GOOGLE']);
@@ -88,15 +88,81 @@ function masked(provider: AegisAiProvider, fingerprint: string): string {
 }
 
 /**
- * Curated model choices for the ANTHROPIC provider (D8). Ids MUST stay in sync
- * with MODEL_IDS in ./types — the router only honors known ids. Structured
- * modes keep their quality floor: preferences upgrade, never downgrade
- * (lib/aegis/router.ts: applyModelPreference).
+ * Curated model choices for the ANTHROPIC BYOK provider. Ids reference the
+ * router tier constants for the three routing tiers, plus current-gen and
+ * recent legacy models the user can pick manually. The router's
+ * applyModelPreference only upgrades, never downgrades.
  */
 export const ANTHROPIC_MODEL_OPTIONS: ReadonlyArray<{ id: string; label: string }> = [
-  { id: MODEL_IDS.sonnet, label: 'Sonnet – Standard (empfohlen)' },
-  { id: MODEL_IDS.opus, label: 'Opus – höchste Qualität, höhere Kosten' },
-  { id: MODEL_IDS.haiku, label: 'Haiku – schnell und günstig' },
+  // ── Current generation (Sep 2026) ──
+  { id: 'claude-fable-5-1', label: 'Claude Fable 5.1 – Top-Tier Reasoning' },
+  { id: 'claude-opus-5', label: 'Claude Opus 5 – komplexe agentische Aufgaben' },
+  { id: 'claude-sonnet-5', label: 'Claude Sonnet 5 – bestes Preis-Leistungs-Verhältnis (empfohlen)' },
+  { id: 'claude-haiku-4-5-20251001', label: 'Claude Haiku 4.5 – schnell und günstig' },
+  // ── Noch verfügbare Vorgänger ──
+  { id: 'claude-fable-5', label: 'Claude Fable 5 – Vorgänger-Reasoning' },
+  { id: 'claude-opus-4-8', label: 'Claude Opus 4.8' },
+  { id: 'claude-opus-4-7', label: 'Claude Opus 4.7' },
+  { id: 'claude-sonnet-4-6', label: 'Claude Sonnet 4.6' },
+  { id: 'claude-opus-4-6', label: 'Claude Opus 4.6' },
+];
+
+/**
+ * Curated model choices for the OpenAI/ChatGPT subscription. These MUST match
+ * what the openai-oauth proxy at 127.0.0.1:10531 actually exposes — the proxy
+ * returns a fixed list; models not in it will 404.
+ */
+export const OPENAI_MODEL_OPTIONS: ReadonlyArray<{ id: string; label: string }> = [
+  { id: 'gpt-6-astra', label: 'GPT-6 Astra – höchste Qualität' },
+  { id: 'gpt-5.6-sol', label: 'GPT-5.6 Sol – stark und vielseitig' },
+  { id: 'gpt-5.6-terra', label: 'GPT-5.6 Terra – ausgewogen (empfohlen)' },
+  { id: 'gpt-5.6-luna', label: 'GPT-5.6 Luna – schnell und günstig' },
+  { id: 'gpt-5.5', label: 'GPT-5.5 – bewährt' },
+  { id: 'gpt-5.4-mini', label: 'GPT-5.4 Mini – schnell und sparsam' },
+];
+
+export const OPENAI_DEFAULT_MODEL = 'gpt-5.6-terra';
+
+/**
+ * Curated model choices for OpenAI BYOK (API key). The full platform API
+ * (api.openai.com/v1) exposes more models than the subscription proxy — this
+ * list covers all chat/reasoning models relevant for AEGIS.
+ */
+export const OPENAI_BYOK_MODEL_OPTIONS: ReadonlyArray<{ id: string; label: string }> = [
+  // ── Flagship (Sep 2026) ──
+  { id: 'gpt-6-astra', label: 'GPT-6 Astra – höchste Qualität' },
+  { id: 'gpt-5.6-sol', label: 'GPT-5.6 Sol – stark und vielseitig' },
+  { id: 'gpt-5.6-terra', label: 'GPT-5.6 Terra – ausgewogen (empfohlen)' },
+  { id: 'gpt-5.6-luna', label: 'GPT-5.6 Luna – schnell und günstig' },
+  // ── GPT-5.x Serie ──
+  { id: 'gpt-5.5', label: 'GPT-5.5 – bewährt' },
+  { id: 'gpt-5.5-pro', label: 'GPT-5.5 Pro – erweitertes Reasoning' },
+  { id: 'gpt-5.4', label: 'GPT-5.4' },
+  { id: 'gpt-5.4-pro', label: 'GPT-5.4 Pro – Reasoning' },
+  { id: 'gpt-5.4-mini', label: 'GPT-5.4 Mini – schnell und sparsam' },
+  { id: 'gpt-5.4-nano', label: 'GPT-5.4 Nano – günstigste Reasoning-Option' },
+  { id: 'gpt-5.3-codex', label: 'GPT-5.3 Codex – agentisches Coding' },
+  // ── GPT-4.1 Serie ──
+  { id: 'gpt-4.1', label: 'GPT-4.1 – stabil und kosteneffizient' },
+  { id: 'gpt-4.1-mini', label: 'GPT-4.1 Mini – kostengünstig' },
+  { id: 'gpt-4.1-nano', label: 'GPT-4.1 Nano – schnellste Option' },
+];
+
+/**
+ * Curated model choices for Google Gemini BYOK (API key). Includes the current
+ * 3.x generation and still-available 2.5 models (sunset Oct 2026).
+ */
+export const GOOGLE_MODEL_OPTIONS: ReadonlyArray<{ id: string; label: string }> = [
+  // ── Gemini 3.x (aktuell) ──
+  { id: 'gemini-3.8-flash', label: 'Gemini 3.8 Flash – neuestes Modell (empfohlen)' },
+  { id: 'gemini-3.7-flash', label: 'Gemini 3.7 Flash – komplexes Coding' },
+  { id: 'gemini-3-1-pro', label: 'Gemini 3.1 Pro – höchste Qualität' },
+  { id: 'gemini-3-pro', label: 'Gemini 3 Pro – 2M Kontext' },
+  { id: 'gemini-3.5-flash', label: 'Gemini 3.5 Flash – schnell' },
+  { id: 'gemini-3.5-flash-lite', label: 'Gemini 3.5 Flash Lite – günstigste 3.x Option' },
+  // ── Gemini 2.5 (verfügbar bis Okt 2026) ──
+  { id: 'gemini-2.5-pro', label: 'Gemini 2.5 Pro – Reasoning (bis Okt 2026)' },
+  { id: 'gemini-2.5-flash', label: 'Gemini 2.5 Flash – schnell (bis Okt 2026)' },
 ];
 
 export const MODEL_PIN_NOTE =
@@ -140,7 +206,10 @@ export async function listProviderSettings(userId: string): Promise<ProviderSett
         enabled: row?.enabled ?? false,
         maskedKey: row ? masked(provider, row.keyFingerprint) : null,
         preferredModel: row?.preferredModel ?? PROVIDER_DEFAULT_MODELS[provider],
-        modelOptions: provider === 'ANTHROPIC' ? [...ANTHROPIC_MODEL_OPTIONS] : [],
+        modelOptions:
+          provider === 'ANTHROPIC' ? [...ANTHROPIC_MODEL_OPTIONS]
+          : provider === 'OPENAI' ? [...OPENAI_BYOK_MODEL_OPTIONS]
+          : [...GOOGLE_MODEL_OPTIONS],
         modelNote: provider === 'ANTHROPIC' ? MODEL_PIN_NOTE : null,
         runtimeSupported,
         note: runtimeSupported

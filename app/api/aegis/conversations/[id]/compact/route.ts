@@ -13,6 +13,7 @@ import {
   generateDigest,
   type DigestMessage,
 } from '@/lib/aegis/digest';
+import { promoteDigestToMemory } from '@/lib/aegis/cross-memory';
 
 const limiter = rateLimit({ key: 'aegis-compact', limit: 20, windowMs: 60 * 60 * 1000 });
 
@@ -109,6 +110,17 @@ export async function POST(
     );
   }
 
+  // Cross-conversation memory: promote digest items to persistent facts.
+  // Fail-open: a promotion error must never block the compact response.
+  let promotionStats: { promoted: number; superseded: number; duplicates: number } | null = null;
+  if (user?.id) {
+    try {
+      promotionStats = await promoteDigestToMemory(user.id, digest, id);
+    } catch (e) {
+      console.error('[cross-memory] promotion failed (non-blocking):', e);
+    }
+  }
+
   return NextResponse.json({
     compacted: true,
     throughSeq,
@@ -117,6 +129,7 @@ export async function POST(
       openTasks: digest.openTasks.length,
       conclusions: digest.conclusions.length,
     },
+    promotionStats,
     message:
       'Verlauf verdichtet — ältere Nachrichten werden ab der nächsten Antwort ' +
       'zusammengefasst an AEGIS übergeben. Der vollständige Verlauf bleibt sichtbar.',

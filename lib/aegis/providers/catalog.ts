@@ -109,7 +109,27 @@ export function resolveProvider(model?: string): ModelProvider {
  * `AEGIS_BRAIN` escape hatch (via {@link resolveProvider}) applies only when NO
  * explicit provider is threaded (internal/developer calls).
  */
-export function providerForSelection(provider: 'anthropic' | 'gemini'): ModelProvider {
+export function providerForSelection(provider: 'anthropic' | 'openai' | 'gemini', opts?: { subscription?: boolean }): ModelProvider {
+  if (provider === 'openai') {
+    // A ChatGPT subscription OAuth token does NOT have the `model.request`
+    // scope needed for `api.openai.com/v1`. The official path is through the
+    // `openai-oauth` local proxy (127.0.0.1:10531/v1), which reads
+    // `~/.codex/auth.json`, manages token refresh, and translates requests.
+    // A BYOK API key goes straight to the platform API as before.
+    const isSubscription = opts?.subscription ?? false;
+    const baseURL = isSubscription
+      ? (env('OPENAI_SUBSCRIPTION_BASE_URL') ?? 'http://127.0.0.1:10531/v1')
+      : (env('OPENAI_BASE_URL') ?? 'https://api.openai.com/v1');
+    return new OpenAiCompatibleProvider({
+      id: 'openai',
+      label: isSubscription ? 'OpenAI (ChatGPT-Abo via Proxy)' : 'OpenAI',
+      baseURL,
+      // The proxy ignores the key but OpenAI's client libraries require a
+      // non-empty value, so 'unused' is a safe placeholder. BYOK uses the
+      // user's actual key (resolved separately in withSubscription/client).
+      apiKey: isSubscription ? 'unused' : (env('OPENAI_API_KEY') ?? null),
+    });
+  }
   if (provider === 'gemini') {
     return new GeminiProvider({
       id: 'gemini',

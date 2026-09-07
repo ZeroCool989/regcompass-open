@@ -11,14 +11,12 @@ import {
   COMPACT_TRIGGER,
   computeContextHealth,
   fullnessBand,
-  type ContextHealth,
   type FullnessBand,
   type HealthTurn,
 } from '@/lib/aegis/context-health';
 import { useSyncExternalStore } from 'react';
 
 // ─── Fullness meter (the "context fills up and turns red" gauge) ───
-// Higher fullness is WORSE: green with room to spare, red when nearly full.
 const FULL_TEXT: Record<FullnessBand, string> = {
   low: 'text-emerald-400',
   mid: 'text-amber-400',
@@ -35,16 +33,12 @@ const FULL_EMOJI: Record<FullnessBand, string> = {
   high: '🔴',
 };
 
-/** Build a `████████░░░░░░░░` block bar for a 0–100 percentage. */
+/** Build a block bar for a 0-100 percentage. */
 function blockBar(pct: number, cells: number): string {
   const filled = Math.max(0, Math.min(cells, Math.round((pct / 100) * cells)));
   return '█'.repeat(filled) + '░'.repeat(cells - filled);
 }
 
-/**
- * Context fullness meter: `[████████░░░░░░░░] 42% 🟢`. Colour + emoji track how
- * full the working context window is — green → yellow → red as it fills.
- */
 function ContextMeter({
   pct,
   cells,
@@ -68,71 +62,15 @@ function ContextMeter({
   );
 }
 
-const BAND_TINT: Record<ContextHealth['band'], string> = {
-  excellent: 'text-emerald-400 border-emerald-500/40',
-  good: 'text-emerald-400 border-emerald-500/40',
-  attention: 'text-amber-400 border-amber-500/40',
-  compress: 'text-red-400 border-red-500/40',
-};
-
-const BAND_LABEL: Record<ContextHealth['band'], string> = {
-  excellent: 'Sehr gut',
-  good: 'Gut',
-  attention: 'Bitte aufpassen',
-  compress: 'Besser aufräumen',
-};
-
 function toTurns(messages: ChatMessage[]): HealthTurn[] {
   return messages.map((m) => ({
     role: m.role,
     content: m.content,
-    toolCallCount: m.meta?.toolCalls.length ?? 0,
     inputTokens: m.meta?.cost.inputTokens,
     cachedTokens: m.meta?.cost.cachedTokens,
   }));
 }
 
-/** Penalty (0 good – 1 bad) → einfaches Mengen-Wort. */
-function penaltyLabel(p: number): string {
-  return p < 0.33 ? 'wenig' : p < 0.66 ? 'mittel' : 'viel';
-}
-/** Quality (0 bad – 1 good) → einfaches Mengen-Wort. */
-function qualityLabel(q: number): string {
-  return q > 0.66 ? 'hoch' : q > 0.33 ? 'mittel' : 'niedrig';
-}
-
-function Bar({ value, good }: { value: number; good?: boolean }) {
-  // value is a penalty (0..1); for "good" metrics pass the quality directly.
-  const filled = Math.round(value * 6);
-  const tint = good
-    ? value > 0.66
-      ? 'bg-emerald-400'
-      : value > 0.33
-        ? 'bg-amber-400'
-        : 'bg-red-400'
-    : value < 0.33
-      ? 'bg-emerald-400'
-      : value < 0.66
-        ? 'bg-amber-400'
-        : 'bg-red-400';
-  return (
-    <span className="inline-flex gap-0.5" aria-hidden="true">
-      {Array.from({ length: 6 }).map((_, i) => (
-        <span
-          key={i}
-          className={`h-1.5 w-1.5 rounded-sm ${i < filled ? tint : 'bg-border-brand/60'}`}
-        />
-      ))}
-    </span>
-  );
-}
-
-/**
- * Always-visible Context Health indicator for the Aegis header. Computes a
- * signal-density health score from the live chat store (no server round-trip)
- * and shows a ring + expandable factor breakdown. This is a heuristic estimate,
- * deliberately not a token-utilization gauge — see lib/aegis/context-health.ts.
- */
 export function AegisContextHealth() {
   const state = useSyncExternalStore(subscribe, getSnapshot, getServerSnapshot);
   const [open, setOpen] = useState(false);
@@ -184,7 +122,6 @@ export function AegisContextHealth() {
     };
   }, [open]);
 
-  // Nothing to measure before the conversation starts.
   if (state.messages.length === 0) return null;
 
   const fBand = health.fullnessBand;
@@ -203,7 +140,6 @@ export function AegisContextHealth() {
         <span className="hidden md:inline">
           <ContextMeter pct={health.fullnessPct} cells={10} />
         </span>
-        {/* Compact fallback on small screens: just % + emoji */}
         <span
           className={`md:hidden inline-flex items-center gap-1 font-mono tabular-nums ${FULL_TEXT[fBand]}`}
         >
@@ -229,26 +165,6 @@ export function AegisContextHealth() {
             </p>
           </div>
 
-          <div className="border-t border-border-brand/60 pt-3 mb-2 flex items-center justify-between">
-            <span className="text-xs font-semibold text-text-secondary">So gut läuft das Gespräch</span>
-            <span className={`text-xs font-mono ${BAND_TINT[health.band].split(' ')[0]}`}>
-              {BAND_LABEL[health.band]}
-            </span>
-          </div>
-
-          <dl className="space-y-2 text-xs">
-            <Row label="Wiederholungen" value={penaltyLabel(health.factors.redundancy)}>
-              <Bar value={health.factors.redundancy} />
-            </Row>
-            <Row label="Zusatz-Daten" value={penaltyLabel(health.factors.toolLoad)}>
-              <Bar value={health.factors.toolLoad} />
-            </Row>
-            <Row label="Klarheit" value={qualityLabel(health.factors.signalDensity)}>
-              <Bar value={health.factors.signalDensity} good />
-            </Row>
-            <Row label="Offene Fragen" value={String(Math.round(health.factors.openLoops * 3))} />
-          </dl>
-
           {health.recommendCompaction !== 'none' && !compactNote ? (
             <div
               className={`mt-3 rounded-lg border px-3 py-2 text-xs ${
@@ -259,7 +175,7 @@ export function AegisContextHealth() {
             >
               <p className="mb-2">
                 Der Chat sollte {health.recommendCompaction === 'hard' ? 'bald ' : ''}
-                aufgeräumt werden — es gibt viele Wiederholungen oder Zusatz-Daten.
+                aufgeräumt werden.
               </p>
               <button
                 type="button"
@@ -278,68 +194,8 @@ export function AegisContextHealth() {
               {compactNote}
             </div>
           ) : null}
-
-          <p className="mt-3 text-[0.7rem] text-text-secondary/70 leading-snug">
-            Oben siehst du, wie voll der Speicher für diesen Chat ist. Die Qualität
-            unten ist ein geschätzter Richtwert.
-          </p>
-
-          <details className="mt-3 text-[0.7rem] text-text-secondary/80 leading-snug">
-            <summary className="cursor-pointer select-none text-text-secondary hover:text-foreground">
-              Wie wird das geschätzt?
-            </summary>
-            <div className="mt-1.5 space-y-1">
-              <p>
-                Das System liest nicht wirklich mit. Es zählt nur Muster im
-                Gespräch und macht daraus einen Daumenwert:
-              </p>
-              <ul className="list-disc pl-4 space-y-0.5">
-                <li>
-                  <span className="text-foreground">Wiederholungen</span> – sagt
-                  der Chat immer wieder dasselbe? (zählt am stärksten)
-                </li>
-                <li>
-                  <span className="text-foreground">Zusatz-Daten</span> – wie viel
-                  Extra-Material (Suchen, Nachschlagen) wurde geladen?
-                </li>
-                <li>
-                  <span className="text-foreground">Klarheit</span> – ist das
-                  Gespräch auf den Punkt oder schwammig?
-                </li>
-                <li>
-                  <span className="text-foreground">Offene Fragen</span> – sind
-                  Fragen unbeantwortet geblieben?
-                </li>
-              </ul>
-              <p>
-                Je weniger Wiederholungen und Ballast, desto besser. Weil das
-                System den Inhalt nicht versteht, ist es ein Richtwert – kein
-                exaktes Urteil.
-              </p>
-            </div>
-          </details>
         </div>
       ) : null}
-    </div>
-  );
-}
-
-function Row({
-  label,
-  value,
-  children,
-}: {
-  label: string;
-  value: string;
-  children?: React.ReactNode;
-}) {
-  return (
-    <div className="flex items-center justify-between gap-2">
-      <dt className="text-text-secondary">{label}</dt>
-      <dd className="flex items-center gap-2">
-        <span className="text-foreground">{value}</span>
-        {children}
-      </dd>
     </div>
   );
 }

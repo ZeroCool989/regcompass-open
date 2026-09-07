@@ -186,12 +186,15 @@ const MODEL_TIER: Record<ModelId, number> = {
 /**
  * Overlay the user's preferred model (D8) on a routing decision.
  *
- * Applies ONLY when the turn runs on the user's own credential (BYOK,
- * `source: 'user'`) — on the system key the app's routing rules stand
- * unchanged. The mode's routed model is a quality FLOOR: a preference may
- * upgrade (user pays for it), never downgrade — the structured modes keep
- * their Sonnet pin. Unknown model ids are ignored
- * (defense in depth; the settings API already rejects them).
+ * Applies when the turn runs on the user's own credential (BYOK,
+ * `source: 'user'`) or a connected subscription (`source: 'subscription'`)
+ * — on the system key the app's routing rules stand unchanged.
+ *
+ * For BYOK (Anthropic tiers): the mode's routed model is a quality FLOOR —
+ * a preference may upgrade (user pays for it), never downgrade.
+ *
+ * For subscriptions (ChatGPT): the user's chosen model replaces the routed
+ * model entirely — subscription pricing is flat, so tier routing doesn't apply.
  *
  * The rationale records what happened — it flows into servedModels/audit, so
  * preference decisions stay observable.
@@ -200,8 +203,16 @@ export function applyModelPreference(
   decision: RouteDecision,
   // Accepts any resolved-credential shape: BYOK rows carry modelHint/source,
   // service-key objects only an apiKey — those never match `source: 'user'`.
-  credential: { apiKey?: string; modelHint?: string | null; source?: string } | null | undefined,
+  credential: { apiKey?: string | null; modelHint?: string | null; source?: string } | null | undefined,
 ): RouteDecision {
+  // Subscription: the user picks one model for all requests — replace outright.
+  if (credential?.source === 'subscription' && credential.modelHint) {
+    return {
+      model: credential.modelHint as ModelId,
+      rationale: `${decision.rationale}; replaced with subscription model ${credential.modelHint}`,
+    };
+  }
+  // BYOK: tier-based floor upgrade.
   const hint = credential?.source === 'user' ? credential.modelHint : null;
   if (!hint || !(hint in MODEL_TIER)) return decision;
   const preferred = hint as ModelId;

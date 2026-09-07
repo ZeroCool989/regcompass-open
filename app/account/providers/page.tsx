@@ -21,10 +21,8 @@ export default async function AiProvidersPage() {
       </div>
       <p className="text-sm text-text-secondary mb-8 max-w-2xl">
         Verbinden Sie das Modell, das AEGIS antreibt: eigener API-Schlüssel (BYOK, verschlüsselt
-        gespeichert und nie wieder angezeigt) oder ein verbundenes Abo-Login (OAuth — Sie melden
-        sich direkt beim Anbieter an; die Zugangsdaten bleiben auf diesem Rechner). Die Abo-Anmeldung
-        erfordert einmalig einen hinterlegten OAuth-Client — die Einrichtung ist in
-        docs/OAUTH_SETUP.md beschrieben.
+        gespeichert und nie wieder angezeigt) oder ein verbundenes ChatGPT-Abo (OAuth — Sie melden
+        sich direkt bei ChatGPT an; die Zugangsdaten bleiben auf diesem Rechner).
       </p>
       <AiProviderSettings />
       <SubscriptionConnect />

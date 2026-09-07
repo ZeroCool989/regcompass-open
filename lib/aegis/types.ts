@@ -230,7 +230,8 @@ export type ToolName =
   | 'generate_assessment_deck'
   | 'export_assessment'
   | 'improve_uploaded_deck'
-  | 'improve_document';
+  | 'improve_document'
+  | 'save_fact';
 
 export type ToolCall = {
   id: string;
@@ -272,7 +273,7 @@ export type ToolContext = {
    * `AEGIS_BRAIN` env override can silently replace it. Absent → legacy
    * env/model-family resolution (internal/escape-hatch calls).
    */
-  provider?: 'anthropic' | 'gemini';
+  provider?: 'anthropic' | 'openai' | 'gemini';
 };
 
 /**

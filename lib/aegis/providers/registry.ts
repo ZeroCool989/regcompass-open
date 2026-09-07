@@ -22,8 +22,9 @@ export function getProvider(model?: string): ModelProvider {
  * replaced by an environment override.
  */
 export function getProviderFor(
-  provider: 'anthropic' | 'gemini' | undefined,
+  provider: 'anthropic' | 'openai' | 'gemini' | undefined,
   model?: string,
+  opts?: { subscription?: boolean },
 ): ModelProvider {
-  return provider ? providerForSelection(provider) : resolveProvider(model);
+  return provider ? providerForSelection(provider, opts) : resolveProvider(model);
 }

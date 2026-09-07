@@ -43,13 +43,27 @@ export {
  * a subscription is connected for the active brain's family, its access token
  * (auto-refreshed) is used; otherwise the provider falls back to its env key.
  * A local-only concern — with no connections configured this is a cheap no-op.
+ *
+ * **OpenAI exception:** ChatGPT subscription tokens lack the `model.request`
+ * scope needed by `api.openai.com/v1`. Those calls are routed through the
+ * `openai-oauth` local proxy (127.0.0.1:10531/v1) which reads
+ * `~/.codex/auth.json` and handles auth itself — so we do NOT inject the token
+ * here. The `_subscription` flag tells the dispatch layer to use the proxy.
  */
 async function withSubscription<T extends { model: ModelId; apiKey?: string | null; authToken?: string | null }>(
   params: T,
-): Promise<T> {
+): Promise<T & { _subscription?: boolean }> {
   if (params.apiKey || params.authToken) return params;
   const id = activeOAuthProviderId(params.model);
   if (!id) return params;
+  // OpenAI subscriptions go through the local proxy — don't inject the token
+  // (the proxy reads it from ~/.codex/auth.json and manages refresh itself).
+  if (id === 'openai') {
+    const { viewConnection } = await import('./oauth/store');
+    const conn = viewConnection('openai');
+    if (conn.connected) return { ...params, _subscription: true } as T & { _subscription?: boolean };
+    return params;
+  }
   const token = await getAccessToken(id);
   return token ? { ...params, authToken: token } : params;
 }
@@ -57,13 +71,13 @@ async function withSubscription<T extends { model: ModelId; apiKey?: string | nu
 /** Non-streaming message create (main loop + helpers route through here). */
 export async function callClaude(params: ClaudeCallParams): Promise<ProviderMessage> {
   const p = await withSubscription(params);
-  return getProviderFor(p.provider, p.model).createMessage(p);
+  return getProviderFor(p.provider, p.model, { subscription: !!(p as { _subscription?: boolean })._subscription }).createMessage(p);
 }
 
 /** Streaming message create (SSE path). */
 export async function streamClaude(params: ClaudeCallParams): Promise<ClaudeMessageStream> {
   const p = await withSubscription(params);
-  return getProviderFor(p.provider, p.model).streamMessage(p);
+  return getProviderFor(p.provider, p.model, { subscription: !!(p as { _subscription?: boolean })._subscription }).streamMessage(p);
 }
 
 /** Single-shot text helper (intent classification, compaction). */
@@ -74,10 +88,10 @@ export async function callHaiku(params: {
   apiKey?: string | null;
   authToken?: string | null;
   /** Explicit request-scoped provider — honours the selection over AEGIS_BRAIN. */
-  provider?: 'anthropic' | 'gemini';
+  provider?: 'anthropic' | 'openai' | 'gemini';
 }): Promise<{ text: string; usage: ClaudeUsage }> {
   const p = await withSubscription(params);
-  return getProviderFor(p.provider, p.model).completeText(p);
+  return getProviderFor(p.provider, p.model, { subscription: !!(p as { _subscription?: boolean })._subscription }).completeText(p);
 }
 
 /** Single-shot schema-constrained structured output (compaction digest). */
@@ -90,8 +104,8 @@ export async function callStructured<T>(params: {
   apiKey?: string | null;
   authToken?: string | null;
   /** Explicit request-scoped provider — honours the selection over AEGIS_BRAIN. */
-  provider?: 'anthropic' | 'gemini';
+  provider?: 'anthropic' | 'openai' | 'gemini';
 }): Promise<{ value: T; usage: ClaudeUsage }> {
   const p = await withSubscription(params);
-  return getProviderFor(p.provider, p.model).structured<T>(p);
+  return getProviderFor(p.provider, p.model, { subscription: !!(p as { _subscription?: boolean })._subscription }).structured<T>(p);
 }

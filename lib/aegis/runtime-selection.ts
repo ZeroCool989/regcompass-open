@@ -11,10 +11,14 @@ import {
   AegisProviderNotConfiguredError,
   decryptApiKey,
   getAegisProvider,
+  OPENAI_DEFAULT_MODEL,
   parseAegisProvider,
+  setAegisProvider,
   type AegisProvider,
   type UiLanguage,
 } from './provider-settings';
+import { getSubscriptionModel } from './oauth';
+import { viewConnection } from './oauth/store';
 import { applyModelPreference, routeToModel } from './router';
 
 /**
@@ -35,20 +39,23 @@ import { applyModelPreference, routeToModel } from './router';
  */
 
 /** The runtime brains that have (or will have) a real dispatch path. */
-export type RuntimeProvider = 'anthropic' | 'gemini';
+export type RuntimeProvider = 'anthropic' | 'openai' | 'gemini';
 
 /** A provider-qualified model reference — carried end-to-end so a nominal Claude
  *  id can never flow through a Gemini request (and vice-versa). */
 export type RuntimeModelRef = { provider: RuntimeProvider; model: string };
 
 /**
- * The resolved credential for the selected provider. `source: 'user'` is a
- * decrypted BYOK key (may upgrade the model tier, D8); `source: 'system'` means
- * the provider falls back to its configured environment key (the app-level
- * key), carrying no secret in this object.
+ * The resolved credential for the selected provider.
+ * - `source: 'user'` — a decrypted BYOK key (may upgrade the model tier, D8).
+ * - `source: 'subscription'` — a connected subscription (ChatGPT); the OAuth
+ *   token is attached at call time by `withSubscription()` in `client.ts`, so
+ *   no key is carried here. `modelHint` is the user's explicitly chosen model.
+ * - `source: 'system'` — the app-level env key (no secret in this object).
  */
 export type RuntimeCredential =
   | { source: 'user'; apiKey: string; modelHint: string | null }
+  | { source: 'subscription'; apiKey: null; modelHint: string }
   | { source: 'system'; apiKey: null; modelHint: null };
 
 /** Provider + credential, resolved early (fail-fast) and immutable. */
@@ -165,28 +172,33 @@ const GEMINI_TIER_MODEL: Record<ModelFamily, string> = {
 /** Translate the router's (Claude-tier) decision into a provider-qualified ref. */
 export function mapToRuntimeModel(provider: RuntimeProvider, routedModel: string): RuntimeModelRef {
   if (provider === 'anthropic') return { provider, model: routedModel };
+  if (provider === 'openai') return { provider, model: routedModel };
   const fam = modelFamily(routedModel) ?? 'sonnet';
   return { provider: 'gemini', model: GEMINI_TIER_MODEL[fam] };
 }
 
 /**
- * The model id to hand the loop, typed as its `ModelId`. Stage 1b-ii-b1
- * dispatches only Anthropic (Gemini is gated in `resolveProviderAccess`, before
- * a selection is ever built for it), so the model is always a Claude `ModelId`
- * here; the assert makes that invariant explicit rather than a silent cast.
- * Widening the loop's `ModelId` signatures for real Gemini dispatch is b2.
+ * The model id to hand the loop. `anthropic` and `openai` pass their model ids
+ * through directly (the loop and client layer both accept string model ids);
+ * Gemini is still gated in `resolveProviderAccess`. The cast to `ModelId` is
+ * nominal — the loop calls `getProviderFor(selection.provider, model)`, which
+ * dispatches to the right provider regardless of the model string.
  */
 export function dispatchModelId(selection: RuntimeSelection): ModelId {
-  if (selection.provider !== 'anthropic') {
-    throw new AegisProviderModelMismatchError(selection.model);
+  if (selection.provider === 'anthropic' || selection.provider === 'openai') {
+    return selection.model.model as ModelId;
   }
-  return selection.model.model as ModelId;
+  throw new AegisProviderModelMismatchError(selection.model);
 }
 
 /** Fail before dispatch if a model id does not belong to its provider. */
 export function assertModelForProvider(ref: RuntimeModelRef): void {
   const ok =
-    ref.provider === 'anthropic' ? ref.model.startsWith('claude') : ref.model.startsWith('gemini');
+    ref.provider === 'anthropic'
+      ? ref.model.startsWith('claude')
+      : ref.provider === 'openai'
+        ? ref.model.startsWith('gpt') || ref.model.startsWith('o1') || ref.model.startsWith('o3') || ref.model.startsWith('o4')
+        : ref.model.startsWith('gemini');
   if (!ok) throw new AegisProviderModelMismatchError(ref);
 }
 
@@ -233,6 +245,10 @@ export async function resolveRuntimeCredential(
   language: UiLanguage,
 ): Promise<RuntimeCredential> {
   if (provider === 'anthropic') return resolveAnthropicCredential(userId, language);
+  if (provider === 'openai') {
+    const modelHint = getSubscriptionModel('openai') ?? OPENAI_DEFAULT_MODEL;
+    return { source: 'subscription', apiKey: null, modelHint };
+  }
   throw new AegisGeminiCapabilityNotReadyError(language);
 }
 
@@ -259,12 +275,34 @@ export async function resolveProviderAccess(params: {
     return Object.freeze({ provider: 'anthropic', credential });
   }
 
-  const selected = params.userId ? await getAegisProvider(params.userId) : null;
+  let selected = params.userId ? await getAegisProvider(params.userId) : null;
+
+  // Auto-detect: if no provider is selected OR the selected provider is NOT
+  // already chatgpt-codex, check whether a ChatGPT subscription is connected
+  // (token in the local store). A connected subscription takes precedence
+  // because it was the most recent explicit user action. Uses `viewConnection`
+  // directly (not `providerView`) to avoid triggering `syncCodexAuth`
+  // side-effects.
+  if (selected !== 'chatgpt-codex' && params.userId) {
+    const openaiConn = viewConnection('openai');
+    if (openaiConn.connected) {
+      selected = 'chatgpt-codex';
+      // Persist so this detection only runs once.
+      setAegisProvider(params.userId, 'chatgpt-codex').catch(() => {});
+    }
+  }
+
   if (!selected) throw new AegisProviderNotConfiguredError(params.language);
 
   switch (selected) {
-    case 'chatgpt-codex':
-      throw new AegisCodexRuntimePendingError(params.language);
+    case 'chatgpt-codex': {
+      // The ChatGPT subscription token is fetched at call time via
+      // `withSubscription()` in client.ts — no API key is stored in RegCompass.
+      // The user's chosen model is stored in the local OAuth store.
+      const modelHint = getSubscriptionModel('openai') ?? OPENAI_DEFAULT_MODEL;
+      const credential: RuntimeCredential = { source: 'subscription', apiKey: null, modelHint };
+      return Object.freeze({ provider: 'openai' as RuntimeProvider, credential });
+    }
     case 'gemini-api':
       // D4 gate: structurally wired, dispatch disabled until parity is proven.
       throw new AegisGeminiCapabilityNotReadyError(params.language);
@@ -314,6 +352,7 @@ export function buildRuntimeSelection(
  * for when that gate lifts.
  */
 export function jobProviderForRuntime(provider: RuntimeProvider): AegisProvider {
+  if (provider === 'openai') return 'chatgpt-codex';
   return provider === 'gemini' ? 'gemini-api' : 'anthropic-api';
 }
 
@@ -330,9 +369,9 @@ export function runtimeProviderForJob(persisted: string | null | undefined, lang
   switch (parsed) {
     case 'anthropic-api':
       return 'anthropic';
+    case 'chatgpt-codex':
+      return 'openai';
     case 'gemini-api':
       throw new AegisGeminiCapabilityNotReadyError(language);
-    case 'chatgpt-codex':
-      throw new AegisCodexRuntimePendingError(language);
   }
 }
