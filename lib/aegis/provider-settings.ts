@@ -94,9 +94,9 @@ function masked(provider: AegisAiProvider, fingerprint: string): string {
  * (lib/aegis/router.ts: applyModelPreference).
  */
 export const ANTHROPIC_MODEL_OPTIONS: ReadonlyArray<{ id: string; label: string }> = [
-  { id: MODEL_IDS.sonnet, label: 'Sonnet – Standard (empfohlen)' },
-  { id: MODEL_IDS.opus, label: 'Opus – höchste Qualität, höhere Kosten' },
-  { id: MODEL_IDS.haiku, label: 'Haiku – schnell und günstig' },
+  { id: MODEL_IDS.sonnet, label: 'Claude Sonnet 4.6 – Standard (empfohlen)' },
+  { id: MODEL_IDS.opus, label: 'Claude Opus 4.7 – höchste Qualität, höhere Kosten' },
+  { id: MODEL_IDS.haiku, label: 'Claude Haiku 4.5 – schnell und günstig' },
 ];
 
 /**
