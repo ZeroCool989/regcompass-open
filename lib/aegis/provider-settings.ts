@@ -115,6 +115,32 @@ export const OPENAI_MODEL_OPTIONS: ReadonlyArray<{ id: string; label: string }> 
 
 export const OPENAI_DEFAULT_MODEL = 'gpt-5.6-terra';
 
+/**
+ * Curated model choices for OpenAI BYOK (API key). These are the models
+ * available on the platform API (api.openai.com/v1) — distinct from the
+ * subscription proxy list which is a subset of ChatGPT-Abo-exposed models.
+ */
+export const OPENAI_BYOK_MODEL_OPTIONS: ReadonlyArray<{ id: string; label: string }> = [
+  { id: 'gpt-6-astra', label: 'GPT-6 Astra – höchste Qualität' },
+  { id: 'gpt-5.6-sol', label: 'GPT-5.6 Sol – stark und vielseitig' },
+  { id: 'gpt-5.6-terra', label: 'GPT-5.6 Terra – ausgewogen (empfohlen)' },
+  { id: 'gpt-5.6-luna', label: 'GPT-5.6 Luna – schnell und günstig' },
+  { id: 'gpt-5.5', label: 'GPT-5.5 – bewährt und vielseitig' },
+  { id: 'gpt-5.4-mini', label: 'GPT-5.4 Mini – schnell und sparsam' },
+  { id: 'gpt-4.1', label: 'GPT-4.1 – stabil und kosteneffizient' },
+  { id: 'o3', label: 'o3 – Reasoning-Modell' },
+];
+
+/**
+ * Curated model choices for Google Gemini BYOK (API key).
+ */
+export const GOOGLE_MODEL_OPTIONS: ReadonlyArray<{ id: string; label: string }> = [
+  { id: 'gemini-2.5-pro', label: 'Gemini 2.5 Pro – höchste Qualität (empfohlen)' },
+  { id: 'gemini-2.5-flash', label: 'Gemini 2.5 Flash – schnell und günstig' },
+  { id: 'gemini-2.0-pro', label: 'Gemini 2.0 Pro – bewährt und vielseitig' },
+  { id: 'gemini-2.0-flash', label: 'Gemini 2.0 Flash – schnell und sparsam' },
+];
+
 export const MODEL_PIN_NOTE =
   'Modi mit festem Qualitätsminimum (z. B. Kontroll-Empfehlungen: Opus) überstimmen Ihre Auswahl nach oben — nie nach unten.';
 
@@ -156,7 +182,10 @@ export async function listProviderSettings(userId: string): Promise<ProviderSett
         enabled: row?.enabled ?? false,
         maskedKey: row ? masked(provider, row.keyFingerprint) : null,
         preferredModel: row?.preferredModel ?? PROVIDER_DEFAULT_MODELS[provider],
-        modelOptions: provider === 'ANTHROPIC' ? [...ANTHROPIC_MODEL_OPTIONS] : [],
+        modelOptions:
+          provider === 'ANTHROPIC' ? [...ANTHROPIC_MODEL_OPTIONS]
+          : provider === 'OPENAI' ? [...OPENAI_BYOK_MODEL_OPTIONS]
+          : [...GOOGLE_MODEL_OPTIONS],
         modelNote: provider === 'ANTHROPIC' ? MODEL_PIN_NOTE : null,
         runtimeSupported,
         note: runtimeSupported
